@@ -5,13 +5,14 @@ import { Match } from '../../../models/response.model';
 
 type props = {
 	matches: Match[];
+	selectMatch: (match: Match) => void
 }
 
-export default function MatchList ({ matches }: props) {
+export default function MatchList ({ matches, selectMatch }: props) {
 
 	const listItems = matches.map((match: Match, index: number) => {
 		const listItem = (
-			<ListItem key={match.id} button>
+			<ListItem key={match.id} onClick={() =>selectMatch(match)} button>
 				<div className="match-list-item">
 					<div className="match-number">Match { match.matchNumber }</div>
 					<div className="bottom-row">

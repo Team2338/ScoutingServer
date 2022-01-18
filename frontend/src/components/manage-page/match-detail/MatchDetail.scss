@@ -1,0 +1,22 @@
+
+.match-detail {
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+
+  .match-number {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .team-number {
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .creator {
+    color: #444444;
+    font-size: 12px;
+    line-height: 14px;
+  }
+}

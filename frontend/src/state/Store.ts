@@ -9,7 +9,8 @@ const INITIAL_STATE: AppState = {
 	teamNumber: null,
 	matches: {
 		isLoaded: false,
-		data: []
+		data: [],
+		selectedMatch: null
 	}
 };
 
@@ -29,6 +30,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				matches: {
 					isLoaded: true,
 					data: action.payload
+				}
+			};
+		case Actions.SELECT_MATCH:
+			return {
+				...state,
+				matches: {
+					...state.matches,
+					selectedMatch: action.payload
 				}
 			};
 		default:

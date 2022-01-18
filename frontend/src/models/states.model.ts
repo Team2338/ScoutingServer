@@ -6,6 +6,7 @@ export interface AppState {
 	matches: {
 		isLoaded: boolean;
 		data: Match[];
+		selectedMatch: Match;
 	};
 }
 

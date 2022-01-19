@@ -12,7 +12,7 @@ export default function MatchList ({ matches, selectMatch }: props) {
 
 	const listItems = matches.map((match: Match, index: number) => {
 		const listItem = (
-			<ListItem key={match.id} onClick={() =>selectMatch(match)} button>
+			<ListItem key={match.id} onClick={() => selectMatch(match)} button>
 				<div className="match-list-item">
 					<div className="match-number">Match { match.matchNumber }</div>
 					<div className="bottom-row">
@@ -28,7 +28,7 @@ export default function MatchList ({ matches, selectMatch }: props) {
 		}
 
 		return (
-			<React.Fragment>
+			<React.Fragment key={match.id}>
 				<Divider variant="fullWidth" component="li" />
 				{ listItem }
 			</React.Fragment>

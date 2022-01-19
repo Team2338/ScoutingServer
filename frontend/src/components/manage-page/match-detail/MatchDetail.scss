@@ -1,7 +1,12 @@
 
 .match-detail {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #dddddd;
   border-radius: 4px;
+  padding: 12px;
+  margin: 8px;
+  height: fit-content;
 
   .match-number {
     font-weight: 600;
@@ -15,8 +20,23 @@
   }
 
   .creator {
-    color: #444444;
+    color: #666666;
     font-size: 12px;
     line-height: 14px;
+    font-weight: 600;
+  }
+
+  .objectives {
+    .gamemode {
+      margin-top: 16px;
+
+      .gamemode-title {
+        text-transform: capitalize;
+        font-weight: 600;
+        color: #666666;
+        margin-bottom: 4px;
+      }
+    }
+
   }
 }

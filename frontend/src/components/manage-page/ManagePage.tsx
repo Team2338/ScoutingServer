@@ -40,7 +40,11 @@ class ConnectedManagePage extends React.Component<any, any> {
 		return (
 			<div className="manage-page">
 				<div className="match-list-wrapper">
-					<MatchList matches={this.props.matches} selectMatch={this.props.selectMatch} />
+					<MatchList
+						matches={this.props.matches}
+						selectMatch={this.props.selectMatch}
+						selectedMatch={this.props.selectedMatch}
+					/>
 				</div>
 				<MatchDetail match={this.props.selectedMatch} />
 			</div>

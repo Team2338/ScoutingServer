@@ -2,11 +2,11 @@
 .manage-page {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: calc(100vh - var(--header-height));
 
   .match-list-wrapper {
     width: 300px;
-    height: 100%;
     border-right: 1px solid #dbdedf;
+    overflow-y: auto;
   }
 }

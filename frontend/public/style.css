@@ -1,10 +1,20 @@
 
 :root {
-	font-family: Roboto, Helvetica, Arial, sans-serif;;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+
+	--header-height: 64px;
+
+}
+
+/* Adjust settings for small devices */
+@media only screen and (max-width: 600px) {
+	:root {
+		--header-height: 56px;
+	}
 }
 
 body {
-	height: 100vh;
+	max-height: 100vh;
 	margin: 0;
 	padding: 0;
 }

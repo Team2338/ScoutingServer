@@ -30,7 +30,7 @@ public class MatchService {
 	}
 	
 	public List<MatchEntry> getAllMatchesForEvent(Integer teamNumber, String eventCode) {
-		return matchRepository.findMatchEntriesByTeamNumberAndEventCode(teamNumber, eventCode);
+		return matchRepository.findMatchEntriesByTeamNumberAndEventCodeOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, eventCode);
 	}
 	
 	public MatchEntry setMatchHiddenStatus(Long matchId, boolean isHidden) {

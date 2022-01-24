@@ -5,6 +5,8 @@ import { Match, Objective } from '../../../models/response.model';
 
 interface IProps {
 	match: Match;
+	hide: (match: Match) => void;
+	unhide: (match: Match) => void;
 }
 
 export default function MatchDetail(props: IProps) {
@@ -28,19 +30,22 @@ export default function MatchDetail(props: IProps) {
 	// Sort gamemodes alphabetically
 	keys.sort();
 
-	// Map to HTML elements
-	const gamemodeElements = [];
-	for (const key of keys) {
-		const objectives = gamemodes.get(key).map((objective: Objective) => (
-			<div key={objective.id}>{ objective.objective }: { objective.count }</div>
-		));
+	// Map to Gamemode components
+	const gamemodeElements = keys.map((key: string) => (
+		<Gamemode
+			key={key}
+			name={key}
+			objectives={gamemodes.get(key)}
+		/>
+	));
 
-		gamemodeElements.push(
-			<div key={key} className="gamemode">
-				<div className="gamemode-title">{ key }</div>
-				{ objectives }
-			</div>
-		);
+	const handleHiddenClick = () => {
+		if (props.match.isHidden) {
+			props.unhide(props.match);
+			return;
+		}
+
+		props.hide(props.match);
 	}
 
 	return (
@@ -55,9 +60,23 @@ export default function MatchDetail(props: IProps) {
 			</div>
 			<div className="action-area">
 				<IconButton size="small">
-					<Icon fontSize="small" color="inherit">delete</Icon>
+					<Icon fontSize="small" color="inherit" onClick={handleHiddenClick}>delete</Icon>
 				</IconButton>
 			</div>
+		</div>
+	);
+}
+
+function Gamemode(props: { name: string, objectives: Objective[] }) {
+
+	const objectiveElements = props.objectives.map((objective: Objective) => (
+		<div key={objective.id}>{ objective.objective }: { objective.count }</div>
+	));
+
+	return (
+		<div className="gamemode">
+			<div className="gamemode-title">{ props.name }</div>
+			{ objectiveElements }
 		</div>
 	);
 }

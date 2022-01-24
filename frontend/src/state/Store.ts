@@ -5,8 +5,9 @@ import { Action, Actions } from './Actions';
 
 
 const INITIAL_STATE: AppState = {
-	eventCode: null,
-	teamNumber: null,
+	eventCode: 'test',
+	teamNumber: 9999,
+	secretCode: null,
 	matches: {
 		isLoaded: false,
 		data: [],

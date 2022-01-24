@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Match } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
 import { selectMatch } from '../../state/Actions';
-import { getMatches } from '../../state/Effects';
+import { getMatches, hideMatch, unhideMatch } from '../../state/Effects';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 
@@ -16,8 +16,10 @@ const inputs = (state: AppState) => ({
 });
 
 const outputs = (dispatch) => ({
-	getMatches: () => dispatch(getMatches(9999, 'test')),
-	selectMatch: (match: Match) => dispatch(selectMatch(match))
+	getMatches: () => dispatch(getMatches('test')),
+	selectMatch: (match: Match) => dispatch(selectMatch(match)),
+	hideMatch: (match: Match) => dispatch(hideMatch(match)),
+	unhideMatch: (match: Match) => dispatch(unhideMatch(match))
 });
 
 class ConnectedManagePage extends React.Component<any, any> {
@@ -46,7 +48,11 @@ class ConnectedManagePage extends React.Component<any, any> {
 						selectedMatch={this.props.selectedMatch}
 					/>
 				</div>
-				<MatchDetail match={this.props.selectedMatch} />
+				<MatchDetail
+					match={this.props.selectedMatch}
+					hide={this.props.hideMatch}
+					unhide={this.props.unhideMatch}
+				/>
 			</div>
 		);
 	}

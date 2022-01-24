@@ -7,6 +7,7 @@ export interface Match {
 	robotNumber: number;
 	creator: string;
 	timeCreated: string;
+	isHidden: boolean;
 	objectives: Objective[];
 }
 

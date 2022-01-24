@@ -27,6 +27,7 @@ public class MatchEntry {
 	private Integer teamNumber; // Team num of data collector
 	
 	@Column(nullable = false)
+	@Size(min = 1, max = 32)
 	private String eventCode;
 	
 	@Column(nullable = false)
@@ -42,6 +43,9 @@ public class MatchEntry {
 	@Column(nullable = false)
 	private String timeCreated;
 	
+	@Column(nullable = false)
+	private boolean isHidden;
+	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	List<ObjectiveEntry> objectives;
 	
@@ -55,6 +59,7 @@ public class MatchEntry {
 		this.robotNumber = match.getRobotNumber();
 		this.creator = match.getCreator();
 		this.timeCreated = timeCreated;
+		this.isHidden = false;
 		this.objectives = match.getObjectives();
 	}
 	
@@ -91,6 +96,11 @@ public class MatchEntry {
 	
 	public String getTimeCreated() {
 		return timeCreated;
+	}
+	
+	
+	public boolean getIsHidden() {
+		return isHidden;
 	}
 	
 	
@@ -131,6 +141,11 @@ public class MatchEntry {
 	
 	public void setTimeCreated(String timeCreated) {
 		this.timeCreated = timeCreated;
+	}
+	
+	
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
 	}
 	
 	

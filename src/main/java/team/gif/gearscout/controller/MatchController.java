@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,28 @@ public class MatchController {
 		
 		List<MatchEntry> result = matchService.getAllMatchesForEvent(teamNumber, eventCode);
 		
+		return ResponseEntity.ok(result);
+	}
+	
+	
+	@PutMapping(value = "/hide/team/{teamNumber}/match/{matchId}")
+	public ResponseEntity<MatchEntry> hideMatch(
+			@PathVariable Integer teamNumber,
+			@PathVariable Long matchId
+	) {
+		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
+		MatchEntry result = matchService.setMatchHiddenStatus(matchId, true);
+		return ResponseEntity.ok(result);
+	}
+	
+	
+	@PutMapping(value = "/unhide/team/{teamNumber}/match/{matchId}")
+	public ResponseEntity<MatchEntry> unhideMatch(
+			@PathVariable Integer teamNumber,
+			@PathVariable Long matchId
+	) {
+		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
+		MatchEntry result = matchService.setMatchHiddenStatus(matchId, false);
 		return ResponseEntity.ok(result);
 	}
 	

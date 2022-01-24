@@ -2,6 +2,7 @@ package team.gif.gearscout.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team.gif.gearscout.exception.MatchNotFoundException;
 import team.gif.gearscout.model.MatchEntry;
 import team.gif.gearscout.model.NewMatch;
 import team.gif.gearscout.repository.MatchRepository;
@@ -30,6 +31,17 @@ public class MatchService {
 	
 	public List<MatchEntry> getAllMatchesForEvent(Integer teamNumber, String eventCode) {
 		return matchRepository.findMatchEntriesByTeamNumberAndEventCode(teamNumber, eventCode);
+	}
+	
+	public MatchEntry setMatchHiddenStatus(Long matchId, boolean isHidden) {
+		MatchEntry match = matchRepository
+				.findById(matchId)
+				.orElseThrow(() -> new MatchNotFoundException(matchId));
+		
+		match.setIsHidden(isHidden);
+		match = matchRepository.save(match);
+		
+		return match;
 	}
 	
 }

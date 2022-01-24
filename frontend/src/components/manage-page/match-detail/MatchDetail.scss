@@ -1,42 +1,56 @@
 
 .match-detail {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   border: 1px solid #dddddd;
   border-radius: 4px;
   padding: 12px;
   margin: 8px;
   height: fit-content;
 
-  .match-number {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 18px;
-  }
+  .info {
+    display: flex;
+    flex-direction: column;
 
-  .team-number {
-    font-size: 16px;
-    line-height: 18px;
-  }
-
-  .creator {
-    color: #666666;
-    font-size: 12px;
-    line-height: 14px;
-    font-weight: 600;
-  }
-
-  .objectives {
-    .gamemode {
-      margin-top: 16px;
-
-      .gamemode-title {
-        text-transform: capitalize;
-        font-weight: 600;
-        color: #666666;
-        margin-bottom: 4px;
-      }
+    .match-number {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 18px;
     }
 
+    .team-number {
+      font-size: 16px;
+      line-height: 18px;
+    }
+
+    .creator {
+      color: #666666;
+      font-size: 12px;
+      line-height: 14px;
+      font-weight: 600;
+    }
+
+    .action-area {
+      margin-top: 12px;
+    }
+
+    .objectives {
+      .gamemode {
+        margin-top: 16px;
+
+        .gamemode-title {
+          text-transform: capitalize;
+          font-weight: 600;
+          color: #666666;
+          margin-bottom: 4px;
+        }
+      }
+
+    }
   }
+
+  .action-area {
+    margin-left: 16px;
+  }
+
 }

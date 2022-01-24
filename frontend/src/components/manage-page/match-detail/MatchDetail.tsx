@@ -1,4 +1,5 @@
 import './MatchDetail.scss';
+import { Icon, IconButton } from '@material-ui/core';
 import React from 'react';
 import { Match, Objective } from '../../../models/response.model';
 
@@ -44,11 +45,18 @@ export default function MatchDetail(props: IProps) {
 
 	return (
 		<div className="match-detail">
-			<div className="match-number">Match { props.match.matchNumber }</div>
-			<div className="team-number">Team { props.match.robotNumber }</div>
-			<div className="creator">{ props.match.creator }</div>
-			<div className="objectives">
-				{ gamemodeElements }
+			<div className="info">
+				<div className="match-number">Match { props.match.matchNumber }</div>
+				<div className="team-number">Team { props.match.robotNumber }</div>
+				<div className="creator">{ props.match.creator }</div>
+				<div className="objectives">
+					{ gamemodeElements }
+				</div>
+			</div>
+			<div className="action-area">
+				<IconButton size="small">
+					<Icon fontSize="small" color="inherit">delete</Icon>
+				</IconButton>
 			</div>
 		</div>
 	);

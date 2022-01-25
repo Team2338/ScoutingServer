@@ -8,7 +8,8 @@ export interface Action {
 export enum Actions {
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
-	SELECT_MATCH = '[MATCH] Select match'
+	SELECT_MATCH = '[MATCH] Select match',
+	REPLACE_MATCH = '[MATCH] Replace match'
 }
 
 
@@ -24,4 +25,12 @@ export const getMatchesSuccess = (matches: Match[]): Action => ({
 export const selectMatch = (match: Match): Action => ({
 	type: Actions.SELECT_MATCH,
 	payload: match
+});
+
+export const replaceMatch = (oldId: number, match: Match): Action => ({
+	type: Actions.REPLACE_MATCH,
+	payload: {
+		oldId: oldId,
+		match: match
+	}
 });

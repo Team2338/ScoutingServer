@@ -1,7 +1,7 @@
 import gearscoutService from '../api/GearscoutService';
 import { Match } from '../models/response.model';
 import { AppState } from '../models/states.model';
-import { getMatchesStart, getMatchesSuccess } from './Actions';
+import { getMatchesStart, getMatchesSuccess, replaceMatch } from './Actions';
 
 type GetState = () => AppState;
 
@@ -20,6 +20,7 @@ export const getMatches = (eventCode: string) => async (dispatch, getState: GetS
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.hideMatch(getState().teamNumber, match.id, getState().secretCode);
+		dispatch(replaceMatch(match.id, response.data));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
@@ -28,6 +29,7 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.unhideMatch(getState().teamNumber, match.id, getState().secretCode);
+		dispatch(replaceMatch(match.id, response.data));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}

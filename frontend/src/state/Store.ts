@@ -1,5 +1,6 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import { Match } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import { Action, Actions } from './Actions';
 
@@ -41,9 +42,26 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 					selectedMatch: action.payload
 				}
 			};
+		case Actions.REPLACE_MATCH:
+			return {
+				...state,
+				matches: {
+					...state.matches,
+					data: replaceMatch(state.matches.data, action.payload.oldId, action.payload.match),
+					selectedMatch: action.payload.match
+				}
+			};
 		default:
 			return state;
 	}
 };
 
 export const store = createStore(reducer, applyMiddleware(thunk));
+
+function replaceMatch(matches: Match[], oldId: number, match: Match) {
+	const targetIndex = matches.findIndex((match: Match) => match.id === oldId);
+	const result = matches.slice();
+	result[targetIndex] = match;
+
+	return result;
+}

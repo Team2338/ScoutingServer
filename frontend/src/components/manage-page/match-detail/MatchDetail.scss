@@ -7,6 +7,13 @@
   padding: 12px;
   margin: 8px;
   height: fit-content;
+  min-width: 200px;
+
+  &.hidden {
+    background-color: #eeeeee;
+    border-style: dashed;
+    border-color: #aaaaaa;
+  }
 
   .info {
     display: flex;
@@ -16,6 +23,11 @@
       font-weight: 600;
       font-size: 16px;
       line-height: 18px;
+
+      .hidden {
+        color: #CC3333;
+        margin-left: 16px;
+      }
     }
 
     .team-number {
@@ -50,7 +62,7 @@
   }
 
   .action-area {
-    margin-left: 16px;
+    margin-left: auto;
   }
 
 }

@@ -2,6 +2,10 @@
 .match-list-item {
   width: 100%;
 
+  &.hidden {
+    opacity: 0.3;
+  }
+
   .match-number {
     font-weight: 600;
   }

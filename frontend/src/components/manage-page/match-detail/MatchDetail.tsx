@@ -48,10 +48,15 @@ export default function MatchDetail(props: IProps) {
 		props.hide(props.match);
 	}
 
+	const hiddenLabel = props.match.isHidden ? <span className="hidden">Hidden</span> : null
+
 	return (
-		<div className="match-detail">
+		<div className={'match-detail' + (props.match.isHidden ? ' hidden' : '')}>
 			<div className="info">
-				<div className="match-number">Match { props.match.matchNumber }</div>
+				<div className="match-number">
+					Match { props.match.matchNumber }
+					{ hiddenLabel  }
+				</div>
 				<div className="team-number">Team { props.match.robotNumber }</div>
 				<div className="creator">{ props.match.creator }</div>
 				<div className="objectives">
@@ -59,8 +64,8 @@ export default function MatchDetail(props: IProps) {
 				</div>
 			</div>
 			<div className="action-area">
-				<IconButton size="small">
-					<Icon fontSize="small" color="inherit" onClick={handleHiddenClick}>delete</Icon>
+				<IconButton size="small" onClick={handleHiddenClick}>
+					<Icon fontSize="small" color="inherit">delete</Icon>
 				</IconButton>
 			</div>
 		</div>

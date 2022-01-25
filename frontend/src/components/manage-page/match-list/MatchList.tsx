@@ -19,7 +19,7 @@ export default function MatchList ({ matches, selectMatch, selectedMatch }: prop
 				selected={match.id === selectedMatch?.id}
 				onClick={() => selectMatch(match)}
 			>
-				<div className="match-list-item">
+				<div className={'match-list-item' + (match.isHidden ? ' hidden' : '')}>
 					<div className="match-number">Match { match.matchNumber }</div>
 					<div className="bottom-row">
 						<div className="robot-number">Team { match.robotNumber }</div>

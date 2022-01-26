@@ -79,4 +79,20 @@ public class MatchController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping(value = "/download/team/{teamNumber}/event/{eventCode}", produces = "text/csv")
+	public ResponseEntity<String> getCsvForEvent(
+			@PathVariable Integer teamNumber,
+			@PathVariable String eventCode
+	) {
+		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
+		// TODO: get CSV file with data
+		
+		String content = "MatchNum,RobotNum,Creator\n1, 2338, Patrick";
+		
+		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);
+		return ResponseEntity.ok()
+				.header("Content-Disposition", "attachment; filename=" + filename)
+				.body(content);
+	}
+	
 }

@@ -85,11 +85,10 @@ public class MatchController {
 			@PathVariable String eventCode
 	) {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
-		// TODO: get CSV file with data
 		
-		String content = "MatchNum,RobotNum,Creator\n1, 2338, Patrick";
-		
+		String content = matchService.getEventDataAsCsv(teamNumber, eventCode);
 		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);
+		
 		return ResponseEntity.ok()
 				.header("Content-Disposition", "attachment; filename=" + filename)
 				.body(content);

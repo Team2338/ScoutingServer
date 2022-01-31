@@ -7,6 +7,8 @@ import ManagePage from './manage-page/ManagePage';
 
 
 const select = (state: AppState) => ({
+	teamNumber: state.teamNumber,
+	eventCode: state.eventCode
 });
 
 const outputs = (dispatch) => ({
@@ -18,7 +20,7 @@ class ConnectedApp extends React.Component<any, any> {
 	render() {
 		return (
 			<React.Fragment>
-				<Header />
+				<Header teamNumber={this.props.teamNumber} eventCode={this.props.eventCode} />
 				<ManagePage />
 			</React.Fragment>
 		);

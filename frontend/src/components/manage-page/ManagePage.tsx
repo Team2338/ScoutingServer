@@ -41,7 +41,6 @@ class ConnectedManagePage extends React.Component<any, any> {
 
 		return (
 			<div className="manage-page">
-				<a href="https://gearscout.patrickubelhor.com/api/v1/download/team/9999/event/test" download>Download</a>
 				<div className="match-list-wrapper">
 					<MatchList
 						matches={this.props.matches}

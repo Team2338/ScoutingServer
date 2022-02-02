@@ -1,5 +1,6 @@
-import gearscoutService from '../api/GearscoutService';
-import { Match } from '../models/response.model';
+import gearscoutService from '../service/GearscoutService';
+import matchModelService from '../service/MatchModelService';
+import { Match, MatchResponse } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import { getMatchesStart, getMatchesSuccess, replaceMatch } from './Actions';
 
@@ -11,7 +12,10 @@ export const getMatches = (eventCode: string) => async (dispatch, getState: GetS
 	try {
 		dispatch(getMatchesStart());
 		let response = await gearscoutService.getMatches(getState().teamNumber, eventCode);
-		dispatch(getMatchesSuccess(response.data));
+		const matches: Match[] = response.data.map((matchResponse: MatchResponse) => {
+			return matchModelService.convertMatchResponseToModel(matchResponse);
+		})
+		dispatch(getMatchesSuccess(matches));
 	} catch (error) {
 		console.error('Error getting matches', error);
 	}
@@ -20,7 +24,8 @@ export const getMatches = (eventCode: string) => async (dispatch, getState: GetS
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.hideMatch(getState().teamNumber, match.id, getState().secretCode);
-		dispatch(replaceMatch(match.id, response.data));
+		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
+		dispatch(replaceMatch(match.id, updatedMatch));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
@@ -29,7 +34,8 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.unhideMatch(getState().teamNumber, match.id, getState().secretCode);
-		dispatch(replaceMatch(match.id, response.data));
+		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
+		dispatch(replaceMatch(match.id, updatedMatch));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}

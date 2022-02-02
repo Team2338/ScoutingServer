@@ -1,5 +1,5 @@
 
-export interface Match {
+export interface MatchResponse {
 	id: number;
 	teamNumber: number;
 	eventCode: string;
@@ -16,4 +16,16 @@ export interface Objective {
 	gamemode: string;
 	objective: string;
 	count: number;
+}
+
+export interface Match {
+	id: number;
+	teamNumber: number;
+	eventCode: string;
+	matchNumber: number;
+	robotNumber: number;
+	creator: string;
+	timeCreated: string;
+	isHidden: boolean;
+	gamemodes: Map<String, Map<string, number>>;
 }

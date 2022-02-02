@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Match } from '../models/response.model';
+import { MatchResponse } from '../models/response.model';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -10,11 +10,11 @@ class GearscoutService {
 	});
 
 
-	getMatches = (teamNumber: number, eventCode: string): GearscoutResponse<Match[]> => {
+	getMatches = (teamNumber: number, eventCode: string): GearscoutResponse<MatchResponse[]> => {
 		return this.service.get(`/v1/team/${teamNumber}/event/${eventCode}`);
 	}
 
-	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<Match> => {
+	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
 		return this.service.put(
 			`/v1/hide/team/${teamNumber}/match/${matchId}`,
 			null,
@@ -26,7 +26,7 @@ class GearscoutService {
 		);
 	}
 
-	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<Match> => {
+	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
 		return this.service.put(
 			`/v1/unhide/team/${teamNumber}/match/${matchId}`,
 			null,

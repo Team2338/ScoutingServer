@@ -58,7 +58,7 @@ public class MatchController {
 	}
 	
 	
-	@PutMapping(value = "/hide/team/{teamNumber}/match/{matchId}")
+	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
 	public ResponseEntity<MatchEntry> hideMatch(
 			@PathVariable Integer teamNumber,
 			@PathVariable Long matchId
@@ -69,7 +69,7 @@ public class MatchController {
 	}
 	
 	
-	@PutMapping(value = "/unhide/team/{teamNumber}/match/{matchId}")
+	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/unhide")
 	public ResponseEntity<MatchEntry> unhideMatch(
 			@PathVariable Integer teamNumber,
 			@PathVariable Long matchId
@@ -79,7 +79,7 @@ public class MatchController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@GetMapping(value = "/download/team/{teamNumber}/event/{eventCode}", produces = "text/csv")
+	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(
 			@PathVariable Integer teamNumber,
 			@PathVariable String eventCode

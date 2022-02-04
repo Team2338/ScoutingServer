@@ -16,7 +16,7 @@ class GearscoutService {
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
 		return this.service.put(
-			`/v1/hide/team/${teamNumber}/match/${matchId}`,
+			`/v1/team/${teamNumber}/match/${matchId}/hide`,
 			null,
 			{
 				headers: {
@@ -28,7 +28,7 @@ class GearscoutService {
 
 	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
 		return this.service.put(
-			`/v1/unhide/team/${teamNumber}/match/${matchId}`,
+			`/v1/team/${teamNumber}/match/${matchId}/unhide`,
 			null,
 			{
 				headers: {

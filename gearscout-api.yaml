@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: GearScout Server
-  description: GearScout Server
+  description: A server for hosting FRC scouting data. Intended for use with apps developed by Gear It Forward (Team 2338)
   version: 1.0.0
 servers:
   - url: 'https://gearscout.patrickubelhor.com/api/v1'
@@ -17,14 +17,202 @@ paths:
               schema:
                 type: string
   /team/{teamNum}/event/{eventCode}:
+    parameters:
+      - $ref: '#/components/parameters/teamNumParam'
+      - $ref: '#/components/parameters/eventCodeParam'
+      - $ref: '#/components/parameters/secretCodeParam'
     get:
-      description: Get a team's list of scouted matches for an event
+      description: Returns list of scouted matches for an event
       responses:
         '200':
+          description: A list of matches
           content:
-            description: A list of matches
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/match'
+                  $ref: '#/components/schemas/Match'
+        default:
+          $ref: '#/components/responses/GeneralError'
+  /team/{teamNum}/event/{eventCode}/download:
+    parameters:
+      - $ref: '#/components/parameters/teamNumParam'
+      - $ref: '#/components/parameters/eventCodeParam'
+      - $ref: '#/components/parameters/secretCodeParam'
+    get:
+      description: Returns CSV file with list of scouted matches for an event
+      responses:
+        '200':
+          description: A list of matches in CSV format
+          content:
+            text/csv:
+              schema:
+                type: string
+        default:
+          $ref: '#/components/responses/GeneralError'
+  /team/{teamNum}:
+    parameters:
+      - $ref: '#/components/parameters/teamNumParam'
+      - $ref: '#/components/parameters/secretCodeParam'
+    post:
+      description: Creates a new match for a particular event and robot
+      requestBody:
+        description: The new match data to save
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMatch'
+      responses:
+        '200':
+          description: The created match
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+        default:
+          $ref: '#/components/responses/GeneralError'
+  /team/{teamNum}/match/${matchId}/hide:
+    parameters:
+      - $ref: '#/components/parameters/teamNumParam'
+      - $ref: '#/components/parameters/matchIdParam'
+      - $ref: '#/components/parameters/secretCodeParam'
+    put:
+      description: Marks a match as "hidden" so that it isn't included in analytics or CSV download
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdatedMatch'
+        default:
+          $ref: '#/components/responses/GeneralError'
+  /team/{teamNum}/match/${matchId}/unhide:
+    parameters:
+      - $ref: '#/components/parameters/teamNumParam'
+      - $ref: '#/components/parameters/matchIdParam'
+      - $ref: '#/components/parameters/secretCodeParam'
+    put:
+      description: Removes "hidden" state from match so that it gets included in analytics and CSV download
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdatedMatch'
+        default:
+          $ref: '#/components/responses/GeneralError'
+components:
+  examples:
+    NewMatch:
+      summary: A new frame of match data to log
+      value: {
+        "eventCode": "CIR",
+        "matchNumber": 4,
+        "robotNumber": 2338,
+        "creator": "Nate",
+        "objectives": [
+          {
+            "gamemode": "auto",
+            "objective": "High Goal",
+            "count": 2
+          },
+          {
+            "gamemode": "auto",
+            "objective": "Low Goal",
+            "count": 1
+          }
+        ]
+      }
+  parameters:
+    teamNumParam:
+      name: teamNum
+      in: path
+      description: Team number that owns the data
+      required: true
+      schema:
+        type: integer
+        format: int32
+      style: simple
+      example: 2338
+    eventCodeParam:
+      name: eventCode
+      in: path
+      description: ID of the event that was scouted
+      required: true
+      schema:
+        type: integer
+      style: simple
+      example: CIR
+    matchIdParam:
+      name: matchId
+      in: path
+      description: ID of the match
+      required: true
+      schema:
+        type: integer
+      style: simple
+      example: 12
+    secretCodeParam:
+      name: secretCode
+      in: header
+      description: Secret code used to limit data access
+      required: true
+      schema:
+        type: string
+      style: simple
+      example: '9t9JB#h'
+  responses:
+    UpdatedMatch:
+      description: The modified match
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Match'
+    GeneralError:
+      description: Error payload
+      content:
+        text/html:
+          schema:
+            $ref: '#/components/schemas/ErrorModel'
+  schemas:
+    NewMatch:
+      type: object
+      properties:
+        eventCode:
+          type: string
+          minLength: 1
+          maxLength: 32
+        matchNumber:
+          type: integer
+          format: int32
+        robotNumber:
+          type: integer
+          format: int32
+        creator:
+          type: string
+          minLength: 1
+          maxLength: 32
+        objectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Objective'
+    Match:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            timeCreated:
+              type: integer
+              format: int64
+            isHidden:
+              type: boolean
+        - $ref: '#/components/schemas/NewMatch'
+    Objective:
+      type: object
+      properties:
+        gamemode:
+          type: string
+        objective:
+          type: string
+        count:
+          type: integer
+          format: int32
+    ErrorModel:
+      type: string

@@ -1,0 +1,6 @@
+[dD]ockerfile
+.dockerignore
+
+application.yaml
+
+README.md

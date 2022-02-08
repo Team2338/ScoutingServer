@@ -15,29 +15,16 @@ export default function MatchDetail(props: IProps) {
 		return <div>Select a match to view more details</div>
 	}
 
-	// Group objectives by gamemode
-	const gamemodes = new Map<string, Objective[]>();
-	const keys: string[] = [];
-	for (const objective of props.match.objectives) {
-		if (!gamemodes.has(objective.gamemode)) {
-			gamemodes.set(objective.gamemode, []);
-			keys.push(objective.gamemode);
-		}
-
-		gamemodes.get(objective.gamemode).push(objective);
-	}
-
-	// Sort gamemodes alphabetically
-	keys.sort();
-
-	// Map to Gamemode components
-	const gamemodeElements = keys.map((key: string) => (
-		<Gamemode
-			key={key}
-			name={key}
-			objectives={gamemodes.get(key)}
-		/>
-	));
+	const gamemodeElements = []
+	props.match.gamemodes.forEach((objectives: Objective[], gamemode: string) => {
+		gamemodeElements.push(
+			<Gamemode
+				key={gamemode}
+				name={gamemode}
+				objectives={objectives}
+			/>
+		);
+	});
 
 	const handleHiddenClick = () => {
 		if (props.match.isHidden) {

@@ -1,17 +1,19 @@
-import { Match, MatchResponse } from '../models/response.model';
+import { Match, MatchResponse, Objective } from '../models/response.model';
 
 
 class MatchModelService {
 
 	convertMatchResponseToModel = (match: MatchResponse): Match => {
-		const gamemodes: Map<String, Map<string, number>> = new Map();
+		const gamemodes: Map<String, Objective[]> = new Map();
 
-		for (const { gamemode, objective, count } of match.objectives) {
+		for (const objective of match.objectives) {
+			const gamemode = objective.gamemode;
+
 			if (!gamemodes.has(gamemode)) {
-				gamemodes.set(gamemode, new Map());
+				gamemodes.set(gamemode, []);
 			}
 
-			gamemodes.get(gamemode).set(objective, count);
+			gamemodes.get(gamemode).push(objective);
 		}
 
 		return {

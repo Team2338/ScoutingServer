@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.gearscout.model.MatchEntry;
@@ -35,11 +36,12 @@ public class MatchController {
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> addMatch(
 			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
 			@RequestBody NewMatch match
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 		
-		matchService.saveMatch(match, teamNumber);
+		matchService.saveMatch(match, teamNumber, secretCode);
 		
 		return ResponseEntity.accepted().build();
 	}
@@ -48,11 +50,12 @@ public class MatchController {
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}")
 	public ResponseEntity<List<MatchEntry>> getAllMatchesForEvent(
 			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
 			@PathVariable String eventCode
 	) {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
 		
-		List<MatchEntry> result = matchService.getAllMatchesForEvent(teamNumber, eventCode);
+		List<MatchEntry> result = matchService.getAllMatchesForEvent(teamNumber, secretCode, eventCode);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -61,10 +64,11 @@ public class MatchController {
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
 	public ResponseEntity<MatchEntry> hideMatch(
 			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
 			@PathVariable Long matchId
 	) {
 		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
-		MatchEntry result = matchService.setMatchHiddenStatus(matchId, true);
+		MatchEntry result = matchService.setMatchHiddenStatus(matchId, secretCode, true);
 		return ResponseEntity.ok(result);
 	}
 	
@@ -72,21 +76,23 @@ public class MatchController {
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/unhide")
 	public ResponseEntity<MatchEntry> unhideMatch(
 			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
 			@PathVariable Long matchId
 	) {
 		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
-		MatchEntry result = matchService.setMatchHiddenStatus(matchId, false);
+		MatchEntry result = matchService.setMatchHiddenStatus(matchId, secretCode, false);
 		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(
 			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
 			@PathVariable String eventCode
 	) {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
 		
-		String content = matchService.getEventDataAsCsv(teamNumber, eventCode);
+		String content = matchService.getEventDataAsCsv(teamNumber, secretCode, eventCode);
 		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);
 		
 		return ResponseEntity.ok()

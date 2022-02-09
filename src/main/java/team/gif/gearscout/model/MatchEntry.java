@@ -27,6 +27,9 @@ public class MatchEntry {
 	private Integer teamNumber; // Team num of data collector
 	
 	@Column(nullable = false)
+	private String secretCode; // For restricting access to team's data
+	
+	@Column(nullable = false)
 	@Size(min = 1, max = 32)
 	private String eventCode;
 	
@@ -52,8 +55,9 @@ public class MatchEntry {
 	
 	public MatchEntry() {}
 	
-	public MatchEntry(NewMatch match, Integer teamNumber, String timeCreated) {
+	public MatchEntry(NewMatch match, Integer teamNumber, String secretCode, String timeCreated) {
 		this.teamNumber = teamNumber;
+		this.secretCode = secretCode;
 		this.eventCode = match.getEventCode();
 		this.matchNumber = match.getMatchNumber();
 		this.robotNumber = match.getRobotNumber();
@@ -71,6 +75,11 @@ public class MatchEntry {
 	
 	public Integer getTeamNumber() {
 		return teamNumber;
+	}
+	
+	
+	public String getSecretCode() {
+		return secretCode;
 	}
 	
 	
@@ -116,6 +125,11 @@ public class MatchEntry {
 	
 	public void setTeamNumber(Integer teamNumber) {
 		this.teamNumber = teamNumber;
+	}
+	
+	
+	public void setSecretCode(String secretCode) {
+		this.secretCode = secretCode;
 	}
 	
 	

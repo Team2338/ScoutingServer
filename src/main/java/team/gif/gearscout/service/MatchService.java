@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -27,21 +26,21 @@ public class MatchService {
 		this.matchRepository = matchRepository;
 	}
 	
-	public MatchEntry saveMatch(NewMatch match, Integer teamNumber) {
+	public MatchEntry saveMatch(NewMatch match, Integer teamNumber, String secretCode) {
 		// Convert Match to MatchEntry
 		String currentTime = Long.toString(System.currentTimeMillis());
-		MatchEntry matchEntry = new MatchEntry(match, teamNumber, currentTime);
+		MatchEntry matchEntry = new MatchEntry(match, teamNumber, secretCode, currentTime);
 		
 		return matchRepository.save(matchEntry);
 	}
 	
-	public List<MatchEntry> getAllMatchesForEvent(Integer teamNumber, String eventCode) {
-		return matchRepository.findMatchEntriesByTeamNumberAndEventCodeOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, eventCode);
+	public List<MatchEntry> getAllMatchesForEvent(Integer teamNumber, String secretCode, String eventCode) {
+		return matchRepository.findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, secretCode, eventCode);
 	}
 	
-	public MatchEntry setMatchHiddenStatus(Long matchId, boolean isHidden) {
+	public MatchEntry setMatchHiddenStatus(Long matchId, String secretCode, boolean isHidden) {
 		MatchEntry match = matchRepository
-				.findById(matchId)
+				.findMatchEntryByIdAndSecretCode(matchId, secretCode)
 				.orElseThrow(() -> new MatchNotFoundException(matchId));
 		
 		match.setIsHidden(isHidden);
@@ -50,8 +49,8 @@ public class MatchService {
 		return match;
 	}
 	
-	public String getEventDataAsCsv(Integer teamNumber, String eventCode) {
-		List<MatchEntry> matches = matchRepository.findVisibleMatches(teamNumber, eventCode);
+	public String getEventDataAsCsv(Integer teamNumber, String secretCode, String eventCode) {
+		List<MatchEntry> matches = matchRepository.findVisibleMatches(teamNumber, secretCode, eventCode);
 		
 		HashSet<String> scoreNames = getUniqueScoreNames(matches); // Collect names of all objectives
 		String[] sortedScoreNames = getSortedScoreNames(scoreNames); // Sort score names

@@ -1,0 +1,23 @@
+# Sample application.yaml
+server:
+  port: 25575
+
+spring:
+  database:
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+  datasource:
+    platform: postgres
+    url:
+    username:
+    password:
+
+auth:
+  url:
+

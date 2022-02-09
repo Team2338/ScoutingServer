@@ -27,5 +27,5 @@ export interface Match {
 	creator: string;
 	timeCreated: string;
 	isHidden: boolean;
-	gamemodes: Map<String, Map<string, number>>;
+	gamemodes: Map<String, Objective[]>;
 }

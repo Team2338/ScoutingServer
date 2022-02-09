@@ -22,7 +22,7 @@ class GearscoutService {
 	}
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
-		const url = `/v1/hide/team/${teamNumber}/match/${matchId}`;
+		const url = `/v1/team/${teamNumber}/match/${matchId}/hide`;
 		const config = {
 			headers: {
 				secretCode: secretCode
@@ -37,7 +37,7 @@ class GearscoutService {
 	}
 
 	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
-		const url = `/v1/unhide/team/${teamNumber}/match/${matchId}`;
+		const url = `/v1/team/${teamNumber}/match/${matchId}/unhide`;
 		const config = {
 			headers: {
 				secretCode: secretCode

@@ -9,7 +9,7 @@ interface IProps {
 
 export default function Header(props: IProps) {
 
-	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/download/team/${props.teamNumber}/event/${props.eventCode}`;
+	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/team/${props.teamNumber}/event/${props.eventCode}/download`;
 
 	return (
 		<AppBar id="appBar" position="sticky" color="primary">

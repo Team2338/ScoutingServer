@@ -8,7 +8,7 @@ import { Action, Actions } from './Actions';
 const INITIAL_STATE: AppState = {
 	eventCode: 'test',
 	teamNumber: 9999,
-	secretCode: null,
+	secretCode: 'password',
 	matches: {
 		isLoaded: false,
 		data: [],

@@ -16,7 +16,7 @@ const inputs = (state: AppState) => ({
 });
 
 const outputs = (dispatch) => ({
-	getMatches: () => dispatch(getMatches('test')),
+	getMatches: () => dispatch(getMatches()),
 	selectMatch: (match: Match) => dispatch(selectMatch(match)),
 	hideMatch: (match: Match) => dispatch(hideMatch(match)),
 	unhideMatch: (match: Match) => dispatch(unhideMatch(match))

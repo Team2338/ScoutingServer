@@ -10,31 +10,44 @@ class GearscoutService {
 	});
 
 
-	getMatches = (teamNumber: number, eventCode: string): GearscoutResponse<MatchResponse[]> => {
-		return this.service.get(`/v1/team/${teamNumber}/event/${eventCode}`);
+	getMatches = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<MatchResponse[]> => {
+		const url = `/v1/team/${teamNumber}/event/${eventCode}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
+			}
+		};
+
+		return this.service.get(url, config);
 	}
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
-		return this.service.put(
-			`/v1/hide/team/${teamNumber}/match/${matchId}`,
-			null,
-			{
-				headers: {
-					secretCode: secretCode
-				}
+		const url = `/v1/hide/team/${teamNumber}/match/${matchId}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
 			}
+		};
+
+		return this.service.put(
+			url,
+			null,
+			config
 		);
 	}
 
 	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
-		return this.service.put(
-			`/v1/unhide/team/${teamNumber}/match/${matchId}`,
-			null,
-			{
-				headers: {
-					secretCode: secretCode
-				}
+		const url = `/v1/unhide/team/${teamNumber}/match/${matchId}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
 			}
+		};
+
+		return this.service.put(
+			url,
+			null,
+			config
 		);
 	}
 

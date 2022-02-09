@@ -18,14 +18,14 @@ export default function MatchDetail(props: IProps) {
 	// Group objectives by gamemode
 	const gamemodes = new Map<string, Objective[]>();
 	const keys: string[] = [];
-	for (const objective of props.match.objectives) {
-		if (!gamemodes.has(objective.gamemode)) {
-			gamemodes.set(objective.gamemode, []);
-			keys.push(objective.gamemode);
-		}
-
-		gamemodes.get(objective.gamemode).push(objective);
-	}
+	// for (const objective of props.match.objectives) {
+	// 	if (!gamemodes.has(objective.gamemode)) {
+	// 		gamemodes.set(objective.gamemode, []);
+	// 		keys.push(objective.gamemode);
+	// 	}
+	//
+	// 	gamemodes.get(objective.gamemode).push(objective);
+	// }
 
 	// Sort gamemodes alphabetically
 	keys.sort();

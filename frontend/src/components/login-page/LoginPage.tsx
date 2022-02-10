@@ -40,42 +40,47 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	render() {
 		return (
 			<div className="login-page">
-				<form className="login-page-form" onSubmit={this.handleSubmit}>
-					<Typography>Login</Typography>
-					<TextField
-						label="Your Team Number"
-						name="teamNumber"
-						type="text"
-						margin="dense"
-						value={this.state.teamNumber}
-						onChange={this.handleChange}
-					/>
-					<TextField
-						label="Event Code"
-						name="eventCode"
-						type="text"
-						margin="dense"
-						value={this.state.eventCode}
-						onChange={this.handleChange}
-					/>
-					<TextField
-						label="Secret Code"
-						name="secretCode"
-						type="text"
-						margin="dense"
-						value={this.state.secretCode}
-						onChange={this.handleChange}
-					/>
-					<Button
-						className="login-page-form-submit"
-						variant="contained"
-						color="primary"
-						type="submit"
-						onClick={this.handleSubmit}
-					>
-						Login
-					</Button>
-				</form>
+				<div className="content-wrapper">
+					<form className="login-page-form" onSubmit={this.handleSubmit}>
+						<Typography variant="h4">Login</Typography>
+						<TextField
+							label="Your team number"
+							name="teamNumber"
+							type="text"
+							margin="dense"
+							variant="outlined"
+							value={this.state.teamNumber}
+							onChange={this.handleChange}
+						/>
+						<TextField
+							label="Event code"
+							name="eventCode"
+							type="text"
+							margin="dense"
+							variant="outlined"
+							value={this.state.eventCode}
+							onChange={this.handleChange}
+						/>
+						<TextField
+							label="Secret code"
+							name="secretCode"
+							type="text"
+							margin="dense"
+							variant="outlined"
+							value={this.state.secretCode}
+							onChange={this.handleChange}
+						/>
+						<Button
+							className="login-page-form-submit"
+							variant="contained"
+							color="primary"
+							type="submit"
+							onClick={this.handleSubmit}
+						>
+							Login
+						</Button>
+					</form>
+				</div>
 			</div>
 		);
 	}

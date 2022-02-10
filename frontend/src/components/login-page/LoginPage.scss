@@ -1,15 +1,26 @@
 
 .login-page {
 	display: flex;
-	height: 50vh;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
+	.content-wrapper {
+		margin-top: 48px;
+		height: fit-content;
+		width: fit-content;
+		border-radius: 4px;
+		box-shadow:
+				0 2px 4px -1px rgb(0 0 0 / 20%),
+				0 4px 5px 0 rgb(0 0 0 / 14%),
+				0 1px 10px 0 rgb(0 0 0 / 12%);
+	}
 
 	&-form {
 		display: flex;
 		flex-direction: column;
 		min-width: 20rem;
+		padding: 16px;
 
 		&-submit {
 			margin-top: 24px !important;

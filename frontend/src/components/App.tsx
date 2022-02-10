@@ -9,6 +9,7 @@ import ManagePage from './manage-page/ManagePage';
 
 
 const select = (state: AppState) => ({
+	isLoggedIn: state.isLoggedIn,
 	teamNumber: state.teamNumber,
 	eventCode: state.eventCode
 });
@@ -25,13 +26,13 @@ class ConnectedApp extends React.Component<any, any> {
 	}
 
 	render() {
-		const page = this.props.teamNumber
+		const page = this.props.isLoggedIn
 			? <ManagePage />
 			: <LoginPage />;
 
 		return (
 			<React.Fragment>
-				<Header teamNumber={this.props.teamNumber} eventCode={this.props.eventCode} />
+				<Header isLoggedIn={this.props.isLoggedIn} teamNumber={this.props.teamNumber} eventCode={this.props.eventCode} />
 				{ page }
 			</React.Fragment>
 		);

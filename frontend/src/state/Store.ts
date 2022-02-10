@@ -6,6 +6,7 @@ import { Action, Actions } from './Actions';
 
 
 const INITIAL_STATE: AppState = {
+	isLoggedIn: false,
 	teamNumber: null,
 	eventCode: null,
 	secretCode: null,
@@ -21,6 +22,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 		case Actions.LOGIN:
 			return {
 				...state,
+				isLoggedIn: true,
 				teamNumber: action.payload.teamNumber,
 				eventCode: action.payload.eventCode,
 				secretCode: action.payload.secretCode

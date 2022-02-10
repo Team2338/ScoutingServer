@@ -21,7 +21,8 @@ const languages = {
 	english: {
 		'HELLO_WORLD': 'Hello world',
 		'MATCH': 'Match',
-		'TEAM': 'Team'
+		'TEAM': 'Team',
+		'DOWNLOAD_DATA': 'Download Data'
 	}
 }
 

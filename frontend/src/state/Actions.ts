@@ -6,12 +6,25 @@ export interface Action {
 }
 
 export enum Actions {
+	LOGIN = '[LOGIN] Login',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	SELECT_MATCH = '[MATCH] Select match',
 	REPLACE_MATCH = '[MATCH] Replace match'
 }
 
+export const login = (
+	teamNumber: string,
+	eventCode: string,
+	secretCode: string
+): Action => ({
+	type: Actions.LOGIN,
+	payload: {
+		teamNumber,
+		eventCode,
+		secretCode
+	}
+});
 
 export const getMatchesStart = (): Action => ({
 	type: Actions.GET_MATCHES_START

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../models/states.model';
 import { initApp } from '../state/Effects';
 import Header from './header/Header';
+import LoginPage from './login-page/LoginPage';
 import ManagePage from './manage-page/ManagePage';
 
 
@@ -24,10 +25,14 @@ class ConnectedApp extends React.Component<any, any> {
 	}
 
 	render() {
+		const page = this.props.teamNumber
+			? <ManagePage />
+			: <LoginPage />;
+
 		return (
 			<React.Fragment>
 				<Header teamNumber={this.props.teamNumber} eventCode={this.props.eventCode} />
-				<ManagePage />
+				{ page }
 			</React.Fragment>
 		);
 	}

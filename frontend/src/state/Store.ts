@@ -6,9 +6,9 @@ import { Action, Actions } from './Actions';
 
 
 const INITIAL_STATE: AppState = {
-	eventCode: 'test',
-	teamNumber: 9999,
-	secretCode: 'password',
+	teamNumber: null,
+	eventCode: null,
+	secretCode: null,
 	matches: {
 		isLoaded: false,
 		data: [],
@@ -18,6 +18,13 @@ const INITIAL_STATE: AppState = {
 
 const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 	switch (action.type) {
+		case Actions.LOGIN:
+			return {
+				...state,
+				teamNumber: action.payload.teamNumber,
+				eventCode: action.payload.eventCode,
+				secretCode: action.payload.secretCode
+			}
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,

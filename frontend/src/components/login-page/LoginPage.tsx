@@ -2,12 +2,18 @@ import './LoginPage.scss';
 import { Button, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../../state/Actions';
+import { AppState } from '../../models/states.model';
+import { login } from '../../state/Effects';
 
+const inputs = (state: AppState) => ({
+	initialTeamNumber: state.teamNumber ?? 0,
+	initialEventCode: state.eventCode ?? '',
+	initialSecretCode: state.secretCode ?? ''
+});
 
 const outputs = (dispatch) => ({
 	login: (teamNumber, eventCode, secretCode) => dispatch(login(teamNumber, eventCode, secretCode))
-})
+});
 
 class ConnectedLoginPage extends React.Component<any, any> {
 
@@ -15,10 +21,22 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		super(props);
 
 		this.state = {
-			teamNumber: '',
-			eventCode: '',
-			secretCode: ''
+			teamNumber: props.initialTeamNumber,
+			eventCode: props.initialEventCode,
+			secretCode: props.initialSecretCode
 		};
+	}
+
+	componentDidUpdate(prevProps) {
+		console.log(prevProps);
+		if (prevProps.teamNumber !== this.props.initialTeamNumber) {
+			console.log('different')
+			this.setState({
+				teamNumber: this.props.initialTeamNumber,
+				eventCode: this.props.initialEventCode,
+				secretCode: this.props.initialSecretCode
+			})
+		}
 	}
 
 	handleChange = (event) => {
@@ -86,5 +104,5 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	}
 }
 
-const LoginPage = connect(null, outputs)(ConnectedLoginPage);
+const LoginPage = connect(inputs, outputs)(ConnectedLoginPage);
 export default LoginPage;

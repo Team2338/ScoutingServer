@@ -13,8 +13,8 @@ export enum Actions {
 	REPLACE_MATCH = '[MATCH] Replace match'
 }
 
-export const login = (
-	teamNumber: string,
+export const loginSuccess = (
+	teamNumber: number,
 	eventCode: string,
 	secretCode: string
 ): Action => ({

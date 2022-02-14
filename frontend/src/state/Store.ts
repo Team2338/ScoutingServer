@@ -27,6 +27,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				eventCode: action.payload.eventCode,
 				secretCode: action.payload.secretCode
 			}
+		case Actions.LOGOUT:
+			return {
+				...state,
+				isLoggedIn: false,
+				teamNumber: null,
+				eventCode: null,
+				secretCode: null,
+			}
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,

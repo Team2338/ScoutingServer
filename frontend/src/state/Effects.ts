@@ -3,16 +3,19 @@ import matchModelService from '../service/MatchModelService';
 import { Match, MatchResponse } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import TranslateService from '../service/TranslateService';
-import { getMatchesStart, getMatchesSuccess, loginSuccess, replaceMatch } from './Actions';
+import { getMatchesStart, getMatchesSuccess, loginSuccess, logoutSuccess, replaceMatch } from './Actions';
 
 type GetState = () => AppState;
 
 export const initApp = () => async (dispatch) => {
-	const teamNumber: number = Number(localStorage.getItem('teamNumber'));
+	const teamNumber: string = localStorage.getItem('teamNumber');
 	const eventCode: string = localStorage.getItem('eventCode');
 	const secretCode: string = localStorage.getItem('secretCode');
 
-	dispatch(loginSuccess(teamNumber, eventCode, secretCode));
+	// Only login if all information is present
+	if (teamNumber && eventCode && secretCode) {
+		dispatch(loginSuccess(Number(teamNumber), eventCode, secretCode));
+	}
 
 	await TranslateService.setLanguage('english');
 }
@@ -28,6 +31,12 @@ export const login = (
 
 	dispatch(loginSuccess(teamNumber, eventCode, secretCode));
 };
+
+export const logout = () => async (dispatch) => {
+	localStorage.clear();
+
+	dispatch(logoutSuccess());
+}
 
 export const getMatches = () => async (dispatch, getState: GetState) => {
 	console.log('Getting matches');

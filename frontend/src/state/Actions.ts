@@ -6,7 +6,8 @@ export interface Action {
 }
 
 export enum Actions {
-	LOGIN = '[LOGIN] Login',
+	LOGIN = '[AUTH] Login',
+	LOGOUT = '[AUTH] Logout',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	SELECT_MATCH = '[MATCH] Select match',
@@ -24,6 +25,10 @@ export const loginSuccess = (
 		eventCode,
 		secretCode
 	}
+});
+
+export const logoutSuccess = (): Action => ({
+	type: Actions.LOGOUT
 });
 
 export const getMatchesStart = (): Action => ({

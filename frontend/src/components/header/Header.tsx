@@ -13,15 +13,23 @@ import {
 	Toolbar,
 	Typography
 } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { AppState } from '../../models/states.model';
+import { logout } from '../../state/Effects';
 
-interface IProps {
-	isLoggedIn: boolean
-	teamNumber: number;
-	eventCode: string;
-}
 
-export default function Header(props: IProps) {
+const inputs = (state: AppState) => ({
+	isLoggedIn: state.isLoggedIn,
+	teamNumber: state.teamNumber,
+	eventCode: state.eventCode
+});
+
+const outputs = (dispatch) => ({
+	logout: () => dispatch(logout())
+});
+
+function ConnectedHeader(props) {
 
 	const title = <Typography variant="h5" color="inherit" noWrap>GearScout</Typography>;
 	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/team/${props.teamNumber}/event/${props.eventCode}/download`;
@@ -38,6 +46,12 @@ export default function Header(props: IProps) {
 
 	const handleAccountMenuClose = () => {
 		setAnchorEl(null);
+	}
+
+	const handleLogout = () => {
+		setDrawerOpen(false);
+		handleAccountMenuClose();
+		props.logout();
 	}
 
 
@@ -82,7 +96,7 @@ export default function Header(props: IProps) {
 			onClose={handleAccountMenuClose}
 			keepMounted
 		>
-			<MenuItem onClick={handleAccountMenuClose}>Logout</MenuItem>
+			<MenuItem onClick={handleLogout}>Logout</MenuItem>
 		</Menu>
 	)
 
@@ -107,14 +121,13 @@ export default function Header(props: IProps) {
 						</ListItemIcon>
 						<ListItemText primary="Analyze"/>
 					</ListItem>
-					<ListItem button>
+					<ListItem onClick={handleLogout} button>
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
 						<ListItemText primary="Logout"/>
 					</ListItem>
 				</List>
-			{/*	Links to places */}
 			</div>
 		</Drawer>
 	);
@@ -142,3 +155,6 @@ export default function Header(props: IProps) {
 		</React.Fragment>
 	);
 }
+
+const Header = connect(inputs, outputs)(ConnectedHeader);
+export default Header;

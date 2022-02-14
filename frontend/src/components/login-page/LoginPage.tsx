@@ -6,7 +6,7 @@ import { AppState } from '../../models/states.model';
 import { login } from '../../state/Effects';
 
 const inputs = (state: AppState) => ({
-	initialTeamNumber: state.teamNumber ?? 0,
+	initialTeamNumber: state.teamNumber ?? '',
 	initialEventCode: state.eventCode ?? '',
 	initialSecretCode: state.secretCode ?? ''
 });
@@ -27,18 +27,6 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		};
 	}
 
-	componentDidUpdate(prevProps) {
-		console.log(prevProps);
-		if (prevProps.teamNumber !== this.props.initialTeamNumber) {
-			console.log('different')
-			this.setState({
-				teamNumber: this.props.initialTeamNumber,
-				eventCode: this.props.initialEventCode,
-				secretCode: this.props.initialSecretCode
-			})
-		}
-	}
-
 	handleChange = (event) => {
 		this.setState({
 			[event.target.name]: event.target.value
@@ -49,7 +37,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		event.preventDefault();
 
 		this.props.login(
-			this.state.teamNumber,
+			Number(this.state.teamNumber),
 			this.state.eventCode,
 			this.state.secretCode
 		);

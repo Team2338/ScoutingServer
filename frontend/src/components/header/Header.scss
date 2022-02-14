@@ -5,3 +5,30 @@
 	color: white;
 	text-decoration: none;
 }
+
+.menu-button {
+	margin-right: 16px !important;
+}
+
+.nav-drawer {
+
+	&-content {
+		height: 100%;
+		min-width: 250px;
+		color: var(--text-color);
+
+	}
+
+	&-header {
+		box-sizing: border-box;
+		padding: 8px var(--content-margin);
+		height: var(--header-height);
+	}
+
+	&-divider {
+		height: 0;
+		width: 100%;
+		border-bottom: 1px solid var(--border-color);
+	}
+}
+

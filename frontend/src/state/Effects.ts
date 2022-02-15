@@ -46,7 +46,7 @@ export const getMatches = () => async (dispatch, getState: GetState) => {
 		let response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
 		const matches: Match[] = response.data.map((matchResponse: MatchResponse) => {
 			return matchModelService.convertMatchResponseToModel(matchResponse);
-		})
+		});
 		dispatch(getMatchesSuccess(matches));
 	} catch (error) {
 		console.error('Error getting matches', error);

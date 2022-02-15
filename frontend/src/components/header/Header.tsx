@@ -13,11 +13,18 @@ import {
 	Toolbar,
 	Typography
 } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { AppState } from '../../models/states.model';
 import { logout } from '../../state/Effects';
 
+
+interface IRoute {
+	path: string;
+	name: string;
+	icon: string;
+}
 
 const inputs = (state: AppState) => ({
 	isLoggedIn: state.isLoggedIn,
@@ -98,7 +105,34 @@ function ConnectedHeader(props) {
 		>
 			<MenuItem onClick={handleLogout}>Logout</MenuItem>
 		</Menu>
-	)
+	);
+
+	const routes: IRoute[] = [
+		{
+			path: '/manage',
+			name: 'Manage',
+			icon: 'storage'
+		},
+		{
+			path: '/analyze',
+			name: 'Analyze',
+			icon: 'assessment'
+		}
+	];
+
+	const routeComponents = routes.map((route: IRoute) => (
+		<ListItem
+			button
+			component={NavLink}
+			to={route.path}
+			onClick={toggleDrawer(false)}
+		>
+			<ListItemIcon>
+				<Icon>{ route.icon }</Icon>
+			</ListItemIcon>
+			<ListItemText primary={route.name}/>
+		</ListItem>
+	));
 
 	const drawer = (
 		<Drawer className="nav-drawer" anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
@@ -109,18 +143,7 @@ function ConnectedHeader(props) {
 				</div>
 				<div className="nav-drawer-divider"/>
 				<List>
-					<ListItem button>
-						<ListItemIcon>
-							<Icon>storage</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Manage"/>
-					</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<Icon>assessment</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Analyze"/>
-					</ListItem>
+					{ routeComponents }
 					<ListItem onClick={handleLogout} button>
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>

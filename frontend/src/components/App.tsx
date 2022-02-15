@@ -3,15 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../models/states.model';
 import { initApp } from '../state/Effects';
+import AnalyzePage from './analyze-page/AnalyzePage';
 import Header from './header/Header';
 import LoginPage from './login-page/LoginPage';
 import ManagePage from './manage-page/ManagePage';
+import { Route, Routes } from 'react-router-dom';
 
 
 const select = (state: AppState) => ({
 	isLoggedIn: state.isLoggedIn,
-	teamNumber: state.teamNumber,
-	eventCode: state.eventCode
 });
 
 const outputs = (dispatch) => ({
@@ -26,14 +26,25 @@ class ConnectedApp extends React.Component<any, any> {
 	}
 
 	render() {
-		const page = this.props.isLoggedIn
-			? <ManagePage />
-			: <LoginPage />;
+		if (!this.props.isLoggedIn) {
+			return (
+				<React.Fragment>
+					<Header />
+					<LoginPage />
+				</React.Fragment>
+			);
+		}
+
+		const managePage = <ManagePage />
 
 		return (
 			<React.Fragment>
-				<Header isLoggedIn={this.props.isLoggedIn} teamNumber={this.props.teamNumber} eventCode={this.props.eventCode} />
-				{ page }
+				<Header />
+				<Routes>
+					<Route path="/" element={managePage} />
+					<Route path="/manage" element={managePage} />
+					<Route path="/analyze" element={<AnalyzePage />} />
+				</Routes>
 			</React.Fragment>
 		);
 	}

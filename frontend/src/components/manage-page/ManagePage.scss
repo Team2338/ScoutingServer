@@ -2,7 +2,6 @@
 .manage-page {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - var(--header-height));
 
   .match-list-wrapper {
     width: 300px;

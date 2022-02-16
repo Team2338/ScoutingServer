@@ -123,6 +123,7 @@ function ConnectedHeader(props) {
 	const routeComponents = routes.map((route: IRoute) => (
 		<ListItem
 			button
+			key={route.name}
 			component={NavLink}
 			to={route.path}
 			onClick={toggleDrawer(false)}

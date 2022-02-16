@@ -22,3 +22,7 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+.page {
+	height: calc(100vh - var(--header-height));
+}

@@ -36,11 +36,11 @@ class ConnectedManagePage extends React.Component<any, any> {
 
 	render() {
 		if (!this.props.isLoaded) {
-			return <div className="manage-page">Loading...</div>;
+			return <div className="page manage-page">Loading...</div>;
 		}
 
 		return (
-			<div className="manage-page">
+			<div className="page manage-page">
 				<div className="match-list-wrapper">
 					<MatchList
 						matches={this.props.matches}

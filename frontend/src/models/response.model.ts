@@ -27,5 +27,30 @@ export interface Match {
 	creator: string;
 	timeCreated: string;
 	isHidden: boolean;
-	gamemodes: Map<String, Objective[]>;
+	gamemodes: Map<string, Objective[]>;
+}
+
+export type ObjectiveStats = Map<string, Map<string, TeamObjectiveStats>>; // gamemode -> objective -> stats
+
+export interface Team {
+	id: number;
+	stats: ObjectiveStats;
+}
+
+export interface TeamObjectiveStats {
+	scores: number[];
+	mean: number;
+	variance: number;
+	median: number;
+	mode: number;
+}
+
+export interface GlobalObjectiveStats {
+	name: string;
+	gamemode: string;
+	scores: Map<number, number>; // teamNumber -> avg count for that team
+	stats: {
+		mean: number;
+		median: number;
+	}
 }

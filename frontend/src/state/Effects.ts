@@ -1,9 +1,10 @@
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
-import { Match, MatchResponse } from '../models/response.model';
+import { Match, MatchResponse, Team } from '../models/response.model';
 import { AppState } from '../models/states.model';
+import TeamModelService from '../service/TeamModelService';
 import TranslateService from '../service/TranslateService';
-import { getMatchesStart, getMatchesSuccess, loginSuccess, logoutSuccess, replaceMatch } from './Actions';
+import { calculateTeamStatsStart, calculateTeamStatsSuccess, getMatchesStart, getMatchesSuccess, loginSuccess, logoutSuccess, replaceMatch } from './Actions';
 
 type GetState = () => AppState;
 
@@ -18,7 +19,7 @@ export const initApp = () => async (dispatch) => {
 	}
 
 	await TranslateService.setLanguage('english');
-}
+};
 
 export const login = (
 	teamNumber: number,
@@ -36,39 +37,72 @@ export const logout = () => async (dispatch) => {
 	localStorage.clear();
 
 	dispatch(logoutSuccess());
-}
+};
 
 export const getMatches = () => async (dispatch, getState: GetState) => {
 	console.log('Getting matches');
+	dispatch(getMatchesStart());
 
 	try {
-		dispatch(getMatchesStart());
 		let response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
-		const matches: Match[] = response.data.map((matchResponse: MatchResponse) => {
+		const matchResponses: MatchResponse[] = response.data;
+		const matches: Match[] = matchResponses.map((matchResponse: MatchResponse) => {
 			return matchModelService.convertMatchResponseToModel(matchResponse);
 		});
+
 		dispatch(getMatchesSuccess(matches));
+		dispatch(getTeams(matchResponses));
 	} catch (error) {
 		console.error('Error getting matches', error);
 	}
 };
 
+// TODO: reset team data
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.hideMatch(getState().teamNumber, match.id, getState().secretCode);
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
+
 		dispatch(replaceMatch(match.id, updatedMatch));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
 };
 
+// TODO: reset team data
 export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.unhideMatch(getState().teamNumber, match.id, getState().secretCode);
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
+
 		dispatch(replaceMatch(match.id, updatedMatch));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
+};
+
+export const getTeams = (matches: MatchResponse[]) => async (dispatch) => {
+	console.log('Computing team statistics');
+	dispatch(calculateTeamStatsStart());
+
+	// Group matches by robot number
+	const groupedMatches = new Map<number, MatchResponse[]>();
+	for (const match of matches) {
+		if (!groupedMatches.has(match.robotNumber)) {
+			groupedMatches.set(match.robotNumber, []);
+		}
+
+		groupedMatches.get(match.robotNumber).push(match);
+	}
+
+	// Calculate team statistics
+	const teams: Team[] = [];
+	groupedMatches.forEach((robotMatches: MatchResponse[]) => {
+		teams.push(TeamModelService.createTeam(robotMatches));
+	});
+
+	// Sort by team number, ascending
+	teams.sort((a: Team, b: Team) => a.id - b.id);
+
+	dispatch(calculateTeamStatsSuccess(teams));
 };

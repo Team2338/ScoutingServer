@@ -1,4 +1,4 @@
-import { Match } from '../models/response.model';
+import { Match, Team } from '../models/response.model';
 
 export interface Action {
 	type: Actions;
@@ -11,7 +11,10 @@ export enum Actions {
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	SELECT_MATCH = '[MATCH] Select match',
-	REPLACE_MATCH = '[MATCH] Replace match'
+	REPLACE_MATCH = '[MATCH] Replace match',
+	CALCULATE_TEAM_STATS_START = '[TEAM] Started calculating team stats',
+	CALCULATE_TEAM_STATS_SUCCESS = '[TEAM] Successfully calculated team stats',
+	SELECT_TEAM = '[TEAM] Select team'
 }
 
 export const loginSuccess = (
@@ -51,4 +54,18 @@ export const replaceMatch = (oldId: number, match: Match): Action => ({
 		oldId: oldId,
 		match: match
 	}
+});
+
+export const calculateTeamStatsStart = () => ({
+	type: Actions.CALCULATE_TEAM_STATS_START,
+});
+
+export const calculateTeamStatsSuccess = (teams: Team[]) => ({
+	type: Actions.CALCULATE_TEAM_STATS_SUCCESS,
+	payload: teams
+});
+
+export const selectTeam = (team: Team): Action => ({
+	type: Actions.SELECT_TEAM,
+	payload: team
 });

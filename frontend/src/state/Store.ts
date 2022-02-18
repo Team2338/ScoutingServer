@@ -14,6 +14,11 @@ const INITIAL_STATE: AppState = {
 		isLoaded: false,
 		data: [],
 		selectedMatch: null
+	},
+	teams: {
+		isLoaded: false,
+		data: [],
+		selectedTeam: null
 	}
 };
 
@@ -28,13 +33,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				secretCode: action.payload.secretCode
 			}
 		case Actions.LOGOUT:
-			return {
-				...state,
-				isLoggedIn: false,
-				teamNumber: null,
-				eventCode: null,
-				secretCode: null,
-			}
+			return INITIAL_STATE;
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,
@@ -66,6 +65,35 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 					...state.matches,
 					data: replaceMatch(state.matches.data, action.payload.oldId, action.payload.match),
 					selectedMatch: action.payload.match
+				},
+				teams: {
+					...state.teams,
+					isLoaded: false // Mark data as dirty, since we modified it
+				}
+			};
+		case Actions.CALCULATE_TEAM_STATS_START:
+			return {
+				...state,
+				teams: {
+					...state.teams,
+					isLoaded: false
+				}
+			};
+		case Actions.CALCULATE_TEAM_STATS_SUCCESS:
+			return {
+				...state,
+				teams: {
+					...state.teams,
+					isLoaded: true,
+					data: action.payload,
+				}
+			};
+		case Actions.SELECT_TEAM:
+			return {
+				...state,
+				teams: {
+					...state.teams,
+					selectedTeam: action.payload
 				}
 			};
 		default:

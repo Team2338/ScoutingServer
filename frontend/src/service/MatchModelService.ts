@@ -4,7 +4,7 @@ import { Match, MatchResponse, Objective } from '../models/response.model';
 class MatchModelService {
 
 	convertMatchResponseToModel = (match: MatchResponse): Match => {
-		const gamemodes: Map<String, Objective[]> = new Map();
+		const gamemodes: Map<string, Objective[]> = new Map();
 
 		for (const objective of match.objectives) {
 			const gamemode = objective.gamemode;

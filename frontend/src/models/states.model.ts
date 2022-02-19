@@ -1,4 +1,4 @@
-import { Match, Team } from './response.model';
+import { Match, MatchResponse, Team } from './response.model';
 
 export interface AppState {
 	isLoggedIn: boolean;
@@ -7,6 +7,7 @@ export interface AppState {
 	secretCode: string;
 	matches: {
 		isLoaded: boolean;
+		raw: MatchResponse[];
 		data: Match[];
 		selectedMatch: Match;
 	};

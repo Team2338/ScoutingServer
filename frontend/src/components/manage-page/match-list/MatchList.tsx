@@ -43,7 +43,7 @@ export default function MatchList ({ matches, selectMatch, selectedMatch }: prop
 
 	return (
 		<List>
-			{listItems}
+			{ listItems }
 		</List>
 	);
 

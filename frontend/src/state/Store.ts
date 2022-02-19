@@ -12,6 +12,7 @@ const INITIAL_STATE: AppState = {
 	secretCode: null,
 	matches: {
 		isLoaded: false,
+		raw: [],
 		data: [],
 		selectedMatch: null
 	},

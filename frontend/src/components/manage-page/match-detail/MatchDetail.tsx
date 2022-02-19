@@ -12,7 +12,7 @@ interface IProps {
 export default function MatchDetail(props: IProps) {
 
 	if (!props.match) {
-		return <div>Select a match to view more details</div>
+		return <div>Select a match to view more details</div>;
 	}
 
 	const gamemodeElements = []

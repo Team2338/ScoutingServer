@@ -143,7 +143,7 @@ class TeamModelService {
 		}
 
 		const sorted = scores.slice().sort((a: number, b: number) => a - b);
-		const middleIndex = sorted.length / 2;
+		const middleIndex = Math.floor(sorted.length / 2);
 
 		// If there's an even number of elements, take average of both middle elements
 		if (sorted.length % 2 === 0) {

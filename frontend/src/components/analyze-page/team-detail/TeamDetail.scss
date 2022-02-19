@@ -1,0 +1,53 @@
+
+.team-detail {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	padding: 12px;
+	margin: 8px;
+	height: fit-content;
+
+	.team-number {
+		font-weight: 600;
+		font-size: 32px;
+		line-height: 36px;
+	}
+
+	.gamemode-list {
+
+		.gamemode {
+			margin-top: 16px;
+
+			&-title {
+				font-weight: 600;
+				font-size: 20px;
+				line-height: 24px;
+			}
+
+			&-stats-wrapper {
+				display: flex;
+				flex-direction: row;
+				margin-top: 8px;
+
+				.stats {
+					padding-left: 12px;
+					padding-right: 12px;
+
+					.objective-name {
+						font-weight: 500;
+						font-size: 18px;
+						line-height: 20px;
+						margin-bottom: 4px;
+					}
+
+					.objective-stat {
+						font-size: 16px;
+						line-height: 18px;
+					}
+				}
+			}
+		}
+
+	};
+}

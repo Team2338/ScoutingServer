@@ -1,5 +1,5 @@
-import { Divider, List, ListItem } from '@material-ui/core';
 import React from 'react';
+import { Divider, List, ListItem } from '@material-ui/core';
 import { Team } from '../../../models/response.model';
 
 interface IProps {

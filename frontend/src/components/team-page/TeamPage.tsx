@@ -1,4 +1,4 @@
-import './AnalyzePage.scss';
+import './TeamPage.scss';
 import React from 'react';
 import { connect } from 'react-redux';
 import { MatchResponse, Team } from '../../models/response.model';
@@ -22,7 +22,7 @@ const outputs = (dispatch) => ({
 	selectTeam: (team: Team) => dispatch(selectTeam(team))
 });
 
-class ConnectedAnalyzePage extends React.Component<any, any> {
+class ConnectedTeamPage extends React.Component<any, any> {
 
 	constructor(props) {
 		super(props);
@@ -44,11 +44,11 @@ class ConnectedAnalyzePage extends React.Component<any, any> {
 
 	render() {
 		if (!this.props.areTeamsLoaded) {
-			return <div className="analyze-page">Loading...</div>;
+			return <div className="team-page">Loading...</div>;
 		}
 
 		return (
-			<div className="page analyze-page">
+			<div className="page team-page">
 				<div className="team-list-wrapper">
 					<TeamList
 						teams={this.props.teams}
@@ -60,8 +60,7 @@ class ConnectedAnalyzePage extends React.Component<any, any> {
 			</div>
 		);
 	}
-
 }
 
-const AnalyzePage = connect(inputs, outputs)(ConnectedAnalyzePage);
-export default AnalyzePage;
+const TeamPage = connect(inputs, outputs)(ConnectedTeamPage);
+export default TeamPage;

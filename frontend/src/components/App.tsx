@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../models/states.model';
 import { initApp } from '../state/Effects';
-import AnalyzePage from './analyze-page/AnalyzePage';
+import StatPage from './stat-page/StatPage';
+import TeamPage from './team-page/TeamPage';
 import Header from './header/Header';
 import LoginPage from './login-page/LoginPage';
 import ManagePage from './manage-page/ManagePage';
@@ -35,15 +36,18 @@ class ConnectedApp extends React.Component<any, any> {
 			);
 		}
 
-		const managePage = <ManagePage />
+		const managePage = <ManagePage />;
+		const teamPage = <TeamPage />;
+		const statPage = <StatPage />;
 
 		return (
 			<React.Fragment>
 				<Header />
 				<Routes>
 					<Route path="/" element={managePage} />
-					<Route path="/manage" element={managePage} />
-					<Route path="/analyze" element={<AnalyzePage />} />
+					<Route path="/matches" element={managePage} />
+					<Route path="/teams" element={teamPage} />
+					<Route path="/stats" element={statPage} />
 				</Routes>
 			</React.Fragment>
 		);

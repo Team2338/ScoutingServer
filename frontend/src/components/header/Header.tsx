@@ -109,13 +109,18 @@ function ConnectedHeader(props) {
 
 	const routes: IRoute[] = [
 		{
-			path: '/manage',
-			name: 'Manage',
+			path: '/matches',
+			name: 'Matches',
 			icon: 'storage'
 		},
 		{
-			path: '/analyze',
-			name: 'Analyze',
+			path: '/teams',
+			name: 'Teams',
+			icon: 'assessment'
+		},
+		{
+			path: '/stats',
+			name: 'Stats',
 			icon: 'assessment'
 		}
 	];

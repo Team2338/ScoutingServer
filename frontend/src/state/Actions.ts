@@ -1,4 +1,4 @@
-import { Match, Team } from '../models/response.model';
+import { GlobalObjectiveStats, Match, Team } from '../models/response.model';
 
 export interface Action {
 	type: Actions;
@@ -14,7 +14,9 @@ export enum Actions {
 	REPLACE_MATCH = '[MATCH] Replace match',
 	CALCULATE_TEAM_STATS_START = '[TEAM] Started calculating team stats',
 	CALCULATE_TEAM_STATS_SUCCESS = '[TEAM] Successfully calculated team stats',
-	SELECT_TEAM = '[TEAM] Select team'
+	SELECT_TEAM = '[TEAM] Select team',
+	CALCULATE_GLOBAL_STATS_START = '[STATS] Started calculating global stats',
+	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats'
 }
 
 export const loginSuccess = (
@@ -57,7 +59,7 @@ export const replaceMatch = (oldId: number, match: Match): Action => ({
 });
 
 export const calculateTeamStatsStart = () => ({
-	type: Actions.CALCULATE_TEAM_STATS_START,
+	type: Actions.CALCULATE_TEAM_STATS_START
 });
 
 export const calculateTeamStatsSuccess = (teams: Team[]) => ({
@@ -68,4 +70,13 @@ export const calculateTeamStatsSuccess = (teams: Team[]) => ({
 export const selectTeam = (team: Team): Action => ({
 	type: Actions.SELECT_TEAM,
 	payload: team
+});
+
+export const calculateGlobalStatsStart = () => ({
+	type: Actions.CALCULATE_TEAM_STATS_START
+});
+
+export const calculateGlobalStatsSuccess = (stats: GlobalObjectiveStats[]) => ({
+	type: Actions.CALCULATE_GLOBAL_STATS_SUCCESS,
+	payload: stats
 });

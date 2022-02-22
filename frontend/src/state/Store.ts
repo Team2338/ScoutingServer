@@ -20,6 +20,10 @@ const INITIAL_STATE: AppState = {
 		isLoaded: false,
 		data: [],
 		selectedTeam: null
+	},
+	stats: {
+		isLoaded: false,
+		data: []
 	}
 };
 
@@ -95,6 +99,23 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				teams: {
 					...state.teams,
 					selectedTeam: action.payload
+				}
+			};
+		case Actions.CALCULATE_GLOBAL_STATS_START:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					isLoaded: false
+				}
+			};
+		case Actions.CALCULATE_GLOBAL_STATS_SUCCESS:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					isLoaded: true,
+					data: action.payload
 				}
 			};
 		default:

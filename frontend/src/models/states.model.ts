@@ -1,4 +1,4 @@
-import { Match, MatchResponse, Team } from './response.model';
+import { GlobalObjectiveStats, Match, MatchResponse, Team } from './response.model';
 
 export interface AppState {
 	isLoggedIn: boolean;
@@ -15,5 +15,9 @@ export interface AppState {
 		isLoaded: boolean;
 		data: Team[];
 		selectedTeam: Team;
-	}
+	};
+	stats: {
+		isLoaded: boolean;
+		data: GlobalObjectiveStats[];
+	};
 }

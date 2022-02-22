@@ -43,6 +43,8 @@ class ConnectedTeamPage extends React.Component<any, any> {
 	}
 
 	render() {
+		console.log(this.props.areTeamsLoaded);
+
 		if (!this.props.areTeamsLoaded) {
 			return <div className="team-page">Loading...</div>;
 		}

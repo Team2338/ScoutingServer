@@ -1,4 +1,4 @@
-import { GlobalObjectiveStats, Match, Team } from '../models/response.model';
+import { GlobalObjectiveStats, Match, MatchResponse, Team } from '../models/response.model';
 
 export interface Action {
 	type: Actions;
@@ -40,9 +40,12 @@ export const getMatchesStart = (): Action => ({
 	type: Actions.GET_MATCHES_START
 });
 
-export const getMatchesSuccess = (matches: Match[]): Action => ({
+export const getMatchesSuccess = (matches: Match[], raw: MatchResponse[]): Action => ({
 	type: Actions.GET_MATCHES_SUCCESS,
-	payload: matches
+	payload: {
+		matchModels: matches,
+		raw: raw
+	}
 });
 
 export const selectMatch = (match: Match): Action => ({
@@ -73,7 +76,7 @@ export const selectTeam = (team: Team): Action => ({
 });
 
 export const calculateGlobalStatsStart = () => ({
-	type: Actions.CALCULATE_TEAM_STATS_START
+	type: Actions.CALCULATE_GLOBAL_STATS_START
 });
 
 export const calculateGlobalStatsSuccess = (stats: GlobalObjectiveStats[]) => ({

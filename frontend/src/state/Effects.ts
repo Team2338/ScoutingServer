@@ -60,7 +60,7 @@ export const getMatches = () => async (dispatch, getState: GetState) => {
 			return matchModelService.convertMatchResponseToModel(matchResponse);
 		});
 
-		dispatch(getMatchesSuccess(matches));
+		dispatch(getMatchesSuccess(matches, matchResponses));
 		dispatch(getTeams(matchResponses));
 	} catch (error) {
 		console.error('Error getting matches', error);
@@ -68,6 +68,7 @@ export const getMatches = () => async (dispatch, getState: GetState) => {
 };
 
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
+	console.log('Hiding match');
 	try {
 		const response = await gearscoutService.hideMatch(getState().teamNumber, match.id, getState().secretCode);
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
@@ -79,6 +80,7 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 };
 
 export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
+	console.log('Unhiding match');
 	try {
 		const response = await gearscoutService.unhideMatch(getState().teamNumber, match.id, getState().secretCode);
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);

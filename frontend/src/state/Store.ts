@@ -52,7 +52,8 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				...state,
 				matches: {
 					isLoaded: true,
-					data: action.payload
+					data: action.payload.matchModels,
+					raw: action.payload.raw
 				}
 			};
 		case Actions.SELECT_MATCH:

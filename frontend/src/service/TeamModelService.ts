@@ -1,13 +1,15 @@
 import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models/response.model';
+import { getMean, getMedian, getMode } from './Stats';
 
 class TeamModelService {
 
 	createTeam = (matches: MatchResponse[]): Team => {
+		const teamNumber = matches[0].robotNumber;
 		const reducedMatches = this.mergeDuplicateMatches(matches); // Merge duplicates
-		const stats = this.getStats(reducedMatches);
+		const stats = this.getStats(teamNumber, reducedMatches);
 
 		return {
-			id: matches[0].robotNumber,
+			id: teamNumber,
 			stats: stats
 		}
 	};
@@ -92,7 +94,7 @@ class TeamModelService {
 		};
 	};
 
-	private getStats = (matches: MatchResponse[]): ObjectiveStats => {
+	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
 		const scores = new Map<string, any>();
 
 		// Collect a list of counts for each objective
@@ -121,62 +123,17 @@ class TeamModelService {
 
 			stats.get(objective.gamemode)
 				.set(objective.objective, {
+					teamNumber: teamNumber,
 					scores: objective.scores,
-					mean: this.getMean(objective.scores),
-					median: this.getMedian(objective.scores),
-					mode: this.getMode(objective.scores),
+					mean: getMean(objective.scores),
+					median: getMedian(objective.scores),
+					mode: getMode(objective.scores),
 					variance: 0
 				});
 		});
 
 		return stats;
 	}
-
-	private getMean = (scores: number[]): number => {
-		const sum = scores.reduce((accumulator: number, current: number) => accumulator + current, 0);
-		return sum / scores.length;
-	};
-
-	private getMedian = (scores: number[]): number => {
-		if (scores.length < 2) {
-			return scores[0];
-		}
-
-		const sorted = scores.slice().sort((a: number, b: number) => a - b);
-		const middleIndex = Math.floor(sorted.length / 2);
-
-		// If there's an even number of elements, take average of both middle elements
-		if (sorted.length % 2 === 0) {
-			return (sorted[middleIndex] + sorted[middleIndex - 1]) / 2
-		}
-
-		// Else return middle element
-		return sorted[middleIndex];
-	};
-
-	private getMode = (scores: number[]): number => {
-
-		// Create list of frequencies
-		const frequencies = new Map<number, number>();
-		for (const score of scores) {
-			if (!frequencies.has(score)) {
-				frequencies.set(score, 0);
-			}
-
-			const nextFrequency = frequencies.get(score) + 1;
-			frequencies.set(score, nextFrequency);
-		}
-
-		// Select score of highest frequency
-		let mode = scores[0];
-		frequencies.forEach((frequency: number, score: number) => {
-			if (frequency > frequencies.get(mode)) {
-				mode = score;
-			}
-		});
-
-		return mode;
-	};
 
 }
 

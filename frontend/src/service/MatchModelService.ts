@@ -1,6 +1,5 @@
 import { Match, MatchResponse, Objective } from '../models/response.model';
 
-
 class MatchModelService {
 
 	convertMatchResponseToModel = (match: MatchResponse): Match => {

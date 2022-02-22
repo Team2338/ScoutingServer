@@ -38,6 +38,7 @@ export interface Team {
 }
 
 export interface TeamObjectiveStats {
+	teamNumber: number;
 	scores: number[];
 	mean: number;
 	variance: number;
@@ -48,7 +49,10 @@ export interface TeamObjectiveStats {
 export interface GlobalObjectiveStats {
 	name: string;
 	gamemode: string;
-	scores: Map<number, number>; // teamNumber -> avg count for that team
+	scores: {
+		teamNumber: number;
+		mean: number;
+	}[];
 	stats: {
 		mean: number;
 		median: number;

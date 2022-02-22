@@ -61,7 +61,7 @@ export const getMatches = () => async (dispatch, getState: GetState) => {
 		});
 
 		dispatch(getMatchesSuccess(matches, matchResponses));
-		dispatch(getTeams(matchResponses));
+		dispatch(getTeams());
 	} catch (error) {
 		console.error('Error getting matches', error);
 	}
@@ -91,11 +91,12 @@ export const unhideMatch = (match: Match) => async (dispatch, getState: GetState
 	}
 };
 
-export const getTeams = (matches: MatchResponse[]) => async (dispatch) => {
+export const getTeams = () => async (dispatch, getState: GetState) => {
 	console.log('Computing team statistics');
 	dispatch(calculateTeamStatsStart());
 
 	// Group matches by robot number
+	const matches = getState().matches.raw;
 	const groupedMatches = new Map<number, MatchResponse[]>();
 	for (const match of matches) {
 		if (!groupedMatches.has(match.robotNumber)) {
@@ -115,13 +116,14 @@ export const getTeams = (matches: MatchResponse[]) => async (dispatch) => {
 	teams.sort((a: Team, b: Team) => a.id - b.id);
 
 	dispatch(calculateTeamStatsSuccess(teams));
-	dispatch(getGlobalStats(teams));
+	dispatch(getGlobalStats());
 };
 
-export const getGlobalStats = (teams: Team[]) => async (dispatch) => {
+export const getGlobalStats = () => async (dispatch, getState: GetState) => {
 	console.log('Computing global statistics');
 	dispatch(calculateGlobalStatsStart());
 
+	const teams = getState().teams.data;
 	const globalStats = StatModelService.calculateGlobalStats(teams);
 	dispatch(calculateGlobalStatsSuccess(globalStats));
 };

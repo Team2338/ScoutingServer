@@ -1,7 +1,7 @@
 import './TeamPage.scss';
 import React from 'react';
 import { connect } from 'react-redux';
-import { MatchResponse, Team } from '../../models/response.model';
+import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
 import { selectTeam } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
@@ -18,17 +18,11 @@ const inputs = (state: AppState) => ({
 
 const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
-	getTeamStats: (matches: MatchResponse[]) => dispatch(getTeams(matches)),
+	getTeamStats: () => dispatch(getTeams()),
 	selectTeam: (team: Team) => dispatch(selectTeam(team))
 });
 
 class ConnectedTeamPage extends React.Component<any, any> {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {};
-	}
 
 	componentDidMount() {
 		if (!this.props.areMatchesLoaded) {
@@ -38,7 +32,7 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		}
 
 		if (!this.props.areTeamsLoaded) {
-			this.props.getTeamStats(this.props.rawMatches);
+			this.props.getTeamStats();
 		}
 	}
 

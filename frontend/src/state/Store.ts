@@ -66,6 +66,11 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				}
 			};
 		case Actions.REPLACE_MATCH:
+			// If we're modifying data for the currently selected team, deselect it so that we don't
+			// see old data when we revisit the Teams page.
+			const selectedTeam = (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
+				? null
+				: state.teams.selectedTeam;
 			return {
 				...state,
 				matches: {
@@ -76,7 +81,13 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				},
 				teams: {
 					...state.teams,
-					isLoaded: false // Mark data as dirty, since we modified it
+					isLoaded: false, // Mark data as dirty, since we modified it
+					selectedTeam: selectedTeam
+				},
+				stats: {
+					...state.stats,
+					isLoaded: false, // Mark as dirty, since we modified it
+					selectedStat: null // Guaranteed to have modified the data we were previously viewing, so hide it
 				}
 			};
 		case Actions.CALCULATE_TEAM_STATS_START:

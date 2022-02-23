@@ -1,9 +1,11 @@
 import './StatPage.scss';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
 import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
+import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 
 const inputs = (state: AppState) => ({
@@ -45,6 +47,18 @@ class ConnectedStatPage extends React.Component<any, any> {
 			return <div className="stat-page">Loading...</div>;
 		}
 
+		let content = <div>Select a statistic to view in-depth analysis</div>;
+		if (this.props.selectedStat) {
+			const teamStats = this.props.teamData.map((team: Team) => (
+				team.stats
+					.get(this.props.selectedStat.gamemode)
+					.get(this.props.selectedStat.objective)
+			));
+
+			const graphName = `[${this.props.selectedStat.gamemode}] ${this.props.selectedStat.objective}`;
+			content = <StatGraph name={graphName} data={teamStats} metric="mean"/>;
+		}
+
 		return (
 			<div className="page stat-page">
 				<div className="stat-list-wrapper">
@@ -54,7 +68,7 @@ class ConnectedStatPage extends React.Component<any, any> {
 						selectStat={this.props.selectStat}
 					/>
 				</div>
-				Stat page!
+				{ content }
 			</div>
 		);
 	}

@@ -16,7 +16,8 @@ export enum Actions {
 	CALCULATE_TEAM_STATS_SUCCESS = '[TEAM] Successfully calculated team stats',
 	SELECT_TEAM = '[TEAM] Select team',
 	CALCULATE_GLOBAL_STATS_START = '[STATS] Started calculating global stats',
-	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats'
+	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats',
+	SELECT_STAT = '[STATS] Select stat'
 }
 
 export const loginSuccess = (
@@ -82,4 +83,12 @@ export const calculateGlobalStatsStart = () => ({
 export const calculateGlobalStatsSuccess = (stats: GlobalObjectiveStats[]) => ({
 	type: Actions.CALCULATE_GLOBAL_STATS_SUCCESS,
 	payload: stats
+});
+
+export const selectStat = (gamemode: string, objective: string) => ({
+	type: Actions.SELECT_STAT,
+	payload: {
+		gamemode: gamemode,
+		objective: objective
+	}
 });

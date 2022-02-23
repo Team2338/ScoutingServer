@@ -3,10 +3,15 @@ import { Divider, List, ListItem } from '@material-ui/core';
 import { GlobalObjectiveStats } from '../../../models/response.model';
 
 interface IProps {
-	stats: GlobalObjectiveStats[]
+	stats: GlobalObjectiveStats[];
+	selectedStat: {
+		gamemode: string;
+		objective: string;
+	};
+	selectStat: (gamemode: string, objective: string) => void
 }
 
-export default function StatList({ stats }: IProps) {
+export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 
 	const listItems = stats.map((stat: GlobalObjectiveStats, index: number) => {
 		const key = stat.gamemode + stat.name;
@@ -14,6 +19,8 @@ export default function StatList({ stats }: IProps) {
 			<ListItem
 				button
 				key={key}
+				selected={stat.gamemode === selectedStat.gamemode && stat.name === selectedStat.objective}
+				onClick={() => selectStat(stat.gamemode, stat.name)}
 			>
 				<div className="stat-list-item">
 					<div>{ stat.gamemode }</div>

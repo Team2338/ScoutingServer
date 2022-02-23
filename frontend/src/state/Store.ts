@@ -23,7 +23,8 @@ const INITIAL_STATE: AppState = {
 	},
 	stats: {
 		isLoaded: false,
-		data: []
+		data: [],
+		selectedStat: null
 	}
 };
 
@@ -117,6 +118,17 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 					...state.stats,
 					isLoaded: true,
 					data: action.payload
+				}
+			};
+		case Actions.SELECT_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					selectedStat: {
+						gamemode: action.payload.gamemode,
+						objective: action.payload.objective
+					}
 				}
 			};
 		default:

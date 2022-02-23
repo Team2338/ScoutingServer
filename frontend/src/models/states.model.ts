@@ -19,5 +19,9 @@ export interface AppState {
 	stats: {
 		isLoaded: boolean;
 		data: GlobalObjectiveStats[];
+		selectedStat: {
+			gamemode: string;
+			objective: string;
+		}
 	};
 }

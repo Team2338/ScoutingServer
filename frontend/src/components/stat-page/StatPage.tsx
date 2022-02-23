@@ -2,6 +2,7 @@ import './StatPage.scss';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../models/states.model';
+import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
 import StatList from './stat-list/StatList';
 
@@ -9,13 +10,16 @@ const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,
 	areTeamsLoaded: state.teams.isLoaded,
 	areStatsLoaded: state.stats.isLoaded,
-	stats: state.stats.data
+	teamData: state.teams.data,
+	stats: state.stats.data,
+	selectedStat: state.stats.selectedStat
 });
 
 const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
 	getTeamStats: () => dispatch(getTeams()),
-	getGlobalStats: () => dispatch(getGlobalStats())
+	getGlobalStats: () => dispatch(getGlobalStats()),
+	selectStat: (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective))
 });
 
 class ConnectedStatPage extends React.Component<any, any> {
@@ -44,7 +48,10 @@ class ConnectedStatPage extends React.Component<any, any> {
 		return (
 			<div className="page stat-page">
 				<div className="stat-list-wrapper">
-					<StatList stats={this.props.stats} />
+					<StatList
+						stats={this.props.stats}
+						selectStat={this.props.selectStat}
+					/>
 				</div>
 				Stat page!
 			</div>

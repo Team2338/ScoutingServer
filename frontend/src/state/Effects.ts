@@ -96,7 +96,7 @@ export const getTeams = () => async (dispatch, getState: GetState) => {
 	dispatch(calculateTeamStatsStart());
 
 	// Group matches by robot number
-	const matches = getState().matches.raw;
+	const matches = getState().matches.raw.filter((match: MatchResponse) => !match.isHidden); // Filter out hidden matches
 	const groupedMatches = new Map<number, MatchResponse[]>();
 	for (const match of matches) {
 		if (!groupedMatches.has(match.robotNumber)) {

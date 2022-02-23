@@ -71,9 +71,10 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 	console.log('Hiding match');
 	try {
 		const response = await gearscoutService.hideMatch(getState().teamNumber, match.id, getState().secretCode);
-		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
+		const rawMatch: MatchResponse = response.data;
+		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
-		dispatch(replaceMatch(match.id, updatedMatch));
+		dispatch(replaceMatch(match.id, updatedMatch, rawMatch));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
@@ -83,9 +84,10 @@ export const unhideMatch = (match: Match) => async (dispatch, getState: GetState
 	console.log('Unhiding match');
 	try {
 		const response = await gearscoutService.unhideMatch(getState().teamNumber, match.id, getState().secretCode);
-		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(response.data);
+		const rawMatch = response.data;
+		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
-		dispatch(replaceMatch(match.id, updatedMatch));
+		dispatch(replaceMatch(match.id, updatedMatch, rawMatch));
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}

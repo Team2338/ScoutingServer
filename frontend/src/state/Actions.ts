@@ -54,11 +54,12 @@ export const selectMatch = (match: Match): Action => ({
 	payload: match
 });
 
-export const replaceMatch = (oldId: number, match: Match): Action => ({
+export const replaceMatch = (oldId: number, match: Match, rawMatch: MatchResponse): Action => ({
 	type: Actions.REPLACE_MATCH,
 	payload: {
 		oldId: oldId,
-		match: match
+		match: match,
+		rawMatch: rawMatch
 	}
 });
 

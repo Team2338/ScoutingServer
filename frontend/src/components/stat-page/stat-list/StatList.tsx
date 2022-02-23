@@ -15,11 +15,15 @@ export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 
 	const listItems = stats.map((stat: GlobalObjectiveStats, index: number) => {
 		const key = stat.gamemode + stat.name;
+		const isSelected = selectedStat
+			&& selectedStat.gamemode === stat.gamemode
+			&& selectedStat.objective === stat.name;
+
 		const listItem = (
 			<ListItem
 				button
 				key={key}
-				selected={stat.gamemode === selectedStat.gamemode && stat.name === selectedStat.objective}
+				selected={isSelected}
 				onClick={() => selectStat(stat.gamemode, stat.name)}
 			>
 				<div className="stat-list-item">

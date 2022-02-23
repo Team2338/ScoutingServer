@@ -50,6 +50,7 @@ class ConnectedStatPage extends React.Component<any, any> {
 				<div className="stat-list-wrapper">
 					<StatList
 						stats={this.props.stats}
+						selectedStat={this.props.selectedStat}
 						selectStat={this.props.selectStat}
 					/>
 				</div>

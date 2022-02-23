@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { Match } from '../models/response.model';
+import { Match, MatchResponse } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import { Action, Actions } from './Actions';
 
@@ -71,6 +71,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				matches: {
 					...state.matches,
 					data: replaceMatch(state.matches.data, action.payload.oldId, action.payload.match),
+					raw: replaceRawMatch(state.matches.raw, action.payload.oldId, action.payload.rawMatch),
 					selectedMatch: action.payload.match
 				},
 				teams: {
@@ -140,6 +141,14 @@ export const store = createStore(reducer, applyMiddleware(thunk));
 
 function replaceMatch(matches: Match[], oldId: number, match: Match) {
 	const targetIndex = matches.findIndex((match: Match) => match.id === oldId);
+	const result = matches.slice();
+	result[targetIndex] = match;
+
+	return result;
+}
+
+function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchResponse) {
+	const targetIndex = matches.findIndex((match: MatchResponse) => match.id === oldId);
 	const result = matches.slice();
 	result[targetIndex] = match;
 

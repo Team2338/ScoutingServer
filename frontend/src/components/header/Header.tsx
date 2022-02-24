@@ -17,7 +17,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { AppState } from '../../models/states.model';
-import { translate } from '../../service/TranslateService';
+import { translate, useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
 
 
@@ -84,7 +84,7 @@ function ConnectedHeader(props) {
 			startIcon={<Icon>download</Icon>}
 			download
 		>
-			Data
+			{ props.translate('DATA') }
 		</Button>
 	);
 
@@ -109,24 +109,24 @@ function ConnectedHeader(props) {
 			onClose={handleAccountMenuClose}
 			keepMounted
 		>
-			<MenuItem onClick={handleLogout}>Logout</MenuItem>
+			<MenuItem onClick={handleLogout}>{ props.translate('LOGOUT') }</MenuItem>
 		</Menu>
 	);
 
 	const routes: IRoute[] = [
 		{
 			path: '/matches',
-			name: 'Matches',
+			name: 'MATCHES',
 			icon: 'list'
 		},
 		{
 			path: '/teams',
-			name: 'Teams',
+			name: 'TEAMS',
 			icon: 'groups'
 		},
 		{
 			path: '/stats',
-			name: 'Stats',
+			name: 'STATS',
 			icon: 'leaderboard'
 		}
 	];
@@ -142,7 +142,7 @@ function ConnectedHeader(props) {
 			<ListItemIcon>
 				<Icon>{ route.icon }</Icon>
 			</ListItemIcon>
-			<ListItemText primary={route.name}/>
+			<ListItemText primary={ props.translate(route.name) }/>
 		</ListItem>
 	));
 
@@ -160,7 +160,7 @@ function ConnectedHeader(props) {
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
-						<ListItemText primary="Logout"/>
+						<ListItemText primary={ props.translate('LOGOUT') }/>
 					</ListItem>
 				</List>
 			</div>
@@ -193,11 +193,12 @@ function ConnectedHeader(props) {
 }
 
 const Header = connect(inputs, outputs)(ConnectedHeader);
-export default Header;
+export default translate(Header);
 
 function LanguageSelector({ lang, onLanguageChange }) {
 
 	const [languageAnchor, setLanguageAnchor] = React.useState(null);
+	const translate = useTranslator();
 
 	const handleLanguageMenuClick = (event) => {
 		setLanguageAnchor(event.currentTarget);
@@ -225,7 +226,7 @@ function LanguageSelector({ lang, onLanguageChange }) {
 				aria-controls="language-menu"
 				aria-haspopup="true"
 			>
-				Language
+				{ translate('LANGUAGE') }
 			</Button>
 			<Menu
 				id="language-menu"

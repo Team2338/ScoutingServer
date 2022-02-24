@@ -1,6 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { AppState } from '../models/states.model';
+
+const translateKey = (language: string, key: string) => {
+	const mapping = languages[language];
+
+	if (mapping.hasOwnProperty(key)) {
+		return mapping[key];
+	}
+
+	return key;
+};
 
 export const translate = (Component) => {
 	const inputs = (state: AppState) => ({
@@ -8,16 +18,8 @@ export const translate = (Component) => {
 	});
 
 	class AddTranslator extends React.Component<any, any> {
-		constructor(props) {
-			super(props);
-		}
-
-		componentDidMount() {
-			console.log('using translator')
-		}
-
 		translate = (key: string) => {
-			return languages[this.props.lang][key];
+			return translateKey(this.props.lang, key);
 		}
 
 		render() {
@@ -28,27 +30,42 @@ export const translate = (Component) => {
 	return connect(inputs, null)(AddTranslator);
 };
 
+export const useTranslator = () => {
+	const language = useSelector((state: AppState) => state.language);
+
+	return (key: string) => translateKey(language, key);
+};
+
 const languages = {
 	english: {
-		'HELLO_WORLD': 'Hello world',
 		'MATCH': 'Match',
+		'MATCHES': 'Matches',
 		'TEAM': 'Team',
+		'TEAMS': 'Teams',
+		'STATS': 'Stats',
 		'DATA': 'Data',
 		'LANGUAGE': 'Language',
+		'LOGOUT': 'Logout',
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details'
 	},
 	spanish: {
-		'HELLO_WORLD': 'Hola mundo',
 		'MATCH': 'Partido',
+		'MATCHES': 'Partidos',
 		'TEAM': 'Equipo',
+		'TEAMS': 'Equipos',
+		'STATS': 'Estadísticas',
 		'DATA': 'Datos',
 		'LANGUAGE': 'Lengua',
-		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Translation works'
+		'LOGOUT': 'Cerrar sesión',
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Seleccione un partido para ver más detalles'
 	},
 	french: {
-		'HELLO_WORLD': 'Bonjour le monde',
 		'MATCH': 'Match',
 		'TEAM': 'Équipe',
-		'DATA': 'Les données'
+		'STATS': 'Statistiques',
+		'DATA': 'Les données',
+		'LANGUAGE': 'Langue',
+		'LOGOUT': 'Se déconnecter',
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Sélectionnez une correspondance pour afficher plus de détails'
 	}
-}
+};

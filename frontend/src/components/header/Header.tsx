@@ -1,6 +1,6 @@
 import './Header.scss';
 import {
-	AppBar,
+	AppBar, Button,
 	Drawer,
 	Icon,
 	IconButton,
@@ -61,21 +61,43 @@ function ConnectedHeader(props) {
 		props.logout();
 	}
 
+	const languageButton = (
+		<Button
+			className="language-button"
+			color="primary"
+			variant="contained"
+			disableElevation={true}
+			aria-label="Change language"
+			startIcon={<Icon>language</Icon>}
+		>
+			Language
+		</Button>
+	);
 
 	if (!props.isLoggedIn) {
 		return (
 			<AppBar id="appBar" position="sticky" color="primary">
 				<Toolbar>
 					{ title }
+					{ languageButton }
 				</Toolbar>
 			</AppBar>
 		)
 	}
 
 	const downloadButton = (
-		<a className="download-button" href={downloadLink} download>
-			Download Data
-		</a>
+		<Button
+			className="download-button"
+			color="primary"
+			disableElevation={true}
+			variant="contained"
+			aria-label="Download data"
+			href={downloadLink}
+			startIcon={<Icon>download</Icon>}
+			download
+		>
+			Data
+		</Button>
 	);
 
 	const accountButton = (
@@ -175,6 +197,7 @@ function ConnectedHeader(props) {
 						<Icon>menu</Icon>
 					</IconButton>
 					{ title }
+					{ languageButton }
 					{ downloadButton }
 					{ accountButton }
 					{ accountMenu }

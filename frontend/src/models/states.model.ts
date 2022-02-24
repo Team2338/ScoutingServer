@@ -1,6 +1,7 @@
 import { GlobalObjectiveStats, Match, MatchResponse, Team } from './response.model';
 
 export interface AppState {
+	language: string;
 	isLoggedIn: boolean;
 	teamNumber: number;
 	eventCode: string;

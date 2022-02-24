@@ -6,6 +6,7 @@ export interface Action {
 }
 
 export enum Actions {
+	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
 	LOGIN = '[AUTH] Login',
 	LOGOUT = '[AUTH] Logout',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
@@ -19,6 +20,11 @@ export enum Actions {
 	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats',
 	SELECT_STAT = '[STATS] Select stat'
 }
+
+export const selectLangSuccess = (language: string) => ({
+	type: Actions.SELECT_LANG_SUCCESS,
+	payload: language
+});
 
 export const loginSuccess = (
 	teamNumber: number,

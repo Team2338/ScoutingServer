@@ -17,8 +17,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { AppState } from '../../models/states.model';
-import TranslateService from '../../service/TranslateService';
-import { logout } from '../../state/Effects';
+import { translate } from '../../service/TranslateService';
+import { logout, selectLanguage } from '../../state/Effects';
 
 
 interface IRoute {
@@ -34,7 +34,8 @@ const inputs = (state: AppState) => ({
 });
 
 const outputs = (dispatch) => ({
-	logout: () => dispatch(logout())
+	logout: () => dispatch(logout()),
+	selectLanguage: (language: string) => dispatch(selectLanguage(language))
 });
 
 function ConnectedHeader(props) {
@@ -66,7 +67,7 @@ function ConnectedHeader(props) {
 			<AppBar id="appBar" position="sticky" color="primary">
 				<Toolbar>
 					{ title }
-					<LanguageSelector lang={TranslateService.getSelectedLanguage()} />
+					<LanguageSelector lang={props.lang} onLanguageChange={props.selectLanguage} />
 				</Toolbar>
 			</AppBar>
 		);
@@ -180,7 +181,7 @@ function ConnectedHeader(props) {
 						<Icon>menu</Icon>
 					</IconButton>
 					{ title }
-					<LanguageSelector lang={props.lang} />
+					<LanguageSelector lang={props.lang} onLanguageChange={props.selectLanguage} />
 					{ downloadButton }
 					{ accountButton }
 					{ accountMenu }
@@ -194,7 +195,7 @@ function ConnectedHeader(props) {
 const Header = connect(inputs, outputs)(ConnectedHeader);
 export default Header;
 
-function LanguageSelector({ lang }) {
+function LanguageSelector({ lang, onLanguageChange }) {
 
 	const [languageAnchor, setLanguageAnchor] = React.useState(null);
 
@@ -207,7 +208,7 @@ function LanguageSelector({ lang }) {
 	}
 
 	const handleLanguageChange = (language: string) => {
-		TranslateService.setLanguage(language);
+		onLanguageChange(language);
 		handleLanguageMenuClose();
 	}
 
@@ -224,7 +225,7 @@ function LanguageSelector({ lang }) {
 				aria-controls="language-menu"
 				aria-haspopup="true"
 			>
-				{ TranslateService.translate('LANGUAGE') }
+				Language
 			</Button>
 			<Menu
 				id="language-menu"
@@ -253,5 +254,5 @@ function LanguageSelector({ lang }) {
 				</MenuItem>
 			</Menu>
 		</React.Fragment>
-	)
+	);
 }

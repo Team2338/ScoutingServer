@@ -4,7 +4,6 @@ import { Match, MatchResponse, Team } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import StatModelService from '../service/StatModelService';
 import TeamModelService from '../service/TeamModelService';
-import TranslateService from '../service/TranslateService';
 import {
 	calculateGlobalStatsStart, calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
@@ -13,7 +12,7 @@ import {
 	getMatchesSuccess,
 	loginSuccess,
 	logoutSuccess,
-	replaceMatch
+	replaceMatch, selectLangSuccess
 } from './Actions';
 
 type GetState = () => AppState;
@@ -28,9 +27,15 @@ export const initApp = () => async (dispatch) => {
 		dispatch(loginSuccess(Number(teamNumber), eventCode, secretCode));
 	}
 
-	const language: string = localStorage.getItem('language') ?? 'english';
+	const language: string = localStorage.getItem('language');
+	if (language) {
+		dispatch(selectLangSuccess(language));
+	}
+};
 
-	TranslateService.setLanguage(language);
+export const selectLanguage = (language: string) => async (dispatch) => {
+	localStorage.setItem('language', language);
+	dispatch(selectLangSuccess(language));
 };
 
 export const login = (

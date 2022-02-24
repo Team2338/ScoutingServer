@@ -6,6 +6,7 @@ import { Action, Actions } from './Actions';
 
 
 const INITIAL_STATE: AppState = {
+	language: 'spanish',
 	isLoggedIn: false,
 	teamNumber: null,
 	eventCode: null,
@@ -30,6 +31,11 @@ const INITIAL_STATE: AppState = {
 
 const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 	switch (action.type) {
+		case Actions.SELECT_LANG_SUCCESS:
+			return {
+				...state,
+				language: action.payload
+			};
 		case Actions.LOGIN:
 			return {
 				...state,

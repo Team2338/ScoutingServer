@@ -2,18 +2,19 @@ import './MatchDetail.scss';
 import { Icon, IconButton } from '@material-ui/core';
 import React from 'react';
 import { Match, Objective } from '../../../models/response.model';
-import TranslateService from '../../../service/TranslateService';
+import { translate } from '../../../service/TranslateService';
 
 interface IProps {
 	match: Match;
 	hide: (match: Match) => void;
 	unhide: (match: Match) => void;
+	translate: (key: string) => string;
 }
 
-export default function MatchDetail(props: IProps) {
+export default translate(function MatchDetail(props: IProps) {
 
 	if (!props.match) {
-		return <div>{TranslateService.translate('SELECT_MATCH_VIEW_MORE_DETAILS')}</div>;
+		return <div>{props.translate('SELECT_MATCH_VIEW_MORE_DETAILS')}</div>;
 	}
 
 	const gamemodeElements = []
@@ -58,7 +59,7 @@ export default function MatchDetail(props: IProps) {
 			</div>
 		</div>
 	);
-}
+})
 
 function Gamemode(props: { name: string, objectives: Objective[] }) {
 

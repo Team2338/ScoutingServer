@@ -28,7 +28,9 @@ export const initApp = () => async (dispatch) => {
 		dispatch(loginSuccess(Number(teamNumber), eventCode, secretCode));
 	}
 
-	await TranslateService.setLanguage('english');
+	const language: string = localStorage.getItem('language') ?? 'english';
+
+	TranslateService.setLanguage(language);
 };
 
 export const login = (

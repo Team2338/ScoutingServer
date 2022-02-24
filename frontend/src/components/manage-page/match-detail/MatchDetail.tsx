@@ -2,6 +2,7 @@ import './MatchDetail.scss';
 import { Icon, IconButton } from '@material-ui/core';
 import React from 'react';
 import { Match, Objective } from '../../../models/response.model';
+import TranslateService from '../../../service/TranslateService';
 
 interface IProps {
 	match: Match;
@@ -12,7 +13,7 @@ interface IProps {
 export default function MatchDetail(props: IProps) {
 
 	if (!props.match) {
-		return <div>Select a match to view more details</div>;
+		return <div>{TranslateService.translate('SELECT_MATCH_VIEW_MORE_DETAILS')}</div>;
 	}
 
 	const gamemodeElements = []

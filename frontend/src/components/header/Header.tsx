@@ -17,6 +17,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { AppState } from '../../models/states.model';
+import TranslateService from '../../service/TranslateService';
 import { logout } from '../../state/Effects';
 
 
@@ -29,7 +30,7 @@ interface IRoute {
 const inputs = (state: AppState) => ({
 	isLoggedIn: state.isLoggedIn,
 	teamNumber: state.teamNumber,
-	eventCode: state.eventCode
+	eventCode: state.eventCode,
 });
 
 const outputs = (dispatch) => ({
@@ -42,17 +43,16 @@ function ConnectedHeader(props) {
 	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/team/${props.teamNumber}/event/${props.eventCode}/download`;
 
 	const [isDrawerOpen, setDrawerOpen] = React.useState(false);
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const isAccountMenuOpen = Boolean(anchorEl);
+	const [accountAnchor, setAccountAnchor] = React.useState(null);
 
 	const toggleDrawer = (isOpen: boolean) => () => setDrawerOpen(isOpen);
 
 	const handleAccountMenuClick = (event) => {
-		setAnchorEl(event.currentTarget);
+		setAccountAnchor(event.currentTarget);
 	}
 
 	const handleAccountMenuClose = () => {
-		setAnchorEl(null);
+		setAccountAnchor(null);
 	}
 
 	const handleLogout = () => {
@@ -61,28 +61,15 @@ function ConnectedHeader(props) {
 		props.logout();
 	}
 
-	const languageButton = (
-		<Button
-			className="language-button"
-			color="primary"
-			variant="contained"
-			disableElevation={true}
-			aria-label="Change language"
-			startIcon={<Icon>language</Icon>}
-		>
-			Language
-		</Button>
-	);
-
 	if (!props.isLoggedIn) {
 		return (
 			<AppBar id="appBar" position="sticky" color="primary">
 				<Toolbar>
 					{ title }
-					{ languageButton }
+					<LanguageSelector lang={TranslateService.getSelectedLanguage()} />
 				</Toolbar>
 			</AppBar>
-		)
+		);
 	}
 
 	const downloadButton = (
@@ -116,12 +103,8 @@ function ConnectedHeader(props) {
 	const accountMenu = (
 		<Menu
 			id="account-menu"
-			anchorEl={anchorEl}
-			anchorOrigin={{
-				vertical: 'bottom',
-				horizontal: 'right'
-			}}
-			open={isAccountMenuOpen}
+			anchorEl={accountAnchor}
+			open={Boolean(accountAnchor)}
 			onClose={handleAccountMenuClose}
 			keepMounted
 		>
@@ -197,7 +180,7 @@ function ConnectedHeader(props) {
 						<Icon>menu</Icon>
 					</IconButton>
 					{ title }
-					{ languageButton }
+					<LanguageSelector lang={props.lang} />
 					{ downloadButton }
 					{ accountButton }
 					{ accountMenu }
@@ -210,3 +193,65 @@ function ConnectedHeader(props) {
 
 const Header = connect(inputs, outputs)(ConnectedHeader);
 export default Header;
+
+function LanguageSelector({ lang }) {
+
+	const [languageAnchor, setLanguageAnchor] = React.useState(null);
+
+	const handleLanguageMenuClick = (event) => {
+		setLanguageAnchor(event.currentTarget);
+	}
+
+	const handleLanguageMenuClose = () => {
+		setLanguageAnchor(null);
+	}
+
+	const handleLanguageChange = (language: string) => {
+		TranslateService.setLanguage(language);
+		handleLanguageMenuClose();
+	}
+
+	return (
+		<React.Fragment>
+			<Button
+				className="language-button"
+				color="primary"
+				variant="contained"
+				disableElevation={true}
+				startIcon={<Icon>language</Icon>}
+				onClick={handleLanguageMenuClick}
+				aria-label="Change language"
+				aria-controls="language-menu"
+				aria-haspopup="true"
+			>
+				{ TranslateService.translate('LANGUAGE') }
+			</Button>
+			<Menu
+				id="language-menu"
+				anchorEl={languageAnchor}
+				open={Boolean(languageAnchor)}
+				onClose={handleLanguageMenuClose}
+				keepMounted
+			>
+				<MenuItem
+					selected={lang === 'english'}
+					onClick={() => handleLanguageChange('english')}
+				>
+					English
+				</MenuItem>
+				<MenuItem
+					selected={lang === 'spanish'}
+					onClick={() => handleLanguageChange('spanish')}
+				>
+					Español
+				</MenuItem>
+				<MenuItem
+					selected={lang === 'french'}
+					onClick={() => handleLanguageChange('french')}
+				>
+					Français
+				</MenuItem>
+			</Menu>
+		</React.Fragment>
+	)
+}

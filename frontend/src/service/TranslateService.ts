@@ -3,7 +3,9 @@ class TranslateService {
 
 	private mapping = languages.english;
 
-	setLanguage = async (language: string): Promise<void> => {
+	getSelectedLanguage = () => 'english';
+
+	setLanguage = (language: string): void => {
 		this.mapping = languages[language];
 	}
 
@@ -13,7 +15,7 @@ class TranslateService {
 		}
 
 		return key;
-	}
+	};
 
 }
 
@@ -22,7 +24,23 @@ const languages = {
 		'HELLO_WORLD': 'Hello world',
 		'MATCH': 'Match',
 		'TEAM': 'Team',
-		'DOWNLOAD_DATA': 'Download Data'
+		'DATA': 'Data',
+		'LANGUAGE': 'Language',
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details'
+	},
+	spanish: {
+		'HELLO_WORLD': 'Hola mundo',
+		'MATCH': 'Partido',
+		'TEAM': 'Equipo',
+		'DATA': 'Datos',
+		'LANGUAGE': 'Lengua',
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Translation works'
+	},
+	french: {
+		'HELLO_WORLD': 'Bonjour le monde',
+		'MATCH': 'Match',
+		'TEAM': 'Équipe',
+		'DATA': 'Les données'
 	}
 }
 

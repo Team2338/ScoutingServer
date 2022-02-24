@@ -111,17 +111,17 @@ function ConnectedHeader(props) {
 		{
 			path: '/matches',
 			name: 'Matches',
-			icon: 'storage'
+			icon: 'list'
 		},
 		{
 			path: '/teams',
 			name: 'Teams',
-			icon: 'assessment'
+			icon: 'groups'
 		},
 		{
 			path: '/stats',
 			name: 'Stats',
-			icon: 'assessment'
+			icon: 'leaderboard'
 		}
 	];
 

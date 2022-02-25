@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
+import { ILanguageTranslation, Language } from '../models/languages.model';
 import { AppState } from '../models/states.model';
 
 const translateKey = (language: string, key: string) => {
@@ -36,8 +37,8 @@ export const useTranslator = () => {
 	return (key: string) => translateKey(language, key);
 };
 
-const languages = {
-	english: {
+const languages: ILanguageTranslation = {
+	[Language.ENGLISH]: {
 		'SIGN_IN': 'Sign In',
 		'YOUR_TEAM_NUMBER': 'Your team number',
 		'EVENT_CODE': 'Event code',
@@ -58,8 +59,11 @@ const languages = {
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Select a team to view more details",
 		"VALUE": "Value",
 		"SELECT_STAT_VIEW_MORE_DETAILS": "Select a statistic to view in-depth analysis",
+		"ACCOUNT": "Account",
+		"DOWNLOAD_DATA": "Download data",
+		"CHANGE_LANGUAGE": "Change language"
 	},
-	spanish: {
+	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
 		'YOUR_TEAM_NUMBER': 'Tu numero de equipo',
 		'EVENT_CODE': 'Código del evento',
@@ -80,8 +84,11 @@ const languages = {
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Seleccione un equipo para ver más detalles",
 		"VALUE": "Valor",
 		"SELECT_STAT_VIEW_MORE_DETAILS": "Seleccione una estadística para ver un análisis en profundidad",
+		"ACCOUNT": "TODO",
+		"DOWNLOAD_DATA": "TODO",
+		"CHANGE_LANGUAGE": "TODO"
 	},
-	french: {
+	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
 		'YOUR_TEAM_NUMBER': "Votre numéro d'équipe",
 		'EVENT_CODE': "Code de l'événement",
@@ -102,5 +109,8 @@ const languages = {
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Sélectionnez une équipe pour afficher plus de détails",
 		"VALUE": "Évaluer",
 		"SELECT_STAT_VIEW_MORE_DETAILS": "Sélectionnez une statistique pour afficher une analyse approfondie",
+		"ACCOUNT": "TODO",
+		"DOWNLOAD_DATA": "TODO",
+		"CHANGE_LANGUAGE": "TODO"
 	}
 };

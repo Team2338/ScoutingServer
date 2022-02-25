@@ -1,12 +1,13 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import { Language } from '../models/languages.model';
 import { Match, MatchResponse } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import { Action, Actions } from './Actions';
 
 
 const INITIAL_STATE: AppState = {
-	language: 'spanish',
+	language: Language.ENGLISH,
 	isLoggedIn: false,
 	teamNumber: null,
 	eventCode: null,

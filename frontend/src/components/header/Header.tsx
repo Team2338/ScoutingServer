@@ -1,24 +1,12 @@
-import './Header.scss';
-import {
-	AppBar, Button,
-	Drawer,
-	Icon,
-	IconButton,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-	Menu,
-	MenuItem,
-	Toolbar,
-	Typography
-} from '@material-ui/core';
+import { AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { Language } from '../../models/languages.model';
 import { AppState } from '../../models/states.model';
-import { translate, useTranslator } from '../../service/TranslateService';
+import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
+import './Header.scss';
 
 
 interface IRoute {
@@ -35,14 +23,12 @@ const inputs = (state: AppState) => ({
 
 const outputs = (dispatch) => ({
 	logout: () => dispatch(logout()),
-	selectLanguage: (language: string) => dispatch(selectLanguage(language))
+	selectLanguage: (language: Language) => dispatch(selectLanguage(language))
 });
 
 function ConnectedHeader(props) {
 
-	const title = <Typography variant="h5" color="inherit" noWrap>GearScout</Typography>;
-	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/team/${props.teamNumber}/event/${props.eventCode}/download`;
-
+	const translate = useTranslator();
 	const [isDrawerOpen, setDrawerOpen] = React.useState(false);
 	const [accountAnchor, setAccountAnchor] = React.useState(null);
 
@@ -62,6 +48,9 @@ function ConnectedHeader(props) {
 		props.logout();
 	}
 
+	const title = <Typography variant="h5" color="inherit" noWrap>GearScout</Typography>;
+	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/team/${props.teamNumber}/event/${props.eventCode}/download`;
+
 	if (!props.isLoggedIn) {
 		return (
 			<AppBar id="appBar" position="sticky" color="primary">
@@ -79,12 +68,12 @@ function ConnectedHeader(props) {
 			color="primary"
 			disableElevation={true}
 			variant="contained"
-			aria-label="Download data"
+			aria-label={ translate('DOWNLOAD_DATA') }
 			href={downloadLink}
 			startIcon={<Icon>download</Icon>}
 			download
 		>
-			{ props.translate('DATA') }
+			{ translate('DATA') }
 		</Button>
 	);
 
@@ -92,7 +81,7 @@ function ConnectedHeader(props) {
 		<IconButton
 			edge="end"
 			color="inherit"
-			aria-label="Account"
+			aria-label={ translate('ACCOUNT') }
 			aria-controls="account-menu"
 			aria-haspopup="true"
 			onClick={handleAccountMenuClick}
@@ -109,7 +98,7 @@ function ConnectedHeader(props) {
 			onClose={handleAccountMenuClose}
 			keepMounted
 		>
-			<MenuItem onClick={handleLogout}>{ props.translate('LOGOUT') }</MenuItem>
+			<MenuItem onClick={handleLogout}>{ translate('LOGOUT') }</MenuItem>
 		</Menu>
 	);
 
@@ -142,7 +131,7 @@ function ConnectedHeader(props) {
 			<ListItemIcon>
 				<Icon>{ route.icon }</Icon>
 			</ListItemIcon>
-			<ListItemText primary={ props.translate(route.name) }/>
+			<ListItemText primary={ translate(route.name) }/>
 		</ListItem>
 	));
 
@@ -160,7 +149,7 @@ function ConnectedHeader(props) {
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
-						<ListItemText primary={ props.translate('LOGOUT') }/>
+						<ListItemText primary={ translate('LOGOUT') }/>
 					</ListItem>
 				</List>
 			</div>
@@ -193,9 +182,9 @@ function ConnectedHeader(props) {
 }
 
 const Header = connect(inputs, outputs)(ConnectedHeader);
-export default translate(Header);
+export default Header;
 
-function LanguageSelector({ lang, onLanguageChange }) {
+function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLanguageChange: (lang: Language) => void }) {
 
 	const [languageAnchor, setLanguageAnchor] = React.useState(null);
 	const translate = useTranslator();
@@ -208,7 +197,7 @@ function LanguageSelector({ lang, onLanguageChange }) {
 		setLanguageAnchor(null);
 	}
 
-	const handleLanguageChange = (language: string) => {
+	const handleLanguageChange = (language: Language) => {
 		onLanguageChange(language);
 		handleLanguageMenuClose();
 	}
@@ -222,7 +211,7 @@ function LanguageSelector({ lang, onLanguageChange }) {
 				disableElevation={true}
 				startIcon={<Icon>language</Icon>}
 				onClick={handleLanguageMenuClick}
-				aria-label="Change language"
+				aria-label={ translate('CHANGE_LANGUAGE') }
 				aria-controls="language-menu"
 				aria-haspopup="true"
 			>
@@ -236,20 +225,20 @@ function LanguageSelector({ lang, onLanguageChange }) {
 				keepMounted
 			>
 				<MenuItem
-					selected={lang === 'english'}
-					onClick={() => handleLanguageChange('english')}
+					selected={lang === Language.ENGLISH}
+					onClick={() => handleLanguageChange(Language.ENGLISH)}
 				>
 					English
 				</MenuItem>
 				<MenuItem
-					selected={lang === 'spanish'}
-					onClick={() => handleLanguageChange('spanish')}
+					selected={lang === Language.SPANISH}
+					onClick={() => handleLanguageChange(Language.SPANISH)}
 				>
 					Español
 				</MenuItem>
 				<MenuItem
-					selected={lang === 'french'}
-					onClick={() => handleLanguageChange('french')}
+					selected={lang === Language.FRENCH}
+					onClick={() => handleLanguageChange(Language.FRENCH)}
 				>
 					Français
 				</MenuItem>

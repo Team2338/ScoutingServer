@@ -1,3 +1,4 @@
+import { Language } from '../models/languages.model';
 import { GlobalObjectiveStats, Match, MatchResponse, Team } from '../models/response.model';
 
 export interface Action {
@@ -21,7 +22,7 @@ export enum Actions {
 	SELECT_STAT = '[STATS] Select stat'
 }
 
-export const selectLangSuccess = (language: string) => ({
+export const selectLangSuccess = (language: Language) => ({
 	type: Actions.SELECT_LANG_SUCCESS,
 	payload: language
 });

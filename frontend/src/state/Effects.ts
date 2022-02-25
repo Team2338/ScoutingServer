@@ -1,3 +1,4 @@
+import { Language } from '../models/languages.model';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import { Match, MatchResponse, Team } from '../models/response.model';
@@ -5,14 +6,16 @@ import { AppState } from '../models/states.model';
 import StatModelService from '../service/StatModelService';
 import TeamModelService from '../service/TeamModelService';
 import {
-	calculateGlobalStatsStart, calculateGlobalStatsSuccess,
+	calculateGlobalStatsStart,
+	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
 	getMatchesStart,
 	getMatchesSuccess,
 	loginSuccess,
 	logoutSuccess,
-	replaceMatch, selectLangSuccess
+	replaceMatch,
+	selectLangSuccess
 } from './Actions';
 
 type GetState = () => AppState;
@@ -27,13 +30,13 @@ export const initApp = () => async (dispatch) => {
 		dispatch(loginSuccess(Number(teamNumber), eventCode, secretCode));
 	}
 
-	const language: string = localStorage.getItem('language');
+	const language: Language = localStorage.getItem('language') as Language;
 	if (language) {
 		dispatch(selectLangSuccess(language));
 	}
 };
 
-export const selectLanguage = (language: string) => async (dispatch) => {
+export const selectLanguage = (language: Language) => async (dispatch) => {
 	localStorage.setItem('language', language);
 	dispatch(selectLangSuccess(language));
 };

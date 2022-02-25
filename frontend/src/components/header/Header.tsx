@@ -1,4 +1,20 @@
-import { AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import './Header.scss';
+import {
+	AppBar,
+	Button,
+	Drawer,
+	Icon,
+	IconButton,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText,
+	Menu,
+	MenuItem,
+	Toolbar,
+	Tooltip,
+	Typography
+} from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -6,7 +22,6 @@ import { Language } from '../../models/languages.model';
 import { AppState } from '../../models/states.model';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
-import './Header.scss';
 
 
 interface IRoute {
@@ -63,31 +78,35 @@ function ConnectedHeader(props) {
 	}
 
 	const downloadButton = (
-		<Button
-			className="download-button"
-			color="primary"
-			disableElevation={true}
-			variant="contained"
-			aria-label={ translate('DOWNLOAD_DATA') }
-			href={downloadLink}
-			startIcon={<Icon>download</Icon>}
-			download
-		>
-			{ translate('DATA') }
-		</Button>
+		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') }>
+			<Button
+				className="download-button"
+				color="primary"
+				disableElevation={true}
+				variant="contained"
+				aria-label={ translate('DOWNLOAD_DATA') }
+				href={downloadLink}
+				startIcon={<Icon>download</Icon>}
+				download
+			>
+				{ translate('DATA') }
+			</Button>
+		</Tooltip>
 	);
 
 	const accountButton = (
-		<IconButton
-			edge="end"
-			color="inherit"
-			aria-label={ translate('ACCOUNT') }
-			aria-controls="account-menu"
-			aria-haspopup="true"
-			onClick={handleAccountMenuClick}
-		>
-			<Icon>account_circle</Icon>
-		</IconButton>
+		<Tooltip title={ translate('ACCOUNT') }>
+			<IconButton
+				edge="end"
+				color="inherit"
+				aria-label={ translate('ACCOUNT') }
+				aria-controls="account-menu"
+				aria-haspopup="true"
+				onClick={handleAccountMenuClick}
+			>
+				<Icon>account_circle</Icon>
+			</IconButton>
+		</Tooltip>
 	);
 
 	const accountMenu = (
@@ -204,19 +223,21 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 
 	return (
 		<React.Fragment>
-			<Button
-				className="language-button"
-				color="primary"
-				variant="contained"
-				disableElevation={true}
-				startIcon={<Icon>language</Icon>}
-				onClick={handleLanguageMenuClick}
-				aria-label={ translate('CHANGE_LANGUAGE') }
-				aria-controls="language-menu"
-				aria-haspopup="true"
-			>
-				{ translate('LANGUAGE') }
-			</Button>
+			<Tooltip title={ translate('CHANGE_LANGUAGE') }>
+				<Button
+					className="language-button"
+					color="primary"
+					variant="contained"
+					disableElevation={true}
+					startIcon={<Icon>language</Icon>}
+					onClick={handleLanguageMenuClick}
+					aria-label={ translate('CHANGE_LANGUAGE') }
+					aria-controls="language-menu"
+					aria-haspopup="true"
+				>
+					{ translate('LANGUAGE') }
+				</Button>
+			</Tooltip>
 			<Menu
 				id="language-menu"
 				anchorEl={languageAnchor}

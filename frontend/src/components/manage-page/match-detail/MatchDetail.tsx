@@ -1,5 +1,5 @@
 import './MatchDetail.scss';
-import { Icon, IconButton } from '@material-ui/core';
+import { Icon, IconButton, Tooltip } from '@material-ui/core';
 import React from 'react';
 import { Match, Objective } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
@@ -38,7 +38,7 @@ export default function MatchDetail(props: IProps) {
 		props.hide(props.match);
 	}
 
-	const hiddenLabel = props.match.isHidden ? <span className="hidden">Hidden</span> : null
+	const hiddenLabel = props.match.isHidden ? <span className="hidden">{ translate('HIDDEN') }</span> : null
 
 	return (
 		<div className={'match-detail' + (props.match.isHidden ? ' hidden' : '')}>
@@ -54,9 +54,11 @@ export default function MatchDetail(props: IProps) {
 				</div>
 			</div>
 			<div className="action-area">
-				<IconButton size="small" onClick={handleHiddenClick}>
-					<Icon fontSize="small" color="inherit">delete</Icon>
-				</IconButton>
+				<Tooltip title={ translate(props.match.isHidden ? 'INCLUDE_IN_STATS' : 'EXCLUDE_FROM_STATS') }>
+					<IconButton size="small" onClick={handleHiddenClick}>
+						<Icon fontSize="small" color="inherit">delete</Icon>
+					</IconButton>
+				</Tooltip>
 			</div>
 		</div>
 	);

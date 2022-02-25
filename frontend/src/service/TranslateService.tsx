@@ -38,6 +38,10 @@ export const useTranslator = () => {
 
 const languages = {
 	english: {
+		'SIGN_IN': 'Sign In',
+		'YOUR_TEAM_NUMBER': 'Your team number',
+		'EVENT_CODE': 'Event code',
+		'SECRET_CODE': 'Secret code',
 		'MATCH': 'Match',
 		'MATCHES': 'Matches',
 		'TEAM': 'Team',
@@ -49,6 +53,10 @@ const languages = {
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details'
 	},
 	spanish: {
+		'SIGN_IN': 'Iniciar sesión',
+		'YOUR_TEAM_NUMBER': 'Tu numero de equipo',
+		'EVENT_CODE': 'Código del evento',
+		'SECRET_CODE': 'Código secreto',
 		'MATCH': 'Partido',
 		'MATCHES': 'Partidos',
 		'TEAM': 'Equipo',
@@ -60,8 +68,14 @@ const languages = {
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Seleccione un partido para ver más detalles'
 	},
 	french: {
+		'SIGN_IN': 'Connexion',
+		'YOUR_TEAM_NUMBER': "Votre numéro d'équipe",
+		'EVENT_CODE': "Code de l'événement",
+		'SECRET_CODE': 'Code secret',
 		'MATCH': 'Match',
+		'MATCHES': 'Matchs',
 		'TEAM': 'Équipe',
+		'TEAMS': 'Équipes',
 		'STATS': 'Statistiques',
 		'DATA': 'Les données',
 		'LANGUAGE': 'Langue',

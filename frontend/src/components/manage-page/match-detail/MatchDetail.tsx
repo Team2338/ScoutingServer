@@ -44,10 +44,10 @@ export default function MatchDetail(props: IProps) {
 		<div className={'match-detail' + (props.match.isHidden ? ' hidden' : '')}>
 			<div className="info">
 				<div className="match-number">
-					Match { props.match.matchNumber }
+					{ translate('MATCH') } { props.match.matchNumber }
 					{ hiddenLabel  }
 				</div>
-				<div className="team-number">Team { props.match.robotNumber }</div>
+				<div className="team-number">{ translate('TEAM') } { props.match.robotNumber }</div>
 				<div className="creator">{ props.match.creator }</div>
 				<div className="objectives">
 					{ gamemodeElements }
@@ -64,13 +64,15 @@ export default function MatchDetail(props: IProps) {
 
 function Gamemode(props: { name: string, objectives: Objective[] }) {
 
+	const translate = useTranslator();
+
 	const objectiveElements = props.objectives.map((objective: Objective) => (
-		<div key={objective.id}>{ objective.objective }: { objective.count }</div>
+		<div key={objective.id}>{ translate(objective.objective) }: { objective.count }</div>
 	));
 
 	return (
 		<div className="gamemode">
-			<div className="gamemode-title">{ props.name }</div>
+			<div className="gamemode-title">{ translate(props.name) }</div>
 			{ objectiveElements }
 		</div>
 	);

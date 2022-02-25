@@ -24,12 +24,6 @@ const outputs = (dispatch) => ({
 
 class ConnectedManagePage extends React.Component<any, any> {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {};
-	}
-
 	componentDidMount() {
 		this.props.getMatches();
 	}

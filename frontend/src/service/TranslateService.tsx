@@ -50,7 +50,12 @@ const languages = {
 		'DATA': 'Data',
 		'LANGUAGE': 'Language',
 		'LOGOUT': 'Logout',
-		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details'
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details',
+		"MEAN": "Mean",
+		"MEDIAN": "Median",
+		"MODE": "Mode",
+		"SCORES": "Scores",
+		"SELECT_TEAM_VIEW_MORE_DETAILS": "Select a team to view more details"
 	},
 	spanish: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -65,7 +70,12 @@ const languages = {
 		'DATA': 'Datos',
 		'LANGUAGE': 'Lengua',
 		'LOGOUT': 'Cerrar sesión',
-		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Seleccione un partido para ver más detalles'
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Seleccione un partido para ver más detalles',
+		"MEAN": "Promedio",
+		"MEDIAN": "Mediano",
+		"MODE": "TODO",
+		"SCORES": "TODO",
+		"SELECT_TEAM_VIEW_MORE_DETAILS": "Seleccione un equipo para ver más detalles"
 	},
 	french: {
 		'SIGN_IN': 'Connexion',
@@ -80,6 +90,11 @@ const languages = {
 		'DATA': 'Les données',
 		'LANGUAGE': 'Langue',
 		'LOGOUT': 'Se déconnecter',
-		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Sélectionnez une correspondance pour afficher plus de détails'
+		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Sélectionnez une correspondance pour afficher plus de détails',
+		"MEAN": "Moyenne",
+		"MEDIAN": "Médian",
+		"MODE": "TODO",
+		"SCORES": "TODO",
+		"SELECT_TEAM_VIEW_MORE_DETAILS": "Sélectionnez une équipe pour afficher plus de détails"
 	}
 };

@@ -1,6 +1,7 @@
 import './TeamDetail.scss';
 import React from 'react';
 import { Team, TeamObjectiveStats } from '../../../models/response.model';
+import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
 	team: Team;
@@ -8,8 +9,10 @@ interface IProps {
 
 export default function TeamDetail(props: IProps) {
 
+	const translate = useTranslator();
+
 	if (!props.team) {
-		return <div>Select a team to view more details</div>;
+		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
 	}
 
 	const gamemodeElements = []
@@ -25,7 +28,7 @@ export default function TeamDetail(props: IProps) {
 
 	return (
 		<div className="team-detail">
-			<div className="team-number">Team { props.team.id }</div>
+			<div className="team-number">{ translate('TEAM') } { props.team.id }</div>
 			<div className="gamemode-list">{ gamemodeElements }</div>
 		</div>
 	);
@@ -50,13 +53,15 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 
+	const translate = useTranslator();
+
 	return (
 		<div className="stats">
-			<div className="objective-name">{ props.name }:</div>
-			<div className="objective-stat">Scores: [ { props.stats.scores.join(', ') } ]</div>
-			<div className="objective-stat">Mean: { props.stats.mean }</div>
-			<div className="objective-stat">Median: { props.stats.median }</div>
-			<div className="objective-stat">Mode: { props.stats.mode }</div>
+			<div className="objective-name">{ translate(props.name) }:</div>
+			<div className="objective-stat">{ translate('SCORES') }: [ { props.stats.scores.join(', ') } ]</div>
+			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean }</div>
+			<div className="objective-stat">{ translate('MEDIAN') }: { props.stats.median }</div>
+			<div className="objective-stat">{ translate('MODE') }: { props.stats.mode }</div>
 		</div>
 	);
 

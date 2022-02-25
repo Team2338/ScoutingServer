@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
+import { translate } from '../../service/TranslateService';
 import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
 import StatGraph from './stat-graph/StatGraph';
@@ -47,7 +48,7 @@ class ConnectedStatPage extends React.Component<any, any> {
 			return <div className="stat-page">Loading...</div>;
 		}
 
-		let content = <div>Select a statistic to view in-depth analysis</div>;
+		let content = <div>{ this.props.translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
 		if (this.props.selectedStat) {
 			const teamStats = this.props.teamData.map((team: Team) => (
 				team.stats
@@ -55,7 +56,9 @@ class ConnectedStatPage extends React.Component<any, any> {
 					.get(this.props.selectedStat.objective)
 			));
 
-			const graphName = `[${this.props.selectedStat.gamemode}] ${this.props.selectedStat.objective}`;
+			const translatedGamemodeName = this.props.translate(this.props.selectedStat.gamemode);
+			const translatedObjectiveName = this.props.translate(this.props.selectedStat.objective)
+			const graphName = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
 			content = <StatGraph name={graphName} data={teamStats} metric="mean"/>;
 		}
 
@@ -75,4 +78,4 @@ class ConnectedStatPage extends React.Component<any, any> {
 }
 
 const StatPage = connect(inputs, outputs)(ConnectedStatPage);
-export default StatPage;
+export default translate(StatPage);

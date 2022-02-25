@@ -1,6 +1,7 @@
 import React from 'react';
 import { Divider, List, ListItem } from '@material-ui/core';
 import { GlobalObjectiveStats } from '../../../models/response.model';
+import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
 	stats: GlobalObjectiveStats[];
@@ -12,6 +13,8 @@ interface IProps {
 }
 
 export default function StatList({ stats, selectedStat, selectStat }: IProps) {
+
+	const translate = useTranslator();
 
 	const listItems = stats.map((stat: GlobalObjectiveStats, index: number) => {
 		const key = stat.gamemode + stat.name;
@@ -27,10 +30,10 @@ export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 				onClick={() => selectStat(stat.gamemode, stat.name)}
 			>
 				<div className="stat-list-item">
-					<div>{ stat.gamemode }</div>
-					<div>{ stat.name }</div>
-					<div>Mean: { stat.stats.mean }</div>
-					<div>Median: { stat.stats.median }</div>
+					<div>{ translate(stat.gamemode) }</div>
+					<div>{ translate(stat.name) }</div>
+					<div>{ translate('MEAN') }: { stat.stats.mean }</div>
+					<div>{ translate('MEDIAN') }: { stat.stats.median }</div>
 				</div>
 			</ListItem>
 		);

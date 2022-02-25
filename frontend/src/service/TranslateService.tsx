@@ -55,7 +55,9 @@ const languages = {
 		"MEDIAN": "Median",
 		"MODE": "Mode",
 		"SCORES": "Scores",
-		"SELECT_TEAM_VIEW_MORE_DETAILS": "Select a team to view more details"
+		"SELECT_TEAM_VIEW_MORE_DETAILS": "Select a team to view more details",
+		"VALUE": "Value",
+		"SELECT_STAT_VIEW_MORE_DETAILS": "Select a statistic to view in-depth analysis",
 	},
 	spanish: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -75,7 +77,9 @@ const languages = {
 		"MEDIAN": "Mediano",
 		"MODE": "TODO",
 		"SCORES": "TODO",
-		"SELECT_TEAM_VIEW_MORE_DETAILS": "Seleccione un equipo para ver más detalles"
+		"SELECT_TEAM_VIEW_MORE_DETAILS": "Seleccione un equipo para ver más detalles",
+		"VALUE": "Valor",
+		"SELECT_STAT_VIEW_MORE_DETAILS": "Seleccione una estadística para ver un análisis en profundidad",
 	},
 	french: {
 		'SIGN_IN': 'Connexion',
@@ -95,6 +99,8 @@ const languages = {
 		"MEDIAN": "Médian",
 		"MODE": "TODO",
 		"SCORES": "TODO",
-		"SELECT_TEAM_VIEW_MORE_DETAILS": "Sélectionnez une équipe pour afficher plus de détails"
+		"SELECT_TEAM_VIEW_MORE_DETAILS": "Sélectionnez une équipe pour afficher plus de détails",
+		"VALUE": "Évaluer",
+		"SELECT_STAT_VIEW_MORE_DETAILS": "Sélectionnez une statistique pour afficher une analyse approfondie",
 	}
 };

@@ -36,6 +36,8 @@ export default function TeamDetail(props: IProps) {
 
 function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveStats> }) {
 
+	const translate = useTranslator();
+
 	const objectiveElements = [];
 	props.objectives.forEach((stats: TeamObjectiveStats, name: string) => {
 		objectiveElements.push(<ObjectiveStats key={name} name={name} stats={stats}/>);
@@ -43,7 +45,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 
 	return (
 		<div className="gamemode">
-			<div className="gamemode-title">{ props.name }</div>
+			<div className="gamemode-title">{ translate(props.name) }</div>
 			<div className="gamemode-stats-wrapper">
 				{ objectiveElements }
 			</div>

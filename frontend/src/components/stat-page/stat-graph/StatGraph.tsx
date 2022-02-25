@@ -2,6 +2,7 @@ import './StatGraph.scss';
 import React from 'react';
 import { Tooltip, Typography } from '@material-ui/core';
 import { TeamObjectiveStats } from '../../../models/response.model';
+import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
 	name: string;
@@ -10,6 +11,8 @@ interface IProps {
 }
 
 export default function StatGraph({ name, data, metric }: IProps) {
+
+	const translate = useTranslator();
 
 	// Find max score for normalizing graph
 	let maxScore = 0;
@@ -24,8 +27,8 @@ export default function StatGraph({ name, data, metric }: IProps) {
 	for (let i = 0; i < data.length; i++) {
 		const tooltipText = (
 			<div>
-				<div>Team { data[i].teamNumber }</div>
-				<div>Value: { data[i][metric] }</div>
+				<div>{ translate('TEAM') }: { data[i].teamNumber }</div>
+				<div>{ translate('VALUE') }: { data[i][metric] }</div>
 			</div>
 		);
 

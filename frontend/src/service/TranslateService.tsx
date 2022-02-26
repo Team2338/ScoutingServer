@@ -41,6 +41,7 @@ const languages: ILanguageTranslation = {
 	[Language.ENGLISH]: {
 		"SIGN_IN": "Sign In",
 		"YOUR_TEAM_NUMBER": "Your team number",
+		"TEAM_NUMBER": "Team number",
 		"EVENT_CODE": "Event code",
 		"SECRET_CODE": "Secret code",
 		"MATCH": "Match",
@@ -52,6 +53,7 @@ const languages: ILanguageTranslation = {
 		"LANGUAGE": "Language",
 		"LOGOUT": "Logout",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Select a match to view more details",
+		"STAT_TABLE": "Stat table",
 		"MEAN": "Mean",
 		"MEDIAN": "Median",
 		"MODE": "Mode",
@@ -77,6 +79,7 @@ const languages: ILanguageTranslation = {
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
 		"YOUR_TEAM_NUMBER": "Tu numero de equipo",
+		"TEAM_NUMBER": "Numero de equipo",
 		"EVENT_CODE": "Código del evento",
 		"SECRET_CODE": "Código secreto",
 		"MATCH": "Partido",
@@ -88,6 +91,7 @@ const languages: ILanguageTranslation = {
 		"LANGUAGE": "Lengua",
 		"LOGOUT": "Cerrar sesión",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Seleccione un partido para ver más detalles",
+		"STAT_TABLE": "Tabla de estadisticas",
 		"MEAN": "Media",
 		"MEDIAN": "Mediana",
 		"MODE": "Moda",
@@ -113,6 +117,7 @@ const languages: ILanguageTranslation = {
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
 		"YOUR_TEAM_NUMBER": "Votre numéro d'équipe",
+		"TEAM_NUMBER": "Numéro d'équipe",
 		"EVENT_CODE": "Code de l'événement",
 		"SECRET_CODE": "Code secret",
 		"MATCH": "Match",
@@ -124,6 +129,7 @@ const languages: ILanguageTranslation = {
 		"LANGUAGE": "Langue",
 		"LOGOUT": "Se déconnecter",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Sélectionnez une match pour afficher plus de détails",
+		"STAT_TABLE": "Tableau statistique",
 		"MEAN": "Moyenne",
 		"MEDIAN": "Médiane",
 		"MODE": "Mode",

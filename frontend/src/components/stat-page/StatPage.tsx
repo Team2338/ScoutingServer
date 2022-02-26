@@ -8,6 +8,7 @@ import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
 import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
+import StatTable from './stat-table/StatTable';
 
 const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,
@@ -59,7 +60,15 @@ class ConnectedStatPage extends React.Component<any, any> {
 			const translatedGamemodeName = this.props.translate(this.props.selectedStat.gamemode);
 			const translatedObjectiveName = this.props.translate(this.props.selectedStat.objective)
 			const graphName = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
-			content = <StatGraph name={graphName} data={teamStats} metric="mean"/>;
+
+			content = (
+				<div className="stat-content">
+					<StatGraph name={graphName} data={teamStats} metric="mean"/>
+					<div className="stat-table-wrapper">
+						<StatTable data={teamStats}/>
+					</div>
+				</div>
+			);
 		}
 
 		return (

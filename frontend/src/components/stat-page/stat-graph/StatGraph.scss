@@ -1,6 +1,9 @@
 
-.stat-graph-wrapper {
-	width: 100%;
+.stat-graph {
+	display: flex;
+	flex-direction: column;
+	height: 30%;
+
 	padding-left: 32px;
 	padding-right: 32px;
 	padding-top: 16px;
@@ -9,7 +12,9 @@
 		display: flex;
 		flex-direction: row;
 		align-items: flex-end;
-		height: 40%;
+		height: 100%;
+		padding-left: 4px;
+		padding-right: 4px;
 
 		box-sizing: border-box;
 		border: 1px solid var(--text-color);
@@ -26,6 +31,8 @@
 	.team-number-wrapper {
 		display: flex;
 		flex-direction: row;
+		padding-left: 4px;
+		padding-right: 4px;
 
 		.team-number {
 			flex-grow: 1;

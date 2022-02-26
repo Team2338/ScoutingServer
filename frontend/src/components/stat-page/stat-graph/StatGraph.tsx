@@ -49,7 +49,7 @@ export default function StatGraph({ name, data, metric }: IProps) {
 	}
 
 	return (
-		<div className="stat-graph-wrapper">
+		<div className="stat-graph">
 			<Typography className="title" variant="h6">{ name }</Typography>
 			<div className="content">
 				{ bars }

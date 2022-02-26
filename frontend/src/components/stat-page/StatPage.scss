@@ -5,7 +5,28 @@
 
 	.stat-list-wrapper {
 		width: 300px;
+		min-width: 300px;
+		display: flex;
+		flex-direction: column;
 		border-right: 1px solid var(--border-color);
 		overflow-y: auto;
+	}
+
+	.stat-content {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+
+		.stat-table-wrapper {
+			display: flex;
+			margin-left: 32px;
+			margin-right: 32px;
+			margin-top: 32px;
+			max-height: 70%;
+			border: 1px solid var(--border-color);
+			border-radius: 4px;
+			overflow-y: auto;
+		}
 	}
 }

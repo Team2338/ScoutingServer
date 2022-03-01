@@ -78,6 +78,10 @@ function ConnectedHeader(props) {
 		);
 	}
 
+	/*
+	 * How to download text file with React
+	 * https://dev.to/imjoshellis/simple-download-text-file-link-with-react-29j3
+	 */
 	const downloadButton = (
 		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') } >
 			<Button
@@ -250,18 +254,24 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 				<MenuItem
 					selected={lang === Language.ENGLISH}
 					onClick={() => handleLanguageChange(Language.ENGLISH)}
+					lang="en"
+					translate="no"
 				>
 					English
 				</MenuItem>
 				<MenuItem
 					selected={lang === Language.SPANISH}
 					onClick={() => handleLanguageChange(Language.SPANISH)}
+					lang="es"
+					translate="no"
 				>
 					Español
 				</MenuItem>
 				<MenuItem
 					selected={lang === Language.FRENCH}
 					onClick={() => handleLanguageChange(Language.FRENCH)}
+					lang="fr"
+					translate="no"
 				>
 					Français
 				</MenuItem>

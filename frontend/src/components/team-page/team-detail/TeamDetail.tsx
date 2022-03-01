@@ -61,7 +61,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 		<div className="stats">
 			<div className="objective-name">{ translate(props.name) }:</div>
 			<div className="objective-stat">{ translate('SCORES') }: [ { props.stats.scores.join(', ') } ]</div>
-			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean }</div>
+			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
 			<div className="objective-stat">{ translate('MEDIAN') }: { props.stats.median }</div>
 			<div className="objective-stat">{ translate('MODE') }: { props.stats.mode }</div>
 		</div>

@@ -15,8 +15,8 @@ export default function StatTable({ data }: IProps) {
 	const rows = sortedData.map((teamData: TeamObjectiveStats) => (
 		<TableRow key={teamData.teamNumber}>
 			<TableCell align="right">{ teamData.teamNumber }</TableCell>
-			<TableCell align="right">{ teamData.mean }</TableCell>
-			<TableCell align="right">{ teamData.median }</TableCell>
+			<TableCell align="right">{ teamData.mean.toFixed(2) }</TableCell>
+			<TableCell align="right">{ teamData.median.toFixed(2) }</TableCell>
 			<TableCell align="right">{ teamData.mode }</TableCell>
 		</TableRow>
 	));

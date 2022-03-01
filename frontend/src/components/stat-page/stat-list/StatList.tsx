@@ -32,8 +32,8 @@ export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 				<div className="stat-list-item">
 					<div>{ translate(stat.gamemode) }</div>
 					<div>{ translate(stat.name) }</div>
-					<div>{ translate('MEAN') }: { stat.stats.mean }</div>
-					<div>{ translate('MEDIAN') }: { stat.stats.median }</div>
+					<div>{ translate('MEAN') }: { stat.stats.mean.toFixed(2) }</div>
+					<div>{ translate('MEDIAN') }: { stat.stats.median.toFixed(2) }</div>
 				</div>
 			</ListItem>
 		);

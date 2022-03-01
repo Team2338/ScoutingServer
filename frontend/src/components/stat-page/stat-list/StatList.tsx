@@ -1,7 +1,7 @@
 import React from 'react';
-import { Divider, List, ListItem } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import { GlobalObjectiveStats } from '../../../models/response.model';
-import { useTranslator } from '../../../service/TranslateService';
+import StatListSection from './StatListSection';
 
 interface IProps {
 	stats: GlobalObjectiveStats[];
@@ -14,46 +14,31 @@ interface IProps {
 
 export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 
-	const translate = useTranslator();
-
-	const listItems = stats.map((stat: GlobalObjectiveStats, index: number) => {
-		const key = stat.gamemode + stat.name;
-		const isSelected = selectedStat
-			&& selectedStat.gamemode === stat.gamemode
-			&& selectedStat.objective === stat.name;
-
-		const listItem = (
-			<ListItem
-				button
-				key={key}
-				selected={isSelected}
-				onClick={() => selectStat(stat.gamemode, stat.name)}
-			>
-				<div className="stat-list-item">
-					<div>{ translate(stat.gamemode) }</div>
-					<div>{ translate(stat.name) }</div>
-					<div>{ translate('MEAN') }: { stat.stats.mean.toFixed(2) }</div>
-					<div>{ translate('MEDIAN') }: { stat.stats.median.toFixed(2) }</div>
-				</div>
-			</ListItem>
-		);
-
-		if (index === 0) {
-			return listItem;
+	const statsGroupedByGamemode = new Map<string, GlobalObjectiveStats[]>();
+	for (const stat of stats) {
+		if (!statsGroupedByGamemode.has(stat.gamemode)) {
+			statsGroupedByGamemode.set(stat.gamemode, []);
 		}
 
-		return (
-			<React.Fragment key={key}>
-				<Divider variant="fullWidth" component="li"/>
-				{ listItem }
-			</React.Fragment>
-		)
-	})
+		statsGroupedByGamemode.get(stat.gamemode).push(stat);
+	}
+
+	const listItems = [];
+	statsGroupedByGamemode.forEach((objectives: GlobalObjectiveStats[], gamemode: string) => {
+		listItems.push(
+			<StatListSection
+				key={gamemode}
+				gamemode={gamemode}
+				stats={objectives}
+				selectedStat={selectedStat}
+				selectStat={(objective: string) => selectStat(gamemode, objective)}
+			/>
+		);
+	});
 
 	return (
 		<List>
 			{ listItems }
 		</List>
 	);
-
 }

@@ -12,6 +12,10 @@ const INITIAL_STATE: AppState = {
 	teamNumber: null,
 	eventCode: null,
 	secretCode: null,
+	csv: {
+		isLoaded: false,
+		url: null
+	},
 	matches: {
 		isLoaded: false,
 		raw: [],
@@ -30,7 +34,7 @@ const INITIAL_STATE: AppState = {
 	}
 };
 
-const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
+const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {
 	switch (action.type) {
 		case Actions.SELECT_LANG_SUCCESS:
 			return {
@@ -47,6 +51,22 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 			};
 		case Actions.LOGOUT:
 			return INITIAL_STATE;
+		case Actions.GET_CSV_START:
+			return {
+				...state,
+				csv: {
+					isLoaded: false,
+					url: null
+				}
+			};
+		case Actions.GET_CSV_SUCCESS:
+			return {
+				...state,
+				csv: {
+					isLoaded: true,
+					url: action.payload
+				}
+			};
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,
@@ -61,7 +81,8 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action) {
 				matches: {
 					isLoaded: true,
 					data: action.payload.matchModels,
-					raw: action.payload.raw
+					raw: action.payload.raw,
+					selectedMatch: null
 				}
 			};
 		case Actions.SELECT_MATCH:

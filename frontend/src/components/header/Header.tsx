@@ -34,6 +34,7 @@ const inputs = (state: AppState) => ({
 	isLoggedIn: state.isLoggedIn,
 	teamNumber: state.teamNumber,
 	eventCode: state.eventCode,
+	csv: state.csv
 });
 
 const outputs = (dispatch) => ({
@@ -64,7 +65,7 @@ function ConnectedHeader(props) {
 	}
 
 	const title = <Typography variant="h5" color="inherit" noWrap>GearScout</Typography>;
-	const downloadLink = `https://gearscout.patrickubelhor.com/api/v1/team/${props.teamNumber}/event/${props.eventCode}/download`;
+	const filename = props.teamNumber + '_' + props.eventCode + '.csv';
 
 	if (!props.isLoggedIn) {
 		return (
@@ -78,16 +79,17 @@ function ConnectedHeader(props) {
 	}
 
 	const downloadButton = (
-		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') }>
+		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') } >
 			<Button
 				className="download-button"
 				color="primary"
 				disableElevation={true}
 				variant="contained"
 				aria-label={ translate('DOWNLOAD_DATA') }
-				href={downloadLink}
 				startIcon={<Icon>download</Icon>}
-				download
+				href={props.csv.url}
+				download={filename}
+				disabled={!props.csv.isLoaded}
 			>
 				{ translate('DATA') }
 			</Button>

@@ -7,6 +7,10 @@ export interface AppState {
 	teamNumber: number;
 	eventCode: string;
 	secretCode: string;
+	csv: {
+		isLoaded: boolean;
+		url: string;
+	}
 	matches: {
 		isLoaded: boolean;
 		raw: MatchResponse[];

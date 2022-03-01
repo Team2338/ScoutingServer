@@ -51,6 +51,17 @@ class GearscoutService {
 		);
 	}
 
+	getMatchesAsCsv = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
+		const url = `/v1/team/${teamNumber}/event/${eventCode}/download`;
+		const config = {
+			headers: {
+				secretCode: secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	}
+
 }
 
 export default new GearscoutService();

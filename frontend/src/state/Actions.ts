@@ -10,6 +10,8 @@ export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
 	LOGIN = '[AUTH] Login',
 	LOGOUT = '[AUTH] Logout',
+	GET_CSV_START = '[CSV] Start getting CSV',
+	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	SELECT_MATCH = '[MATCH] Select match',
@@ -42,6 +44,15 @@ export const loginSuccess = (
 
 export const logoutSuccess = (): Action => ({
 	type: Actions.LOGOUT
+});
+
+export const getCsvStart = (): Action => ({
+	type: Actions.GET_CSV_START,
+});
+
+export const getCsvSuccess = (url: string): Action => ({
+	type: Actions.GET_CSV_SUCCESS,
+	payload: url
 });
 
 export const getMatchesStart = (): Action => ({

@@ -9,7 +9,7 @@ import {
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
-	calculateTeamStatsSuccess,
+	calculateTeamStatsSuccess, getCsvStart, getCsvSuccess,
 	getMatchesStart,
 	getMatchesSuccess,
 	loginSuccess,
@@ -62,9 +62,10 @@ export const logout = () => async (dispatch) => {
 export const getMatches = () => async (dispatch, getState: GetState) => {
 	console.log('Getting matches');
 	dispatch(getMatchesStart());
+	dispatch(getCsvData());
 
 	try {
-		let response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
+		const response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
 		const matchResponses: MatchResponse[] = response.data;
 		const matches: Match[] = matchResponses.map((matchResponse: MatchResponse) => {
 			return matchModelService.convertMatchResponseToModel(matchResponse);
@@ -76,6 +77,29 @@ export const getMatches = () => async (dispatch, getState: GetState) => {
 		console.error('Error getting matches', error);
 	}
 };
+
+export const getCsvData = () => async (dispatch, getState: GetState) => {
+	console.log('Getting CSV');
+
+	const lastUrl = getState().csv.url;
+	dispatch(getCsvStart());
+
+	try {
+		let response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
+		const csvContent = response.data;
+		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+
+		// Revoke last URL
+		if (lastUrl) {
+			window.URL.revokeObjectURL(lastUrl);
+		}
+
+		const nextUrl = window.URL.createObjectURL(csvBlob);
+		dispatch(getCsvSuccess(nextUrl));
+	} catch (error) {
+		console.error('Error getting CSV', error);
+	}
+}
 
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	console.log('Hiding match');

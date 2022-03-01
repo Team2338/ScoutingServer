@@ -11,7 +11,8 @@ export default function StatTable({ data }: IProps) {
 
 	const translate = useTranslator();
 
-	const rows = data.map((teamData: TeamObjectiveStats) => (
+	const sortedData = data.slice().sort((a: TeamObjectiveStats, b: TeamObjectiveStats) => b.mean - a.mean);
+	const rows = sortedData.map((teamData: TeamObjectiveStats) => (
 		<TableRow key={teamData.teamNumber}>
 			<TableCell align="right">{ teamData.teamNumber }</TableCell>
 			<TableCell align="right">{ teamData.mean }</TableCell>

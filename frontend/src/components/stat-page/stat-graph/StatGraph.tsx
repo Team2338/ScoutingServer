@@ -22,29 +22,33 @@ export default function StatGraph({ name, data, metric }: IProps) {
 		}
 	}
 
+	// Sort by metric, ascending
+	const sortedData = data.slice().sort((a: TeamObjectiveStats, b: TeamObjectiveStats) => b[metric] - a[metric]);
+
 	const bars = [];
 	const teamLabels = [];
-	for (let i = 0; i < data.length; i++) {
+	for (const team of sortedData) {
 		const tooltipText = (
 			<div>
-				<div>{ translate('TEAM') }: { data[i].teamNumber }</div>
-				<div>{ translate('VALUE') }: { data[i][metric] }</div>
+				<div>{ translate('TEAM') }: { team.teamNumber }</div>
+				<div>{ translate('VALUE') }: { team[metric] }</div>
 			</div>
 		);
 
 		let bar = (
-			<Tooltip key={data[i].teamNumber} title={tooltipText} arrow>
+			<Tooltip key={team.teamNumber} title={tooltipText} arrow>
 				<div
 					className="bar"
 					style={{
-						height: 100 * data[i][metric] / maxScore + '%'
+						height: 100 * team[metric] / maxScore + '%'
 					}}
 				/>
 			</Tooltip>
 		);
+
 		bars.push(bar);
 
-		let label = <div key={data[i].teamNumber} className="team-number">{ data[i].teamNumber }</div>;
+		let label = <div key={team.teamNumber} className="team-number">{ team.teamNumber }</div>;
 		teamLabels.push(label);
 	}
 

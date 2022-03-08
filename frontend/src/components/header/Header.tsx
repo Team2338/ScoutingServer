@@ -64,7 +64,17 @@ function ConnectedHeader(props) {
 		props.logout();
 	}
 
-	const title = <Typography variant="h5" color="inherit" noWrap>GearScout</Typography>;
+	const title = (
+		<Typography
+			variant="h5"
+			color="inherit"
+			lang="en"
+		  translate="no"
+			noWrap
+		>
+			GearScout
+		</Typography>
+	);
 	const filename = props.teamNumber + '_' + props.eventCode + '.csv';
 
 	if (!props.isLoggedIn) {
@@ -278,7 +288,7 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 				<MenuItem
 					selected={lang === Language.TURKISH}
 					onClick={() => handleLanguageChange(Language.TURKISH)}
-					lang="tu"
+					lang="tr"
 					translate="no"
 				>
 					Türkçe

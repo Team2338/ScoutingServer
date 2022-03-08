@@ -275,6 +275,14 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 				>
 					Français
 				</MenuItem>
+				<MenuItem
+					selected={lang === Language.TURKISH}
+					onClick={() => handleLanguageChange(Language.TURKISH)}
+					lang="tu"
+					translate="no"
+				>
+					Türkçe
+				</MenuItem>
 			</Menu>
 		</React.Fragment>
 	);

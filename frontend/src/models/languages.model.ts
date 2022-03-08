@@ -3,7 +3,8 @@ export enum Language {
 	ENGLISH = 'english',
 	SPANISH = 'spanish',
 	FRENCH = 'french',
-	TURKISH = 'turkish'
+	TURKISH = 'turkish',
+	HINDI = 'hindi'
 }
 
 export type ILanguageTranslation = {

@@ -4,8 +4,9 @@
 	flex-direction: row;
 
 	.stat-list-wrapper {
-		width: 300px;
-		min-width: 300px;
+		width: var(--stat-sidenav-width);
+		min-width: var(--stat-sidenav-width);
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		border-right: 1px solid var(--border-color);
@@ -16,7 +17,7 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		width: calc(100% - 301px);
+		width: calc(100% - var(--stat-sidenav-width));
 
 		.stat-table-wrapper {
 			display: flex;

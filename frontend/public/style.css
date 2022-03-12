@@ -7,6 +7,8 @@
 	--border-color: rgba(0, 0, 0, 0.24);
 	--text-color: #000000;
 	--header-text-color: #ffffff;
+
+	--stat-sidenav-width: 300px;
 }
 
 /* Adjust settings for small devices */

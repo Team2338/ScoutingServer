@@ -14,6 +14,7 @@ export default function StatGraph({ name, data, metric }: IProps) {
 
 	const translate = useTranslator();
 
+	console.log(data);
 	// Find max score for normalizing graph
 	let maxScore = 0;
 	for (const entry of data) {

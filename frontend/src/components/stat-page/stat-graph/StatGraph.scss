@@ -2,26 +2,27 @@
 .stat-graph {
 	display: flex;
 	flex-direction: column;
-	height: 30%;
-
-	padding-left: 32px;
-	padding-right: 32px;
-	padding-top: 16px;
+	//height: 30%;
+	min-height: 30%;
+	overflow-x: auto;
+	padding: 16px 32px;
 
 	.content {
 		display: flex;
 		flex-direction: row;
 		align-items: flex-end;
 		height: 100%;
+		width: fit-content;
 		padding-left: 4px;
 		padding-right: 4px;
 
 		box-sizing: border-box;
-		border: 1px solid var(--text-color);
+		border: 1px solid var(--border-color);
 		border-radius: 4px;
 
 		.bar {
-			flex-grow: 1;
+			width: 40px;
+			min-width: 40px;
 			margin-left: 4px;
 			margin-right: 4px;
 			background-color: #aa2456;
@@ -35,9 +36,10 @@
 		padding-right: 4px;
 
 		.team-number {
-			flex-grow: 1;
-			flex-basis: 4em;
 			text-align: center;
+			min-width: 40px;
+			margin-left: 4px;
+			margin-right: 4px
 		}
 	}
 

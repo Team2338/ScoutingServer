@@ -4,8 +4,14 @@
 	flex-direction: row;
 
 	.team-list-wrapper {
+		min-width: 300px;
 		width: 300px;
 		border-right: 1px solid var(--border-color);
 		overflow-y: auto;
+	}
+
+	.team-detail-wrapper {
+		display: flex;
+		flex-direction: column;
 	}
 }

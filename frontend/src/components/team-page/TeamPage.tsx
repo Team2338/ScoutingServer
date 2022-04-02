@@ -1,4 +1,5 @@
 import './TeamPage.scss';
+import { MenuItem } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
@@ -7,6 +8,7 @@ import { selectTeam } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
+import { TeamSelector } from './team-selector/TeamSelector';
 
 const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,
@@ -50,11 +52,21 @@ class ConnectedTeamPage extends React.Component<any, any> {
 						selectedTeam={this.props.selectedTeam}
 					/>
 				</div>
-				<TeamDetail team={this.props.selectedTeam}/>
+				<div className="team-detail-wrapper">
+					<div className="team-selector">
+						<TeamSelector
+							teams={this.props.teams}
+							selectTeam={this.props.selectTeam}
+							selectedTeam={this.props.selectedTeam}
+						/>
+					</div>
+					<TeamDetail team={this.props.selectedTeam}/>
+				</div>
 			</div>
 		);
 	}
 }
+
 
 const TeamPage = connect(inputs, outputs)(ConnectedTeamPage);
 export default TeamPage;

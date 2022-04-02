@@ -3,9 +3,9 @@
 	display: flex;
 	flex-direction: column;
 	//border: 1px solid var(--border-color);
-	border-radius: 4px;
-	padding: 12px;
-	margin: 8px;
+	//border-radius: 4px;
+	padding: 8px;
+	margin-top: 12px;
 	height: fit-content;
 
 	.team-number {
@@ -28,6 +28,8 @@
 			&-stats-wrapper {
 				display: flex;
 				flex-direction: row;
+				flex-flow: wrap;
+				row-gap: 12px;
 				margin-top: 8px;
 
 				.stats {

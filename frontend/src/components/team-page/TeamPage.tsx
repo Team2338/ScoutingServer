@@ -80,7 +80,9 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 					selectedTeam={selectedTeam}
 				/>
 			</div>
-			<TeamDetail team={selectedTeam}/>
+			<div className="team-detail-wrapper">
+				<TeamDetail team={selectedTeam}/>
+			</div>
 		</div>
 	);
 }

@@ -1,5 +1,5 @@
 import './TeamPage.scss';
-import { MenuItem } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
@@ -44,27 +44,45 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		}
 
 		return (
-			<div className="page team-page">
-				<div className="team-list-wrapper">
-					<TeamList
-						teams={this.props.teams}
-						selectTeam={this.props.selectTeam}
-						selectedTeam={this.props.selectedTeam}
-					/>
-				</div>
+			<TeamPageContent
+				teams={this.props.teams}
+				selectTeam={this.props.selectTeam}
+				selectedTeam={this.props.selectedTeam}
+			/>
+		);
+	}
+}
+
+function TeamPageContent({ teams, selectTeam, selectedTeam }) {
+	const isMobile = useMediaQuery('(max-width: 600px)');
+
+	if (isMobile) {
+		return (
+			<div className="page team-page-mobile">
 				<div className="team-detail-wrapper">
-					<div className="team-selector">
-						<TeamSelector
-							teams={this.props.teams}
-							selectTeam={this.props.selectTeam}
-							selectedTeam={this.props.selectedTeam}
-						/>
-					</div>
-					<TeamDetail team={this.props.selectedTeam}/>
+					<TeamSelector
+						teams={teams}
+						selectTeam={selectTeam}
+						selectedTeam={selectedTeam}
+					/>
+					<TeamDetail team={selectedTeam}/>
 				</div>
 			</div>
 		);
 	}
+
+	return (
+		<div className="page team-page">
+			<div className="team-list-wrapper">
+				<TeamList
+					teams={teams}
+					selectTeam={selectTeam}
+					selectedTeam={selectedTeam}
+				/>
+			</div>
+			<TeamDetail team={selectedTeam}/>
+		</div>
+	);
 }
 
 

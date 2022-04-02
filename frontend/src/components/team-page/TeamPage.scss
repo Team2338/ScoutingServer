@@ -4,11 +4,17 @@
 	flex-direction: row;
 
 	.team-list-wrapper {
-		min-width: 300px;
-		width: 300px;
+		min-width: 200px;
+		width: 200px;
 		border-right: 1px solid var(--border-color);
 		overflow-y: auto;
 	}
+}
+
+.team-page-mobile {
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
 
 	.team-detail-wrapper {
 		display: flex;

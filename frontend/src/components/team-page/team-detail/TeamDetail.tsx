@@ -32,7 +32,7 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				{ translate('TEAM') } { props.team.id }
-				<Tooltip title="View notes for this team">
+				<Tooltip title={ translate('VIEW_NOTES_FOR_THIS_TEAM')}>
 					<Button
 						id="view-notes-button"
 						color="primary"
@@ -41,7 +41,7 @@ export default function TeamDetail(props: IProps) {
 						startIcon={<NotesIcon fontSize="small"/>}
 						disableElevation
 					>
-						Notes
+						{ translate('NOTES') }
 					</Button>
 				</Tooltip>
 			</div>

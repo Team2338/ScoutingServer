@@ -1,12 +1,12 @@
 import './TeamPage.scss';
 import React from 'react';
-import { Fab, Tooltip, useMediaQuery } from '@material-ui/core';
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import { useMediaQuery } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
 import { selectTeam } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
+import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import { TeamSelector } from './team-selector/TeamSelector';
@@ -22,7 +22,8 @@ const inputs = (state: AppState) => ({
 const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
 	getTeamStats: () => dispatch(getTeams()),
-	selectTeam: (team: Team) => dispatch(selectTeam(team))
+	selectTeam: (team: Team) => dispatch(selectTeam(team)),
+	createNote: (teamNum: number, content: string) => {}
 });
 
 class ConnectedTeamPage extends React.Component<any, any> {
@@ -50,26 +51,15 @@ class ConnectedTeamPage extends React.Component<any, any> {
 					teams={this.props.teams}
 					selectTeam={this.props.selectTeam}
 					selectedTeam={this.props.selectedTeam}
+					createNote={this.props.createNote}
 				/>
 			</React.Fragment>
 		);
 	}
 }
 
-function TeamPageContent({ teams, selectTeam, selectedTeam }) {
+function TeamPageContent({ teams, selectTeam, selectedTeam, createNote }) {
 	const isMobile = useMediaQuery('(max-width: 600px)');
-
-	const addNoteButton = (
-		<Tooltip title="Add note">
-			<Fab
-				id="team-page-add-note"
-				color="primary"
-				aria-label="add note"
-			>
-				<NoteAddIcon/>
-			</Fab>
-		</Tooltip>
-	);
 
 	if (isMobile) {
 		return (
@@ -82,7 +72,11 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 					/>
 					<TeamDetail team={selectedTeam}/>
 				</div>
-				{ addNoteButton }
+				<CreateNote
+					isMobile={true}
+					selectedTeamNum={selectedTeam?.id}
+					createNote={createNote}
+				/>
 			</div>
 		);
 	}
@@ -99,11 +93,14 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 			<div className="team-detail-wrapper">
 				<TeamDetail team={selectedTeam}/>
 			</div>
-			{ addNoteButton }
+			<CreateNote
+				isMobile={false}
+				selectedTeamNum={selectedTeam?.id}
+				createNote={createNote}
+			/>
 		</div>
 	);
 }
-
 
 const TeamPage = connect(inputs, outputs)(ConnectedTeamPage);
 export default TeamPage;

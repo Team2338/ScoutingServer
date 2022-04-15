@@ -1,6 +1,6 @@
 import './TeamDetail.scss';
-import { Button, IconButton, Tooltip } from '@material-ui/core';
 import React from 'react';
+import { Button, Tooltip } from '@material-ui/core';
 import NotesIcon from '@material-ui/icons/Notes';
 import { Team, TeamObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';

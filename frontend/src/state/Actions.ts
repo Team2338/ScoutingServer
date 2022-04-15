@@ -1,5 +1,5 @@
 import { Language } from '../models/languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, Team } from '../models/response.model';
+import { GlobalObjectiveStats, Match, MatchResponse, Note, Team } from '../models/response.model';
 
 export interface Action {
 	type: Actions;
@@ -21,7 +21,11 @@ export enum Actions {
 	SELECT_TEAM = '[TEAM] Select team',
 	CALCULATE_GLOBAL_STATS_START = '[STATS] Started calculating global stats',
 	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats',
-	SELECT_STAT = '[STATS] Select stat'
+	SELECT_STAT = '[STATS] Select stat',
+	GET_NOTES_START = '[NOTES] Start getting notes',
+	GET_NOTES_SUCCESS = '[NOTES] Successfully got notes',
+	ADD_NOTE_START = '[NOTES] Create new note',
+	ADD_NOTE_SUCCESS = '[NOTES] Successfully created new note'
 }
 
 export const selectLangSuccess = (language: Language) => ({
@@ -110,4 +114,22 @@ export const selectStat = (gamemode: string, objective: string) => ({
 		gamemode: gamemode,
 		objective: objective
 	}
+});
+
+export const getNotesStart = (robotNumber: number) => ({
+	type: Actions.GET_NOTES_START,
+	payload: robotNumber
+});
+
+export const getNotesSuccess = (notes: Note[]) => ({
+	type: Actions.GET_NOTES_SUCCESS,
+	payload: notes
+});
+
+export const addNoteStart = () => ({
+	type: Actions.ADD_NOTE_START,
+});
+
+export const addNoteSuccess = () => ({
+	type: Actions.ADD_NOTE_SUCCESS,
 });

@@ -7,35 +7,35 @@ import { useTranslator } from '../../../service/TranslateService';
 interface IProps {
 	isMobile: boolean;
 	selectedTeamNum: number;
-	createNote: (teamNum: number, content: string) => void;
+	createNote: (robotNum: number, content: string) => void;
 }
 
 export default function CreateNote(props: IProps) {
 
 	const [isOpen, setOpen] = React.useState(false);
-	const [teamNum, setTeamNum] = React.useState('');
+	const [robotNum, setRobotNum] = React.useState('');
 	const [noteContent, setNoteContent] = React.useState('');
 	const translate = useTranslator();
 
 	const handleOpen = () => {
 		const selectedTeamNum = props.selectedTeamNum ?? '';
-		setTeamNum('' + selectedTeamNum);
+		setRobotNum('' + selectedTeamNum);
 		setOpen(true);
 	}
 
 	const handleCancel = () => {
 		setOpen(false);
-		setTeamNum('');
+		setRobotNum('');
 		setNoteContent('');
 	};
 
 	const handleSubmit = () => {
 		setOpen(false);
 
-		const convertedTeamNum = Number.parseInt(teamNum);
-		props.createNote(convertedTeamNum, noteContent);
+		const convertedRobotNum = Number.parseInt(robotNum);
+		props.createNote(convertedRobotNum, noteContent);
 
-		setTeamNum('');
+		setRobotNum('');
 		setNoteContent('');
 	}
 
@@ -69,8 +69,8 @@ export default function CreateNote(props: IProps) {
 						type="number"
 						placeholder={ translate('TEAM_NUMBER') }
 						label={ translate('TEAM_NUMBER') }
-						value={teamNum}
-						onChange={(event) => setTeamNum(event.target.value)}
+						value={robotNum}
+						onChange={(event) => setRobotNum(event.target.value)}
 						InputProps={{
 							startAdornment: <InputAdornment position="start">#</InputAdornment>
 						}}

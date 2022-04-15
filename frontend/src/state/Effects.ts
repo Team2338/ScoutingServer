@@ -1,17 +1,19 @@
 import { Language } from '../models/languages.model';
+import GearscoutService from '../service/GearscoutService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
-import { Match, MatchResponse, Team } from '../models/response.model';
+import { Match, MatchResponse, NewNote, Note, Team } from '../models/response.model';
 import { AppState } from '../models/states.model';
 import StatModelService from '../service/StatModelService';
 import TeamModelService from '../service/TeamModelService';
 import {
+	addNoteStart, addNoteSuccess,
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess, getCsvStart, getCsvSuccess,
 	getMatchesStart,
-	getMatchesSuccess,
+	getMatchesSuccess, getNotesStart, getNotesSuccess,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -85,7 +87,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	dispatch(getCsvStart());
 
 	try {
-		let response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
+		const response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
 
@@ -162,4 +164,42 @@ export const getGlobalStats = () => async (dispatch, getState: GetState) => {
 	const teams = getState().teams.data;
 	const globalStats = StatModelService.calculateGlobalStats(teams);
 	dispatch(calculateGlobalStatsSuccess(globalStats));
+};
+
+export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
+	console.log('Getting notes for robot');
+	dispatch(getNotesStart(robotNumber));
+
+	try {
+		const response = await GearscoutService.getNotes(
+			getState().teamNumber,
+			getState().eventCode,
+			robotNumber,
+			getState().secretCode
+		);
+		const notes: Note[] = response.data;
+
+		dispatch(getNotesSuccess(notes));
+	} catch (error) {
+		console.error('Error getting notes', error);
+	}
+};
+
+export const addNoteForRobot = (robotNumber: number, content: string) => async (dispatch, getState: GetState) => {
+	console.log('Adding note for robot');
+	dispatch(addNoteStart());
+
+	const note: NewNote = {
+		robotNumber: robotNumber,
+		eventCode: getState().eventCode,
+		creator: 'Author - not implemented yet',
+		content: content
+	};
+
+	try {
+		const response = await GearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
+		dispatch(addNoteSuccess());
+	} catch (error) {
+		console.error('Error adding note', error);
+	}
 };

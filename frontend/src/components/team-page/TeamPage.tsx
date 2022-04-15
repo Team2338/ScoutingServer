@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
 import { selectTeam } from '../../state/Actions';
-import { getMatches, getTeams } from '../../state/Effects';
+import { addNoteForRobot, getMatches, getTeams } from '../../state/Effects';
 import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
@@ -23,7 +23,7 @@ const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
 	getTeamStats: () => dispatch(getTeams()),
 	selectTeam: (team: Team) => dispatch(selectTeam(team)),
-	createNote: (teamNum: number, content: string) => {}
+	createNote: (robotNum: number, content: string) => dispatch(addNoteForRobot(robotNum, content))
 });
 
 class ConnectedTeamPage extends React.Component<any, any> {

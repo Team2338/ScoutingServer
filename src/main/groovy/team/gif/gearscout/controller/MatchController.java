@@ -84,6 +84,15 @@ public class MatchController {
 		return ResponseEntity.ok(result);
 	}
 	
+	
+	@GetMapping(value = "/distinct")
+	public ResponseEntity<List<Integer>> getDistinctTeamNumbers() {
+		logger.debug("Received getDistinctTeamNumbers request");
+		List<Integer> teamNumbers = matchService.getDistinctTeamNumbers();
+		return ResponseEntity.ok(teamNumbers);
+	}
+	
+	
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(
 			@PathVariable Integer teamNumber,

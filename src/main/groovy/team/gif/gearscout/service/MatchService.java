@@ -49,6 +49,10 @@ public class MatchService {
 		return match;
 	}
 	
+	public List<Integer> getDistinctTeamNumbers() {
+		return matchRepository.findDistinctTeamNumbers();
+	}
+	
 	public String getEventDataAsCsv(Integer teamNumber, String secretCode, String eventCode) {
 		List<MatchEntry> matches = matchRepository.findVisibleMatches(teamNumber, secretCode, eventCode);
 		

@@ -16,6 +16,12 @@
 		padding-bottom: 8px;
 		overflow-y: auto;
 	}
+
+	#team-page-add-note {
+		position: absolute;
+		right: 20px;
+		bottom: 16px;
+	}
 }
 
 .team-page-mobile {
@@ -27,4 +33,11 @@
 		display: flex;
 		flex-direction: column;
 	}
+
+	#team-page-add-note {
+		position: absolute;
+		right: 16px;
+		bottom: 16px;
+	}
 }
+

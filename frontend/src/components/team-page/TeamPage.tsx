@@ -1,6 +1,7 @@
 import './TeamPage.scss';
-import { useMediaQuery } from '@material-ui/core';
 import React from 'react';
+import { Fab, Tooltip, useMediaQuery } from '@material-ui/core';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
@@ -44,17 +45,31 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		}
 
 		return (
-			<TeamPageContent
-				teams={this.props.teams}
-				selectTeam={this.props.selectTeam}
-				selectedTeam={this.props.selectedTeam}
-			/>
+			<React.Fragment>
+				<TeamPageContent
+					teams={this.props.teams}
+					selectTeam={this.props.selectTeam}
+					selectedTeam={this.props.selectedTeam}
+				/>
+			</React.Fragment>
 		);
 	}
 }
 
 function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 	const isMobile = useMediaQuery('(max-width: 600px)');
+
+	const addNoteButton = (
+		<Tooltip title="Add note">
+			<Fab
+				id="team-page-add-note"
+				color="primary"
+				aria-label="add note"
+			>
+				<NoteAddIcon/>
+			</Fab>
+		</Tooltip>
+	);
 
 	if (isMobile) {
 		return (
@@ -67,6 +82,7 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 					/>
 					<TeamDetail team={selectedTeam}/>
 				</div>
+				{ addNoteButton }
 			</div>
 		);
 	}
@@ -83,6 +99,7 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 			<div className="team-detail-wrapper">
 				<TeamDetail team={selectedTeam}/>
 			</div>
+			{ addNoteButton }
 		</div>
 	);
 }

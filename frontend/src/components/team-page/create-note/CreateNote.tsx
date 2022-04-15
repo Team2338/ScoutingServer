@@ -88,11 +88,13 @@ export default function CreateNote(props: IProps) {
 				</DialogContent>
 				<DialogActions>
 					<Button
+						color="primary"
 						onClick={handleCancel}
 					>
 						{ translate('CANCEL') }
 					</Button>
 					<Button
+						color="primary"
 						onClick={handleSubmit}
 					>
 						{ translate('SUBMIT') }

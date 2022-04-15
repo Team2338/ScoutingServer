@@ -75,6 +75,12 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "Missed Shot",
 		"MOBILITY_2022": "Taxi",
 		"CLIMB_2022": "Hangar",
+		"ADD_NOTE": "Add Note",
+		"CANCEL": "Cancel",
+		"SUBMIT": "Submit",
+		"NOTE": "Note",
+		"NOTES": "Notes",
+		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -113,6 +119,12 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "Tiro fallado",
 		"MOBILITY_2022": "Desplazamiento",
 		"CLIMB_2022": "Hangar",
+		"ADD_NOTE": "Añadir la Nota",
+		"CANCEL": "Cancelar",
+		"SUBMIT": "Entregar",
+		"NOTE": "Nota",
+		"NOTES": "Notas",
+		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -151,6 +163,12 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "Coup raté",
 		"MOBILITY_2022": "Circulation",
 		"CLIMB_2022": "Hangar",
+		"ADD_NOTE": "Ajouter une Note",
+		"CANCEL": "Annuler",
+		"SUBMIT": "Soumettre",
+		"NOTE": "Note",
+		"NOTES": "Notes",
+		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -189,6 +207,12 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "Kaçırılan Gol",
 		"MOBILITY_2022": "Taksi̇",
 		"CLIMB_2022": "Hangar",
+		"ADD_NOTE": "Not Ekle",
+		"CANCEL": "İptal etmek",
+		"SUBMIT": "Sunmak",
+		"NOTE": "Not",
+		"NOTES": "Notlar",
+		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",
@@ -227,5 +251,11 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "छूटी हुई गेंद",
 		"MOBILITY_2022": "टैक्सी",
 		"CLIMB_2022": "हैंगर",
+		"ADD_NOTE": "नोट जोड़े",
+		"CANCEL": "रद्द करें",
+		"SUBMIT": "भेजना",
+		"NOTE": "टिप्पणी",
+		"NOTES": "टिप्पणियाँ",
+		"VIEW_NOTES_FOR_THIS_TEAM": "इस टीम के लिए नोट देखें"
 	}
 };

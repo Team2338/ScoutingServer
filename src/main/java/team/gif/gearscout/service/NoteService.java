@@ -31,7 +31,7 @@ public class NoteService {
 		return noteRepository.save(noteEntry);
 	}
 	
-	public List<NoteEntry> getAllNotesForTeam(
+	public List<NoteEntry> getAllNotesForRobot(
 		Integer teamNumber,
 		String secretCode,
 		String eventCode,
@@ -39,6 +39,17 @@ public class NoteService {
 	) {
 		return noteRepository.findNoteEntriesByTeamNumberAndSecretCodeAndEventCodeAndRobotNumberOrderByTimeCreatedAsc(
 			teamNumber, secretCode, eventCode, robotNumber
+		);
+	}
+	
+	
+	public List<NoteEntry> getAllNotes(
+		Integer teamNumber,
+		String secretCode,
+		String eventCode
+	) {
+		return noteRepository.findNoteEntriesByTeamNumberAndSecretCodeAndEventCodeOrderByTimeCreatedAsc(
+			teamNumber, secretCode, eventCode
 		);
 	}
 	

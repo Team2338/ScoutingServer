@@ -45,6 +45,29 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		}
 	}
 
+	getTeamsWithNotes = (): Team[] => {
+		const noteTeamNumbers = this.props.notes.map((note: Note) => note.robotNumber);
+		const uniqueNoteTeamNumbers = new Set(noteTeamNumbers);
+
+		// This gives us the list of team numbers with notes but not match data
+		for (const team of this.props.teams) {
+			uniqueNoteTeamNumbers.delete(team.id);
+		}
+
+		const dummyTeamsWithNotes: Team[] = [];
+		uniqueNoteTeamNumbers.forEach((teamNumber: number) => {
+			dummyTeamsWithNotes.push({
+				id: teamNumber,
+				stats: null
+			});
+		});
+
+		const completeListOfTeams: Team[] = this.props.teams.concat(dummyTeamsWithNotes);
+		completeListOfTeams.sort((a, b) => a.id - b.id);
+
+		return completeListOfTeams;
+	};
+
 	render() {
 		if (!this.props.areTeamsLoaded) {
 			return <div className="team-page">Loading...</div>;
@@ -54,7 +77,7 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		return (
 			<React.Fragment>
 				<TeamPageContent
-					teams={this.props.teams}
+					teams={this.getTeamsWithNotes()}
 					selectTeam={this.props.selectTeam}
 					selectedTeam={this.props.selectedTeam}
 					notes={notes}

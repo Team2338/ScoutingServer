@@ -17,16 +17,20 @@ export default function TeamDetail(props: IProps) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
 	}
 
-	const gamemodeElements = []
-	props.team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
-		gamemodeElements.push(
-			<Gamemode
-				key={gamemode}
-				name={gamemode}
-				objectives={objectives}
-			/>
-		);
-	});
+	let gamemodeElements: any = [];
+	if (props.team.stats) {
+		props.team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
+			gamemodeElements.push(
+				<Gamemode
+					key={gamemode}
+					name={gamemode}
+					objectives={objectives}
+				/>
+			);
+		});
+	} else {
+		gamemodeElements = <div>No quantitative data for this team</div>
+	}
 
 	return (
 		<div className="team-detail">

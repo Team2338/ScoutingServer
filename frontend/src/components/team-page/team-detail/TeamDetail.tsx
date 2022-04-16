@@ -1,9 +1,8 @@
 import './TeamDetail.scss';
 import React from 'react';
-import { Button, Tooltip } from '@material-ui/core';
-import NotesIcon from '@material-ui/icons/Notes';
 import { Team, TeamObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
+import ViewNotes from '../view-notes/ViewNotes';
 
 interface IProps {
 	team: Team;
@@ -32,18 +31,7 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				{ translate('TEAM') } { props.team.id }
-				<Tooltip title={ translate('VIEW_NOTES_FOR_THIS_TEAM')}>
-					<Button
-						id="view-notes-button"
-						color="primary"
-						variant="outlined"
-						size="small"
-						startIcon={<NotesIcon fontSize="small"/>}
-						disableElevation
-					>
-						{ translate('NOTES') }
-					</Button>
-				</Tooltip>
+				<ViewNotes isMobile={false}/>
 			</div>
 			<div className="gamemode-list">{ gamemodeElements }</div>
 		</div>

@@ -1,6 +1,7 @@
+import './ViewNotes.scss';
+import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
 import NotesIcon from '@material-ui/icons/Notes';
-import React from 'react';
 import { Note } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
 
@@ -23,11 +24,11 @@ export default function ViewNotes(props: IProps) {
 	}
 
 	const noteElements = props.notes.map((note: Note) => (
-		<div key={note.id}>
-			<div>
+		<div className="team-note" key={note.id}>
+			<div className="team-note-content">
 				{note.content}
 			</div>
-			<div>
+			<div className="team-note-author">
 				{note.creator}
 			</div>
 		</div>

@@ -220,9 +220,17 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 		content: content
 	};
 
+	const dummyCompleteNote: Note = {
+		...note,
+		teamNumber: getState().teamNumber,
+		secretCode: getState().secretCode,
+		id: -getState().notes.data.length,
+		timeCreated: null
+	}
+
 	try {
 		const response = await GearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
-		dispatch(addNoteSuccess());
+		dispatch(addNoteSuccess(dummyCompleteNote));
 	} catch (error) {
 		console.error('Error adding note', error);
 	}

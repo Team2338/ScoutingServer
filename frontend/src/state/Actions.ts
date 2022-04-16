@@ -141,6 +141,7 @@ export const addNoteStart = () => ({
 	type: Actions.ADD_NOTE_START,
 });
 
-export const addNoteSuccess = () => ({
+export const addNoteSuccess = (note: Note) => ({
 	type: Actions.ADD_NOTE_SUCCESS,
+	payload: note
 });

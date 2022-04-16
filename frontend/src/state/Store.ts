@@ -88,6 +88,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					data: action.payload
 				}
 			};
+		case Actions.ADD_NOTE_SUCCESS:
+			return {
+				...state,
+				notes: {
+					...state.notes,
+					data: state.notes.data.concat(action.payload)
+				}
+			};
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,

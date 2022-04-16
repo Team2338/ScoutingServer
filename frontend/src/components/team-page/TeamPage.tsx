@@ -2,10 +2,10 @@ import './TeamPage.scss';
 import React from 'react';
 import { useMediaQuery } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { Team } from '../../models/response.model';
+import { Note, Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
 import { selectTeam } from '../../state/Actions';
-import { addNoteForRobot, getMatches, getTeams } from '../../state/Effects';
+import { addNoteForRobot, getAllNotes, getMatches, getTeams } from '../../state/Effects';
 import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
@@ -14,14 +14,17 @@ import { TeamSelector } from './team-selector/TeamSelector';
 const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,
 	areTeamsLoaded: state.teams.isLoaded,
+	areNotesLoaded: state.notes.isLoaded,
 	rawMatches: state.matches.raw,
 	teams: state.teams.data,
-	selectedTeam: state.teams.selectedTeam
+	selectedTeam: state.teams.selectedTeam,
+	notes: state.notes.data
 });
 
 const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
 	getTeamStats: () => dispatch(getTeams()),
+	getNotes: () => dispatch(getAllNotes()),
 	selectTeam: (team: Team) => dispatch(selectTeam(team)),
 	createNote: (robotNum: number, content: string) => dispatch(addNoteForRobot(robotNum, content))
 });
@@ -29,6 +32,8 @@ const outputs = (dispatch) => ({
 class ConnectedTeamPage extends React.Component<any, any> {
 
 	componentDidMount() {
+		this.props.getNotes();
+
 		if (!this.props.areMatchesLoaded) {
 			this.props.getMatches();
 
@@ -45,12 +50,15 @@ class ConnectedTeamPage extends React.Component<any, any> {
 			return <div className="team-page">Loading...</div>;
 		}
 
+		const notes: Note[] = this.props.notes.filter((note: Note) => note.robotNumber === this.props.selectedTeam?.id);
+		console.log(notes);
 		return (
 			<React.Fragment>
 				<TeamPageContent
 					teams={this.props.teams}
 					selectTeam={this.props.selectTeam}
 					selectedTeam={this.props.selectedTeam}
+					notes={notes}
 					createNote={this.props.createNote}
 				/>
 			</React.Fragment>
@@ -58,7 +66,7 @@ class ConnectedTeamPage extends React.Component<any, any> {
 	}
 }
 
-function TeamPageContent({ teams, selectTeam, selectedTeam, createNote }) {
+function TeamPageContent({ teams, selectTeam, selectedTeam, notes, createNote }) {
 	const isMobile = useMediaQuery('(max-width: 600px)');
 
 	if (isMobile) {
@@ -70,7 +78,7 @@ function TeamPageContent({ teams, selectTeam, selectedTeam, createNote }) {
 						selectTeam={selectTeam}
 						selectedTeam={selectedTeam}
 					/>
-					<TeamDetail team={selectedTeam}/>
+					<TeamDetail team={selectedTeam} notes={notes}/>
 				</div>
 				<CreateNote
 					isMobile={true}
@@ -91,7 +99,7 @@ function TeamPageContent({ teams, selectTeam, selectedTeam, createNote }) {
 				/>
 			</div>
 			<div className="team-detail-wrapper">
-				<TeamDetail team={selectedTeam}/>
+				<TeamDetail team={selectedTeam} notes={notes}/>
 			</div>
 			<CreateNote
 				isMobile={false}

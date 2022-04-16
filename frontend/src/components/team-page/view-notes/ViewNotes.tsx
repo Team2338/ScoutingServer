@@ -1,10 +1,12 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
 import NotesIcon from '@material-ui/icons/Notes';
 import React from 'react';
+import { Note } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
 	isMobile: boolean;
+	notes: Note[];
 }
 
 export default function ViewNotes(props: IProps) {
@@ -19,6 +21,17 @@ export default function ViewNotes(props: IProps) {
 	const handleClose = () => {
 		setOpen(false);
 	}
+
+	const noteElements = props.notes.map((note: Note) => (
+		<div key={note.id}>
+			<div>
+				{note.content}
+			</div>
+			<div>
+				{note.creator}
+			</div>
+		</div>
+	))
 
 	return (
 		<React.Fragment>
@@ -43,7 +56,7 @@ export default function ViewNotes(props: IProps) {
 					{ translate('VIEW_NOTES') }
 				</DialogTitle>
 				<DialogContent>
-
+					{ noteElements }
 				</DialogContent>
 				<DialogActions>
 					<Button

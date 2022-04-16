@@ -1,11 +1,12 @@
 import './TeamDetail.scss';
 import React from 'react';
-import { Team, TeamObjectiveStats } from '../../../models/response.model';
+import { Note, Team, TeamObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
 import ViewNotes from '../view-notes/ViewNotes';
 
 interface IProps {
 	team: Team;
+	notes: Note[]
 }
 
 export default function TeamDetail(props: IProps) {
@@ -31,7 +32,7 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				{ translate('TEAM') } { props.team.id }
-				<ViewNotes isMobile={false}/>
+				<ViewNotes isMobile={false} notes={props.notes}/>
 			</div>
 			<div className="gamemode-list">{ gamemodeElements }</div>
 		</div>

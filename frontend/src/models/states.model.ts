@@ -1,5 +1,5 @@
 import { Language } from './languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, Team } from './response.model';
+import { GlobalObjectiveStats, Match, MatchResponse, Note, Team } from './response.model';
 
 export interface AppState {
 	language: Language;
@@ -10,7 +10,7 @@ export interface AppState {
 	csv: {
 		isLoaded: boolean;
 		url: string;
-	}
+	};
 	matches: {
 		isLoaded: boolean;
 		raw: MatchResponse[];
@@ -28,6 +28,10 @@ export interface AppState {
 		selectedStat: {
 			gamemode: string;
 			objective: string;
-		}
+		};
+	};
+	notes: {
+		isLoaded: boolean;
+		data: Note[];
 	};
 }

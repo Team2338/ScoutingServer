@@ -57,7 +57,9 @@ export default function ViewNotes(props: IProps) {
 					{ translate('VIEW_NOTES') }
 				</DialogTitle>
 				<DialogContent>
-					{ noteElements }
+					<div className="team-notes-list">
+						{ noteElements }
+					</div>
 				</DialogContent>
 				<DialogActions>
 					<Button

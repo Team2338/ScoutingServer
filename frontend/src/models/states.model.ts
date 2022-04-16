@@ -5,6 +5,7 @@ export interface AppState {
 	language: Language;
 	isLoggedIn: boolean;
 	teamNumber: number;
+	username: string;
 	eventCode: string;
 	secretCode: string;
 	csv: {

@@ -51,7 +51,6 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		}
 
 		const notes: Note[] = this.props.notes.filter((note: Note) => note.robotNumber === this.props.selectedTeam?.id);
-		console.log(notes);
 		return (
 			<React.Fragment>
 				<TeamPageContent

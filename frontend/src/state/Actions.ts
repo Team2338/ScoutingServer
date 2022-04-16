@@ -37,12 +37,14 @@ export const selectLangSuccess = (language: Language) => ({
 
 export const loginSuccess = (
 	teamNumber: number,
+	username: string,
 	eventCode: string,
 	secretCode: string
 ): Action => ({
 	type: Actions.LOGIN,
 	payload: {
 		teamNumber,
+		username,
 		eventCode,
 		secretCode
 	}

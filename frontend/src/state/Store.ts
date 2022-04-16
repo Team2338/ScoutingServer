@@ -10,6 +10,7 @@ const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
 	isLoggedIn: false,
 	teamNumber: null,
+	username: null,
 	eventCode: null,
 	secretCode: null,
 	csv: {
@@ -50,6 +51,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				isLoggedIn: true,
 				teamNumber: action.payload.teamNumber,
+				username: action.payload.username,
 				eventCode: action.payload.eventCode,
 				secretCode: action.payload.secretCode
 			};

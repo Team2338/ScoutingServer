@@ -9,11 +9,12 @@ import { login } from '../../state/Effects';
 const inputs = (state: AppState) => ({
 	initialTeamNumber: state.teamNumber ?? '',
 	initialEventCode: state.eventCode ?? '',
-	initialSecretCode: state.secretCode ?? ''
+	initialSecretCode: state.secretCode ?? '',
+	initialUsername: state.username ?? ''
 });
 
 const outputs = (dispatch) => ({
-	login: (teamNumber, eventCode, secretCode) => dispatch(login(teamNumber, eventCode, secretCode))
+	login: (teamNumber, username, eventCode, secretCode) => dispatch(login(teamNumber, username, eventCode, secretCode))
 });
 
 class ConnectedLoginPage extends React.Component<any, any> {
@@ -23,6 +24,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 
 		this.state = {
 			teamNumber: props.initialTeamNumber,
+			username: props.initialUsername,
 			eventCode: props.initialEventCode,
 			secretCode: props.initialSecretCode
 		};
@@ -39,9 +41,14 @@ class ConnectedLoginPage extends React.Component<any, any> {
 
 		this.props.login(
 			Number(this.state.teamNumber),
+			this.state.username,
 			this.state.eventCode,
 			this.state.secretCode
 		);
+	}
+
+	isValid = (): boolean => {
+		return this.state.teamNumber && this.state.username && this.state.eventCode && this.state.secretCode;
 	}
 
 	render() {
@@ -57,6 +64,15 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							margin="dense"
 							variant="outlined"
 							value={this.state.teamNumber}
+							onChange={this.handleChange}
+						/>
+						<TextField
+							label={this.props.translate('USERNAME')}
+							name="username"
+							type="text"
+							margin="dense"
+							variant="outlined"
+							value={this.state.username}
 							onChange={this.handleChange}
 						/>
 						<TextField
@@ -83,6 +99,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							color="primary"
 							type="submit"
 							onClick={this.handleSubmit}
+							disabled={!this.isValid()}
 						>
 							{ this.props.translate('SIGN_IN') }
 						</Button>

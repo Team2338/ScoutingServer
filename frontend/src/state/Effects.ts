@@ -30,12 +30,13 @@ type GetState = () => AppState;
 
 export const initApp = () => async (dispatch) => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
+	const username: string = localStorage.getItem('username');
 	const eventCode: string = localStorage.getItem('eventCode');
 	const secretCode: string = localStorage.getItem('secretCode');
 
 	// Only login if all information is present
-	if (teamNumber && eventCode && secretCode) {
-		dispatch(loginSuccess(Number(teamNumber), eventCode, secretCode));
+	if (teamNumber && username && eventCode && secretCode) {
+		dispatch(loginSuccess(Number(teamNumber), username, eventCode, secretCode));
 	}
 
 	const language: Language = localStorage.getItem('language') as Language;
@@ -51,14 +52,16 @@ export const selectLanguage = (language: Language) => async (dispatch) => {
 
 export const login = (
 	teamNumber: number,
+	username: string,
 	eventCode: string,
 	secretCode: string
 ) => async (dispatch) => {
 	localStorage.setItem('teamNumber', teamNumber.toString());
+	localStorage.setItem('username', username);
 	localStorage.setItem('eventCode', eventCode);
 	localStorage.setItem('secretCode', secretCode);
 
-	dispatch(loginSuccess(teamNumber, eventCode, secretCode));
+	dispatch(loginSuccess(teamNumber, username, eventCode, secretCode));
 };
 
 export const logout = () => async (dispatch) => {
@@ -216,9 +219,10 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 	const note: NewNote = {
 		robotNumber: robotNumber,
 		eventCode: getState().eventCode,
-		creator: 'Author - not implemented yet',
+		creator: getState().username,
 		content: content
 	};
+	console.log(note);
 
 	const dummyCompleteNote: Note = {
 		...note,

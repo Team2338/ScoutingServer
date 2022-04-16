@@ -80,7 +80,9 @@ const languages: ILanguageTranslation = {
 		"SUBMIT": "Submit",
 		"NOTE": "Note",
 		"NOTES": "Notes",
-		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team"
+		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team",
+		"NO_QUANTITATIVE_DATA": "No quantitative data for this team",
+		"USERNAME": "Username"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -124,7 +126,9 @@ const languages: ILanguageTranslation = {
 		"SUBMIT": "Entregar",
 		"NOTE": "Nota",
 		"NOTES": "Notas",
-		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo"
+		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo",
+		"NO_QUANTITATIVE_DATA": "No hay datos cuantitativos para este equipo",
+		"USERNAME": "Nombre de usuario"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -168,7 +172,9 @@ const languages: ILanguageTranslation = {
 		"SUBMIT": "Soumettre",
 		"NOTE": "Note",
 		"NOTES": "Notes",
-		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe"
+		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe",
+		"NO_QUANTITATIVE_DATA": "Pas de données quantitatives pour cette équipe",
+		"USERNAME": "Nom d'utilisateur"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -212,7 +218,9 @@ const languages: ILanguageTranslation = {
 		"SUBMIT": "Sunmak",
 		"NOTE": "Not",
 		"NOTES": "Notlar",
-		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle"
+		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle",
+		"NO_QUANTITATIVE_DATA": "Bu ekip için nicel veri yok",
+		"USERNAME": "Kullanıcı adı"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",
@@ -256,6 +264,8 @@ const languages: ILanguageTranslation = {
 		"SUBMIT": "भेजना",
 		"NOTE": "टिप्पणी",
 		"NOTES": "टिप्पणियाँ",
-		"VIEW_NOTES_FOR_THIS_TEAM": "इस टीम के लिए नोट देखें"
+		"VIEW_NOTES_FOR_THIS_TEAM": "इस टीम के लिए नोट देखें",
+		"NO_QUANTITATIVE_DATA": "इस टीम के लिए कोई मात्रात्मक डेटा नहीं",
+		"USERNAME": "उपयोगकर्ता नाम"
 	}
 };

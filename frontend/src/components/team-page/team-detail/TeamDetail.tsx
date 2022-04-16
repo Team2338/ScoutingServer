@@ -29,7 +29,7 @@ export default function TeamDetail(props: IProps) {
 			);
 		});
 	} else {
-		gamemodeElements = <div>No quantitative data for this team</div>
+		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>
 	}
 
 	return (

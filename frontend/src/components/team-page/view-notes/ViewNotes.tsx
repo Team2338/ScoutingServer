@@ -54,7 +54,7 @@ export default function ViewNotes(props: IProps) {
 				onClose={handleClose}
 			>
 				<DialogTitle id="view-notes-title">
-					{ translate('VIEW_NOTES') }
+					{ translate('NOTES') }
 				</DialogTitle>
 				<DialogContent>
 					<div className="team-notes-list">

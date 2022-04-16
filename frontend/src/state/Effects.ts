@@ -11,9 +11,15 @@ import {
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
-	calculateTeamStatsSuccess, getCsvStart, getCsvSuccess,
+	calculateTeamStatsSuccess,
+	getAllNotesStart,
+	getAllNotesSuccess,
+	getCsvStart,
+	getCsvSuccess,
 	getMatchesStart,
-	getMatchesSuccess, getNotesStart, getNotesSuccess,
+	getMatchesSuccess,
+	getNotesForRobotStart,
+	getNotesForRobotSuccess,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -168,10 +174,10 @@ export const getGlobalStats = () => async (dispatch, getState: GetState) => {
 
 export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
 	console.log('Getting notes for robot');
-	dispatch(getNotesStart(robotNumber));
+	dispatch(getNotesForRobotStart(robotNumber));
 
 	try {
-		const response = await GearscoutService.getNotes(
+		const response = await GearscoutService.getNotesForRobot(
 			getState().teamNumber,
 			getState().eventCode,
 			robotNumber,
@@ -179,9 +185,27 @@ export const getNotesForRobot = (robotNumber: number) => async (dispatch, getSta
 		);
 		const notes: Note[] = response.data;
 
-		dispatch(getNotesSuccess(notes));
+		dispatch(getNotesForRobotSuccess(notes));
 	} catch (error) {
-		console.error('Error getting notes', error);
+		console.error('Error getting notes for robot', error);
+	}
+};
+
+export const getAllNotes = () => async (dispatch, getState: GetState) => {
+	console.log('Getting all notes');
+	dispatch(getAllNotesStart());
+
+	try {
+		const response = await GearscoutService.getAllNotes(
+			getState().teamNumber,
+			getState().eventCode,
+			getState().secretCode
+		);
+		const notes: Note[] = response.data;
+
+		dispatch(getAllNotesSuccess(notes));
+	} catch (error) {
+		console.error('Error getting all notes', error);
 	}
 };
 

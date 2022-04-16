@@ -66,7 +66,7 @@ class GearscoutService {
 		);
 	};
 
-	getNotes = (teamNumber: number, eventCode: string, robotNumber: number, secretCode: string): GearscoutResponse<Note[]> => {
+	getNotesForRobot = (teamNumber: number, eventCode: string, robotNumber: number, secretCode: string): GearscoutResponse<Note[]> => {
 		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}/robot/${robotNumber}`;
 		const config = {
 			headers: {
@@ -75,7 +75,18 @@ class GearscoutService {
 		};
 
 		return this.service.get(url, config);
-	}
+	};
+
+	getAllNotes = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<Note[]> => {
+		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	};
 
 	getMatchesAsCsv = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
 		const url = `/v1/team/${teamNumber}/event/${eventCode}/download`;

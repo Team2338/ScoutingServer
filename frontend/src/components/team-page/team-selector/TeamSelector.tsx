@@ -11,14 +11,6 @@ export function TeamSelector({ teams, selectedTeam, selectTeam }) {
 		const teamNum = event.target.value;
 		let team: Team = teams.find((team: Team) => team.id === teamNum);
 
-		if (team === null) {
-			// Then this is a team with notes and not data
-			team = {
-				id: teamNum,
-				stats: null
-			};
-		}
-
 		selectTeam(team);
 	}
 

@@ -63,7 +63,7 @@ class ConnectedTeamPage extends React.Component<any, any> {
 		});
 
 		const completeListOfTeams: Team[] = this.props.teams.concat(dummyTeamsWithNotes);
-		completeListOfTeams.sort((a, b) => a.id - b.id);
+		completeListOfTeams.sort((a: Team, b: Team) => a.id - b.id);
 
 		return completeListOfTeams;
 	};

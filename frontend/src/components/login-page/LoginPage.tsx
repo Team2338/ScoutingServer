@@ -1,5 +1,5 @@
 import './LoginPage.scss';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, InputAdornment, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../models/states.model';
@@ -58,15 +58,24 @@ class ConnectedLoginPage extends React.Component<any, any> {
 					<form className="login-page-form" onSubmit={this.handleSubmit}>
 						<Typography variant="h4">{ this.props.translate('SIGN_IN') }</Typography>
 						<TextField
+							id="team-number-input"
 							label={this.props.translate('YOUR_TEAM_NUMBER')}
 							name="teamNumber"
-							type="text"
+							type="number"
 							margin="dense"
 							variant="outlined"
 							value={this.state.teamNumber}
 							onChange={this.handleChange}
+							InputProps={{
+								startAdornment: <InputAdornment position="start">#</InputAdornment>
+							}}
+							inputProps={{
+								min: 0,
+								max: 9999
+							}}
 						/>
 						<TextField
+							id="username-input"
 							label={this.props.translate('USERNAME')}
 							name="username"
 							type="text"
@@ -74,8 +83,12 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							variant="outlined"
 							value={this.state.username}
 							onChange={this.handleChange}
+							inputProps={{
+								maxLength: 32
+							}}
 						/>
 						<TextField
+							id="event-code-input"
 							label={this.props.translate('EVENT_CODE')}
 							name="eventCode"
 							type="text"
@@ -83,8 +96,12 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							variant="outlined"
 							value={this.state.eventCode}
 							onChange={this.handleChange}
+							inputProps={{
+								maxLength: 32
+							}}
 						/>
 						<TextField
+							id="secret-code-input"
 							label={this.props.translate('SECRET_CODE')}
 							name="secretCode"
 							type="text"
@@ -92,6 +109,9 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							variant="outlined"
 							value={this.state.secretCode}
 							onChange={this.handleChange}
+							inputProps={{
+								maxLength: 32
+							}}
 						/>
 						<Button
 							className="login-page-form-submit"

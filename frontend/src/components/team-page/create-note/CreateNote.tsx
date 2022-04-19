@@ -39,6 +39,10 @@ export default function CreateNote(props: IProps) {
 		setNoteContent('');
 	}
 
+	const isValid = (): boolean => {
+		return !!robotNum && !!noteContent;
+	}
+
 	return (
 		<React.Fragment>
 			<Tooltip title={ translate('ADD_NOTE') }>
@@ -74,6 +78,10 @@ export default function CreateNote(props: IProps) {
 						InputProps={{
 							startAdornment: <InputAdornment position="start">#</InputAdornment>
 						}}
+						inputProps={{
+							min: 0,
+							max: 9999
+						}}
 					/>
 					<TextField
 						variant="outlined"
@@ -81,9 +89,13 @@ export default function CreateNote(props: IProps) {
 						placeholder={ translate('NOTE') }
 						label={ translate('NOTE') }
 						value={noteContent}
+						helperText={`${noteContent.length}/255`}
 						onChange={(event) => setNoteContent(event.target.value)}
 						multiline={true}
 						fullWidth={true}
+						inputProps={{
+							maxLength: 255
+						}}
 					/>
 				</DialogContent>
 				<DialogActions>
@@ -96,6 +108,7 @@ export default function CreateNote(props: IProps) {
 					<Button
 						color="primary"
 						onClick={handleSubmit}
+						disabled={!isValid()}
 					>
 						{ translate('SUBMIT') }
 					</Button>

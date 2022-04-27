@@ -1,0 +1,2869 @@
+[
+  {
+    "id": 175,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 1,
+    "robotNumber": 3310,
+    "creator": "Sander Cohen",
+    "timeCreated": "1650548599083",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 176,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 177,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 178,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 179,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 180,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 181,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 24
+      },
+      {
+        "id": 182,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 183,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 166,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 1,
+    "robotNumber": 4020,
+    "creator": "Vault Boy",
+    "timeCreated": "1650548569434",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 167,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 168,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 169,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 170,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 171,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 172,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 7
+      },
+      {
+        "id": 173,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 174,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 157,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 1,
+    "robotNumber": 4930,
+    "creator": "A Really Long Name That Should Wrap",
+    "timeCreated": "1650548555111",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 158,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 159,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 160,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 161,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 162,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 163,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 164,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 165,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 200,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 2,
+    "robotNumber": 3636,
+    "creator": "Andrew Ryan",
+    "timeCreated": "1650549100153",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 201,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 202,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 203,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 204,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 205,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 206,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 207,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 7
+      },
+      {
+        "id": 208,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 219,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 2,
+    "robotNumber": 7419,
+    "creator": "Wheatley",
+    "timeCreated": "1650549125417",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 220,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 221,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 222,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 223,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 224,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 225,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 226,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 227,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 189,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 2,
+    "robotNumber": 8717,
+    "creator": "Xerath",
+    "timeCreated": "1650549083300",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 190,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 191,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 192,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 193,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 194,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 195,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 196,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 197,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 209,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 2,
+    "robotNumber": 8861,
+    "creator": "Chell",
+    "timeCreated": "1650549112708",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 210,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 211,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 212,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 213,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 214,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 215,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 216,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 217,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 272,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 67,
+    "creator": "Cave Johnson",
+    "timeCreated": "1650549542059",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 273,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 274,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 275,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 276,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 277,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 278,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 20
+      },
+      {
+        "id": 279,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 280,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 263,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 1468,
+    "creator": "Chell",
+    "timeCreated": "1650549541369",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 264,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 265,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 266,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 267,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 268,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 269,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 14
+      },
+      {
+        "id": 270,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 271,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 234,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 1923,
+    "creator": "Xerath",
+    "timeCreated": "1650549516941",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 235,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 236,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 237,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 238,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 239,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 240,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 7
+      },
+      {
+        "id": 241,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 242,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 282,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 1923,
+    "creator": "Vault Boy",
+    "timeCreated": "1650549568881",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 283,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 284,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 285,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 286,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 287,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 288,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 8
+      },
+      {
+        "id": 289,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 290,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 254,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 4265,
+    "creator": "Wheatley",
+    "timeCreated": "1650549532829",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 255,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 256,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 257,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 258,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 259,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 260,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 15
+      },
+      {
+        "id": 261,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 262,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 244,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 6078,
+    "creator": "Andrew Ryan",
+    "timeCreated": "1650549528005",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 245,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 246,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 247,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 248,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 249,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 250,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 6
+      },
+      {
+        "id": 251,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 252,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 294,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 3,
+    "robotNumber": 8717,
+    "creator": "Xerath",
+    "timeCreated": "1650549765365",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 295,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 296,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 297,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 298,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 299,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 300,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 7
+      },
+      {
+        "id": 301,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 302,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 323,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 4,
+    "robotNumber": 1701,
+    "creator": "Andrew Ryan",
+    "timeCreated": "1650550090684",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 324,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 325,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 326,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 327,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 328,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 329,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 11
+      },
+      {
+        "id": 330,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 331,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 350,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 4,
+    "robotNumber": 3374,
+    "creator": "Vault Boy",
+    "timeCreated": "1650550102639",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 351,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 352,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 353,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 354,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 355,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 356,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 14
+      },
+      {
+        "id": 357,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 358,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 341,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 4,
+    "robotNumber": 3467,
+    "creator": "Sophia Lamb",
+    "timeCreated": "1650550100364",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 342,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 343,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 344,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 345,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 346,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 347,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 12
+      },
+      {
+        "id": 348,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 349,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 312,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 4,
+    "robotNumber": 4130,
+    "creator": "Sander Cohen",
+    "timeCreated": "1650550075042",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 313,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 314,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 315,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 316,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 317,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 318,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 319,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 320,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 332,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 4,
+    "robotNumber": 5437,
+    "creator": "Wheatley",
+    "timeCreated": "1650550097851",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 333,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 334,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 335,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 336,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 337,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 338,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 339,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 340,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 303,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 4,
+    "robotNumber": 7407,
+    "creator": "Xerath",
+    "timeCreated": "1650550072878",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 304,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 305,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 306,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 4
+      },
+      {
+        "id": 307,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 308,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 309,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 18
+      },
+      {
+        "id": 310,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 3
+      },
+      {
+        "id": 311,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 392,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 5,
+    "robotNumber": 115,
+    "creator": "Corvo Attano",
+    "timeCreated": "1650550462750",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 393,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 394,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 395,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 396,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 397,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 398,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 8
+      },
+      {
+        "id": 399,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 400,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 403,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 5,
+    "robotNumber": 836,
+    "creator": "Vault Boy",
+    "timeCreated": "1650550510813",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 404,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 405,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 406,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 4
+      },
+      {
+        "id": 407,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 408,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 409,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 10
+      },
+      {
+        "id": 410,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 411,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 364,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 5,
+    "robotNumber": 4488,
+    "creator": "Frank Fontaine",
+    "timeCreated": "1650550446936",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 365,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 366,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 367,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 368,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 369,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 370,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 16
+      },
+      {
+        "id": 371,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 372,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 383,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 5,
+    "robotNumber": 4488,
+    "creator": "Cave Johnson",
+    "timeCreated": "1650550456879",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 384,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 385,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 386,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 387,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 388,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 389,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 16
+      },
+      {
+        "id": 390,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 391,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 374,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 5,
+    "robotNumber": 8853,
+    "creator": "Andrew Ryan",
+    "timeCreated": "1650550451530",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 375,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 376,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 377,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 378,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 379,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 380,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 381,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 382,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 428,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 6,
+    "robotNumber": 1902,
+    "creator": "Sophia Lamb",
+    "timeCreated": "1650550908283",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 429,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 430,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 431,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 432,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 433,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 434,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 435,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 436,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 437,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 6,
+    "robotNumber": 2341,
+    "creator": "Cave Johnson",
+    "timeCreated": "1650550912908",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 438,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 439,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 440,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 441,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 442,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 443,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 12
+      },
+      {
+        "id": 444,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 445,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 446,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 6,
+    "robotNumber": 3539,
+    "creator": "Chell",
+    "timeCreated": "1650550929715",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 447,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 448,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 449,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 3
+      },
+      {
+        "id": 450,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 451,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 452,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 9
+      },
+      {
+        "id": 453,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 6
+      },
+      {
+        "id": 454,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 416,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 6,
+    "robotNumber": 4451,
+    "creator": "Corvo Attano",
+    "timeCreated": "1650550896379",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 417,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 418,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 419,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 420,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 421,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 422,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 11
+      },
+      {
+        "id": 423,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 424,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 466,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 7,
+    "robotNumber": 2016,
+    "creator": "Wheatley",
+    "timeCreated": "1650551263770",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 467,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 0
+      },
+      {
+        "id": 468,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 469,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 470,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 471,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 472,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 473,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 474,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 5209,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 7,
+    "robotNumber": 2212,
+    "creator": "Chel",
+    "timeCreated": "1650651132167",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 5210,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 5211,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 5212,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 5213,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 5214,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 5215,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 5216,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 5217,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 457,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 7,
+    "robotNumber": 6328,
+    "creator": "Frank Fontaine",
+    "timeCreated": "1650551257745",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 458,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 459,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 460,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 4
+      },
+      {
+        "id": 461,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 462,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 463,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 19
+      },
+      {
+        "id": 464,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 465,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 476,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 7,
+    "robotNumber": 6328,
+    "creator": "Sophia Lamb",
+    "timeCreated": "1650551283112",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 477,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 478,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 479,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 4
+      },
+      {
+        "id": 480,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 481,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 482,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 19
+      },
+      {
+        "id": 483,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 484,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 490,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 8,
+    "robotNumber": 1939,
+    "creator": "Sander Cohen",
+    "timeCreated": "1650551701787",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 491,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 492,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 493,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 494,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 495,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 496,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 10
+      },
+      {
+        "id": 497,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 498,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 509,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 8,
+    "robotNumber": 2075,
+    "creator": "A Really Long Name That Should Wrap",
+    "timeCreated": "1650551718273",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 510,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 511,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 512,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 4
+      },
+      {
+        "id": 513,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 514,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 515,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 10
+      },
+      {
+        "id": 516,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 517,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 499,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 8,
+    "robotNumber": 5827,
+    "creator": "Vault Boy",
+    "timeCreated": "1650551704424",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 500,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 501,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 502,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 503,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 504,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 505,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 13
+      },
+      {
+        "id": 506,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 507,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "id": 529,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 9,
+    "robotNumber": 3534,
+    "creator": "Andrew Ryan",
+    "timeCreated": "1650552083063",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 530,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 531,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 532,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 533,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 534,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 535,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 14
+      },
+      {
+        "id": 536,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 537,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 547,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 9,
+    "robotNumber": 4013,
+    "creator": "Sophia Lamb",
+    "timeCreated": "1650552104044",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 548,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 549,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 550,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 551,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 552,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 553,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 13
+      },
+      {
+        "id": 554,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 555,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 538,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 9,
+    "robotNumber": 5813,
+    "creator": "Sander Cohen",
+    "timeCreated": "1650552095838",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 539,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 540,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 541,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 542,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 543,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 544,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 545,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 3
+      },
+      {
+        "id": 546,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 520,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 9,
+    "robotNumber": 5900,
+    "creator": "Frank Fontaine",
+    "timeCreated": "1650552068965",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 521,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 522,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 523,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 524,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 525,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 6
+      },
+      {
+        "id": 526,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 527,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 528,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 596,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 176,
+    "creator": "A Really Long Name That Should Wrap",
+    "timeCreated": "1650552655984",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 597,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 598,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 599,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 600,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 601,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 602,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 11
+      },
+      {
+        "id": 603,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 5
+      },
+      {
+        "id": 604,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 569,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 1293,
+    "creator": "Andrew Ryan",
+    "timeCreated": "1650552628479",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 570,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 571,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 572,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 573,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 574,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 575,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 576,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 577,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 667,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 2531,
+    "creator": "Cave Johnson",
+    "timeCreated": "1650553560241",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 668,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 669,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 670,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 671,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 672,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 673,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 674,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 675,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "id": 605,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 3182,
+    "creator": "Wheatley",
+    "timeCreated": "1650552659872",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 606,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 607,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 608,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 609,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 610,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 611,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 612,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 613,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "id": 578,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 4775,
+    "creator": "Cave Johnson",
+    "timeCreated": "1650552647153",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 579,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 0
+      },
+      {
+        "id": 580,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 581,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 582,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 583,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 584,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 1
+      },
+      {
+        "id": 585,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 3
+      },
+      {
+        "id": 586,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 587,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 5940,
+    "creator": "Chell",
+    "timeCreated": "1650552647954",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 588,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 589,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 590,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 591,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 592,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 593,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 18
+      },
+      {
+        "id": 594,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 3
+      },
+      {
+        "id": 595,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "id": 559,
+    "teamNumber": 2338,
+    "secretCode": "password",
+    "eventCode": "test",
+    "matchNumber": 10,
+    "robotNumber": 5940,
+    "creator": "Frank Fontaine",
+    "timeCreated": "1650552618572",
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 560,
+        "gamemode": "AUTO",
+        "objective": "MOBILITY_2022",
+        "count": 2
+      },
+      {
+        "id": 561,
+        "gamemode": "AUTO",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 562,
+        "gamemode": "AUTO",
+        "objective": "HIGH_GOAL_2022",
+        "count": 2
+      },
+      {
+        "id": 563,
+        "gamemode": "AUTO",
+        "objective": "MISS_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 564,
+        "gamemode": "TELEOP",
+        "objective": "LOW_GOAL_2022",
+        "count": 0
+      },
+      {
+        "id": 565,
+        "gamemode": "TELEOP",
+        "objective": "HIGH_GOAL_2022",
+        "count": 17
+      },
+      {
+        "id": 566,
+        "gamemode": "TELEOP",
+        "objective": "MISS_GOAL_2022",
+        "count": 3
+      },
+      {
+        "id": 567,
+        "gamemode": "TELEOP",
+        "objective": "CLIMB_2022",
+        "count": 10
+      }
+    ]
+  }
+]

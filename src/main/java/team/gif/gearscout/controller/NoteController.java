@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.gearscout.model.NewNote;
-import team.gif.gearscout.model.NoteEntry;
+import team.gif.gearscout.model.NoteEntity;
 import team.gif.gearscout.service.NoteService;
 
 import java.util.List;
@@ -46,14 +46,14 @@ public class NoteController {
 	
 	
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/robot/{robotNumber}")
-	public ResponseEntity<List<NoteEntry>> getNotesForTeam(
+	public ResponseEntity<List<NoteEntity>> getNotesForTeam(
 		@PathVariable Integer teamNumber,
 		@PathVariable String eventCode,
 		@PathVariable Integer robotNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getNotesForTeam request: {}, {}, {}", teamNumber, eventCode, robotNumber);
-		List<NoteEntry> result = noteService.getAllNotesForTeam(teamNumber, secretCode, eventCode, robotNumber);
+		List<NoteEntity> result = noteService.getAllNotesForTeam(teamNumber, secretCode, eventCode, robotNumber);
 		
 		return ResponseEntity.ok(result);
 	}

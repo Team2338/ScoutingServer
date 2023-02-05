@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "notes")
-public class NoteEntry {
+public class NoteEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,9 +43,9 @@ public class NoteEntry {
 	private String timeCreated;
 	
 	
-	public NoteEntry() {}
+	public NoteEntity() {}
 	
-	public NoteEntry(
+	public NoteEntity(
 		NewNote note,
 		Integer teamNumber,
 		String secretCode,

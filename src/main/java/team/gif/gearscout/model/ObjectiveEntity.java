@@ -1,6 +1,7 @@
 package team.gif.gearscout.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "objectives")
-public class ObjectiveEntry {
+public class ObjectiveEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +22,7 @@ public class ObjectiveEntry {
 	private Long id;
 	
 	@ManyToOne
-	private MatchEntry match;
+	private MatchEntity match;
 	
 	@Column
 	@Size(min = 1, max = 64)
@@ -31,15 +32,19 @@ public class ObjectiveEntry {
 	@Size(min = 1, max = 128)
 	private String objective;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Integer count;
+	
+	@Column(nullable = true)
+	@Type(type = "team.gif.gearscout.repository.PostgresIntegerArrayType")
+	private Integer[] list;
 	
 	
 	public Long getId() {
 		return id;
 	}
 	
-	public MatchEntry getMatch() {
+	public MatchEntity getMatch() {
 		return match;
 	}
 	
@@ -55,11 +60,15 @@ public class ObjectiveEntry {
 		return count;
 	}
 	
+	public Integer[] getList() {
+		return list;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	public void setMatch(MatchEntry match) {
+	public void setMatch(MatchEntity match) {
 		this.match = match;
 	}
 	
@@ -73,6 +82,10 @@ public class ObjectiveEntry {
 	
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+	
+	public void setList(Integer[] list) {
+		this.list = list;
 	}
 	
 }

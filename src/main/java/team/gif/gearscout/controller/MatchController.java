@@ -1,4 +1,4 @@
-package team.gif.gearscout.v2022;
+package team.gif.gearscout.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,29 +13,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team.gif.gearscout.v2022.model.Match22;
-import team.gif.gearscout.v2022.model.NewMatch22;
+import team.gif.gearscout.model.MatchEntity;
+import team.gif.gearscout.model.NewMatch;
+import team.gif.gearscout.service.MatchService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/2022/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MatchController22 {
+@RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
+public class MatchController {
 	
-	private static final Logger logger = LogManager.getLogger(MatchController22.class);
-	private final MatchService22 matchService;
+	private final MatchService matchService;
+	private static final Logger logger = LogManager.getLogger(MatchController.class);
+	
 	
 	@Autowired
-	public MatchController22(MatchService22 matchService) {
+	public MatchController(MatchService matchService) {
 		this.matchService = matchService;
 	}
 	
 	
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> addMatch(
-		@PathVariable Integer teamNumber,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-		@RequestBody NewMatch22 match
+			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@RequestBody NewMatch match
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 		
@@ -46,48 +48,56 @@ public class MatchController22 {
 	
 	
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}")
-	public ResponseEntity<List<Match22>> getAllMatchesForEvent(
-		@PathVariable Integer teamNumber,
-		@PathVariable String eventCode,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+	public ResponseEntity<List<MatchEntity>> getAllMatchesForEvent(
+			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@PathVariable String eventCode
 	) {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
 		
-		List<Match22> result = matchService.getAllMatchesForEvent(teamNumber, secretCode, eventCode);
+		List<MatchEntity> result = matchService.getAllMatchesForEvent(teamNumber, secretCode, eventCode);
 		
 		return ResponseEntity.ok(result);
 	}
 	
 	
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
-	public ResponseEntity<Match22> hideMatch(
-		@PathVariable Integer teamNumber,
-		@PathVariable Long matchId,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+	public ResponseEntity<MatchEntity> hideMatch(
+			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@PathVariable Long matchId
 	) {
 		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
-		Match22 result = matchService.setMatchHiddenStatus(matchId, secretCode, true);
+		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, true);
 		return ResponseEntity.ok(result);
 	}
 	
 	
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/unhide")
-	public ResponseEntity<Match22> unhideMatch(
-		@PathVariable Integer teamNumber,
-		@PathVariable Long matchId,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+	public ResponseEntity<MatchEntity> unhideMatch(
+			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@PathVariable Long matchId
 	) {
 		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
-		Match22 result = matchService.setMatchHiddenStatus(matchId, secretCode, false);
+		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, false);
 		return ResponseEntity.ok(result);
+	}
+	
+	
+	@GetMapping(value = "/distinct")
+	public ResponseEntity<List<Integer>> getDistinctTeamNumbers() {
+		logger.debug("Received getDistinctTeamNumbers request");
+		List<Integer> teamNumbers = matchService.getDistinctTeamNumbers();
+		return ResponseEntity.ok(teamNumbers);
 	}
 	
 	
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(
-		@PathVariable Integer teamNumber,
-		@PathVariable String eventCode,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+			@PathVariable Integer teamNumber,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@PathVariable String eventCode
 	) {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
 		
@@ -95,8 +105,8 @@ public class MatchController22 {
 		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);
 		
 		return ResponseEntity.ok()
-			.header("Content-Disposition", "attachment; filename=" + filename)
-			.body(content);
+				.header("Content-Disposition", "attachment; filename=" + filename)
+				.body(content);
 	}
 	
 }

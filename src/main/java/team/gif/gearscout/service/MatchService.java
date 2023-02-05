@@ -3,9 +3,9 @@ package team.gif.gearscout.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.exception.MatchNotFoundException;
-import team.gif.gearscout.model.MatchEntry;
+import team.gif.gearscout.model.MatchEntity;
 import team.gif.gearscout.model.NewMatch;
-import team.gif.gearscout.model.ObjectiveEntry;
+import team.gif.gearscout.model.ObjectiveEntity;
 import team.gif.gearscout.repository.MatchRepository;
 
 import javax.transaction.Transactional;
@@ -26,20 +26,20 @@ public class MatchService {
 		this.matchRepository = matchRepository;
 	}
 	
-	public MatchEntry saveMatch(NewMatch match, Integer teamNumber, String secretCode) {
+	public MatchEntity saveMatch(NewMatch match, Integer teamNumber, String secretCode) {
 		// Convert Match to MatchEntry
 		String currentTime = Long.toString(System.currentTimeMillis());
-		MatchEntry matchEntry = new MatchEntry(match, teamNumber, secretCode, currentTime);
+		MatchEntity matchEntity = new MatchEntity(match, teamNumber, secretCode, currentTime);
 		
-		return matchRepository.save(matchEntry);
+		return matchRepository.save(matchEntity);
 	}
 	
-	public List<MatchEntry> getAllMatchesForEvent(Integer teamNumber, String secretCode, String eventCode) {
+	public List<MatchEntity> getAllMatchesForEvent(Integer teamNumber, String secretCode, String eventCode) {
 		return matchRepository.findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, secretCode, eventCode);
 	}
 	
-	public MatchEntry setMatchHiddenStatus(Long matchId, String secretCode, boolean isHidden) {
-		MatchEntry match = matchRepository
+	public MatchEntity setMatchHiddenStatus(Long matchId, String secretCode, boolean isHidden) {
+		MatchEntity match = matchRepository
 				.findMatchEntryByIdAndSecretCode(matchId, secretCode)
 				.orElseThrow(() -> new MatchNotFoundException(matchId));
 		
@@ -54,7 +54,7 @@ public class MatchService {
 	}
 	
 	public String getEventDataAsCsv(Integer teamNumber, String secretCode, String eventCode) {
-		List<MatchEntry> matches = matchRepository.findVisibleMatches(teamNumber, secretCode, eventCode);
+		List<MatchEntity> matches = matchRepository.findVisibleMatches(teamNumber, secretCode, eventCode);
 		
 		HashSet<String> scoreNames = getUniqueScoreNames(matches); // Collect names of all objectives
 		String[] sortedScoreNames = getSortedScoreNames(scoreNames); // Sort score names
@@ -65,7 +65,7 @@ public class MatchService {
 		sb.append(getCsvHeader(sortedScoreNames));
 		
 		// Append each line of match data
-		for (MatchEntry match : matches) {
+		for (MatchEntity match : matches) {
 			String line = getLineFromMatch(match, scorePositions);
 			sb.append("\n").append(line);
 		}
@@ -81,10 +81,10 @@ public class MatchService {
 	 * @param matches The match history
 	 * @return The set of unique identifiers for each objective present in the match history.
 	 */
-	private HashSet<String> getUniqueScoreNames(List<MatchEntry> matches) {
+	private HashSet<String> getUniqueScoreNames(List<MatchEntity> matches) {
 		HashSet<String> scoreNames = new HashSet<>();
-		for (MatchEntry match : matches) {
-			for (ObjectiveEntry objective : match.getObjectives()) {
+		for (MatchEntity match : matches) {
+			for (ObjectiveEntity objective : match.getObjectives()) {
 				String name = this.getObjectiveName(objective);
 				scoreNames.add(name);
 			}
@@ -93,7 +93,7 @@ public class MatchService {
 		return scoreNames;
 	}
 	
-	private String getObjectiveName(ObjectiveEntry obj) {
+	private String getObjectiveName(ObjectiveEntity obj) {
 		return obj.getGamemode() + "_" + obj.getObjective();
 	}
 	
@@ -122,7 +122,7 @@ public class MatchService {
 		return header.toString();
 	}
 	
-	private String getLineFromMatch(MatchEntry match, HashMap<String, Integer> scorePositions) {
+	private String getLineFromMatch(MatchEntity match, HashMap<String, Integer> scorePositions) {
 		StringBuilder line = new StringBuilder()
 				.append(match.getRobotNumber())
 				.append(",")
@@ -138,11 +138,11 @@ public class MatchService {
 		return line.toString();
 	}
 	
-	private String[] getSortedScores(MatchEntry match, HashMap<String, Integer> scorePositions) {
+	private String[] getSortedScores(MatchEntity match, HashMap<String, Integer> scorePositions) {
 		String[] scores = new String[scorePositions.size()]; // One score for each possible objective (null if not listed)
 		Arrays.fill(scores, "");
 		
-		for (ObjectiveEntry objective : match.getObjectives()) {
+		for (ObjectiveEntity objective : match.getObjectives()) {
 			String name = this.getObjectiveName(objective);
 			int position = scorePositions.get(name);
 			scores[position] = objective.getCount().toString();

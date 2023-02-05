@@ -3,7 +3,7 @@ package team.gif.gearscout.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.model.NewNote;
-import team.gif.gearscout.model.NoteEntry;
+import team.gif.gearscout.model.NoteEntity;
 import team.gif.gearscout.repository.NoteRepository;
 
 import javax.transaction.Transactional;
@@ -20,18 +20,18 @@ public class NoteService {
 		this.noteRepository = noteRepository;
 	}
 	
-	public NoteEntry saveNote(
+	public NoteEntity saveNote(
 		NewNote note,
 		Integer teamNumber,
 		String secretCode
 	) {
 		String currentTime = Long.toString(System.currentTimeMillis());
-		NoteEntry noteEntry = new NoteEntry(note, teamNumber, secretCode, currentTime);
+		NoteEntity noteEntity = new NoteEntity(note, teamNumber, secretCode, currentTime);
 		
-		return noteRepository.save(noteEntry);
+		return noteRepository.save(noteEntity);
 	}
 	
-	public List<NoteEntry> getAllNotesForTeam(
+	public List<NoteEntity> getAllNotesForTeam(
 		Integer teamNumber,
 		String secretCode,
 		String eventCode,

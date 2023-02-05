@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "matches")
-public class MatchEntry {
+public class MatchEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,18 +44,19 @@ public class MatchEntry {
 	private String creator; // Username of the scouter that created this entry
 	
 	@Column(nullable = false)
+	@Size(min = 8, max = 64)
 	private String timeCreated;
 	
 	@Column(nullable = false)
 	private boolean isHidden;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	List<ObjectiveEntry> objectives;
+	List<ObjectiveEntity> objectives;
 	
 	
-	public MatchEntry() {}
+	public MatchEntity() {}
 	
-	public MatchEntry(
+	public MatchEntity(
 		NewMatch match,
 		Integer teamNumber,
 		String secretCode,
@@ -118,7 +119,7 @@ public class MatchEntry {
 	}
 	
 	
-	public List<ObjectiveEntry> getObjectives() {
+	public List<ObjectiveEntity> getObjectives() {
 		return objectives;
 	}
 	
@@ -168,7 +169,7 @@ public class MatchEntry {
 	}
 	
 	
-	public void setObjectives(List<ObjectiveEntry> objectives) {
+	public void setObjectives(List<ObjectiveEntity> objectives) {
 		this.objectives = objectives;
 	}
 	

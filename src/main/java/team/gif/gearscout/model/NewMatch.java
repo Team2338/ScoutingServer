@@ -9,7 +9,7 @@ public class NewMatch {
 	private Integer robotNumber;
 	private String creator;
 	
-	private List<ObjectiveEntry> objectives;
+	private List<ObjectiveEntity> objectives;
 	
 	public NewMatch() {}
 	
@@ -30,7 +30,7 @@ public class NewMatch {
 		return creator;
 	}
 	
-	public List<ObjectiveEntry> getObjectives() {
+	public List<ObjectiveEntity> getObjectives() {
 		return this.objectives;
 	}
 	
@@ -50,7 +50,7 @@ public class NewMatch {
 		this.creator = creator;
 	}
 	
-	public void setObjectives(List<ObjectiveEntry> objectives) {
+	public void setObjectives(List<ObjectiveEntity> objectives) {
 		this.objectives = objectives;
 	}
 	

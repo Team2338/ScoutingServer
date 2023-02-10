@@ -98,8 +98,8 @@ function ListObjective(props: { objective: Objective }) {
 
 	return (
 		<div className="objective-list">
-			<div className="objective-list-title">{ translate(props.objective.objective) }</div>
-			{ listElements }
+			<div className="objective-list-title">{ translate(props.objective.objective) }:</div>
+			<div className="objective-list-scores">{ listElements }</div>
 		</div>
 	)
 }

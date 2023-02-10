@@ -15,7 +15,7 @@ export default function MatchDetail(props: IProps) {
 	const translate = useTranslator();
 
 	if (!props.match) {
-		return <div>{translate('SELECT_MATCH_VIEW_MORE_DETAILS')}</div>;
+		return <div>{ translate('SELECT_MATCH_VIEW_MORE_DETAILS') }</div>;
 	}
 
 	const gamemodeElements = []
@@ -65,12 +65,17 @@ export default function MatchDetail(props: IProps) {
 }
 
 function Gamemode(props: { name: string, objectives: Objective[] }) {
-
 	const translate = useTranslator();
 
-	const objectiveElements = props.objectives.map((objective: Objective) => (
-		<div key={objective.id}>{ translate(objective.objective) }: { objective.count }</div>
-	));
+	const getObjectiveElement = (objective: Objective) => {
+		if (objective.list !== null && objective.list !== undefined) {
+			return <ListObjective objective={objective}/>
+		}
+
+		return <SimpleObjective objective={objective}/>
+	}
+
+	const objectiveElements = props.objectives.map(getObjectiveElement);
 
 	return (
 		<div className="gamemode">
@@ -78,4 +83,23 @@ function Gamemode(props: { name: string, objectives: Objective[] }) {
 			{ objectiveElements }
 		</div>
 	);
+}
+
+function SimpleObjective(props: { objective: Objective }) {
+	const translate = useTranslator();
+	return <div>{ translate(props.objective.objective) }: { props.objective.count }</div>;
+}
+
+function ListObjective(props: { objective: Objective }) {
+	const translate = useTranslator();
+	const listElements = props.objective.list.map((score: number) => (
+		<div className="objective-list-score">{ score }</div>
+	));
+
+	return (
+		<div className="objective-list">
+			<div className="objective-list-title">{ translate(props.objective.objective) }</div>
+			{ listElements }
+		</div>
+	)
 }

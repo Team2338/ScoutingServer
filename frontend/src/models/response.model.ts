@@ -15,7 +15,8 @@ export interface Objective {
 	id: number;
 	gamemode: string;
 	objective: string;
-	count: number;
+	count?: number;
+	list?: number[];
 }
 
 export interface Match {

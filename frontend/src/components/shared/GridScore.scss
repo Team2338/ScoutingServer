@@ -1,0 +1,17 @@
+
+.grid-display {
+	display: grid;
+	grid-template-columns: repeat(9, 1fr);
+	gap: 4px;
+	margin-left: 8px;
+
+	&-score {
+		display: flex;
+		width: 32px;
+		height: 32px;
+		border: 1px solid #dbdedf;
+		border-radius: 4px;
+		align-items: center;
+		justify-content: center;
+	}
+}

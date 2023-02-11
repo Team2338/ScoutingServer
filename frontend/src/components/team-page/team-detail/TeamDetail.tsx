@@ -2,6 +2,7 @@ import './TeamDetail.scss';
 import React from 'react';
 import { Team, TeamObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
+import { GridScore } from '../../shared/GridScore';
 
 interface IProps {
 	team: Team;
@@ -62,7 +63,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 		meanListElement = (
 			<React.Fragment>
 				<div className="objective-stat">{ translate('MEAN_LIST') }:</div>
-				<div className="objective-stat-list"></div>
+				<GridScore list={props.stats.meanList} />
 			</React.Fragment>
 		);
 	}

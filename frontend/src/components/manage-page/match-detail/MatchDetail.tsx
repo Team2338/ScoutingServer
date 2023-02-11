@@ -3,6 +3,7 @@ import { Icon, IconButton, Tooltip } from '@material-ui/core';
 import React from 'react';
 import { Match, Objective } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
+import { GridScore } from '../../shared/GridScore';
 
 interface IProps {
 	match: Match;
@@ -69,10 +70,10 @@ function Gamemode(props: { name: string, objectives: Objective[] }) {
 
 	const getObjectiveElement = (objective: Objective) => {
 		if (objective.list !== null && objective.list !== undefined) {
-			return <ListObjective objective={objective}/>
+			return <ListObjective key={objective.objective} objective={objective}/>
 		}
 
-		return <SimpleObjective objective={objective}/>
+		return <SimpleObjective key={objective.objective} objective={objective}/>
 	}
 
 	const objectiveElements = props.objectives.map(getObjectiveElement);
@@ -99,7 +100,8 @@ function ListObjective(props: { objective: Objective }) {
 	return (
 		<div className="objective-list">
 			<div className="objective-list-title">{ translate(props.objective.objective) }:</div>
-			<div className="objective-list-scores">{ listElements }</div>
+			{/*<div className="objective-list-scores">{ listElements }</div>*/}
+			<GridScore list={props.objective.list}/>
 		</div>
-	)
+	);
 }

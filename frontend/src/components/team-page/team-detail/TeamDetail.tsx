@@ -57,6 +57,16 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 
 	const translate = useTranslator();
 
+	let meanListElement = null;
+	if (props.stats.meanList) {
+		meanListElement = (
+			<React.Fragment>
+				<div className="objective-stat">{ translate('MEAN_LIST') }:</div>
+				<div className="objective-stat-list"></div>
+			</React.Fragment>
+		);
+	}
+
 	return (
 		<div className="stats">
 			<div className="objective-name">{ translate(props.name) }:</div>
@@ -64,11 +74,8 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
 			<div className="objective-stat">{ translate('MEDIAN') }: { props.stats.median }</div>
 			<div className="objective-stat">{ translate('MODE') }: { props.stats.mode }</div>
+			{ meanListElement }
 		</div>
 	);
-
-}
-
-function ListObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 
 }

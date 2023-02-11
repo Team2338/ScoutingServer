@@ -134,7 +134,10 @@ class TeamModelService {
 				}
 
 				scores.get(key).scores.push(objective.count);
-				scores.get(key).lists.push(objective.list);
+
+				if (objective.list) {
+					scores.get(key).lists.push(objective.list);
+				}
 			}
 		}
 
@@ -149,8 +152,8 @@ class TeamModelService {
 				.set(objective.objective, {
 					teamNumber: teamNumber,
 					scores: objective.scores,
-					lists: objective.lists,
-					meanList: getListMean(objective.lists),
+					lists: objective.lists.length > 0 ? objective.lists : null,
+					meanList: objective.lists.length > 0 ? getListMean(objective.lists) : null,
 					mean: getMean(objective.scores),
 					median: getMedian(objective.scores),
 					mode: getMode(objective.scores),

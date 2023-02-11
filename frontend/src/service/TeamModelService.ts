@@ -1,6 +1,10 @@
 import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models/response.model';
 import { getMean, getMedian, getMode } from './Stats';
 
+interface AggregateObjective extends Objective {
+	numMatchesToAverage: number;
+}
+
 class TeamModelService {
 
 	createTeam = (matches: MatchResponse[]): Team => {
@@ -57,7 +61,7 @@ class TeamModelService {
 	 * @param matches The list of matches to merge.
 	 */
 	private mergeMatches = (matches: MatchResponse[]): MatchResponse => {
-		const objectives = new Map<string, any>();
+		const objectives = new Map<string, AggregateObjective>();
 
 		// Get sum of all objectives
 		for (const match of matches) {
@@ -66,9 +70,11 @@ class TeamModelService {
 
 				if (!objectives.has(key)) {
 					objectives.set(key, {
+						id: null,
 						gamemode: objective.gamemode,
 						objective: objective.objective,
-						count: objective.count,
+						count: objective.count ?? 0,
+						list: objective.list ?? [],
 						numMatchesToAverage: 1
 					});
 
@@ -77,14 +83,16 @@ class TeamModelService {
 
 				const value = objectives.get(key);
 				value.count += objective.count;
+				value.list = this.sumLists(value.list, objective.list);
 				value.numMatchesToAverage++;
 			}
 		}
 
 		// Convert back into a list of objectives
 		const mergedObjectives: Objective[] = [];
-		objectives.forEach((value: any) => {
+		objectives.forEach((value: AggregateObjective) => {
 			value.count = (value.count / value.numMatchesToAverage);
+			value.list = value.list.map((sum: number) => sum / value.numMatchesToAverage);
 			mergedObjectives.push(value);
 		});
 
@@ -93,6 +101,13 @@ class TeamModelService {
 			objectives: mergedObjectives
 		};
 	};
+
+	private sumLists = (first: number[], second: number[]): number[] => {
+		const result: number[] = [];
+		first.forEach((value: number, index: number) => result[index] = value);
+		second.forEach((value: number, index: number) => result[index] = (result[index] ?? 0) + value); // Null check in case second list is longer
+		return result;
+	}
 
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
 		const scores = new Map<string, any>();

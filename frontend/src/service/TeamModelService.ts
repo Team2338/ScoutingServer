@@ -1,8 +1,15 @@
 import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models/response.model';
-import { getMean, getMedian, getMode } from './Stats';
+import { getListMean, getMean, getMedian, getMode } from './Stats';
 
 interface AggregateObjective extends Objective {
 	numMatchesToAverage: number;
+}
+
+interface ObjectiveSums {
+	gamemode: string;
+	objective: string;
+	scores: number[];
+	lists: number[][];
 }
 
 class TeamModelService {
@@ -110,7 +117,7 @@ class TeamModelService {
 	}
 
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
-		const scores = new Map<string, any>();
+		const scores = new Map<string, ObjectiveSums>();
 
 		// Collect a list of counts for each objective
 		for (const match of matches) {
@@ -121,17 +128,19 @@ class TeamModelService {
 					scores.set(key, {
 						gamemode: objective.gamemode,
 						objective: objective.objective,
-						scores: []
+						scores: [],
+						lists: []
 					});
 				}
 
 				scores.get(key).scores.push(objective.count);
+				scores.get(key).lists.push(objective.list);
 			}
 		}
 
 		// Create collection of stats for each objective
 		const stats: ObjectiveStats = new Map<string, Map<string, TeamObjectiveStats>>(); // gamemode -> objective -> stats
-		scores.forEach((objective: any) => {
+		scores.forEach((objective: ObjectiveSums) => {
 			if (!stats.has(objective.gamemode)) {
 				stats.set(objective.gamemode, new Map());
 			}
@@ -140,6 +149,8 @@ class TeamModelService {
 				.set(objective.objective, {
 					teamNumber: teamNumber,
 					scores: objective.scores,
+					lists: objective.lists,
+					meanList: getListMean(objective.lists),
 					mean: getMean(objective.scores),
 					median: getMedian(objective.scores),
 					mode: getMode(objective.scores),

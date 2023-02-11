@@ -68,3 +68,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	);
 
 }
+
+function ListObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
+
+}

@@ -4,6 +4,16 @@ export const getMean = (scores: number[]): number => {
 	return sum / scores.length;
 };
 
+export const getListMean = (lists: number[][]): number[] => {
+	const result = [];
+	for (let i = 0; i < lists[0].length; i++) {
+		result[i] = 0;
+		lists.forEach((list: number[]) => result[i] += list[i]);
+	}
+
+	return result.map((value: number) => value / lists.length);
+}
+
 export const getMedian = (scores: number[]): number => {
 	if (scores.length < 2) {
 		return scores[0];
@@ -34,7 +44,7 @@ export const getMode = (scores: number[]): number => {
 		frequencies.set(score, nextFrequency);
 	}
 
-	// Select score of highest frequency
+	// Select score of the highest frequency
 	let mode = scores[0];
 	frequencies.forEach((frequency: number, score: number) => {
 		if (frequency > frequencies.get(mode)) {

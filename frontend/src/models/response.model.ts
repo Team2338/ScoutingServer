@@ -41,6 +41,8 @@ export interface Team {
 export interface TeamObjectiveStats {
 	teamNumber: number;
 	scores: number[];
+	lists: number[][];
+	meanList: number[];
 	mean: number;
 	variance: number;
 	median: number;

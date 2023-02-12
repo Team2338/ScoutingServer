@@ -32,7 +32,7 @@ export const translate = (Component) => {
 };
 
 export const useTranslator = () => {
-	const language = useSelector((state: AppState) => state.language);
+	const language: string = useSelector((state: AppState) => state.language);
 
 	return (key: string) => translateKey(language, key);
 };
@@ -54,6 +54,7 @@ const languages: ILanguageTranslation = {
 		"LOGOUT": "Logout",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Select a match to view more details",
 		"STAT_TABLE": "Stat table",
+		"MEAN_LIST": "Mean list",
 		"MEAN": "Mean",
 		"MEDIAN": "Median",
 		"MODE": "Mode",
@@ -92,6 +93,7 @@ const languages: ILanguageTranslation = {
 		"LOGOUT": "Cerrar sesión",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Seleccione un partido para ver más detalles",
 		"STAT_TABLE": "Tabla de estadisticas",
+		"MEAN_LIST": "Lista media",
 		"MEAN": "Media",
 		"MEDIAN": "Mediana",
 		"MODE": "Moda",
@@ -130,6 +132,7 @@ const languages: ILanguageTranslation = {
 		"LOGOUT": "Se déconnecter",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Sélectionnez une match pour afficher plus de détails",
 		"STAT_TABLE": "Tableau statistique",
+		"MEAN_LIST": "Liste moyenne ",
 		"MEAN": "Moyenne",
 		"MEDIAN": "Médiane",
 		"MODE": "Mode",
@@ -168,6 +171,7 @@ const languages: ILanguageTranslation = {
 		"LOGOUT": "Çıkış Yap",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Daha fazla ayrıntı görmek için bir eşleşme seçin",
 		"STAT_TABLE": "Istatistik tablosu",
+		"MEAN_LIST": "Ortalama liste",
 		"MEAN": "Ortalama",
 		"MEDIAN": "Medyan",
 		"MODE": "Mod",
@@ -206,6 +210,7 @@ const languages: ILanguageTranslation = {
 		"LOGOUT": "लॉग आउट",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "अधिक विवरण देखने के लिए एक मैच का चयन करें",
 		"STAT_TABLE": "सांख्यिकी तालिका",
+		"MEAN_LIST": "औसत सूची",
 		"MEAN": "माध्य",
 		"MEDIAN": "माध्यिका",
 		"MODE": "मोड",

@@ -12,23 +12,23 @@
     "objectives": [
       {
         "id": 1,
-        "gamemode": "auto",
-        "objective": "mobility",
+        "gamemode": "Auto",
+        "objective": "Mobility",
         "count": 3,
         "list": null
       },
       {
         "id": 2,
-        "gamemode": "auto",
-        "objective": "engage",
+        "gamemode": "Auto",
+        "objective": "Engage",
         "count": 12,
         "list": null
       },
       {
         "id": 3,
-        "gamemode": "auto",
-        "objective": "grid",
-        "count": null,
+        "gamemode": "Auto",
+        "objective": "Grid",
+        "count": 9,
         "list": [
           0, 1, 1,   1, 0, 0,   0, 0, 1,
           0, 0, 0,   0, 1, 0,   0, 0, 0,
@@ -37,8 +37,53 @@
       },
       {
         "id": 4,
-        "gamemode": "teleop",
-        "objective": "engage",
+        "gamemode": "Teleop",
+        "objective": "Engage",
+        "count": 10,
+        "list": null
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "teamNumber": 2338,
+    "secretCode": "example",
+    "eventCode": "mock",
+    "matchNumber": 16,
+    "robotNumber": 1,
+    "creator": "Patrick",
+    "timeCreated": 0,
+    "isHidden": false,
+    "objectives": [
+      {
+        "id": 6,
+        "gamemode": "Auto",
+        "objective": "Mobility",
+        "count": 3,
+        "list": null
+      },
+      {
+        "id": 7,
+        "gamemode": "Auto",
+        "objective": "Engage",
+        "count": 12,
+        "list": null
+      },
+      {
+        "id": 8,
+        "gamemode": "Auto",
+        "objective": "Grid",
+        "count": 11,
+        "list": [
+          1, 1, 1,   1, 0, 0,   0, 0, 0,
+          0, 0, 0,   0, 1, 0,   0, 0, 0,
+          1, 1, 1,   0, 0, 0,   0, 0, 0
+        ]
+      },
+      {
+        "id": 9,
+        "gamemode": "Teleop",
+        "objective": "Engage",
         "count": 10,
         "list": null
       }

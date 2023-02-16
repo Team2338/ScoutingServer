@@ -80,7 +80,7 @@ class TeamModelService {
 						id: null,
 						gamemode: objective.gamemode,
 						objective: objective.objective,
-						count: objective.count ?? 0,
+						count: objective.count,
 						list: objective.list ?? [],
 						numMatchesToAverage: 1
 					});
@@ -90,7 +90,7 @@ class TeamModelService {
 
 				const value = objectives.get(key);
 				value.count += objective.count;
-				value.list = this.sumLists(value.list, objective.list);
+				value.list = this.sumLists(value.list, objective.list ?? []);
 				value.numMatchesToAverage++;
 			}
 		}

@@ -1,6 +1,7 @@
 import './TeamDetail.scss';
 import React from 'react';
 import { Team, TeamObjectiveStats } from '../../../models/response.model';
+import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 
@@ -71,7 +72,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	return (
 		<div className="stats">
 			<div className="objective-name">{ translate(props.name) }:</div>
-			<div className="objective-stat">{ translate('SCORES') }: [ { props.stats.scores.join(', ') } ]</div>
+			<div className="objective-stat">{ translate('SCORES') }: [ { props.stats.scores.map(roundToDecimal).join(', ') } ]</div>
 			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
 			<div className="objective-stat">{ translate('MEDIAN') }: { props.stats.median }</div>
 			<div className="objective-stat">{ translate('MODE') }: { props.stats.mode }</div>

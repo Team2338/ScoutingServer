@@ -40,16 +40,18 @@ public class PostgresIntegerArrayType implements UserType {
 	
 	@Override
 	public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner)
-		throws HibernateException, SQLException {
+		throws HibernateException, SQLException
+	{
 		Array array = rs.getArray(names[0]);
 		return array != null ? array.getArray() : null;
 	}
 	
 	@Override
 	public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session)
-		throws HibernateException, SQLException {
+		throws HibernateException, SQLException
+	{
 		if (value != null && st != null) {
-			Array array = session.connection().createArrayOf("integer", (Integer[]) value);
+			Array array = session.connection().createArrayOf("int", (Integer[]) value);
 			st.setArray(index, array);
 		} else {
 			st.setNull(index, sqlTypes()[0]);
@@ -58,7 +60,7 @@ public class PostgresIntegerArrayType implements UserType {
 	
 	@Override
 	public Object deepCopy(Object value) throws HibernateException {
-		String[] a = (String[])value;
+		Integer[] a = (Integer[]) value;
 		return Arrays.copyOf(a, a.length);
 	}
 	

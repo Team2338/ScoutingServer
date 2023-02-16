@@ -35,7 +35,7 @@ public class ObjectiveEntity {
 	@Column(nullable = false)
 	private Integer count;
 	
-	@Column(nullable = true)
+	@Column(columnDefinition = "int[]", nullable = true)
 	@Type(type = "team.gif.gearscout.repository.PostgresIntegerArrayType")
 	private Integer[] list;
 	

@@ -60,6 +60,10 @@ public class PostgresIntegerArrayType implements UserType {
 	
 	@Override
 	public Object deepCopy(Object value) throws HibernateException {
+		if (value == null) {
+			return null;
+		}
+		
 		Integer[] a = (Integer[]) value;
 		return Arrays.copyOf(a, a.length);
 	}

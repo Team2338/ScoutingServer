@@ -32,7 +32,7 @@ public class ObjectiveEntity {
 	@Size(min = 1, max = 128)
 	private String objective;
 	
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private Integer count;
 	
 	@Column(nullable = true)

@@ -1,5 +1,5 @@
 import './MatchList.scss'
-import { Divider, List, ListItem } from '@material-ui/core';
+import { Divider, List, ListItemButton } from '@mui/material';
 import React from 'react';
 import { Match } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
@@ -16,8 +16,7 @@ export default function MatchList ({ matches, selectMatch, selectedMatch }: prop
 
 	const listItems = matches.map((match: Match, index: number) => {
 		const listItem = (
-			<ListItem
-				button
+			<ListItemButton
 				key={match.id}
 				selected={match.id === selectedMatch?.id}
 				onClick={() => selectMatch(match)}
@@ -29,7 +28,7 @@ export default function MatchList ({ matches, selectMatch, selectedMatch }: prop
 						<div className="creator">{ match.creator }</div>
 					</div>
 				</div>
-			</ListItem>
+			</ListItemButton>
 		);
 
 		if (index === 0) {

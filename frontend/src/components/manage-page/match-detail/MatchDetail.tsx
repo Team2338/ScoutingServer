@@ -1,5 +1,5 @@
 import './MatchDetail.scss';
-import { Icon, IconButton, Tooltip } from '@material-ui/core';
+import { Icon, IconButton, Tooltip } from '@mui/material';
 import React from 'react';
 import { Match, Objective } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
@@ -93,14 +93,10 @@ function SimpleObjective(props: { objective: Objective }) {
 
 function ListObjective(props: { objective: Objective }) {
 	const translate = useTranslator();
-	const listElements = props.objective.list.map((score: number) => (
-		<div className="objective-list-score">{ score }</div>
-	));
 
 	return (
 		<div className="objective-list">
 			<div className="objective-list-title">{ translate(props.objective.objective) }:</div>
-			{/*<div className="objective-list-scores">{ listElements }</div>*/}
 			<GridScore list={props.objective.list}/>
 		</div>
 	);

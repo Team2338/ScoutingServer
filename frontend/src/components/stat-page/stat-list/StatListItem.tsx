@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, ListItem } from '@material-ui/core';
+import { Divider, ListItemButton } from '@mui/material';
 import { GlobalObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
 
@@ -14,8 +14,7 @@ export default function StatListItem({ stat, isSelected, selectStat }: IProps) {
 
 	return (
 		<React.Fragment>
-			<ListItem
-				button
+			<ListItemButton
 				selected={isSelected}
 				onClick={selectStat}
 			>
@@ -24,7 +23,7 @@ export default function StatListItem({ stat, isSelected, selectStat }: IProps) {
 					<div>{ translate('MEAN') }: { stat.stats.mean.toFixed(2) }</div>
 					<div>{ translate('MEDIAN') }: { stat.stats.median.toFixed(2) }</div>
 				</div>
-			</ListItem>
+			</ListItemButton>
 			<Divider variant="fullWidth" component="li"/>
 		</React.Fragment>
 	);

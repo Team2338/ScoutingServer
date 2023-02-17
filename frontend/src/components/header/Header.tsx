@@ -6,7 +6,7 @@ import {
 	Icon,
 	IconButton,
 	List,
-	ListItem,
+	ListItemButton,
 	ListItemIcon,
 	ListItemText,
 	Menu,
@@ -14,7 +14,7 @@ import {
 	Toolbar,
 	Tooltip,
 	Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -156,8 +156,7 @@ function ConnectedHeader(props) {
 	];
 
 	const routeComponents = routes.map((route: IRoute) => (
-		<ListItem
-			button
+		<ListItemButton
 			key={route.name}
 			component={NavLink}
 			to={route.path}
@@ -167,7 +166,7 @@ function ConnectedHeader(props) {
 				<Icon>{ route.icon }</Icon>
 			</ListItemIcon>
 			<ListItemText primary={ translate(route.name) }/>
-		</ListItem>
+		</ListItemButton>
 	));
 
 	const drawer = (
@@ -180,12 +179,12 @@ function ConnectedHeader(props) {
 				<div className="nav-drawer-divider"/>
 				<List>
 					{ routeComponents }
-					<ListItem onClick={handleLogout} button>
+					<ListItemButton onClick={handleLogout}>
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
 						<ListItemText primary={ translate('LOGOUT') }/>
-					</ListItem>
+					</ListItemButton>
 				</List>
 			</div>
 		</Drawer>

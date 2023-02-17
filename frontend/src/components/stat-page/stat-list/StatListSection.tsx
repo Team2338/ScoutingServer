@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListSubheader } from '@material-ui/core';
+import { ListSubheader } from '@mui/material';
 import { GlobalObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
 import StatListItem from './StatListItem';

@@ -1,5 +1,5 @@
 import './LoginPage.scss';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../models/states.model';

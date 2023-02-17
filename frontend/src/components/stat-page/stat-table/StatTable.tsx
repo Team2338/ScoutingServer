@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import React from 'react';
 import { TeamObjectiveStats } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';

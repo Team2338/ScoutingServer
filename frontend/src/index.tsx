@@ -14,4 +14,4 @@ root.render(
       <App/>
     </BrowserRouter>
   </Provider>
-)
+);

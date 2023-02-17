@@ -13,7 +13,7 @@ import {
 	MenuItem,
 	Toolbar,
 	Tooltip,
-	Typography
+	Typography, useMediaQuery
 } from '@mui/material';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -45,6 +45,7 @@ const outputs = (dispatch) => ({
 function ConnectedHeader(props) {
 
 	const translate = useTranslator();
+	const isMobile = useMediaQuery('(max-width: 600px)');
 	const [isDrawerOpen, setDrawerOpen] = React.useState(false);
 	const [accountAnchor, setAccountAnchor] = React.useState(null);
 
@@ -205,7 +206,7 @@ function ConnectedHeader(props) {
 					</IconButton>
 					{ title }
 					<LanguageSelector lang={props.lang} onLanguageChange={props.selectLanguage} />
-					{ downloadButton }
+					{ isMobile ? null : downloadButton }
 					{ accountButton }
 					{ accountMenu }
 				</Toolbar>

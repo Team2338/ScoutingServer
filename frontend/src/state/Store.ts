@@ -1,5 +1,4 @@
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
 import { Language } from '../models/languages.model';
 import { Match, MatchResponse } from '../models/response.model';
 import { AppState } from '../models/states.model';
@@ -176,7 +175,13 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 	}
 };
 
-export const store = createStore(reducer, applyMiddleware(thunk));
+export const store = configureStore({
+	reducer: reducer
+});
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+// export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 function replaceMatch(matches: Match[], oldId: number, match: Match) {
 	const targetIndex = matches.findIndex((match: Match) => match.id === oldId);

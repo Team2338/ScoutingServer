@@ -1,56 +1,47 @@
 import './ManagePage.scss';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Match } from '../../models/response.model';
-import { AppState } from '../../models/states.model';
 import { selectMatch } from '../../state/Actions';
 import { getMatches, hideMatch, unhideMatch } from '../../state/Effects';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 
 
-const inputs = (state: AppState) => ({
-	isLoaded: state.matches.isLoaded,
-	matches: state.matches.data,
-	selectedMatch: state.matches.selectedMatch
-});
+function ManagePage() {
 
-const outputs = (dispatch) => ({
-	getMatches: () => dispatch(getMatches()),
-	selectMatch: (match: Match) => dispatch(selectMatch(match)),
-	hideMatch: (match: Match) => dispatch(hideMatch(match)),
-	unhideMatch: (match: Match) => dispatch(unhideMatch(match))
-});
+	const dispatch = useAppDispatch();
+	const isLoaded: boolean = useAppSelector(state => state.matches.isLoaded);
+	const matches: Match[] = useAppSelector(state => state.matches.data);
+	const selectedMatch: Match = useAppSelector(state => state.matches.selectedMatch);
 
-class ConnectedManagePage extends React.Component<any, any> {
+	useEffect(
+		() => {
+			dispatch(getMatches());
+		},
+		[dispatch]
+	);
 
-	componentDidMount() {
-		this.props.getMatches();
+	if (!isLoaded) {
+		return <div className="page manage-page">Loading...</div>;
 	}
 
-	render() {
-		if (!this.props.isLoaded) {
-			return <div className="page manage-page">Loading...</div>;
-		}
-
-		return (
-			<div className="page manage-page">
-				<div className="match-list-wrapper">
-					<MatchList
-						matches={this.props.matches}
-						selectMatch={this.props.selectMatch}
-						selectedMatch={this.props.selectedMatch}
-					/>
-				</div>
-				<MatchDetail
-					match={this.props.selectedMatch}
-					hide={this.props.hideMatch}
-					unhide={this.props.unhideMatch}
+	return (
+		<div className="page manage-page">
+			<div className="match-list-wrapper">
+				<MatchList
+					matches={matches}
+					selectMatch={(match: Match) => dispatch(selectMatch(match))}
+					selectedMatch={selectedMatch}
 				/>
 			</div>
-		);
-	}
+			<MatchDetail
+				match={selectedMatch}
+				hide={(match: Match) => dispatch(hideMatch(match))}
+				unhide={(match: Match) => dispatch(unhideMatch(match))}
+			/>
+		</div>
+	);
 }
 
-const ManagePage = connect(inputs, outputs)(ConnectedManagePage);
 export default ManagePage;

@@ -44,6 +44,7 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Team number",
 		"EVENT_CODE": "Event code",
 		"SECRET_CODE": "Secret code",
+		"LOADING": "Loading...", // TODO: translate
 		"MATCH": "Match",
 		"MATCHES": "Matches",
 		"TEAM": "Team",
@@ -83,6 +84,7 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Numero de equipo",
 		"EVENT_CODE": "Código del evento",
 		"SECRET_CODE": "Código secreto",
+		"LOADING": "Loading...", // TODO: translate
 		"MATCH": "Partido",
 		"MATCHES": "Partidos",
 		"TEAM": "Equipo",
@@ -122,6 +124,7 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Numéro d'équipe",
 		"EVENT_CODE": "Code de l'événement",
 		"SECRET_CODE": "Code secret",
+		"LOADING": "Loading...", // TODO: translate
 		"MATCH": "Match",
 		"MATCHES": "Matchs",
 		"TEAM": "Équipe",
@@ -161,6 +164,7 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Takım numarası",
 		"EVENT_CODE": "Etkinlik kodu",
 		"SECRET_CODE": "Gizli kod",
+		"LOADING": "Loading...", // TODO: translate
 		"MATCH": "Maç",
 		"MATCHES": "Maçlar",
 		"TEAM": "Takım",
@@ -200,6 +204,7 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "टीम नंबर",
 		"EVENT_CODE": "घटना कोड",
 		"SECRET_CODE": "गुप्त संकेत",
+		"LOADING": "Loading...", // TODO: translate
 		"MATCH": "खेल",
 		"MATCHES": "माचिस",
 		"TEAM": "टीम",

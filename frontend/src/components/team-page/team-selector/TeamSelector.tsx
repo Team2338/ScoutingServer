@@ -11,7 +11,7 @@ export function TeamSelector({ teams, selectedTeam, selectTeam }) {
 		const teamNum = event.target.value;
 		const team = teams.find((team: Team) => team.id === teamNum);
 		selectTeam(team);
-	}
+	};
 
 	const options = teams.map((team: Team) => (
 		<MenuItem key={team.id} value={team.id}>{ team.id }</MenuItem>

@@ -1,0 +1,22 @@
+
+.match-list-item {
+	width: 100%;
+
+	&.hidden {
+		opacity: 0.3;
+	}
+
+	.match-number {
+		font-weight: 600;
+	}
+
+	.bottom-row {
+		display: flex;
+		flex-direction: row;
+
+		.creator {
+			color: #444444;
+			margin-left: auto;
+		}
+	}
+}

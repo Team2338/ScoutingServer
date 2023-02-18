@@ -3,6 +3,7 @@ import { Divider, List, ListItemButton } from '@mui/material';
 import React from 'react';
 import { Match } from '../../../models/response.model';
 import { useTranslator } from '../../../service/TranslateService';
+import MatchListItem from '../match-list-item/MatchListItem';
 
 type props = {
 	matches: Match[];
@@ -10,7 +11,7 @@ type props = {
 	selectedMatch: Match;
 }
 
-export default function MatchList ({ matches, selectMatch, selectedMatch }: props) {
+export default function MatchList({ matches, selectMatch, selectedMatch }: props) {
 
 	const translate = useTranslator();
 
@@ -21,13 +22,7 @@ export default function MatchList ({ matches, selectMatch, selectedMatch }: prop
 				selected={match.id === selectedMatch?.id}
 				onClick={() => selectMatch(match)}
 			>
-				<div className={'match-list-item' + (match.isHidden ? ' hidden' : '')}>
-					<div className="match-number">{ translate('MATCH') } { match.matchNumber }</div>
-					<div className="bottom-row">
-						<div className="robot-number">{ translate('TEAM') } { match.robotNumber }</div>
-						<div className="creator">{ match.creator }</div>
-					</div>
-				</div>
+				<MatchListItem match={match}/>
 			</ListItemButton>
 		);
 

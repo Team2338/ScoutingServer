@@ -9,3 +9,9 @@
     overflow-y: auto;
   }
 }
+
+.match-page-mobile {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}

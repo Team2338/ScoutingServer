@@ -24,7 +24,7 @@ export enum Actions {
 	SELECT_STAT = '[STATS] Select stat'
 }
 
-export const selectLangSuccess = (language: Language) => ({
+export const selectLangSuccess = (language: Language): Action => ({
 	type: Actions.SELECT_LANG_SUCCESS,
 	payload: language
 });
@@ -81,11 +81,11 @@ export const replaceMatch = (oldId: number, match: Match, rawMatch: MatchRespons
 	}
 });
 
-export const calculateTeamStatsStart = () => ({
+export const calculateTeamStatsStart = (): Action => ({
 	type: Actions.CALCULATE_TEAM_STATS_START
 });
 
-export const calculateTeamStatsSuccess = (teams: Team[]) => ({
+export const calculateTeamStatsSuccess = (teams: Team[]): Action => ({
 	type: Actions.CALCULATE_TEAM_STATS_SUCCESS,
 	payload: teams
 });
@@ -95,16 +95,16 @@ export const selectTeam = (team: Team): Action => ({
 	payload: team
 });
 
-export const calculateGlobalStatsStart = () => ({
+export const calculateGlobalStatsStart = (): Action => ({
 	type: Actions.CALCULATE_GLOBAL_STATS_START
 });
 
-export const calculateGlobalStatsSuccess = (stats: GlobalObjectiveStats[]) => ({
+export const calculateGlobalStatsSuccess = (stats: GlobalObjectiveStats[]): Action => ({
 	type: Actions.CALCULATE_GLOBAL_STATS_SUCCESS,
 	payload: stats
 });
 
-export const selectStat = (gamemode: string, objective: string) => ({
+export const selectStat = (gamemode: string, objective: string): Action => ({
 	type: Actions.SELECT_STAT,
 	payload: {
 		gamemode: gamemode,

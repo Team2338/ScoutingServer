@@ -15,6 +15,9 @@ function ManagePage() {
 
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
+	const _selectMatch = (match: Match) => dispatch(selectMatch(match));
+	const _hideMatch = (match: Match) => dispatch(hideMatch(match));
+	const _unhideMatch = (match: Match) => dispatch(unhideMatch(match));
 	const isMobile: boolean = useMediaQuery('(max-width: 600px)');
 	const isLoaded: boolean = useAppSelector(state => state.matches.isLoaded);
 	const matches: Match[] = useAppSelector(state => state.matches.data);
@@ -36,13 +39,13 @@ function ManagePage() {
 			<div className="page match-page-mobile">
 				<MatchSelector
 					matches={matches}
-					selectMatch={(match: Match) => dispatch(selectMatch(match))}
+					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
 				></MatchSelector>
 				<MatchDetail
 					match={selectedMatch}
-					hide={(match: Match) => dispatch(hideMatch(match))}
-					unhide={(match: Match) => dispatch(unhideMatch(match))}
+					hide={_hideMatch}
+					unhide={_unhideMatch}
 				/>
 			</div>
 		);
@@ -53,14 +56,14 @@ function ManagePage() {
 			<div className="match-list-wrapper">
 				<MatchList
 					matches={matches}
-					selectMatch={(match: Match) => dispatch(selectMatch(match))}
+					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
 				/>
 			</div>
 			<MatchDetail
 				match={selectedMatch}
-				hide={(match: Match) => dispatch(hideMatch(match))}
-				unhide={(match: Match) => dispatch(unhideMatch(match))}
+				hide={_hideMatch}
+				unhide={_unhideMatch}
 			/>
 		</div>
 	);

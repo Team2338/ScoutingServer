@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { ILanguageTranslation, Language } from '../models/languages.model';
 import { AppState } from '../models/states.model';
+import { useAppSelector } from '../state/Hooks';
 
 const translateKey = (language: string, key: string) => {
 	const mapping = languages[language];
@@ -32,7 +33,7 @@ export const translate = (Component) => {
 };
 
 export const useTranslator = () => {
-	const language: string = useSelector((state: AppState) => state.language);
+	const language: string = useAppSelector((state: AppState) => state.language);
 
 	return (key: string) => translateKey(language, key);
 };

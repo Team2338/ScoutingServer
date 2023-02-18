@@ -2,19 +2,15 @@ import './MatchList.scss'
 import { Divider, List, ListItemButton } from '@mui/material';
 import React from 'react';
 import { Match } from '../../../models/response.model';
-import { useTranslator } from '../../../service/TranslateService';
 import MatchListItem from '../match-list-item/MatchListItem';
 
-type props = {
+type IProps = {
 	matches: Match[];
 	selectMatch: (match: Match) => void;
 	selectedMatch: Match;
 }
 
-export default function MatchList({ matches, selectMatch, selectedMatch }: props) {
-
-	const translate = useTranslator();
-
+export default function MatchList({ matches, selectMatch, selectedMatch }: IProps) {
 	const listItems = matches.map((match: Match, index: number) => {
 		const listItem = (
 			<ListItemButton

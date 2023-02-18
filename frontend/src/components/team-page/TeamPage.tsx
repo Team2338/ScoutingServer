@@ -4,8 +4,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Team } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
+import { useTranslator } from '../../service/TranslateService';
 import { selectTeam } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import { TeamSelector } from './team-selector/TeamSelector';
@@ -13,15 +15,11 @@ import { TeamSelector } from './team-selector/TeamSelector';
 const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,
 	areTeamsLoaded: state.teams.isLoaded,
-	rawMatches: state.matches.raw,
-	teams: state.teams.data,
-	selectedTeam: state.teams.selectedTeam
 });
 
 const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
 	getTeamStats: () => dispatch(getTeams()),
-	selectTeam: (team: Team) => dispatch(selectTeam(team))
 });
 
 class ConnectedTeamPage extends React.Component<any, any> {
@@ -39,22 +37,24 @@ class ConnectedTeamPage extends React.Component<any, any> {
 	}
 
 	render() {
-		if (!this.props.areTeamsLoaded) {
-			return <div className="team-page">Loading...</div>;
-		}
-
 		return (
-			<TeamPageContent
-				teams={this.props.teams}
-				selectTeam={this.props.selectTeam}
-				selectedTeam={this.props.selectedTeam}
-			/>
+			<TeamPageContent/>
 		);
 	}
 }
 
-function TeamPageContent({ teams, selectTeam, selectedTeam }) {
-	const isMobile = useMediaQuery('(max-width: 600px)');
+function TeamPageContent() {
+	const dispatch = useAppDispatch();
+	const _selectTeam = (team: Team) => dispatch(selectTeam(team));
+	const translate = useTranslator();
+	const isMobile: boolean = useMediaQuery('(max-width: 600px)');
+	const areTeamsLoaded: boolean = useAppSelector(state => state.teams.isLoaded);
+	const teams: Team[] = useAppSelector(state => state.teams.data);
+	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
+
+	if (!areTeamsLoaded) {
+		return <div className="team-page">{ translate('LOADING') }</div>;
+	}
 
 	if (isMobile) {
 		return (
@@ -62,7 +62,7 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 				<div className="team-detail-wrapper">
 					<TeamSelector
 						teams={teams}
-						selectTeam={selectTeam}
+						selectTeam={_selectTeam}
 						selectedTeam={selectedTeam}
 					/>
 					<TeamDetail team={selectedTeam}/>
@@ -76,7 +76,7 @@ function TeamPageContent({ teams, selectTeam, selectedTeam }) {
 			<div className="team-list-wrapper">
 				<TeamList
 					teams={teams}
-					selectTeam={selectTeam}
+					selectTeam={_selectTeam}
 					selectedTeam={selectedTeam}
 				/>
 			</div>

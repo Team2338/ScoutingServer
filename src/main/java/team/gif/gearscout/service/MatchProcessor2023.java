@@ -1,5 +1,7 @@
 package team.gif.gearscout.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.model.NewMatch;
 import team.gif.gearscout.model.ObjectiveEntity;
@@ -10,6 +12,8 @@ import java.util.function.Consumer;
 
 @Service
 public class MatchProcessor2023 {
+	
+	private static final Logger logger = LogManager.getLogger(MatchProcessor2023.class);
 	
 	public void process(NewMatch match) {
 		String color = match.getAllianceColor().toUpperCase();
@@ -28,6 +32,7 @@ public class MatchProcessor2023 {
 	private void handleGridObjective(ObjectiveEntity objective, Consumer<ObjectiveEntity> consumer, String allianceColor) {
 		objective.setObjective(allianceColor + "_GRID_2023");
 		consumer.accept(objective);
+		
 		
 		// We consider the blue side to be "normal"
 		ObjectiveEntity normalized = new ObjectiveEntity();
@@ -48,6 +53,6 @@ public class MatchProcessor2023 {
 			};
 			normalized.setList(normalizedScoreList);
 		}
-		consumer.accept(objective);
+		consumer.accept(normalized);
 	}
 }

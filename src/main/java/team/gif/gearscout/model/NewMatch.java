@@ -8,6 +8,7 @@ public class NewMatch {
 	private Integer matchNumber;
 	private Integer robotNumber;
 	private String creator;
+	private String allianceColor;
 	
 	private List<ObjectiveEntity> objectives;
 	
@@ -28,6 +29,10 @@ public class NewMatch {
 	
 	public String getCreator() {
 		return creator;
+	}
+	
+	public String getAllianceColor() {
+		return allianceColor;
 	}
 	
 	public List<ObjectiveEntity> getObjectives() {
@@ -52,6 +57,10 @@ public class NewMatch {
 	
 	public void setObjectives(List<ObjectiveEntity> objectives) {
 		this.objectives = objectives;
+	}
+	
+	public void setAllianceColor(String color) {
+		this.allianceColor = color;
 	}
 	
 }

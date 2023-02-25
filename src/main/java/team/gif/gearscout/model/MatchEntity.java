@@ -44,6 +44,10 @@ public class MatchEntity {
 	private String creator; // Username of the scouter that created this entry
 	
 	@Column(nullable = false)
+	@Size(min = 1, max = 32)
+	private String allianceColor;
+	
+	@Column(nullable = false)
 	@Size(min = 8, max = 64)
 	private String timeCreated;
 	
@@ -68,6 +72,7 @@ public class MatchEntity {
 		this.matchNumber = match.getMatchNumber();
 		this.robotNumber = match.getRobotNumber();
 		this.creator = match.getCreator();
+		this.allianceColor = match.getAllianceColor();
 		this.timeCreated = timeCreated;
 		this.isHidden = false;
 		this.objectives = match.getObjectives();
@@ -106,6 +111,11 @@ public class MatchEntity {
 	
 	public String getCreator() {
 		return creator;
+	}
+	
+	
+	public String getAllianceColor() {
+		return allianceColor;
 	}
 	
 	
@@ -156,6 +166,11 @@ public class MatchEntity {
 	
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+	
+	
+	public void setAllianceColor(String color) {
+		this.allianceColor = color;
 	}
 	
 	

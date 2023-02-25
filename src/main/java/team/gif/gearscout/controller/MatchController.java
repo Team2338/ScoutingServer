@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.gearscout.model.MatchEntity;
 import team.gif.gearscout.model.NewMatch;
+import team.gif.gearscout.service.MatchProcessor2023;
 import team.gif.gearscout.service.MatchService;
 
 import java.util.List;
@@ -24,12 +25,17 @@ import java.util.List;
 public class MatchController {
 	
 	private final MatchService matchService;
+	private final MatchProcessor2023 matchProcessor;
 	private static final Logger logger = LogManager.getLogger(MatchController.class);
 	
 	
 	@Autowired
-	public MatchController(MatchService matchService) {
+	public MatchController(
+		MatchService matchService,
+		MatchProcessor2023 matchProcessor
+	) {
 		this.matchService = matchService;
+		this.matchProcessor = matchProcessor;
 	}
 	
 	
@@ -41,6 +47,7 @@ public class MatchController {
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 		
+		matchProcessor.process(match);
 		matchService.saveMatch(match, teamNumber, secretCode);
 		
 		return ResponseEntity.accepted().build();

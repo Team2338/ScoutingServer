@@ -79,7 +79,10 @@ const languages: ILanguageTranslation = {
 		"MOBILITY_2022": "Taxi",
 		"CLIMB_2022": "Hangar",
 		"CHARGE_STATION_2023": "Charge Station",
-		"GRID_2023": "Grid"
+		"GRID_2023": "Grid",
+		"BLUE_GRID_2023": "Grid (blue)",
+		"RED_GRID_2023": "Grid (red)",
+		"NORMALIZED_GRID_2023": "Normalized Grid"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",

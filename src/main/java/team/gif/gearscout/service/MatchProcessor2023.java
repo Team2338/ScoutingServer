@@ -22,7 +22,10 @@ public class MatchProcessor2023 {
 			.mapMulti((ObjectiveEntity objective, Consumer<ObjectiveEntity> consumer) -> {
 				if (objective.getObjective().equals("GRID_2023")) {
 					handleGridObjective(objective, consumer, color);
+					return;
 				}
+				
+				consumer.accept(objective);
 			})
 			.toList();
 		

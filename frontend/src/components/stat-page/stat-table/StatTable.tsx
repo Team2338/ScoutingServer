@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import React from 'react';
 import { TeamObjectiveStats } from '../../../models/response.model';
+import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 
 enum Statistic {
@@ -41,8 +42,8 @@ export default function StatTable({ data }: IProps) {
 		<TableRow key={teamData.teamNumber}>
 			<TableCell align="left">{ teamData.teamNumber }</TableCell>
 			<TableCell align="right">{ teamData.mean.toFixed(2) }</TableCell>
-			<TableCell align="right">{ teamData.median.toFixed(2) }</TableCell>
-			<TableCell align="right">{ teamData.mode }</TableCell>
+			<TableCell align="right">{ roundToDecimal(2) }</TableCell>
+			<TableCell align="right">{ roundToDecimal(teamData.mode) }</TableCell>
 		</TableRow>
 	));
 

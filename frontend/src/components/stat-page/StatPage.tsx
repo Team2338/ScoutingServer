@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { GlobalObjectiveStats, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
-import { translate, useTranslator } from '../../service/TranslateService';
+import { useTranslator } from '../../service/TranslateService';
 import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
@@ -48,6 +48,7 @@ class ConnectedStatPage extends React.Component<any, any> {
 
 function StatPageContent() {
 	const dispatch = useAppDispatch();
+	const _selectStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
 	const translate = useTranslator();
 	const areStatsLoaded: boolean = useAppSelector(state => state.stats.isLoaded);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
@@ -87,7 +88,7 @@ function StatPageContent() {
 				<StatList
 					stats={stats}
 					selectedStat={selectedStat}
-					selectStat={(gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective))}
+					selectStat={_selectStat}
 				/>
 			</div>
 			{ content }
@@ -96,4 +97,4 @@ function StatPageContent() {
 }
 
 const StatPage = connect(inputs, outputs)(ConnectedStatPage);
-export default translate(StatPage);
+export default StatPage;

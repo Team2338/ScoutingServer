@@ -51,11 +51,13 @@ class ConnectedStatPage extends React.Component<any, any> {
 
 		let content = <div>{ this.props.translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
 		if (this.props.selectedStat) {
-			const teamStats = this.props.teamData.map((team: Team) => (
-				team.stats
-					.get(this.props.selectedStat.gamemode)
-					.get(this.props.selectedStat.objective)
-			));
+			const teamStats = this.props.teamData
+				.map((team: Team) => (
+					team.stats
+						.get(this.props.selectedStat.gamemode)
+						?.get(this.props.selectedStat.objective)
+				))
+				.filter((objective: string) => !!objective);
 
 			const translatedGamemodeName = this.props.translate(this.props.selectedStat.gamemode);
 			const translatedObjectiveName = this.props.translate(this.props.selectedStat.objective)

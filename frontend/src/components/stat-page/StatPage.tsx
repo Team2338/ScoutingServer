@@ -1,11 +1,12 @@
 import './StatPage.scss';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Team } from '../../models/response.model';
+import { GlobalObjectiveStats, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models/response.model';
 import { AppState } from '../../models/states.model';
-import { translate } from '../../service/TranslateService';
+import { translate, useTranslator } from '../../service/TranslateService';
 import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
@@ -14,16 +15,12 @@ const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,
 	areTeamsLoaded: state.teams.isLoaded,
 	areStatsLoaded: state.stats.isLoaded,
-	teamData: state.teams.data,
-	stats: state.stats.data,
-	selectedStat: state.stats.selectedStat
 });
 
 const outputs = (dispatch) => ({
 	getMatches: () => dispatch(getMatches()),
 	getTeamStats: () => dispatch(getTeams()),
 	getGlobalStats: () => dispatch(getGlobalStats()),
-	selectStat: (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective))
 });
 
 class ConnectedStatPage extends React.Component<any, any> {
@@ -45,47 +42,57 @@ class ConnectedStatPage extends React.Component<any, any> {
 	}
 
 	render() {
-		if (!this.props.areStatsLoaded) {
-			return <div className="stat-page">Loading...</div>;
-		}
+		return <StatPageContent/>
+	}
+}
 
-		let content = <div>{ this.props.translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
-		if (this.props.selectedStat) {
-			const teamStats = this.props.teamData
-				.map((team: Team) => (
-					team.stats
-						.get(this.props.selectedStat.gamemode)
-						?.get(this.props.selectedStat.objective)
-				))
-				.filter((objective: string) => !!objective);
+function StatPageContent() {
+	const dispatch = useAppDispatch();
+	const translate = useTranslator();
+	const areStatsLoaded: boolean = useAppSelector(state => state.stats.isLoaded);
+	const teamData: Team[] = useAppSelector(state => state.teams.data);
+	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
+	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 
-			const translatedGamemodeName = this.props.translate(this.props.selectedStat.gamemode);
-			const translatedObjectiveName = this.props.translate(this.props.selectedStat.objective)
-			const graphName = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
+	if (!areStatsLoaded) {
+		return <div className="stat-page">Loading...</div>;
+	}
 
-			content = (
-				<div className="stat-content">
-					<StatGraph name={graphName} data={teamStats} metric="mean"/>
-					<div className="stat-table-wrapper">
-						<StatTable data={teamStats}/>
-					</div>
+	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>
+	if (selectedStat) {
+		const teamStats: TeamObjectiveStats[] = teamData
+			.map((team: Team) => team.stats
+				.get(selectedStat.gamemode)
+				?.get(selectedStat.objective)
+			)
+			.filter((objective: TeamObjectiveStats) => !!objective);
+
+		const translatedGamemodeName: string = translate(selectedStat.gamemode);
+		const translatedObjectiveName: string = translate(selectedStat.objective);
+		const graphName = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
+
+		content = (
+			<div className="stat-content">
+				<StatGraph name={graphName} data={teamStats} metric="mean"/>
+				<div className="stat-table-wrapper">
+					<StatTable data={teamStats}/>
 				</div>
-			);
-		}
-
-		return (
-			<div className="page stat-page">
-				<div className="stat-list-wrapper">
-					<StatList
-						stats={this.props.stats}
-						selectedStat={this.props.selectedStat}
-						selectStat={this.props.selectStat}
-					/>
-				</div>
-				{ content }
 			</div>
 		);
 	}
+
+	return (
+		<div className="page stat-page">
+			<div className="stat-list-wrapper">
+				<StatList
+					stats={stats}
+					selectedStat={selectedStat}
+					selectStat={(gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective))}
+				/>
+			</div>
+			{ content }
+		</div>
+	);
 }
 
 const StatPage = connect(inputs, outputs)(ConnectedStatPage);

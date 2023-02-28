@@ -97,7 +97,7 @@ function ListObjective(props: { objective: Objective }) {
 	return (
 		<div className="objective-list">
 			<div className="objective-list-title">{ translate(props.objective.objective) }:</div>
-			<GridScore list={props.objective.list}/>
+			<GridScore variant="binary" list={props.objective.list}/>
 		</div>
 	);
 }

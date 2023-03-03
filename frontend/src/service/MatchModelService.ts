@@ -30,4 +30,5 @@ class MatchModelService {
 
 }
 
-export default new MatchModelService();
+const service = new MatchModelService();
+export default service;

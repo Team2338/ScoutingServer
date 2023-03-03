@@ -82,4 +82,5 @@ class StatModelService {
 
 }
 
-export default new StatModelService();
+const service = new StatModelService();
+export default service;

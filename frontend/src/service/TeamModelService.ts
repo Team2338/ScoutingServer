@@ -166,4 +166,5 @@ class TeamModelService {
 
 }
 
-export default new TeamModelService();
+const service = new TeamModelService();
+export default service;

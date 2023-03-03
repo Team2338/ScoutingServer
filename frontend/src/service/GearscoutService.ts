@@ -64,4 +64,5 @@ class GearscoutService {
 
 }
 
-export default new GearscoutService();
+const service = new GearscoutService();
+export default service;

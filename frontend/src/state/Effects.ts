@@ -1,15 +1,15 @@
-import { Language } from '../models/languages.model';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
-import { Match, MatchResponse, Team } from '../models/response.model';
-import { AppState } from '../models/states.model';
+import { AppState, Language, Match, MatchResponse, Team } from '../models';
 import StatModelService from '../service/StatModelService';
 import TeamModelService from '../service/TeamModelService';
 import {
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
-	calculateTeamStatsSuccess, getCsvStart, getCsvSuccess,
+	calculateTeamStatsSuccess,
+	getCsvStart,
+	getCsvSuccess,
 	getMatchesStart,
 	getMatchesSuccess,
 	loginSuccess,

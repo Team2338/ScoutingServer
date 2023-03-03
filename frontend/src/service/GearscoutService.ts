@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { MatchResponse } from '../models/response.model';
+import { MatchResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 

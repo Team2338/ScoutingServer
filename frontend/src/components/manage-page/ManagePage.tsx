@@ -1,7 +1,7 @@
 import './ManagePage.scss';
 import { useMediaQuery } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Match } from '../../models/response.model';
+import { Match } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectMatch } from '../../state/Actions';
 import { getMatches, hideMatch, unhideMatch } from '../../state/Effects';

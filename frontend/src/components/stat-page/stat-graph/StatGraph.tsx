@@ -1,7 +1,7 @@
 import './StatGraph.scss';
 import React from 'react';
 import { Tooltip, Typography } from '@mui/material';
-import { TeamObjectiveStats } from '../../../models/response.model';
+import { TeamObjectiveStats } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {

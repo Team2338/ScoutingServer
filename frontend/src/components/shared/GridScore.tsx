@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import './GridScore.scss';
-import { roundToDecimal } from '../../service/DisplayUtility';
 
 type GridVariant = 'binary' | 'heatmap';
 interface IProps {

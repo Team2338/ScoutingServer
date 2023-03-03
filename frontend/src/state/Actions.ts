@@ -1,5 +1,10 @@
-import { Language } from '../models/languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, Team } from '../models/response.model';
+import {
+	GlobalObjectiveStats,
+	Language,
+	Match,
+	MatchResponse,
+	Team
+} from '../models';
 
 export interface Action {
 	type: Actions;

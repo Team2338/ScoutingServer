@@ -1,4 +1,4 @@
-import { Match, MatchResponse, Objective } from '../models/response.model';
+import { Match, MatchResponse, Objective } from '../models';
 
 class MatchModelService {
 

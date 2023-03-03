@@ -13,13 +13,13 @@ import {
 	MenuItem,
 	Toolbar,
 	Tooltip,
-	Typography, useMediaQuery
+	Typography,
+	useMediaQuery
 } from '@mui/material';
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Language } from '../../models/languages.model';
-import { AppState } from '../../models/states.model';
+import { AppState, Language } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
 

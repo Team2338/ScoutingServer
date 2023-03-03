@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, List, ListItemButton } from '@mui/material';
-import { Team } from '../../../models/response.model';
+import { Team } from '../../../models';
 
 interface IProps {
 	teams: Team[];

@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Language } from '../models/languages.model';
-import { Match, MatchResponse } from '../models/response.model';
-import { AppState } from '../models/states.model';
+import { AppState, Language, Match, MatchResponse } from '../models';
 import { Action, Actions } from './Actions';
 
 

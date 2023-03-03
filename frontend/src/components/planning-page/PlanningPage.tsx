@@ -1,8 +1,7 @@
 import './PlanningPage.scss';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Team } from '../../models/response.model';
-import { AppState } from '../../models/states.model';
+import { AppState, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';

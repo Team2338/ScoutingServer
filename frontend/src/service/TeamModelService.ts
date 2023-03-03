@@ -1,4 +1,4 @@
-import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models/response.model';
+import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models';
 import { getListMean, getMean, getMedian, getMode } from './Stats';
 
 interface AggregateObjective extends Objective {

@@ -1,7 +1,7 @@
 import './MatchList.scss'
 import { Divider, List, ListItemButton } from '@mui/material';
 import React from 'react';
-import { Match } from '../../../models/response.model';
+import { Match } from '../../../models';
 import MatchListItem from '../match-list-item/MatchListItem';
 
 type IProps = {

@@ -1,6 +1,6 @@
 import './TeamDetail.scss';
 import React from 'react';
-import { Team, TeamObjectiveStats } from '../../../models/response.model';
+import { Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';

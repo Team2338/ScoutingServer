@@ -1,6 +1,6 @@
 import React from 'react';
 import { List } from '@mui/material';
-import { GlobalObjectiveStats } from '../../../models/response.model';
+import { GlobalObjectiveStats } from '../../../models';
 import StatListSection from './StatListSection';
 
 interface IProps {

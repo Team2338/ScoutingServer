@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ILanguageTranslation, Language } from '../models/languages.model';
-import { AppState } from '../models/states.model';
+import { AppState, ILanguageTranslation, Language } from '../models';
 import { useAppSelector } from '../state/Hooks';
 
 const translateKey = (language: string, key: string): string => {

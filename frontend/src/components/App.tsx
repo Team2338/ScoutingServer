@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../models/states.model';
+import { AppState } from '../models';
 import { initApp } from '../state/Effects';
 import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';

@@ -2,7 +2,7 @@ import './LoginPage.scss';
 import { Button, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../models/states.model';
+import { AppState } from '../../models';
 import { translate } from '../../service/TranslateService';
 import { login } from '../../state/Effects';
 

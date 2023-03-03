@@ -1,6 +1,6 @@
 import './MatchListItem.scss';
 import React from 'react';
-import { Match } from '../../../models/response.model';
+import { Match } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {

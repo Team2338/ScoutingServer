@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, ListItemButton } from '@mui/material';
-import { GlobalObjectiveStats } from '../../../models/response.model';
+import { GlobalObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 

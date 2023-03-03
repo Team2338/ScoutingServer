@@ -1,4 +1,4 @@
-import { GlobalObjectiveStats, Team, TeamObjectiveStats } from '../models/response.model';
+import { GlobalObjectiveStats, Team, TeamObjectiveStats } from '../models';
 import { getMean, getMedian } from './Stats';
 
 type TeamStat = {

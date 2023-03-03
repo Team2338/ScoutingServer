@@ -1,7 +1,7 @@
 import './MatchDetail.scss';
 import { Icon, IconButton, Tooltip } from '@mui/material';
 import React from 'react';
-import { Match, Objective } from '../../../models/response.model';
+import { Match, Objective } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 

@@ -1,8 +1,13 @@
 import './StatPage.scss';
 import React from 'react';
 import { connect } from 'react-redux';
-import { GlobalObjectiveStats, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models/response.model';
-import { AppState } from '../../models/states.model';
+import {
+	AppState,
+	GlobalObjectiveStats,
+	ObjectiveDescriptor,
+	Team,
+	TeamObjectiveStats
+} from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectStat } from '../../state/Actions';
 import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';

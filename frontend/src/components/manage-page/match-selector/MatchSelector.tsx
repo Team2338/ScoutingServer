@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuItem, TextField } from '@mui/material';
-import { Match } from '../../../models/response.model';
+import { Match } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import MatchListItem from '../match-list-item/MatchListItem';
 

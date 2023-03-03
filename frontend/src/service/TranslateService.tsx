@@ -4,7 +4,7 @@ import { ILanguageTranslation, Language } from '../models/languages.model';
 import { AppState } from '../models/states.model';
 import { useAppSelector } from '../state/Hooks';
 
-const translateKey = (language: string, key: string) => {
+const translateKey = (language: string, key: string): string => {
 	const mapping = languages[language];
 
 	if (mapping.hasOwnProperty(key)) {
@@ -20,7 +20,7 @@ export const translate = (Component) => {
 	});
 
 	class AddTranslator extends React.Component<any, any> {
-		translate = (key: string) => {
+		translate = (key: string): string => {
 			return translateKey(this.props.lang, key);
 		}
 
@@ -78,8 +78,12 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "Missed Shot",
 		"MOBILITY_2022": "Taxi",
 		"CLIMB_2022": "Hangar",
+		"MOBILITY_2023": "Mobility",
 		"CHARGE_STATION_2023": "Charge Station",
-		"GRID_2023": "Grid"
+		"GRID_2023": "Grid",
+		"BLUE_GRID_2023": "Grid (blue)",
+		"RED_GRID_2023": "Grid (red)",
+		"NORMALIZED_GRID_2023": "Normalized Grid"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -113,13 +117,19 @@ const languages: ILanguageTranslation = {
 		"EXCLUDE_FROM_STATS": "Excluir datos de partidos de las estadísticas del equipo",
 		"INCLUDE_IN_STATS": "Incluir datos de partidos en las estadísticas del equipo",
 		"HIDDEN": "Oculto",
-		"AUTO": "Auto", // TODO: or Autónomo?
-		"TELEOP": "Teleop", // TODO: or Teledirigido
+		"AUTO": "Auto",
+		"TELEOP": "Teleop",
 		"HIGH_GOAL_2022": "Núcleo Superior",
 		"LOW_GOAL_2022": "Núcleo Inferior",
 		"MISS_GOAL_2022": "Tiro fallado",
 		"MOBILITY_2022": "Desplazamiento",
 		"CLIMB_2022": "Hangar",
+		"MOBILITY_2023": "Mobilización",
+		"CHARGE_STATION_2023": "Estacióon de Carga",
+		"GRID_2023": "Portería",
+		"BLUE_GRID_2023": "Portería (azul)",
+		"RED_GRID_2023": "Portería (rojo)",
+		"NORMALIZED_GRID_2023": "Portería Normalizado"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -153,13 +163,19 @@ const languages: ILanguageTranslation = {
 		"EXCLUDE_FROM_STATS": "Exclure les données de match des statistiques de l'équipe",
 		"INCLUDE_IN_STATS": "Inclure les données de match dans les statistiques de l'équipe",
 		"HIDDEN": "Caché",
-		"AUTO": "Auto", // TODO or autonome
-		"TELEOP": "Téléop", // TODO: or télécommandée
+		"AUTO": "Auto",
+		"TELEOP": "Téléop",
 		"HIGH_GOAL_2022": "Centre de Tri Supérieur",
 		"LOW_GOAL_2022": "Centre de Tri Inférieur",
 		"MISS_GOAL_2022": "Coup raté",
 		"MOBILITY_2022": "Circulation",
 		"CLIMB_2022": "Hangar",
+		"MOBILITY_2023": "Mobilité",
+		"CHARGE_STATION_2023": "Station de Recharge",
+		"GRID_2023": "Réseau",
+		"BLUE_GRID_2023": "Réseau (bleu)",
+		"RED_GRID_2023": "Réseau (rouge)",
+		"NORMALIZED_GRID_2023": "Réseau normalisé"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -200,6 +216,12 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "Kaçırılan Gol",
 		"MOBILITY_2022": "Taksi̇",
 		"CLIMB_2022": "Hangar",
+		"MOBILITY_2023": "Hareketli̇li̇k",
+		"CHARGE_STATION_2023": "Şarj İstasyonu",
+		"GRID_2023": "Şebeke",
+		"BLUE_GRID_2023": "Şebeke (mavi)",
+		"RED_GRID_2023": "Şebeke (kırmızı)",
+		"NORMALIZED_GRID_2023": "Normalleştirilmiş Şebeke"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",

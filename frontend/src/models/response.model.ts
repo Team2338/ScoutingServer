@@ -19,6 +19,11 @@ export interface Objective {
 	list?: number[];
 }
 
+export interface ObjectiveDescriptor {
+	gamemode: string;
+	objective: string;
+}
+
 export interface Match {
 	id: number;
 	teamNumber: number;

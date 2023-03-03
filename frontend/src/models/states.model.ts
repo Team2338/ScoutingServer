@@ -1,5 +1,5 @@
 import { Language } from './languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, Team } from './response.model';
+import { GlobalObjectiveStats, Match, MatchResponse, ObjectiveDescriptor, Team } from './response.model';
 
 export interface AppState {
 	language: Language;
@@ -25,9 +25,6 @@ export interface AppState {
 	stats: {
 		isLoaded: boolean;
 		data: GlobalObjectiveStats[];
-		selectedStat: {
-			gamemode: string;
-			objective: string;
-		}
+		selectedStat: ObjectiveDescriptor;
 	};
 }

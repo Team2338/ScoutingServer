@@ -43,7 +43,8 @@ public class MatchEntity {
 	@Size(min = 1, max = 32)
 	private String creator; // Username of the scouter that created this entry
 	
-	@Column(nullable = false)
+//	@Column(nullable = false) // TODO: make this non-null
+	@Column(nullable = true)
 	@Size(min = 1, max = 32)
 	private String allianceColor;
 	

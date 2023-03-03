@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../models/states.model';
 import { initApp } from '../state/Effects';
+import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
 import Header from './header/Header';
@@ -39,6 +40,7 @@ class ConnectedApp extends React.Component<any, any> {
 		const managePage = <ManagePage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
+		const planningPage = <PlanningPage />;
 
 		return (
 			<React.Fragment>
@@ -48,6 +50,7 @@ class ConnectedApp extends React.Component<any, any> {
 					<Route path="/matches" element={managePage} />
 					<Route path="/teams" element={teamPage} />
 					<Route path="/stats" element={statPage} />
+					<Route path="/plan" element={planningPage} />
 				</Routes>
 			</React.Fragment>
 		);

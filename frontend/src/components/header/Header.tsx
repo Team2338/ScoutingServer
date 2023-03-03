@@ -153,6 +153,11 @@ function ConnectedHeader(props) {
 			path: '/stats',
 			name: 'STATS',
 			icon: 'leaderboard'
+		},
+		{
+			path: '/plan',
+			name: 'PLAN',
+			icon: 'mediation'
 		}
 	];
 

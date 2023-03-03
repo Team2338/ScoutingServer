@@ -8,9 +8,9 @@ import { useTranslator } from '../../service/TranslateService';
 import { selectTeam } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
+import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
-import { TeamSelector } from './team-selector/TeamSelector';
 
 const inputs = (state: AppState) => ({
 	areMatchesLoaded: state.matches.isLoaded,

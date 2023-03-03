@@ -1,0 +1,12 @@
+
+.planning-page {
+	display: flex;
+	padding: 16px;
+
+	.team-selectors {
+		display: flex;
+		flex-direction: column;
+		min-width: 140px;
+		row-gap: 8px;
+	}
+}

@@ -82,7 +82,15 @@ const languages: ILanguageTranslation = {
 		"GRID_2023": "Grid",
 		"BLUE_GRID_2023": "Grid (blue)",
 		"RED_GRID_2023": "Grid (red)",
-		"NORMALIZED_GRID_2023": "Normalized Grid"
+		"NORMALIZED_GRID_2023": "Normalized Grid",
+		"ADD_NOTE": "Add Note",
+		"CANCEL": "Cancel",
+		"SUBMIT": "Submit",
+		"NOTE": "Note",
+		"NOTES": "Notes",
+		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team",
+		"NO_QUANTITATIVE_DATA": "No quantitative data for this team",
+		"USERNAME": "Username"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -128,7 +136,15 @@ const languages: ILanguageTranslation = {
 		"GRID_2023": "Portería",
 		"BLUE_GRID_2023": "Portería (azul)",
 		"RED_GRID_2023": "Portería (rojo)",
-		"NORMALIZED_GRID_2023": "Portería Normalizado"
+		"NORMALIZED_GRID_2023": "Portería Normalizado",
+		"ADD_NOTE": "Añadir la Nota",
+		"CANCEL": "Cancelar",
+		"SUBMIT": "Entregar",
+		"NOTE": "Nota",
+		"NOTES": "Notas",
+		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo",
+		"NO_QUANTITATIVE_DATA": "No hay datos cuantitativos para este equipo",
+		"USERNAME": "Nombre de usuario"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -174,7 +190,15 @@ const languages: ILanguageTranslation = {
 		"GRID_2023": "Réseau",
 		"BLUE_GRID_2023": "Réseau (bleu)",
 		"RED_GRID_2023": "Réseau (rouge)",
-		"NORMALIZED_GRID_2023": "Réseau normalisé"
+		"NORMALIZED_GRID_2023": "Réseau normalisé",
+		"ADD_NOTE": "Ajouter une Note",
+		"CANCEL": "Annuler",
+		"SUBMIT": "Soumettre",
+		"NOTE": "Note",
+		"NOTES": "Notes",
+		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe",
+		"NO_QUANTITATIVE_DATA": "Pas de données quantitatives pour cette équipe",
+		"USERNAME": "Nom d'utilisateur"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -220,7 +244,15 @@ const languages: ILanguageTranslation = {
 		"GRID_2023": "Şebeke",
 		"BLUE_GRID_2023": "Şebeke (mavi)",
 		"RED_GRID_2023": "Şebeke (kırmızı)",
-		"NORMALIZED_GRID_2023": "Normalleştirilmiş Şebeke"
+		"NORMALIZED_GRID_2023": "Normalleştirilmiş Şebeke",
+		"ADD_NOTE": "Not Ekle",
+		"CANCEL": "İptal etmek",
+		"SUBMIT": "Sunmak",
+		"NOTE": "Not",
+		"NOTES": "Notlar",
+		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle",
+		"NO_QUANTITATIVE_DATA": "Bu ekip için nicel veri yok",
+		"USERNAME": "Kullanıcı adı"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",
@@ -261,5 +293,13 @@ const languages: ILanguageTranslation = {
 		"MISS_GOAL_2022": "छूटी हुई गेंद",
 		"MOBILITY_2022": "टैक्सी",
 		"CLIMB_2022": "हैंगर",
+		"ADD_NOTE": "नोट जोड़े",
+		"CANCEL": "रद्द करें",
+		"SUBMIT": "भेजना",
+		"NOTE": "टिप्पणी",
+		"NOTES": "टिप्पणियाँ",
+		"VIEW_NOTES_FOR_THIS_TEAM": "इस टीम के लिए नोट देखें",
+		"NO_QUANTITATIVE_DATA": "इस टीम के लिए कोई मात्रात्मक डेटा नहीं",
+		"USERNAME": "उपयोगकर्ता नाम"
 	}
 };

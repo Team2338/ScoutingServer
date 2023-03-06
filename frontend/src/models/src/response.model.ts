@@ -66,3 +66,21 @@ export interface GlobalObjectiveStats {
 		median: number;
 	}
 }
+
+export interface NewNote {
+	eventCode: string;
+	robotNumber: number;
+	creator: string;
+	content: string;
+}
+
+export interface Note {
+	id: number;
+	teamNumber: number;
+	secretCode: string;
+	eventCode: string;
+	robotNumber: number;
+	creator: string;
+	content: string;
+	timeCreated: string;
+}

@@ -1,12 +1,14 @@
 import './TeamDetail.scss';
 import React from 'react';
-import { Team, TeamObjectiveStats } from '../../../models';
+import { Note, Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
+import ViewNotes from '../view-notes/ViewNotes';
 
 interface IProps {
 	team: Team;
+	notes: Note[]
 }
 
 export default function TeamDetail(props: IProps) {
@@ -17,20 +19,27 @@ export default function TeamDetail(props: IProps) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
 	}
 
-	const gamemodeElements = []
-	props.team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
-		gamemodeElements.push(
-			<Gamemode
-				key={gamemode}
-				name={gamemode}
-				objectives={objectives}
-			/>
-		);
-	});
+	let gamemodeElements: any = [];
+	if (props.team.stats) {
+		props.team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
+			gamemodeElements.push(
+				<Gamemode
+					key={gamemode}
+					name={gamemode}
+					objectives={objectives}
+				/>
+			);
+		});
+	} else {
+		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>
+	}
 
 	return (
 		<div className="team-detail">
-			<div className="team-number">{ translate('TEAM') } { props.team.id }</div>
+			<div className="team-number">
+				{ translate('TEAM') } { props.team.id }
+				<ViewNotes isMobile={false} notes={props.notes}/>
+			</div>
 			<div className="gamemode-list">{ gamemodeElements }</div>
 		</div>
 	);
@@ -58,6 +67,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 
 	const translate = useTranslator();
+	const scores = props.stats.scores.map(roundToDecimal);
 
 	let meanListElement = null;
 	if (props.stats.meanList) {
@@ -72,7 +82,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	return (
 		<div className="stats">
 			<div className="objective-name">{ translate(props.name) }:</div>
-			<div className="objective-stat">{ translate('SCORES') }: [ { props.stats.scores.map(roundToDecimal).join(', ') } ]</div>
+			<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
 			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
 			<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
 			<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>

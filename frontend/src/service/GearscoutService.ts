@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { MatchResponse } from '../models';
+import { MatchResponse, NewNote, Note } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -19,7 +19,7 @@ class GearscoutService {
 		};
 
 		return this.service.get(url, config);
-	}
+	};
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
 		const url = `/v1/team/${teamNumber}/match/${matchId}/hide`;
@@ -34,7 +34,7 @@ class GearscoutService {
 			null,
 			config
 		);
-	}
+	};
 
 	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
 		const url = `/v1/team/${teamNumber}/match/${matchId}/unhide`;
@@ -49,7 +49,44 @@ class GearscoutService {
 			null,
 			config
 		);
-	}
+	};
+
+	addNote = (teamNumber: number, secretCode: string, note: NewNote): GearscoutResponse<null> => {
+		const url = `/v1/notes/team/${teamNumber}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
+			}
+		};
+
+		return this.service.post(
+			url,
+			note,
+			config
+		);
+	};
+
+	getNotesForRobot = (teamNumber: number, eventCode: string, robotNumber: number, secretCode: string): GearscoutResponse<Note[]> => {
+		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}/robot/${robotNumber}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	};
+
+	getAllNotes = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<Note[]> => {
+		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}`;
+		const config = {
+			headers: {
+				secretCode: secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	};
 
 	getMatchesAsCsv = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
 		const url = `/v1/team/${teamNumber}/event/${eventCode}/download`;
@@ -60,7 +97,7 @@ class GearscoutService {
 		};
 
 		return this.service.get(url, config);
-	}
+	};
 
 }
 

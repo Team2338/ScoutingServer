@@ -1,16 +1,17 @@
 import { Language } from './languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, ObjectiveDescriptor, Team } from './response.model';
+import { GlobalObjectiveStats, Match, MatchResponse, Note, ObjectiveDescriptor, Team } from './response.model';
 
 export interface AppState {
 	language: Language;
 	isLoggedIn: boolean;
 	teamNumber: number;
+	username: string;
 	eventCode: string;
 	secretCode: string;
 	csv: {
 		isLoaded: boolean;
 		url: string;
-	}
+	};
 	matches: {
 		isLoaded: boolean;
 		raw: MatchResponse[];
@@ -26,5 +27,9 @@ export interface AppState {
 		isLoaded: boolean;
 		data: GlobalObjectiveStats[];
 		selectedStat: ObjectiveDescriptor;
+	};
+	notes: {
+		isLoaded: boolean;
+		data: Note[];
 	};
 }

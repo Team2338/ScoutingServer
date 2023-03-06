@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, Language, Match, MatchResponse } from '../models';
+import { AppState, Language, Match, MatchResponse, RequestStatus } from '../models';
 import { Action, Actions } from './Actions';
 
 
@@ -11,27 +11,27 @@ const INITIAL_STATE: AppState = {
 	eventCode: null,
 	secretCode: null,
 	csv: {
-		isLoaded: false,
+		loadStatus: RequestStatus.none,
 		url: null
 	},
 	matches: {
-		isLoaded: false,
+		loadStatus: RequestStatus.none,
 		raw: [],
 		data: [],
 		selectedMatch: null
 	},
 	teams: {
-		isLoaded: false,
+		loadStatus: RequestStatus.none,
 		data: [],
 		selectedTeam: null
 	},
 	stats: {
-		isLoaded: false,
+		loadStatus: RequestStatus.none,
 		data: [],
 		selectedStat: null
 	},
 	notes: {
-		isLoaded: false,
+		loadStatus: RequestStatus.none,
 		data: []
 	}
 };
@@ -58,7 +58,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				csv: {
-					isLoaded: false,
+					loadStatus: RequestStatus.loading,
 					url: null
 				}
 			};
@@ -66,7 +66,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				csv: {
-					isLoaded: true,
+					loadStatus: RequestStatus.success,
 					url: action.payload
 				}
 			};
@@ -75,7 +75,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				notes: {
 					...state.notes,
-					isLoaded: false,
+					loadStatus: getNextStatusOnLoad(state.notes.loadStatus)
 				}
 			};
 		case Actions.GET_ALL_NOTES_SUCCESS:
@@ -83,7 +83,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				notes: {
 					...state.notes,
-					isLoaded: true,
+					loadStatus: RequestStatus.success,
 					data: action.payload
 				}
 			};
@@ -100,14 +100,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				matches: {
 					...state.matches,
-					isLoaded: false
+					loadStatus: getNextStatusOnLoad(state.matches.loadStatus)
 				}
 			};
 		case Actions.GET_MATCHES_SUCCESS:
 			return {
 				...state,
 				matches: {
-					isLoaded: true,
+					loadStatus: RequestStatus.success,
 					data: action.payload.matchModels,
 					raw: action.payload.raw,
 					selectedMatch: null
@@ -151,7 +151,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				teams: {
 					...state.teams,
-					isLoaded: false
+					loadStatus: getNextStatusOnLoad(state.teams.loadStatus)
 				}
 			};
 		case Actions.CALCULATE_TEAM_STATS_SUCCESS:
@@ -159,7 +159,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				teams: {
 					...state.teams,
-					isLoaded: true,
+					loadStatus: RequestStatus.success,
 					data: action.payload,
 				}
 			};
@@ -176,7 +176,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				stats: {
 					...state.stats,
-					isLoaded: false
+					loadStatus: RequestStatus.loading
 				}
 			};
 		case Actions.CALCULATE_GLOBAL_STATS_SUCCESS:
@@ -184,7 +184,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				stats: {
 					...state.stats,
-					isLoaded: true,
+					loadStatus: RequestStatus.success,
 					data: action.payload
 				}
 			};
@@ -226,4 +226,12 @@ function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchRe
 	result[targetIndex] = match;
 
 	return result;
+}
+
+function getNextStatusOnLoad(previousStatus: RequestStatus): RequestStatus {
+	if (previousStatus === RequestStatus.success || previousStatus === RequestStatus.loadingWithPriorSuccess) {
+		return RequestStatus.loadingWithPriorSuccess;
+	}
+
+	return RequestStatus.loading;
 }

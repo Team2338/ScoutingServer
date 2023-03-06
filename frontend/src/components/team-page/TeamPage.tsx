@@ -1,74 +1,48 @@
-import './TeamPage.scss';
 import { useMediaQuery } from '@mui/material';
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
-import { Note, Team, AppState } from '../../models';
+import React, { useEffect, useMemo } from 'react';
+import { Note, RequestStatus, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectTeam } from '../../state/Actions';
-import { addNoteForRobot, getAllNotes, getMatches, getTeams } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
+import { addNoteForRobot, getAllNotes } from '../../state/Effects';
+import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
-
-const inputs = (state: AppState) => ({
-	areMatchesLoaded: state.matches.isLoaded,
-	areTeamsLoaded: state.teams.isLoaded,
-	areNotesLoaded: state.notes.isLoaded,
-});
-
-const outputs = (dispatch) => ({
-	getMatches: () => dispatch(getMatches()),
-	getTeamStats: () => dispatch(getTeams()),
-	getNotes: () => dispatch(getAllNotes()),
-});
-
-class ConnectedTeamPage extends React.Component<any, null> {
-
-	componentDidMount() {
-		this.props.getNotes();
-
-		if (!this.props.areMatchesLoaded) {
-			this.props.getMatches();
-
-			return;
-		}
-
-		if (!this.props.areTeamsLoaded) {
-			this.props.getTeamStats();
-		}
-	}
-
-	render() {
-		return <TeamPageContent />;
-	}
-}
+import './TeamPage.scss';
 
 
-function TeamPageContent() {
+export default function TeamPage() {
 	const isMobile = useMediaQuery('(max-width: 600px)');
 	const translate = useTranslator();
+	useDataInitializer();
 
 	// Dispatch and actions
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team));
 	const _createNote = (robotNum: number, content: string) => dispatch(addNoteForRobot(robotNum, content));
 
+	useEffect(
+		() => {
+			dispatch(getAllNotes())
+		},
+		[dispatch]
+	);
+
 	// Selectors
-	const areTeamsLoaded: boolean = useAppSelector(state => state.teams.isLoaded);
+	const teamsLoadStatus: RequestStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
 	const notes: Note[] = useAppSelector(state => state.notes.data);
 	const filteredNotes: Note[] = notes.filter((note: Note) => note.robotNumber === selectedTeam?.id);
 
 	const allTeams: Team[] = useMemo(
-		() => getTeamsWithNotesOrData([], notes),
+		() => getTeamsWithNotesOrData(teams, notes),
 		[teams, notes]
 	);
 
-	if (!areTeamsLoaded) {
-		return <div className="team-page">{ translate('LOADING') }</div>
+	if (teamsLoadStatus === RequestStatus.none || teamsLoadStatus === RequestStatus.loading) {
+		return <div className="team-page">{ translate('LOADING') }</div>;
 	}
 
 	if (isMobile) {
@@ -133,6 +107,3 @@ const getTeamsWithNotesOrData = (teamsWithData: Team[], notes: Note[]): Team[] =
 
 	return completeListOfTeams;
 };
-
-const TeamPage = connect(inputs, outputs)(ConnectedTeamPage);
-export default TeamPage;

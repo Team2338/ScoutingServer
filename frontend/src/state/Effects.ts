@@ -4,7 +4,8 @@ import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
 import teamModelService from '../service/TeamModelService';
 import {
-	addNoteStart, addNoteSuccess,
+	addNoteStart,
+	addNoteSuccess,
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
@@ -22,6 +23,7 @@ import {
 	replaceMatch,
 	selectLangSuccess
 } from './Actions';
+import { AppDispatch } from './Store';
 
 type GetState = () => AppState;
 
@@ -67,10 +69,18 @@ export const logout = () => async (dispatch) => {
 	dispatch(logoutSuccess());
 };
 
-export const getMatches = () => async (dispatch, getState: GetState) => {
+export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting all data');
+	dispatch(getCsvData());
+	await getMatches(dispatch, getState);
+	await getTeams()(dispatch, getState);
+	await getGlobalStats()(dispatch, getState);
+	console.log('Got all data');
+}
+
+const getMatches = async (dispatch, getState: GetState) => {
 	console.log('Getting matches');
 	dispatch(getMatchesStart());
-	dispatch(getCsvData());
 
 	try {
 		const response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
@@ -80,7 +90,6 @@ export const getMatches = () => async (dispatch, getState: GetState) => {
 		});
 
 		dispatch(getMatchesSuccess(matches, matchResponses));
-		dispatch(getTeams());
 	} catch (error) {
 		console.error('Error getting matches', error);
 	}
@@ -144,7 +153,6 @@ export const getTeams = () => async (dispatch, getState: GetState) => {
 	teams.sort((a: Team, b: Team) => a.id - b.id); // Sort by team number, ascending
 
 	dispatch(calculateTeamStatsSuccess(teams));
-	dispatch(getGlobalStats());
 };
 
 export const getGlobalStats = () => async (dispatch, getState: GetState) => {

@@ -1,11 +1,11 @@
-import './ManagePage.scss';
 import { useMediaQuery } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Match } from '../../models';
+import { Match, RequestStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectMatch } from '../../state/Actions';
-import { getMatches, hideMatch, unhideMatch } from '../../state/Effects';
+import { getAllData, hideMatch, unhideMatch } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
+import './ManagePage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 import MatchSelector from './match-selector/MatchSelector';
@@ -19,19 +19,23 @@ function ManagePage() {
 	const _hideMatch = (match: Match) => dispatch(hideMatch(match));
 	const _unhideMatch = (match: Match) => dispatch(unhideMatch(match));
 	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
-	const isLoaded: boolean = useAppSelector(state => state.matches.isLoaded);
+	const loadStatus: RequestStatus = useAppSelector(state => state.matches.loadStatus);
 	const matches: Match[] = useAppSelector(state => state.matches.data);
 	const selectedMatch: Match = useAppSelector(state => state.matches.selectedMatch);
 
 	useEffect(
 		() => {
-			dispatch(getMatches());
+			dispatch(getAllData())
 		},
 		[dispatch]
 	);
 
-	if (!isLoaded) {
-		return <div className="page manage-page">{translate('LOADING')}</div>;
+	if (loadStatus === RequestStatus.none || loadStatus === RequestStatus.loading) {
+		return <div className="page manage-page">{ translate('LOADING') }</div>;
+	}
+
+	if (loadStatus === RequestStatus.failed) {
+		return <div className="page manage-page">{ translate('FAILED') }</div>;
 	}
 
 	if (isMobile) {

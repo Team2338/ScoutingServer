@@ -1,51 +1,16 @@
 import './PlanningPage.scss';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { AppState, Team } from '../../models';
+import { Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { getMatches, getTeams } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
-import { AppDispatch } from '../../state/Store';
+import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 
-interface IProps {
-	areMatchesLoaded: boolean;
-	areTeamsLoaded: boolean;
-	getMatches: () => void;
-	getTeamStats: () => void;
-}
 
-const inputs = (state: AppState) => ({
-	areMatchesLoaded: state.matches.isLoaded,
-	areTeamsLoaded: state.teams.isLoaded
-});
-
-const outputs = (dispatch: AppDispatch) => ({
-	getMatches: () => dispatch(getMatches()),
-	getTeamStats: () => dispatch(getTeams())
-});
-
-class ConnectedPlanningPage extends React.Component<IProps, {}> {
-
-	componentDidMount() {
-		if (!this.props.areMatchesLoaded) {
-			this.props.getMatches();
-			return;
-		}
-
-		if (!this.props.areTeamsLoaded) {
-			this.props.getTeamStats();
-		}
-	}
-
-	render() {
-		return <PlanningPageContent/>;
-	}
-}
-
-function PlanningPageContent() {
-	const dispatch = useAppDispatch();
+function PlanningPage() {
+	useDataInitializer();
 	const translate = useTranslator();
+
+	const dispatch = useAppDispatch();
 	const isLoaded: boolean = useAppSelector(state => state.teams.isLoaded);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const [firstTeam, setFirstTeam] = useState<Team>(null);
@@ -68,5 +33,4 @@ function PlanningPageContent() {
 	)
 }
 
-const PlanningPage = connect(inputs, outputs)(ConnectedPlanningPage);
 export default PlanningPage;

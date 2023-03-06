@@ -7,6 +7,7 @@ const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
 	isLoggedIn: false,
 	teamNumber: null,
+	username: null,
 	eventCode: null,
 	secretCode: null,
 	csv: {
@@ -28,6 +29,10 @@ const INITIAL_STATE: AppState = {
 		isLoaded: false,
 		data: [],
 		selectedStat: null
+	},
+	notes: {
+		isLoaded: false,
+		data: []
 	}
 };
 
@@ -43,6 +48,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				isLoggedIn: true,
 				teamNumber: action.payload.teamNumber,
+				username: action.payload.username,
 				eventCode: action.payload.eventCode,
 				secretCode: action.payload.secretCode
 			};
@@ -62,6 +68,31 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				csv: {
 					isLoaded: true,
 					url: action.payload
+				}
+			};
+		case Actions.GET_ALL_NOTES_START:
+			return {
+				...state,
+				notes: {
+					...state.notes,
+					isLoaded: false,
+				}
+			};
+		case Actions.GET_ALL_NOTES_SUCCESS:
+			return {
+				...state,
+				notes: {
+					...state.notes,
+					isLoaded: true,
+					data: action.payload
+				}
+			};
+		case Actions.ADD_NOTE_SUCCESS:
+			return {
+				...state,
+				notes: {
+					...state.notes,
+					data: state.notes.data.concat(action.payload)
 				}
 			};
 		case Actions.GET_MATCHES_START:

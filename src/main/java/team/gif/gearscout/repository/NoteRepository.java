@@ -14,4 +14,10 @@ public interface NoteRepository extends CrudRepository<NoteEntity, Long> {
 		Integer robotNumber
 	);
 	
+	List<NoteEntity> findNoteEntriesByTeamNumberAndSecretCodeAndEventCodeOrderByTimeCreatedAsc(
+		Integer teamNumber,
+		String secretCode,
+		String eventCode
+	);
+	
 }

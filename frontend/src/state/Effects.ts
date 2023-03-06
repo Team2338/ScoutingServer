@@ -1,17 +1,22 @@
+import { AppState, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
-import { AppState, Language, Match, MatchResponse, Team } from '../models';
-import StatModelService from '../service/StatModelService';
-import TeamModelService from '../service/TeamModelService';
+import statModelService from '../service/StatModelService';
+import teamModelService from '../service/TeamModelService';
 import {
+	addNoteStart, addNoteSuccess,
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
+	getAllNotesStart,
+	getAllNotesSuccess,
 	getCsvStart,
 	getCsvSuccess,
 	getMatchesStart,
 	getMatchesSuccess,
+	getNotesForRobotStart,
+	getNotesForRobotSuccess,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -22,12 +27,13 @@ type GetState = () => AppState;
 
 export const initApp = () => async (dispatch) => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
+	const username: string = localStorage.getItem('username');
 	const eventCode: string = localStorage.getItem('eventCode');
 	const secretCode: string = localStorage.getItem('secretCode');
 
 	// Only login if all information is present
-	if (teamNumber && eventCode && secretCode) {
-		dispatch(loginSuccess(Number(teamNumber), eventCode, secretCode));
+	if (teamNumber && username && eventCode && secretCode) {
+		dispatch(loginSuccess(Number(teamNumber), username, eventCode, secretCode));
 	}
 
 	const language: Language = localStorage.getItem('language') as Language;
@@ -43,14 +49,16 @@ export const selectLanguage = (language: Language) => async (dispatch) => {
 
 export const login = (
 	teamNumber: number,
+	username: string,
 	eventCode: string,
 	secretCode: string
 ) => async (dispatch) => {
 	localStorage.setItem('teamNumber', teamNumber.toString());
+	localStorage.setItem('username', username);
 	localStorage.setItem('eventCode', eventCode);
 	localStorage.setItem('secretCode', secretCode);
 
-	dispatch(loginSuccess(teamNumber, eventCode, secretCode));
+	dispatch(loginSuccess(teamNumber, username, eventCode, secretCode));
 };
 
 export const logout = () => async (dispatch) => {
@@ -85,7 +93,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	dispatch(getCsvStart());
 
 	try {
-		let response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
+		const response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
 
@@ -145,7 +153,7 @@ export const getTeams = () => async (dispatch, getState: GetState) => {
 	// Calculate team statistics
 	const teams: Team[] = [];
 	groupedMatches.forEach((robotMatches: MatchResponse[]) => {
-		teams.push(TeamModelService.createTeam(robotMatches));
+		teams.push(teamModelService.createTeam(robotMatches));
 	});
 
 	// Sort by team number, ascending
@@ -160,6 +168,71 @@ export const getGlobalStats = () => async (dispatch, getState: GetState) => {
 	dispatch(calculateGlobalStatsStart());
 
 	const teams = getState().teams.data;
-	const globalStats = StatModelService.calculateGlobalStats(teams);
+	const globalStats = statModelService.calculateGlobalStats(teams);
 	dispatch(calculateGlobalStatsSuccess(globalStats));
+};
+
+export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
+	console.log('Getting notes for robot');
+	dispatch(getNotesForRobotStart(robotNumber));
+
+	try {
+		const response = await gearscoutService.getNotesForRobot(
+			getState().teamNumber,
+			getState().eventCode,
+			robotNumber,
+			getState().secretCode
+		);
+		const notes: Note[] = response.data;
+
+		dispatch(getNotesForRobotSuccess(notes));
+	} catch (error) {
+		console.error('Error getting notes for robot', error);
+	}
+};
+
+export const getAllNotes = () => async (dispatch, getState: GetState) => {
+	console.log('Getting all notes');
+	dispatch(getAllNotesStart());
+
+	try {
+		const response = await gearscoutService.getAllNotes(
+			getState().teamNumber,
+			getState().eventCode,
+			getState().secretCode
+		);
+		const notes: Note[] = response.data;
+
+		dispatch(getAllNotesSuccess(notes));
+	} catch (error) {
+		console.error('Error getting all notes', error);
+	}
+};
+
+export const addNoteForRobot = (robotNumber: number, content: string) => async (dispatch, getState: GetState) => {
+	console.log('Adding note for robot');
+	dispatch(addNoteStart());
+
+	const note: NewNote = {
+		robotNumber: robotNumber,
+		eventCode: getState().eventCode,
+		creator: getState().username,
+		content: content
+	};
+	console.log(note);
+
+	const dummyCompleteNote: Note = {
+		...note,
+		teamNumber: getState().teamNumber,
+		secretCode: getState().secretCode,
+		id: -getState().notes.data.length,
+		timeCreated: null
+	}
+
+	try {
+		const response = await gearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
+		dispatch(addNoteSuccess(dummyCompleteNote));
+	} catch (error) {
+		console.error('Error adding note', error);
+	}
 };

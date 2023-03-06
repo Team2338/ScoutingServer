@@ -9,7 +9,8 @@ export function TeamSelector({ teams, selectedTeam, selectTeam }) {
 
 	const handleTeamChange = (event) => {
 		const teamNum = event.target.value;
-		const team = teams.find((team: Team) => team.id === teamNum);
+		let team: Team = teams.find((team: Team) => team.id === teamNum);
+
 		selectTeam(team);
 	};
 

@@ -46,14 +46,27 @@ public class NoteController {
 	
 	
 	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/robot/{robotNumber}")
-	public ResponseEntity<List<NoteEntity>> getNotesForTeam(
+	public ResponseEntity<List<NoteEntity>> getNotesForRobot(
 		@PathVariable Integer teamNumber,
 		@PathVariable String eventCode,
 		@PathVariable Integer robotNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getNotesForTeam request: {}, {}, {}", teamNumber, eventCode, robotNumber);
-		List<NoteEntity> result = noteService.getAllNotesForTeam(teamNumber, secretCode, eventCode, robotNumber);
+		List<NoteEntity> result = noteService.getAllNotesForRobot(teamNumber, secretCode, eventCode, robotNumber);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	
+	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}")
+	public ResponseEntity<List<NoteEntity>> getNotes(
+		@PathVariable Integer teamNumber,
+		@PathVariable String eventCode,
+		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+	) {
+		logger.debug("Received getNotes request: {}, {}", teamNumber, eventCode);
+		List<NoteEntity> result = noteService.getAllNotes(teamNumber, secretCode, eventCode);
 		
 		return ResponseEntity.ok(result);
 	}

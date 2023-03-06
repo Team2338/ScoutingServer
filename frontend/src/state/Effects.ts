@@ -139,25 +139,9 @@ export const getTeams = () => async (dispatch, getState: GetState) => {
 	console.log('Computing team statistics');
 	dispatch(calculateTeamStatsStart());
 
-	// Group matches by robot number
 	const matches = getState().matches.raw.filter((match: MatchResponse) => !match.isHidden); // Filter out hidden matches
-	const groupedMatches = new Map<number, MatchResponse[]>();
-	for (const match of matches) {
-		if (!groupedMatches.has(match.robotNumber)) {
-			groupedMatches.set(match.robotNumber, []);
-		}
-
-		groupedMatches.get(match.robotNumber).push(match);
-	}
-
-	// Calculate team statistics
-	const teams: Team[] = [];
-	groupedMatches.forEach((robotMatches: MatchResponse[]) => {
-		teams.push(teamModelService.createTeam(robotMatches));
-	});
-
-	// Sort by team number, ascending
-	teams.sort((a: Team, b: Team) => a.id - b.id);
+	const teams: Team[] = teamModelService.createTeams(matches);
+	teams.sort((a: Team, b: Team) => a.id - b.id); // Sort by team number, ascending
 
 	dispatch(calculateTeamStatsSuccess(teams));
 	dispatch(getGlobalStats());
@@ -219,7 +203,6 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 		creator: getState().username,
 		content: content
 	};
-	console.log(note);
 
 	const dummyCompleteNote: Note = {
 		...note,
@@ -230,7 +213,7 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 	}
 
 	try {
-		const response = await gearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
+		await gearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
 		dispatch(addNoteSuccess(dummyCompleteNote));
 	} catch (error) {
 		console.error('Error adding note', error);

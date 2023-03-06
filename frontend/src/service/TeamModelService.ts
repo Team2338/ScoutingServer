@@ -14,6 +14,25 @@ interface ObjectiveSums {
 
 class TeamModelService {
 
+	createTeams = (matches: MatchResponse[]): Team[] => {
+		const groupedMatches = new Map<number, MatchResponse[]>();
+		for (const match of matches) {
+			if (!groupedMatches.has(match.robotNumber)) {
+				groupedMatches.set(match.robotNumber, []);
+			}
+
+			groupedMatches.get(match.robotNumber).push(match);
+		}
+
+		// Calculate team statistics
+		const teams: Team[] = [];
+		groupedMatches.forEach((robotMatches: MatchResponse[]) => {
+			teams.push(this.createTeam(robotMatches));
+		});
+
+		return teams;
+	};
+
 	createTeam = (matches: MatchResponse[]): Team => {
 		const teamNumber = matches[0].robotNumber;
 		const reducedMatches = this.mergeDuplicateMatches(matches); // Merge duplicates

@@ -2,7 +2,7 @@ import './PlanningPage.scss';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { AppState, Team } from '../../models';
+import { AppState, Plan, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { applyPlanSelection } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
@@ -50,6 +50,7 @@ function PlanningPageContent() {
 	const translate = useTranslator();
 	const isLoaded: boolean = useAppSelector(state => state.teams.isLoaded);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
+	const plan: Plan = useAppSelector(state => state.planning.plan);
 	const [firstTeam, setFirstTeam] = useState<Team>(null);
 	const [secondTeam, setSecondTeam] = useState<Team>(null);
 	const [thirdTeam, setThirdTeam] = useState<Team>(null);
@@ -72,6 +73,9 @@ function PlanningPageContent() {
 					{ translate('APPLY') }
 				</Button>
 				<div>Here's the planning page!</div>
+			</div>
+			<div className="plan">
+
 			</div>
 		</div>
 	)

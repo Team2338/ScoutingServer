@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { AppState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
 
@@ -38,7 +39,8 @@ const INITIAL_STATE: AppState = {
 		loadStatus: LoadStatus.none,
 		firstTeam: null,
 		secondTeam: null,
-		thirdTeam: null
+		thirdTeam: null,
+		plan: null
 	}
 };
 
@@ -234,9 +236,15 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				planning: {
 					...state.planning,
+					loadStatus: LoadStatus.success,
 					firstTeam: action.payload.firstTeam,
 					secondTeam: action.payload.secondTeam,
-					thirdTeam: action.payload.secondTeam
+					thirdTeam: action.payload.secondTeam,
+					plan: planningService.createPlan(
+						action.payload.firstTeam,
+						action.payload.secondTeam,
+						action.payload.thirdTeam
+					)
 				}
 			};
 		default:

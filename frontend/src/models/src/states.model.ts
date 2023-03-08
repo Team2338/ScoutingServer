@@ -4,7 +4,7 @@ import {
 	Match,
 	MatchResponse,
 	Note,
-	ObjectiveDescriptor,
+	ObjectiveDescriptor, Plan,
 	Team
 } from './response.model';
 
@@ -51,5 +51,6 @@ export interface AppState {
 		firstTeam: Team;
 		secondTeam: Team;
 		thirdTeam: Team;
+		plan: Plan;
 	}
 }

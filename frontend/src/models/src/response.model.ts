@@ -84,3 +84,9 @@ export interface Note {
 	content: string;
 	timeCreated: string;
 }
+
+export interface Plan {
+	[gamemode: string]: {
+		[objective: string]: TeamObjectiveStats[];
+	}
+}

@@ -1,5 +1,19 @@
 import { Language } from './languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, Note, ObjectiveDescriptor, Team } from './response.model';
+import {
+	GlobalObjectiveStats,
+	Match,
+	MatchResponse,
+	Note,
+	ObjectiveDescriptor,
+	Team
+} from './response.model';
+
+export enum LoadStatus {
+	none = 'none',
+	loading = 'loading',
+	failed = 'failed',
+	success = 'success',
+}
 
 export interface AppState {
 	language: Language;
@@ -32,4 +46,10 @@ export interface AppState {
 		isLoaded: boolean;
 		data: Note[];
 	};
+	planning: {
+		loadStatus: LoadStatus;
+		firstTeam: Team;
+		secondTeam: Team;
+		thirdTeam: Team;
+	}
 }

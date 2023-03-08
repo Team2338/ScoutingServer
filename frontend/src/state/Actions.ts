@@ -33,7 +33,11 @@ export enum Actions {
 	GET_ALL_NOTES_START = '[NOTES] Start getting all notes',
 	GET_ALL_NOTES_SUCCESS = '[NOTES] Successfully got all notes',
 	ADD_NOTE_START = '[NOTES] Create new note',
-	ADD_NOTE_SUCCESS = '[NOTES] Successfully created new note'
+	ADD_NOTE_SUCCESS = '[NOTES] Successfully created new note',
+	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
+	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
+	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
+	APPLY_PLAN_SELECTION = '[PLAN] Apply selection'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -152,4 +156,28 @@ export const addNoteStart = (): Action => ({
 export const addNoteSuccess = (note: Note): Action => ({
 	type: Actions.ADD_NOTE_SUCCESS,
 	payload: note
+});
+
+export const selectFirstTeamForPlanning = (team: Team): Action => ({
+	type: Actions.SELECT_FIRST_TEAM_FOR_PLANNING,
+	payload: team
+});
+
+export const selectSecondTeamForPlanning = (team: Team): Action => ({
+	type: Actions.SELECT_SECOND_TEAM_FOR_PLANNING,
+	payload: team
+});
+
+export const selectThirdTeamForPlanning = (team: Team): Action => ({
+	type: Actions.SELECT_THIRD_TEAM_FOR_PLANNING,
+	payload: team
+});
+
+export const applyPlanSelection = (firstTeam: Team, secondTeam: Team, thirdTeam: Team): Action => ({
+	type: Actions.APPLY_PLAN_SELECTION,
+	payload: {
+		firstTeam: firstTeam,
+		secondTeam: secondTeam,
+		thirdTeam: thirdTeam
+	}
 });

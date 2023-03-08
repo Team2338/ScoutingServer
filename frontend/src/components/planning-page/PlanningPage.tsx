@@ -1,8 +1,10 @@
 import './PlanningPage.scss';
+import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { AppState, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
+import { applyPlanSelection } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import { AppDispatch } from '../../state/Store';
@@ -62,6 +64,13 @@ function PlanningPageContent() {
 				<TeamSelector teams={teams} selectedTeam={firstTeam} selectTeam={setFirstTeam}/>
 				<TeamSelector teams={teams} selectedTeam={secondTeam} selectTeam={setSecondTeam}/>
 				<TeamSelector teams={teams} selectedTeam={thirdTeam} selectTeam={setThirdTeam}/>
+				<Button
+					onClick={() => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam))}
+					variant="contained"
+					disableElevation
+				>
+					{ translate('APPLY') }
+				</Button>
 				<div>Here's the planning page!</div>
 			</div>
 		</div>

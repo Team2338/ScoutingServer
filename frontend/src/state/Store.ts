@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, Language, Match, MatchResponse } from '../models';
+import { AppState, Language, LoadStatus, Match, MatchResponse } from '../models';
 import { Action, Actions } from './Actions';
 
 
@@ -33,6 +33,12 @@ const INITIAL_STATE: AppState = {
 	notes: {
 		isLoaded: false,
 		data: []
+	},
+	planning: {
+		loadStatus: LoadStatus.none,
+		firstTeam: null,
+		secondTeam: null,
+		thirdTeam: null
 	}
 };
 
@@ -199,13 +205,60 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					}
 				}
 			};
+		case Actions.SELECT_FIRST_TEAM_FOR_PLANNING:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					firstTeam: action.payload
+				}
+			};
+		case Actions.SELECT_SECOND_TEAM_FOR_PLANNING:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					secondTeam: action.payload
+				}
+			};
+		case Actions.SELECT_THIRD_TEAM_FOR_PLANNING:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					thirdTeam: action.payload
+				}
+			};
+		case Actions.APPLY_PLAN_SELECTION:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					firstTeam: action.payload.firstTeam,
+					secondTeam: action.payload.secondTeam,
+					thirdTeam: action.payload.secondTeam
+				}
+			};
 		default:
 			return state;
 	}
 };
 
 export const store = configureStore({
-	reducer: reducer
+	reducer: reducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [
+					Actions.GET_MATCHES_SUCCESS,
+					Actions.CALCULATE_TEAM_STATS_START,
+					Actions.CALCULATE_TEAM_STATS_SUCCESS,
+					Actions.CALCULATE_GLOBAL_STATS_START,
+					Actions.CALCULATE_GLOBAL_STATS_SUCCESS
+				],
+				ignoreState: true
+			}
+		})
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -74,7 +74,9 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 		meanListElement = (
 			<React.Fragment>
 				<div className="objective-stat">{ translate('MEAN_LIST') }:</div>
-				<GridScore list={props.stats.meanList} />
+				<div className="mean-list-wrapper">
+					<GridScore list={props.stats.meanList} />
+				</div>
 			</React.Fragment>
 		);
 	}

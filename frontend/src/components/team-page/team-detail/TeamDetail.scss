@@ -2,8 +2,6 @@
 .team-detail {
 	display: flex;
 	flex-direction: column;
-	//border: 1px solid var(--border-color);
-	//border-radius: 4px;
 	padding: 8px;
 	margin-top: 12px;
 	height: fit-content;
@@ -56,5 +54,12 @@
 			}
 		}
 
-	};
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.team-detail {
+		padding: 0;
+		margin-top: 20px;
+	}
 }

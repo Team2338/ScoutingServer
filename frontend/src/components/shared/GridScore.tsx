@@ -2,14 +2,17 @@ import React, { ReactElement } from 'react';
 import './GridScore.scss';
 
 type GridVariant = 'binary' | 'heatmap';
+type Size = 'normal' | 'large';
 interface IProps {
 	list: number[];
 	variant?: GridVariant;
+	size?: Size;
 }
 
 export function GridScore(props: IProps) {
 
 	const variant: GridVariant = props.variant ?? 'heatmap';
+	const size: Size = props.size ?? 'normal';
 
 	let listElements: ReactElement[];
 	if (variant === 'binary') {
@@ -19,7 +22,7 @@ export function GridScore(props: IProps) {
 	}
 
 	return (
-		<div className="grid-display">{ listElements }</div>
+		<div className={'grid-display ' + size}>{ listElements }</div>
 	);
 }
 

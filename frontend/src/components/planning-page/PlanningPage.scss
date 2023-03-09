@@ -34,9 +34,9 @@
 			flex-direction: column;
 
 			&-header {
-				font-size: 20px;
-				line-height: 24px;
 				font-weight: 600;
+				font-size: 28px;
+				line-height: 36px;
 				margin-bottom: 16px;
 			}
 
@@ -44,7 +44,7 @@
 				display: flex;
 				flex-direction: column;
 				row-gap: 32px;
-				padding-left: 16px;
+				padding-left: 12px;
 
 				.objective {
 					display: flex;
@@ -52,8 +52,9 @@
 
 					&-header {
 						color: #777;
-						font-size: 16px;
 						font-weight: 600;
+						font-size: 20px;
+						line-height: 24px;
 					}
 
 					.comparison {
@@ -63,8 +64,10 @@
 
 						&-grids {
 							display: flex;
-							flex-direction: column;
+							flex-direction: row;
+							flex-wrap: wrap;
 							row-gap: 24px;
+							column-gap: 32px;
 						}
 
 						&-grid {
@@ -73,7 +76,7 @@
 							row-gap: 4px;
 
 							.team-number {
-								padding-left: 8px;
+								color: #777;
 								font-weight: 600;
 							}
 						}

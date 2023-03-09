@@ -63,7 +63,7 @@ function TeamPageContent() {
 	const filteredNotes: Note[] = notes.filter((note: Note) => note.robotNumber === selectedTeam?.id);
 
 	const allTeams: Team[] = useMemo(
-		() => getTeamsWithNotesOrData([], notes),
+		() => getTeamsWithNotesOrData(teams, notes),
 		[teams, notes]
 	);
 

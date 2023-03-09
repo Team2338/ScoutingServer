@@ -262,7 +262,8 @@ export const store = configureStore({
 					Actions.CALCULATE_TEAM_STATS_START,
 					Actions.CALCULATE_TEAM_STATS_SUCCESS,
 					Actions.CALCULATE_GLOBAL_STATS_START,
-					Actions.CALCULATE_GLOBAL_STATS_SUCCESS
+					Actions.CALCULATE_GLOBAL_STATS_SUCCESS,
+					Actions.APPLY_PLAN_SELECTION
 				],
 				ignoreState: true
 			}

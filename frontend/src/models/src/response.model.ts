@@ -86,7 +86,16 @@ export interface Note {
 }
 
 export interface Plan {
-	[gamemode: string]: {
-		[objective: string]: TeamObjectiveStats[];
-	}
+	teams: Team[];
+	gamemodes: {
+		[gamemode: string]: {
+			name: string;
+			objectives: {
+				[objective: string]: {
+					name: string;
+					stats: TeamObjectiveStats[];
+				};
+			};
+		};
+	};
 }

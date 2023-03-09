@@ -1,6 +1,6 @@
 import './PlanningPage.scss';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { AppState, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
@@ -70,7 +70,7 @@ function PlanningPageContent() {
 					onClick={() => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam))}
 					variant="contained"
 				>
-					{ translate('TODO_APPLY') }
+					{ translate('APPLY') }
 				</Button>
 			</div>
 			<div className="plan">
@@ -90,23 +90,26 @@ interface IPlanDisplay {
 
 function PlanDisplay({ plan }: IPlanDisplay) {
 	const translate = useTranslator();
-	const gamemodeNames: string[] = Object.getOwnPropertyNames(plan);
+	const gamemodeNames: string[] = Object.getOwnPropertyNames(plan.gamemodes);
 	const gamemodeElements: ReactElement[] = [];
 
-	for (const gamemode of gamemodeNames) {
-		const objectiveNames: string[] = Object.getOwnPropertyNames(plan[gamemode]);
-		const objectiveElements: ReactElement[] = objectiveNames.map((objective: string) => (
-			<div key={objective} className="objective">
-				<div className="objective-header">{ translate(objective) }</div>
+	for (const gamemodeName of gamemodeNames) {
+		const objectiveNames: string[] = Object.getOwnPropertyNames(plan.gamemodes[gamemodeName].objectives);
+		const objectiveElements: ReactElement[] = objectiveNames.map((objectiveName: string) => (
+			<div key={objectiveName} className="objective">
+				<div className="objective-header">{ translate(objectiveName) }</div>
 				<div>
-					<PlanComparison stats={plan[gamemode][objective]}/>
+					<PlanComparison
+						teams={plan.teams}
+						stats={plan.gamemodes[gamemodeName].objectives[objectiveName].stats}
+					/>
 				</div>
 			</div>
 		));
 
 		gamemodeElements.push((
-			<div key={gamemode} className="gamemode">
-				<div className="gamemode-header">{ translate(gamemode) }</div>
+			<div key={gamemodeName} className="gamemode">
+				<div className="gamemode-header">{ translate(gamemodeName) }</div>
 				<div className="gamemode-objectives">{ objectiveElements }</div>
 			</div>
 		));
@@ -119,7 +122,12 @@ function PlanDisplay({ plan }: IPlanDisplay) {
 	);
 }
 
-function PlanComparison({ stats }: { stats: TeamObjectiveStats[] }) {
+interface IPlanComparisonProps {
+	teams: Team[];
+	stats: TeamObjectiveStats[];
+}
+
+function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 	const translate = useTranslator();
 
 	return (
@@ -128,29 +136,29 @@ function PlanComparison({ stats }: { stats: TeamObjectiveStats[] }) {
 				<TableHead>
 					<TableRow>
 						<TableCell>{ translate('STATS') }</TableCell>
-						<TableCell>{ stats[0].teamNumber }</TableCell>
-						<TableCell>{ stats[1].teamNumber }</TableCell>
-						<TableCell>{ stats[2].teamNumber }</TableCell>
+						<TableCell>{ teams[0].id }</TableCell>
+						<TableCell>{ teams[1].id }</TableCell>
+						<TableCell>{ teams[2].id }</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					<TableRow>
 						<TableCell align="left">{ translate('MEAN') }</TableCell>
-						<TableCell>{ stats[0].mean.toFixed(2) }</TableCell>
-						<TableCell>{ stats[1].mean.toFixed(2) }</TableCell>
-						<TableCell>{ stats[2].mean.toFixed(2) }</TableCell>
+						<TableCell>{ stats[0] ? stats[0].mean.toFixed(2) : '-' }</TableCell>
+						<TableCell>{ stats[1] ? stats[1].mean.toFixed(2) : '-' }</TableCell>
+						<TableCell>{ stats[2] ? stats[2].mean.toFixed(2) : '-' }</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell align="left">{ translate('MEDIAN') }</TableCell>
-						<TableCell>{ roundToDecimal(stats[0].median) }</TableCell>
-						<TableCell>{ roundToDecimal(stats[1].median) }</TableCell>
-						<TableCell>{ roundToDecimal(stats[2].median) }</TableCell>
+						<TableCell>{ stats[0] ? roundToDecimal(stats[0].median) : '-' }</TableCell>
+						<TableCell>{ stats[1] ? roundToDecimal(stats[1].median) : '-' }</TableCell>
+						<TableCell>{ stats[2] ? roundToDecimal(stats[2].median) : '-' }</TableCell>
 					</TableRow>
 					<TableRow>
-						<TableCell align="left">{ translate('TODO_MAX') }</TableCell>
-						<TableCell>{ roundToDecimal(Math.max(...stats[0].scores)) }</TableCell>
-						<TableCell>{ roundToDecimal(Math.max(...stats[1].scores)) }</TableCell>
-						<TableCell>{ roundToDecimal(Math.max(...stats[2].scores)) }</TableCell>
+						<TableCell align="left">{ translate('MAX') }</TableCell>
+						<TableCell>{ stats[0] ? roundToDecimal(Math.max(...stats[0].scores)) : '-' }</TableCell>
+						<TableCell>{ stats[1] ? roundToDecimal(Math.max(...stats[1].scores)) : '-' }</TableCell>
+						<TableCell>{ stats[2] ? roundToDecimal(Math.max(...stats[2].scores)) : '-' }</TableCell>
 					</TableRow>
 				</TableBody>
 			</Table>

@@ -31,7 +31,8 @@ export const translate = (Component) => {
 	return connect(inputs, null)(AddTranslator);
 };
 
-export const useTranslator = () => {
+type Translator = (key: string) => string;
+export const useTranslator = (): Translator => {
 	const language: string = useAppSelector((state: AppState) => state.language);
 
 	return (key: string) => translateKey(language, key);
@@ -59,6 +60,7 @@ const languages: ILanguageTranslation = {
 		"MEAN": "Mean",
 		"MEDIAN": "Median",
 		"MODE": "Mode",
+		"MAX": "Max",
 		"SCORES": "Scores",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Select a team to view more details",
 		"VALUE": "Value",
@@ -90,7 +92,8 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notes",
 		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team",
 		"NO_QUANTITATIVE_DATA": "No quantitative data for this team",
-		"USERNAME": "Username"
+		"USERNAME": "Username",
+		"APPLY": "Apply"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -113,6 +116,7 @@ const languages: ILanguageTranslation = {
 		"MEAN": "Media",
 		"MEDIAN": "Mediana",
 		"MODE": "Moda",
+		"MAX": "Máxima",
 		"SCORES": "Anotaciones",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Seleccione un equipo para ver más detalles",
 		"VALUE": "Valor",
@@ -144,7 +148,8 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notas",
 		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo",
 		"NO_QUANTITATIVE_DATA": "No hay datos cuantitativos para este equipo",
-		"USERNAME": "Nombre de usuario"
+		"USERNAME": "Nombre de usuario",
+		"APPLY": "Aplicar"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -167,6 +172,7 @@ const languages: ILanguageTranslation = {
 		"MEAN": "Moyenne",
 		"MEDIAN": "Médiane",
 		"MODE": "Mode",
+		"MAX": "Maximum",
 		"SCORES": "Pointages",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Sélectionnez une équipe pour afficher plus de détails",
 		"VALUE": "Évaluer",
@@ -198,7 +204,8 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notes",
 		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe",
 		"NO_QUANTITATIVE_DATA": "Pas de données quantitatives pour cette équipe",
-		"USERNAME": "Nom d'utilisateur"
+		"USERNAME": "Nom d'utilisateur",
+		"APPLY": "Appliquer"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -221,6 +228,7 @@ const languages: ILanguageTranslation = {
 		"MEAN": "Ortalama",
 		"MEDIAN": "Medyan",
 		"MODE": "Mod",
+		"MAX": "Maksimum",
 		"SCORES": "Puanı",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Daha fazla ayrıntı görmek için bir ekip seçin",
 		"VALUE": "Değer",
@@ -252,7 +260,8 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notlar",
 		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle",
 		"NO_QUANTITATIVE_DATA": "Bu ekip için nicel veri yok",
-		"USERNAME": "Kullanıcı adı"
+		"USERNAME": "Kullanıcı adı",
+		"APPLY": "Uygula"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",

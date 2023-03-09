@@ -8,12 +8,12 @@ import {
 	TableHead,
 	TableRow
 } from '@mui/material';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { AppState, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
 import { useTranslator } from '../../service/TranslateService';
-import { applyPlanSelection, clearPlan } from '../../state/Actions';
+import { applyPlanSelection, clearPlan, selectFirstTeamForPlanning, selectSecondTeamForPlanning, selectThirdTeamForPlanning } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import { AppDispatch } from '../../state/Store';
@@ -56,25 +56,39 @@ class ConnectedPlanningPage extends React.Component<IProps, {}> {
 }
 
 function PlanningPageContent() {
-	const dispatch = useAppDispatch();
 	const translate = useTranslator();
+	const dispatch = useAppDispatch();
 	const isLoaded: boolean = useAppSelector(state => state.teams.isLoaded);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const plan: Plan = useAppSelector(state => state.planning.plan);
-	const [firstTeam, setFirstTeam] = useState<Team>(null);
-	const [secondTeam, setSecondTeam] = useState<Team>(null);
-	const [thirdTeam, setThirdTeam] = useState<Team>(null);
+	const firstTeam: Team = useAppSelector(state => state.planning.firstTeam);
+	const secondTeam: Team = useAppSelector(state => state.planning.secondTeam);
+	const thirdTeam: Team = useAppSelector(state => state.planning.thirdTeam);
 
 	if (!isLoaded) {
 		return <div className="planning-page">{ translate('LOADING') }</div>;
 	}
 
+	const isApplyDisabled: boolean = (firstTeam === null) || (secondTeam === null) || (thirdTeam === null);
+
 	return (
 		<div className="page planning-page">
 			<div className="team-selectors">
-				<TeamSelector teams={teams} selectedTeam={firstTeam} selectTeam={setFirstTeam}/>
-				<TeamSelector teams={teams} selectedTeam={secondTeam} selectTeam={setSecondTeam}/>
-				<TeamSelector teams={teams} selectedTeam={thirdTeam} selectTeam={setThirdTeam}/>
+				<TeamSelector
+					teams={teams}
+					selectedTeam={firstTeam}
+					selectTeam={(team) => dispatch(selectFirstTeamForPlanning(team))}
+				/>
+				<TeamSelector
+					teams={teams}
+					selectedTeam={secondTeam}
+					selectTeam={(team) => dispatch(selectSecondTeamForPlanning(team))}
+				/>
+				<TeamSelector
+					teams={teams}
+					selectedTeam={thirdTeam}
+					selectTeam={(team) => dispatch(selectThirdTeamForPlanning(team))}
+				/>
 				<div className="action-area">
 					<Button
 						onClick={() => dispatch(clearPlan())}
@@ -87,6 +101,7 @@ function PlanningPageContent() {
 						onClick={() => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam))}
 						variant="contained"
 						color="primary"
+						disabled={isApplyDisabled}
 					>
 						{ translate('APPLY') }
 					</Button>

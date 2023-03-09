@@ -1,12 +1,51 @@
 
 .planning-page {
 	display: flex;
+	flex-direction: column;
+	row-gap: 32px;
 	padding: 16px;
 
 	.team-selectors {
 		display: flex;
 		flex-direction: column;
 		min-width: 140px;
-		row-gap: 8px;
+		max-width: 480px;
+		row-gap: 16px;
+	}
+
+	.gamemodes {
+		display: flex;
+		flex-direction: column;
+		row-gap: 64px;
+
+		.gamemode {
+			display: flex;
+			flex-direction: column;
+
+			&-header {
+				font-size: 20px;
+				line-height: 24px;
+				font-weight: 600;
+				margin-bottom: 8px;
+			}
+
+			&-objectives {
+				display: flex;
+				flex-direction: column;
+				row-gap: 32px;
+				padding-left: 16px;
+
+				.objective {
+					display: flex;
+					flex-direction: column;
+
+					&-header {
+						color: #777;
+						font-size: 16px;
+						font-weight: 600;
+					}
+				}
+			}
+		}
 	}
 }

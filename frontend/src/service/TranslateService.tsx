@@ -85,7 +85,8 @@ const languages: ILanguageTranslation = {
 		"NO_QUANTITATIVE_DATA": "No quantitative data for this team",
 		"USERNAME": "Username",
 		"APPLY": "Apply",
-		"CLEAR": "Clear"
+		"CLEAR": "Clear",
+		"CLOSE": "Close"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -143,7 +144,8 @@ const languages: ILanguageTranslation = {
 		"NO_QUANTITATIVE_DATA": "No hay datos cuantitativos para este equipo",
 		"USERNAME": "Nombre de usuario",
 		"APPLY": "Aplicar",
-		"CLEAR": "Despejar"
+		"CLEAR": "Despejar",
+		"CLOSE": "Cerrar"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -201,7 +203,8 @@ const languages: ILanguageTranslation = {
 		"NO_QUANTITATIVE_DATA": "Pas de données quantitatives pour cette équipe",
 		"USERNAME": "Nom d'utilisateur",
 		"APPLY": "Appliquer",
-		"CLEAR": "Supprimer"
+		"CLEAR": "Supprimer",
+		"CLOSE": "Fermer"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -259,7 +262,8 @@ const languages: ILanguageTranslation = {
 		"NO_QUANTITATIVE_DATA": "Bu ekip için nicel veri yok",
 		"USERNAME": "Kullanıcı adı",
 		"APPLY": "Uygula",
-		"CLEAR": "Temizlemek"
+		"CLEAR": "Temizlemek",
+		"CLOSE": "Kapatmak"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",

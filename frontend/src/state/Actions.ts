@@ -37,7 +37,8 @@ export enum Actions {
 	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
 	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
-	APPLY_PLAN_SELECTION = '[PLAN] Apply selection'
+	APPLY_PLAN_SELECTION = '[PLAN] Apply selection',
+	CLEAR_PLAN = '[Plan] Clear'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -180,4 +181,8 @@ export const applyPlanSelection = (firstTeam: Team, secondTeam: Team, thirdTeam:
 		secondTeam: secondTeam,
 		thirdTeam: thirdTeam
 	}
+});
+
+export const clearPlan = (): Action => ({
+	type: Actions.CLEAR_PLAN
 });

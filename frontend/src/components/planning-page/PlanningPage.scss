@@ -11,6 +11,17 @@
 		min-width: 140px;
 		max-width: 480px;
 		row-gap: 16px;
+
+		.action-area {
+			display: flex;
+			flex-direction: row;
+			column-gap: 16px;
+			justify-content: center;
+
+			& > button {
+				min-width: 10em;
+			}
+		}
 	}
 
 	.gamemodes {

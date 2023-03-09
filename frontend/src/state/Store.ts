@@ -247,6 +247,11 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					)
 				}
 			};
+		case Actions.CLEAR_PLAN:
+			return {
+				...state,
+				planning: INITIAL_STATE.planning
+			};
 		default:
 			return state;
 	}

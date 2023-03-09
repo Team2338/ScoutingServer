@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AppState, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
 import { useTranslator } from '../../service/TranslateService';
-import { applyPlanSelection } from '../../state/Actions';
+import { applyPlanSelection, clearPlan } from '../../state/Actions';
 import { getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import { AppDispatch } from '../../state/Store';
@@ -66,12 +66,22 @@ function PlanningPageContent() {
 				<TeamSelector teams={teams} selectedTeam={firstTeam} selectTeam={setFirstTeam}/>
 				<TeamSelector teams={teams} selectedTeam={secondTeam} selectTeam={setSecondTeam}/>
 				<TeamSelector teams={teams} selectedTeam={thirdTeam} selectTeam={setThirdTeam}/>
-				<Button
-					onClick={() => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam))}
-					variant="contained"
-				>
-					{ translate('APPLY') }
-				</Button>
+				<div className="action-area">
+					<Button
+						onClick={() => dispatch(clearPlan())}
+						variant="outlined"
+						color="primary"
+					>
+						{ translate('CLEAR') }
+					</Button>
+					<Button
+						onClick={() => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam))}
+						variant="contained"
+						color="primary"
+					>
+						{ translate('APPLY') }
+					</Button>
+				</div>
 			</div>
 			<div className="plan">
 				{ plan ? <PlanDisplay plan={plan}/> : null }

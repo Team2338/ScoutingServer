@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { AppState, ILanguageTranslation, Language } from '../models';
 import { useAppSelector } from '../state/Hooks';
 
@@ -14,21 +13,12 @@ const translateKey = (language: string, key: string): string => {
 };
 
 export const translate = (Component) => {
-	const inputs = (state: AppState) => ({
-		lang: state.language
-	});
-
-	class AddTranslator extends React.Component<any, any> {
-		translate = (key: string): string => {
-			return translateKey(this.props.lang, key);
-		}
-
-		render() {
-			return <Component translate={this.translate} {...this.props} />;
-		}
+	function AddTranslator(props) {
+		const translate = useTranslator();
+		return <Component translate={translate} {...props} />;
 	}
 
-	return connect(inputs, null)(AddTranslator);
+	return AddTranslator;
 };
 
 type Translator = (key: string) => string;
@@ -45,12 +35,13 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Team number",
 		"EVENT_CODE": "Event code",
 		"SECRET_CODE": "Secret code",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "Loading...",
 		"MATCH": "Match",
 		"MATCHES": "Matches",
 		"TEAM": "Team",
 		"TEAMS": "Teams",
 		"STATS": "Stats",
+		"PLAN": "Plan",
 		"DATA": "Data",
 		"LANGUAGE": "Language",
 		"LOGOUT": "Logout",
@@ -93,7 +84,8 @@ const languages: ILanguageTranslation = {
 		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team",
 		"NO_QUANTITATIVE_DATA": "No quantitative data for this team",
 		"USERNAME": "Username",
-		"APPLY": "Apply"
+		"APPLY": "Apply",
+		"CLEAR": "Clear"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -101,12 +93,13 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Numero de equipo",
 		"EVENT_CODE": "Código del evento",
 		"SECRET_CODE": "Código secreto",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "Está cargando...",
 		"MATCH": "Partido",
 		"MATCHES": "Partidos",
 		"TEAM": "Equipo",
 		"TEAMS": "Equipos",
 		"STATS": "Estadísticas",
+		"PLAN": "Planificar",
 		"DATA": "Datos",
 		"LANGUAGE": "Lengua",
 		"LOGOUT": "Cerrar sesión",
@@ -149,7 +142,8 @@ const languages: ILanguageTranslation = {
 		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo",
 		"NO_QUANTITATIVE_DATA": "No hay datos cuantitativos para este equipo",
 		"USERNAME": "Nombre de usuario",
-		"APPLY": "Aplicar"
+		"APPLY": "Aplicar",
+		"CLEAR": "Despejar"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -157,12 +151,13 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Numéro d'équipe",
 		"EVENT_CODE": "Code de l'événement",
 		"SECRET_CODE": "Code secret",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "C'est en cours de chargement...",
 		"MATCH": "Match",
 		"MATCHES": "Matchs",
 		"TEAM": "Équipe",
 		"TEAMS": "Équipes",
 		"STATS": "Statistiques",
+		"PLAN": "Planifier",
 		"DATA": "Les données",
 		"LANGUAGE": "Langue",
 		"LOGOUT": "Se déconnecter",
@@ -205,7 +200,8 @@ const languages: ILanguageTranslation = {
 		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe",
 		"NO_QUANTITATIVE_DATA": "Pas de données quantitatives pour cette équipe",
 		"USERNAME": "Nom d'utilisateur",
-		"APPLY": "Appliquer"
+		"APPLY": "Appliquer",
+		"CLEAR": "Supprimer"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -213,12 +209,13 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Takım numarası",
 		"EVENT_CODE": "Etkinlik kodu",
 		"SECRET_CODE": "Gizli kod",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "Yükleniyor...",
 		"MATCH": "Maç",
 		"MATCHES": "Maçlar",
 		"TEAM": "Takım",
 		"TEAMS": "Takımlar",
 		"STATS": "Istatistikler",
+		"PLAN": "Planlamak",
 		"DATA": "Veri",
 		"LANGUAGE": "Dilim",
 		"LOGOUT": "Çıkış Yap",
@@ -261,7 +258,8 @@ const languages: ILanguageTranslation = {
 		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle",
 		"NO_QUANTITATIVE_DATA": "Bu ekip için nicel veri yok",
 		"USERNAME": "Kullanıcı adı",
-		"APPLY": "Uygula"
+		"APPLY": "Uygula",
+		"CLEAR": "Temizlemek"
 	},
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",

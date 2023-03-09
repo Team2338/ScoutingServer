@@ -4,14 +4,19 @@ export const getMean = (scores: number[]): number => {
 	return sum / scores.length;
 };
 
-export const getListMean = (lists: number[][]): number[] => {
+export const getMeanList = (lists: number[][]): number[] => {
+	const result = getSumList(lists);
+	return result.map((value: number) => value / lists.length);
+}
+
+export const getSumList = (lists: number[][]): number[] => {
 	const result = [];
 	for (let i = 0; i < lists[0].length; i++) {
 		result[i] = 0;
 		lists.forEach((list: number[]) => result[i] += list[i]);
 	}
 
-	return result.map((value: number) => value / lists.length);
+	return result;
 }
 
 export const getMedian = (scores: number[]): number => {

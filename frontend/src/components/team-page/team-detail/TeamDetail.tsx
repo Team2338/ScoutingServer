@@ -69,13 +69,13 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	const translate = useTranslator();
 	const scores = props.stats.scores.map(roundToDecimal);
 
-	let meanListElement = null;
-	if (props.stats.meanList) {
-		meanListElement = (
+	let sumListElement = null;
+	if (props.stats.sumList) {
+		sumListElement = (
 			<React.Fragment>
-				<div className="objective-stat">{ translate('MEAN_LIST') }:</div>
+				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
 				<div className="mean-list-wrapper">
-					<GridScore list={props.stats.meanList} />
+					<GridScore list={props.stats.sumList} />
 				</div>
 			</React.Fragment>
 		);
@@ -88,7 +88,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
 			<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
 			<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
-			{ meanListElement }
+			{ sumListElement }
 		</div>
 	);
 

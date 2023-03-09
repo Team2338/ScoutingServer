@@ -166,11 +166,11 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 
 	const grids = [];
 	for (let i = 0; i < teams.length; i++) {
-		if (stats[i] && stats[i].meanList) {
+		if (stats[i] && stats[i].sumList) {
 			grids.push(
 				<div key={teams[i].id} className="comparison-grid">
 					<div className="team-number">{ teams[i].id }</div>
-					<GridScore list={stats[i].meanList} variant="heatmap" />
+					<GridScore list={stats[i].sumList} variant="heatmap" />
 				</div>
 			);
 		}

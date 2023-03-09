@@ -56,7 +56,6 @@ function getHeatmapElements(list: number[]) {
 	const max: number = Math.max(...list); // TODO: Can memoize this
 	return list.map((score: number, index: number) => {
 		const ratio = (max > 0) ? (score / max) : 0;
-		const percent = (score > 0) ? Math.round(score * 100) + '%' : '';
 		const echelon = Math.floor(ratio * 10);
 		const backgroundColor = heatmapLookup[echelon];
 		return (
@@ -67,7 +66,7 @@ function getHeatmapElements(list: number[]) {
 					backgroundColor: backgroundColor
 				}}
 			>
-				{ percent }
+				{ score > 0 ? score : '' }
 			</div>
 		);
 	});

@@ -16,6 +16,10 @@ export default function TeamList({ teams, selectTeam, selectedTeam }: IProps) {
 				key={team.id}
 				selected={team.id === selectedTeam?.id}
 				onClick={() => selectTeam(team)}
+				sx={{
+					paddingTop: '12px',
+					paddingBottom: '12px'
+				}}
 			>
 				<div className="team-list-item">
 					<div>{ team.id }</div>

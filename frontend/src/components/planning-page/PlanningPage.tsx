@@ -1,6 +1,14 @@
 import './PlanningPage.scss';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { ReactElement, useEffect, useState } from 'react';
+import {
+	Button,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow
+} from '@mui/material';
+import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import { AppState, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
@@ -10,6 +18,7 @@ import { getMatches, getTeams } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import { AppDispatch } from '../../state/Store';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
+import { GridScore } from '../shared/GridScore';
 
 interface IProps {
 	areMatchesLoaded: boolean;
@@ -140,38 +149,53 @@ interface IPlanComparisonProps {
 function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 	const translate = useTranslator();
 
+	const grids = [];
+	for (let i = 0; i < teams.length; i++) {
+		if (stats[i] && stats[i].meanList) {
+			grids.push(
+				<div key={teams[i].id} className="comparison-grid">
+					<div className="team-number">{ teams[i].id }</div>
+					<GridScore list={stats[i].meanList} variant="heatmap" />
+				</div>
+			);
+		}
+	}
+
 	return (
-		<TableContainer>
-			<Table aria-label={ translate('STATS_TABLE') }>
-				<TableHead>
-					<TableRow>
-						<TableCell>{ translate('STATS') }</TableCell>
-						<TableCell>{ teams[0].id }</TableCell>
-						<TableCell>{ teams[1].id }</TableCell>
-						<TableCell>{ teams[2].id }</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					<TableRow>
-						<TableCell align="left">{ translate('MEAN') }</TableCell>
-						<TableCell>{ stats[0] ? stats[0].mean.toFixed(2) : '-' }</TableCell>
-						<TableCell>{ stats[1] ? stats[1].mean.toFixed(2) : '-' }</TableCell>
-						<TableCell>{ stats[2] ? stats[2].mean.toFixed(2) : '-' }</TableCell>
-					</TableRow>
-					<TableRow>
-						<TableCell align="left">{ translate('MEDIAN') }</TableCell>
-						<TableCell>{ stats[0] ? roundToDecimal(stats[0].median) : '-' }</TableCell>
-						<TableCell>{ stats[1] ? roundToDecimal(stats[1].median) : '-' }</TableCell>
-						<TableCell>{ stats[2] ? roundToDecimal(stats[2].median) : '-' }</TableCell>
-					</TableRow>
-					<TableRow>
-						<TableCell align="left">{ translate('MAX') }</TableCell>
-						<TableCell>{ stats[0] ? roundToDecimal(Math.max(...stats[0].scores)) : '-' }</TableCell>
-						<TableCell>{ stats[1] ? roundToDecimal(Math.max(...stats[1].scores)) : '-' }</TableCell>
-						<TableCell>{ stats[2] ? roundToDecimal(Math.max(...stats[2].scores)) : '-' }</TableCell>
-					</TableRow>
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<div className="comparison">
+			<TableContainer>
+				<Table aria-label={ translate('STATS_TABLE') }>
+					<TableHead>
+						<TableRow>
+							<TableCell>{ translate('STATS') }</TableCell>
+							<TableCell>{ teams[0].id }</TableCell>
+							<TableCell>{ teams[1].id }</TableCell>
+							<TableCell>{ teams[2].id }</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						<TableRow>
+							<TableCell align="left">{ translate('MEAN') }</TableCell>
+							<TableCell>{ stats[0] ? stats[0].mean.toFixed(2) : '-' }</TableCell>
+							<TableCell>{ stats[1] ? stats[1].mean.toFixed(2) : '-' }</TableCell>
+							<TableCell>{ stats[2] ? stats[2].mean.toFixed(2) : '-' }</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align="left">{ translate('MEDIAN') }</TableCell>
+							<TableCell>{ stats[0] ? roundToDecimal(stats[0].median) : '-' }</TableCell>
+							<TableCell>{ stats[1] ? roundToDecimal(stats[1].median) : '-' }</TableCell>
+							<TableCell>{ stats[2] ? roundToDecimal(stats[2].median) : '-' }</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align="left">{ translate('MAX') }</TableCell>
+							<TableCell>{ stats[0] ? roundToDecimal(Math.max(...stats[0].scores)) : '-' }</TableCell>
+							<TableCell>{ stats[1] ? roundToDecimal(Math.max(...stats[1].scores)) : '-' }</TableCell>
+							<TableCell>{ stats[2] ? roundToDecimal(Math.max(...stats[2].scores)) : '-' }</TableCell>
+						</TableRow>
+					</TableBody>
+				</Table>
+			</TableContainer>
+			{ grids.length === 0 ? null : <div className="comparison-grids">{ grids }</div> }
+		</div>
 	);
 }

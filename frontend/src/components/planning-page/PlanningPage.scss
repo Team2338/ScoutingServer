@@ -55,6 +55,29 @@
 						font-size: 16px;
 						font-weight: 600;
 					}
+
+					.comparison {
+						display: flex;
+						flex-direction: column;
+						row-gap: 24px;
+
+						&-grids {
+							display: flex;
+							flex-direction: column;
+							row-gap: 24px;
+						}
+
+						&-grid {
+							display: flex;
+							flex-direction: column;
+							row-gap: 4px;
+
+							.team-number {
+								padding-left: 8px;
+								font-weight: 600;
+							}
+						}
+					}
 				}
 			}
 		}

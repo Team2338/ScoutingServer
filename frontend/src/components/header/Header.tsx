@@ -16,7 +16,7 @@ import {
 	Typography,
 	useMediaQuery
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { AppState, Language } from '../../models';
@@ -46,8 +46,8 @@ function ConnectedHeader(props) {
 
 	const translate = useTranslator();
 	const isMobile = useMediaQuery('(max-width: 600px)');
-	const [isDrawerOpen, setDrawerOpen] = React.useState(false);
-	const [accountAnchor, setAccountAnchor] = React.useState(null);
+	const [isDrawerOpen, setDrawerOpen] = useState(false);
+	const [accountAnchor, setAccountAnchor] = useState(null);
 
 	const toggleDrawer = (isOpen: boolean) => () => setDrawerOpen(isOpen);
 

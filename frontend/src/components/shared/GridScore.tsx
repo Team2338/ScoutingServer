@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import './GridScore.scss';
+import { roundToDecimal } from '../../service/DisplayUtility';
 
 type GridVariant = 'binary' | 'heatmap';
 type Size = 'normal' | 'large';
@@ -55,6 +56,7 @@ const heatmapLookup = {
 function getHeatmapElements(list: number[]) {
 	const max: number = Math.max(...list); // TODO: Can memoize this
 	return list.map((score: number, index: number) => {
+		const roundedScore = (score > 0) ? roundToDecimal(score) : '';
 		const ratio = (max > 0) ? (score / max) : 0;
 		const echelon = Math.floor(ratio * 10);
 		const backgroundColor = heatmapLookup[echelon];
@@ -66,7 +68,7 @@ function getHeatmapElements(list: number[]) {
 					backgroundColor: backgroundColor
 				}}
 			>
-				{ score > 0 ? score : '' }
+				{ roundedScore }
 			</div>
 		);
 	});

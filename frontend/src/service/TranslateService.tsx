@@ -132,7 +132,7 @@ const languages: ILanguageTranslation = {
 		"MOBILITY_2022": "Desplazamiento",
 		"CLIMB_2022": "Hangar",
 		"MOBILITY_2023": "Mobilización",
-		"CHARGE_STATION_2023": "Estacióon de Carga",
+		"CHARGE_STATION_2023": "Estación de Carga",
 		"GRID_2023": "Portería",
 		"BLUE_GRID_2023": "Portería (azul)",
 		"RED_GRID_2023": "Portería (rojo)",

@@ -16,10 +16,10 @@ import {
 	Typography,
 	useMediaQuery
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { AppState, Language } from '../../models';
+import { AppState, Language, LanguageDescriptor, LanguageInfo } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
 
@@ -226,7 +226,7 @@ export default Header;
 
 function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLanguageChange: (lang: Language) => void }) {
 
-	const [languageAnchor, setLanguageAnchor] = React.useState(null);
+	const [languageAnchor, setLanguageAnchor] = useState(null);
 	const translate = useTranslator();
 
 	const handleLanguageMenuClick = (event) => {
@@ -241,6 +241,19 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 		onLanguageChange(language);
 		handleLanguageMenuClose();
 	}
+
+	const languageOptions: ReactElement[] = Object.values(LanguageInfo)
+		.map((info: LanguageDescriptor) => (
+			<MenuItem
+				key={info.key}
+				lang={info.code}
+				translate="no"
+				selected={lang === info.key}
+				onClick={() => handleLanguageChange(info.key)}
+			>
+				{ info.localName }
+			</MenuItem>
+		));
 
 	return (
 		<React.Fragment>
@@ -266,38 +279,7 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 				onClose={handleLanguageMenuClose}
 				keepMounted
 			>
-				<MenuItem
-					selected={lang === Language.ENGLISH}
-					onClick={() => handleLanguageChange(Language.ENGLISH)}
-					lang="en"
-					translate="no"
-				>
-					English
-				</MenuItem>
-				<MenuItem
-					selected={lang === Language.SPANISH}
-					onClick={() => handleLanguageChange(Language.SPANISH)}
-					lang="es"
-					translate="no"
-				>
-					Español
-				</MenuItem>
-				<MenuItem
-					selected={lang === Language.FRENCH}
-					onClick={() => handleLanguageChange(Language.FRENCH)}
-					lang="fr"
-					translate="no"
-				>
-					Français
-				</MenuItem>
-				<MenuItem
-					selected={lang === Language.TURKISH}
-					onClick={() => handleLanguageChange(Language.TURKISH)}
-					lang="tr"
-					translate="no"
-				>
-					Türkçe
-				</MenuItem>
+				{ languageOptions }
 				{/*<MenuItem*/}
 				{/*	selected={lang === Language.HINDI}*/}
 				{/*	onClick={() => handleLanguageChange(Language.HINDI)}*/}

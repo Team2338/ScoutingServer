@@ -239,7 +239,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					loadStatus: LoadStatus.success,
 					firstTeam: action.payload.firstTeam,
 					secondTeam: action.payload.secondTeam,
-					thirdTeam: action.payload.secondTeam,
+					thirdTeam: action.payload.thirdTeam,
 					plan: planningService.createPlan(
 						action.payload.firstTeam,
 						action.payload.secondTeam,

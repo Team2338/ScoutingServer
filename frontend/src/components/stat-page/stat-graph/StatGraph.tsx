@@ -2,6 +2,7 @@ import './StatGraph.scss';
 import React from 'react';
 import { Tooltip, Typography } from '@mui/material';
 import { TeamObjectiveStats } from '../../../models';
+import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
@@ -32,7 +33,7 @@ export default function StatGraph({ name, data, metric }: IProps) {
 		const tooltipText = (
 			<div>
 				<div>{ translate('TEAM') }: { team.teamNumber }</div>
-				<div>{ translate('VALUE') }: { team[metric] }</div>
+				<div>{ translate('VALUE') }: { roundToDecimal(team[metric]) }</div>
 			</div>
 		);
 

@@ -16,12 +16,12 @@ import {
 	Typography,
 	useMediaQuery
 } from '@mui/material';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AppState, Language } from '../../models';
+import { Language, LanguageDescriptor, LanguageInfo } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
+import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 
 
 interface IRoute {
@@ -30,23 +30,19 @@ interface IRoute {
 	icon: string;
 }
 
-const inputs = (state: AppState) => ({
-	isLoggedIn: state.isLoggedIn,
-	teamNumber: state.teamNumber,
-	eventCode: state.eventCode,
-	csv: state.csv
-});
-
-const outputs = (dispatch) => ({
-	logout: () => dispatch(logout()),
-	selectLanguage: (language: Language) => dispatch(selectLanguage(language))
-});
-
-function ConnectedHeader(props) {
+export default function Header() {
 
 	const translate = useTranslator();
-	const isMobile = useMediaQuery('(max-width: 600px)');
-	const [isDrawerOpen, setDrawerOpen] = useState(false);
+	const dispatch = useAppDispatch();
+	const isMobile: boolean = useMediaQuery('(max-width: 600px)');
+
+	const _logout = () => dispatch(logout());
+	const isLoggedIn: boolean = useAppSelector(state => state.isLoggedIn);
+	const teamNumber: number = useAppSelector(state => state.teamNumber);
+	const eventCode: string = useAppSelector(state => state.eventCode);
+	const csv = useAppSelector(state => state.csv);
+
+	const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const [accountAnchor, setAccountAnchor] = useState(null);
 
 	const toggleDrawer = (isOpen: boolean) => () => setDrawerOpen(isOpen);
@@ -62,7 +58,7 @@ function ConnectedHeader(props) {
 	const handleLogout = () => {
 		setDrawerOpen(false);
 		handleAccountMenuClose();
-		props.logout();
+		_logout();
 	}
 
 	const title = (
@@ -76,14 +72,14 @@ function ConnectedHeader(props) {
 			GearScout
 		</Typography>
 	);
-	const filename = props.teamNumber + '_' + props.eventCode + '.csv';
+	const filename: string = teamNumber + '_' + eventCode + '.csv';
 
-	if (!props.isLoggedIn) {
+	if (!isLoggedIn) {
 		return (
 			<AppBar id="appBar" position="sticky" color="primary">
 				<Toolbar>
 					{ title }
-					<LanguageSelector lang={props.lang} onLanguageChange={props.selectLanguage} />
+					<LanguageSelector />
 				</Toolbar>
 			</AppBar>
 		);
@@ -102,9 +98,9 @@ function ConnectedHeader(props) {
 				variant="contained"
 				aria-label={ translate('DOWNLOAD_DATA') }
 				startIcon={<Icon>download</Icon>}
-				href={props.csv.url}
+				href={csv.url}
 				download={filename}
-				disabled={!props.csv.isLoaded}
+				disabled={!csv.isLoaded}
 			>
 				{ translate('DATA') }
 			</Button>
@@ -210,7 +206,7 @@ function ConnectedHeader(props) {
 						<Icon>menu</Icon>
 					</IconButton>
 					{ title }
-					<LanguageSelector lang={props.lang} onLanguageChange={props.selectLanguage} />
+					<LanguageSelector />
 					{ isMobile ? null : downloadButton }
 					{ accountButton }
 					{ accountMenu }
@@ -221,12 +217,12 @@ function ConnectedHeader(props) {
 	);
 }
 
-const Header = connect(inputs, outputs)(ConnectedHeader);
-export default Header;
 
-function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLanguageChange: (lang: Language) => void }) {
+function LanguageSelector() {
 
-	const [languageAnchor, setLanguageAnchor] = React.useState(null);
+	const dispatch = useAppDispatch();
+	const selectedLanguage: Language = useAppSelector(state => state.language);
+	const [languageAnchor, setLanguageAnchor] = useState(null);
 	const translate = useTranslator();
 
 	const handleLanguageMenuClick = (event) => {
@@ -238,9 +234,22 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 	}
 
 	const handleLanguageChange = (language: Language) => {
-		onLanguageChange(language);
+		dispatch(selectLanguage(language));
 		handleLanguageMenuClose();
 	}
+
+	const languageOptions: ReactElement[] = Object.values(LanguageInfo)
+		.map((info: LanguageDescriptor) => (
+			<MenuItem
+				key={info.key}
+				lang={info.code}
+				translate="no"
+				selected={selectedLanguage === info.key}
+				onClick={() => handleLanguageChange(info.key)}
+			>
+				{ info.localName }
+			</MenuItem>
+		));
 
 	return (
 		<React.Fragment>
@@ -266,38 +275,7 @@ function LanguageSelector({ lang, onLanguageChange }: { lang: Language, onLangua
 				onClose={handleLanguageMenuClose}
 				keepMounted
 			>
-				<MenuItem
-					selected={lang === Language.ENGLISH}
-					onClick={() => handleLanguageChange(Language.ENGLISH)}
-					lang="en"
-					translate="no"
-				>
-					English
-				</MenuItem>
-				<MenuItem
-					selected={lang === Language.SPANISH}
-					onClick={() => handleLanguageChange(Language.SPANISH)}
-					lang="es"
-					translate="no"
-				>
-					Español
-				</MenuItem>
-				<MenuItem
-					selected={lang === Language.FRENCH}
-					onClick={() => handleLanguageChange(Language.FRENCH)}
-					lang="fr"
-					translate="no"
-				>
-					Français
-				</MenuItem>
-				<MenuItem
-					selected={lang === Language.TURKISH}
-					onClick={() => handleLanguageChange(Language.TURKISH)}
-					lang="tr"
-					translate="no"
-				>
-					Türkçe
-				</MenuItem>
+				{ languageOptions }
 				{/*<MenuItem*/}
 				{/*	selected={lang === Language.HINDI}*/}
 				{/*	onClick={() => handleLanguageChange(Language.HINDI)}*/}

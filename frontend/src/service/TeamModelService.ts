@@ -154,7 +154,7 @@ class TeamModelService {
 
 				scores.get(key).scores.push(objective.count);
 
-				if (objective.list) {
+				if (objective.list && objective.list.length > 0) {
 					scores.get(key).lists.push(objective.list);
 				}
 			}

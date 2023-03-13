@@ -61,7 +61,10 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				secretCode: action.payload.secretCode
 			};
 		case Actions.LOGOUT:
-			return INITIAL_STATE;
+			return {
+				...INITIAL_STATE,
+				language: state.language
+			};
 		case Actions.GET_CSV_START:
 			return {
 				...state,
@@ -239,7 +242,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					loadStatus: LoadStatus.success,
 					firstTeam: action.payload.firstTeam,
 					secondTeam: action.payload.secondTeam,
-					thirdTeam: action.payload.secondTeam,
+					thirdTeam: action.payload.thirdTeam,
 					plan: planningService.createPlan(
 						action.payload.firstTeam,
 						action.payload.secondTeam,

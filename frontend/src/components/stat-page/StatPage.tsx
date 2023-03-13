@@ -28,7 +28,7 @@ const outputs = (dispatch) => ({
 	getGlobalStats: () => dispatch(getGlobalStats()),
 });
 
-class ConnectedStatPage extends React.Component<any, any> {
+class ConnectedStatPage extends React.Component<any, null> {
 
 	componentDidMount() {
 		if (!this.props.areMatchesLoaded) {
@@ -47,7 +47,7 @@ class ConnectedStatPage extends React.Component<any, any> {
 	}
 
 	render() {
-		return <StatPageContent/>
+		return <StatPageContent/>;
 	}
 }
 
@@ -61,7 +61,7 @@ function StatPageContent() {
 	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 
 	if (!areStatsLoaded) {
-		return <div className="stat-page">Loading...</div>;
+		return <div className="stat-page">{ translate('LOADING') }</div>;
 	}
 
 	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>
@@ -75,7 +75,7 @@ function StatPageContent() {
 
 		const translatedGamemodeName: string = translate(selectedStat.gamemode);
 		const translatedObjectiveName: string = translate(selectedStat.objective);
-		const graphName = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
+		const graphName: string = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
 
 		content = (
 			<div className="stat-content">

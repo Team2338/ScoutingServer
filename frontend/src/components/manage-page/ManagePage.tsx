@@ -41,7 +41,7 @@ function ManagePage() {
 					matches={matches}
 					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
-				></MatchSelector>
+				/>
 				<MatchDetail
 					match={selectedMatch}
 					hide={_hideMatch}

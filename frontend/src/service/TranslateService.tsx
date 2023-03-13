@@ -269,6 +269,7 @@ const languages: ILanguageTranslation = {
 		"CLEAR": "Temizlemek",
 		"CLOSE": "Kapatmak"
 	},
+/*
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",
 		"YOUR_TEAM_NUMBER": "आपकी टीम नंबर",
@@ -317,4 +318,5 @@ const languages: ILanguageTranslation = {
 		"NO_QUANTITATIVE_DATA": "इस टीम के लिए कोई मात्रात्मक डेटा नहीं",
 		"USERNAME": "उपयोगकर्ता नाम"
 	}
+*/
 };

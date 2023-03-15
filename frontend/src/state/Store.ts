@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import { AppState, Language, LoadStatus, Match, MatchResponse, Team } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -135,7 +135,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 		case Actions.REPLACE_MATCH:
 			// If we're modifying data for the currently selected team, deselect it so that we don't
 			// see old data when we revisit the Teams page.
-			const selectedTeam = (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
+			const selectedTeam: Team = (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
 				? null
 				: state.teams.selectedTeam;
 			return {

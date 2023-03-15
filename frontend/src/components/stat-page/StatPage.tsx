@@ -2,7 +2,7 @@ import React from 'react';
 import {
 	GlobalObjectiveStats,
 	ObjectiveDescriptor,
-	RequestStatus,
+	LoadStatus,
 	Team,
 	TeamObjectiveStats
 } from '../../models';
@@ -18,19 +18,21 @@ import './StatPage.scss';
 function StatPage() {
 	useDataInitializer();
 	const translate = useTranslator();
-
-	// Dispatch
 	const dispatch = useAppDispatch();
 	const _selectStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
 
 	// Selectors
-	const statsLoadStatus: RequestStatus = useAppSelector(state => state.stats.loadStatus);
+	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 
-	if (statsLoadStatus === RequestStatus.none || statsLoadStatus === RequestStatus.loading) {
+	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
 		return <div className="stat-page">{ translate('LOADING') }</div>;
+	}
+
+	if (statsLoadStatus === LoadStatus.failed) {
+		return <div className="stat-page">{ translate('FAILED_TO_LOAD_STATS') }</div>;
 	}
 
 	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
@@ -44,7 +46,7 @@ function StatPage() {
 
 		const translatedGamemodeName: string = translate(selectedStat.gamemode);
 		const translatedObjectiveName: string = translate(selectedStat.objective);
-		const graphName = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
+		const graphName: string = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
 
 		content = (
 			<div className="stat-content">

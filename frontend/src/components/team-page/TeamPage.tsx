@@ -1,6 +1,6 @@
 import { useMediaQuery } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
-import { Note, RequestStatus, Team } from '../../models';
+import { LoadStatus, Note, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectTeam } from '../../state/Actions';
 import { addNoteForRobot, getAllNotes } from '../../state/Effects';
@@ -30,7 +30,7 @@ export default function TeamPage() {
 	);
 
 	// Selectors
-	const teamsLoadStatus: RequestStatus = useAppSelector(state => state.teams.loadStatus);
+	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
 	const notes: Note[] = useAppSelector(state => state.notes.data);
@@ -41,8 +41,12 @@ export default function TeamPage() {
 		[teams, notes]
 	);
 
-	if (teamsLoadStatus === RequestStatus.none || teamsLoadStatus === RequestStatus.loading) {
+	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
 		return <div className="team-page">{ translate('LOADING') }</div>;
+	}
+
+	if (teamsLoadStatus === LoadStatus.failed) {
+		return <div className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
 	}
 
 	if (isMobile) {

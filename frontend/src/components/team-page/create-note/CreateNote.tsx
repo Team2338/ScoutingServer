@@ -6,7 +6,6 @@ import {
 	DialogContent,
 	DialogTitle,
 	Fab,
-	Icon,
 	InputAdornment,
 	TextField,
 	Tooltip

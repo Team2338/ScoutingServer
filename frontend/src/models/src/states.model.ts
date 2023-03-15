@@ -1,13 +1,21 @@
 import { Language } from './languages.model';
-import { GlobalObjectiveStats, Match, MatchResponse, Note, ObjectiveDescriptor, Team } from './response.model';
+import {
+	GlobalObjectiveStats,
+	Match,
+	MatchResponse,
+	Note,
+	ObjectiveDescriptor,
+	Plan,
+	Team
+} from './response.model';
 
-export enum RequestStatus {
+export enum LoadStatus {
 	none = 'none',
 	loading = 'loading',
 	loadingWithPriorSuccess = 'reloading',
 	failed = 'failed',
 	failedWithPriorSuccess = 'failed reload',
-	success = 'success'
+	success = 'success',
 }
 
 export interface AppState {
@@ -18,27 +26,34 @@ export interface AppState {
 	eventCode: string;
 	secretCode: string;
 	csv: {
-		loadStatus: RequestStatus;
+		loadStatus: LoadStatus;
 		url: string;
 	};
 	matches: {
-		loadStatus: RequestStatus;
+		loadStatus: LoadStatus;
 		raw: MatchResponse[];
 		data: Match[];
 		selectedMatch: Match;
 	};
 	teams: {
-		loadStatus: RequestStatus;
+		loadStatus: LoadStatus;
 		data: Team[];
 		selectedTeam: Team;
 	};
 	stats: {
-		loadStatus: RequestStatus;
+		loadStatus: LoadStatus;
 		data: GlobalObjectiveStats[];
 		selectedStat: ObjectiveDescriptor;
 	};
 	notes: {
-		loadStatus: RequestStatus;
+		loadStatus: LoadStatus;
 		data: Note[];
 	};
+	planning: {
+		loadStatus: LoadStatus;
+		firstTeam: Team;
+		secondTeam: Team;
+		thirdTeam: Team;
+		plan: Plan;
+	}
 }

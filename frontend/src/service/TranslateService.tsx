@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { AppState, ILanguageTranslation, Language } from '../models';
 import { useAppSelector } from '../state/Hooks';
 
@@ -14,24 +13,16 @@ const translateKey = (language: string, key: string): string => {
 };
 
 export const translate = (Component) => {
-	const inputs = (state: AppState) => ({
-		lang: state.language
-	});
-
-	class AddTranslator extends React.Component<any, any> {
-		translate = (key: string): string => {
-			return translateKey(this.props.lang, key);
-		}
-
-		render() {
-			return <Component translate={this.translate} {...this.props} />;
-		}
+	function AddTranslator(props) {
+		const translate = useTranslator();
+		return <Component translate={translate} {...props} />;
 	}
 
-	return connect(inputs, null)(AddTranslator);
+	return AddTranslator;
 };
 
-export const useTranslator = () => {
+type Translator = (key: string) => string;
+export const useTranslator = (): Translator => {
 	const language: string = useAppSelector((state: AppState) => state.language);
 
 	return (key: string) => translateKey(language, key);
@@ -44,21 +35,24 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Team number",
 		"EVENT_CODE": "Event code",
 		"SECRET_CODE": "Secret code",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "Loading...",
 		"MATCH": "Match",
 		"MATCHES": "Matches",
 		"TEAM": "Team",
 		"TEAMS": "Teams",
 		"STATS": "Stats",
+		"PLAN": "Plan",
 		"DATA": "Data",
 		"LANGUAGE": "Language",
 		"LOGOUT": "Logout",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Select a match to view more details",
 		"STAT_TABLE": "Stat table",
+		"SUM_LIST": "Totals",
 		"MEAN_LIST": "Mean list",
 		"MEAN": "Mean",
 		"MEDIAN": "Median",
 		"MODE": "Mode",
+		"MAX": "Max",
 		"SCORES": "Scores",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Select a team to view more details",
 		"VALUE": "Value",
@@ -90,7 +84,10 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notes",
 		"VIEW_NOTES_FOR_THIS_TEAM": "View notes for this team",
 		"NO_QUANTITATIVE_DATA": "No quantitative data for this team",
-		"USERNAME": "Username"
+		"USERNAME": "Username",
+		"APPLY": "Apply",
+		"CLEAR": "Clear",
+		"CLOSE": "Close"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -98,21 +95,24 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Numero de equipo",
 		"EVENT_CODE": "Código del evento",
 		"SECRET_CODE": "Código secreto",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "Está cargando...",
 		"MATCH": "Partido",
 		"MATCHES": "Partidos",
 		"TEAM": "Equipo",
 		"TEAMS": "Equipos",
 		"STATS": "Estadísticas",
+		"PLAN": "Planificar",
 		"DATA": "Datos",
 		"LANGUAGE": "Lengua",
 		"LOGOUT": "Cerrar sesión",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Seleccione un partido para ver más detalles",
 		"STAT_TABLE": "Tabla de estadisticas",
+		"SUM_LIST": "Totales",
 		"MEAN_LIST": "Lista media",
 		"MEAN": "Media",
 		"MEDIAN": "Mediana",
 		"MODE": "Moda",
+		"MAX": "Máxima",
 		"SCORES": "Anotaciones",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Seleccione un equipo para ver más detalles",
 		"VALUE": "Valor",
@@ -132,7 +132,7 @@ const languages: ILanguageTranslation = {
 		"MOBILITY_2022": "Desplazamiento",
 		"CLIMB_2022": "Hangar",
 		"MOBILITY_2023": "Mobilización",
-		"CHARGE_STATION_2023": "Estacióon de Carga",
+		"CHARGE_STATION_2023": "Estación de Carga",
 		"GRID_2023": "Portería",
 		"BLUE_GRID_2023": "Portería (azul)",
 		"RED_GRID_2023": "Portería (rojo)",
@@ -144,7 +144,10 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notas",
 		"VIEW_NOTES_FOR_THIS_TEAM": "Ver notas de este equipo",
 		"NO_QUANTITATIVE_DATA": "No hay datos cuantitativos para este equipo",
-		"USERNAME": "Nombre de usuario"
+		"USERNAME": "Nombre de usuario",
+		"APPLY": "Aplicar",
+		"CLEAR": "Despejar",
+		"CLOSE": "Cerrar"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -152,21 +155,24 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Numéro d'équipe",
 		"EVENT_CODE": "Code de l'événement",
 		"SECRET_CODE": "Code secret",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "C'est en cours de chargement...",
 		"MATCH": "Match",
 		"MATCHES": "Matchs",
 		"TEAM": "Équipe",
 		"TEAMS": "Équipes",
 		"STATS": "Statistiques",
+		"PLAN": "Planifier",
 		"DATA": "Les données",
 		"LANGUAGE": "Langue",
 		"LOGOUT": "Se déconnecter",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Sélectionnez une match pour afficher plus de détails",
 		"STAT_TABLE": "Tableau statistique",
-		"MEAN_LIST": "Liste moyenne ",
+		"SUM_LIST": "Totaux",
+		"MEAN_LIST": "Liste moyenne",
 		"MEAN": "Moyenne",
 		"MEDIAN": "Médiane",
 		"MODE": "Mode",
+		"MAX": "Maximum",
 		"SCORES": "Pointages",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Sélectionnez une équipe pour afficher plus de détails",
 		"VALUE": "Évaluer",
@@ -198,7 +204,10 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notes",
 		"VIEW_NOTES_FOR_THIS_TEAM": "Afficher les notes de cette équipe",
 		"NO_QUANTITATIVE_DATA": "Pas de données quantitatives pour cette équipe",
-		"USERNAME": "Nom d'utilisateur"
+		"USERNAME": "Nom d'utilisateur",
+		"APPLY": "Appliquer",
+		"CLEAR": "Supprimer",
+		"CLOSE": "Fermer"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -206,21 +215,24 @@ const languages: ILanguageTranslation = {
 		"TEAM_NUMBER": "Takım numarası",
 		"EVENT_CODE": "Etkinlik kodu",
 		"SECRET_CODE": "Gizli kod",
-		"LOADING": "Loading...", // TODO: translate
+		"LOADING": "Yükleniyor...",
 		"MATCH": "Maç",
 		"MATCHES": "Maçlar",
 		"TEAM": "Takım",
 		"TEAMS": "Takımlar",
 		"STATS": "Istatistikler",
+		"PLAN": "Planlamak",
 		"DATA": "Veri",
 		"LANGUAGE": "Dilim",
 		"LOGOUT": "Çıkış Yap",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "Daha fazla ayrıntı görmek için bir eşleşme seçin",
 		"STAT_TABLE": "Istatistik tablosu",
+		"SUM_LIST": "Toplamlar",
 		"MEAN_LIST": "Ortalama liste",
 		"MEAN": "Ortalama",
 		"MEDIAN": "Medyan",
 		"MODE": "Mod",
+		"MAX": "Maksimum",
 		"SCORES": "Puanı",
 		"SELECT_TEAM_VIEW_MORE_DETAILS": "Daha fazla ayrıntı görmek için bir ekip seçin",
 		"VALUE": "Değer",
@@ -252,8 +264,12 @@ const languages: ILanguageTranslation = {
 		"NOTES": "Notlar",
 		"VIEW_NOTES_FOR_THIS_TEAM": "Bu ekip için notları görüntüle",
 		"NO_QUANTITATIVE_DATA": "Bu ekip için nicel veri yok",
-		"USERNAME": "Kullanıcı adı"
+		"USERNAME": "Kullanıcı adı",
+		"APPLY": "Uygula",
+		"CLEAR": "Temizlemek",
+		"CLOSE": "Kapatmak"
 	},
+/*
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",
 		"YOUR_TEAM_NUMBER": "आपकी टीम नंबर",
@@ -302,4 +318,5 @@ const languages: ILanguageTranslation = {
 		"NO_QUANTITATIVE_DATA": "इस टीम के लिए कोई मात्रात्मक डेटा नहीं",
 		"USERNAME": "उपयोगकर्ता नाम"
 	}
+*/
 };

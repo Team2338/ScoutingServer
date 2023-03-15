@@ -42,7 +42,7 @@ export default function StatTable({ data }: IProps) {
 		<TableRow key={teamData.teamNumber}>
 			<TableCell align="left">{ teamData.teamNumber }</TableCell>
 			<TableCell align="right">{ teamData.mean.toFixed(2) }</TableCell>
-			<TableCell align="right">{ roundToDecimal(2) }</TableCell>
+			<TableCell align="right">{ roundToDecimal(teamData.median) }</TableCell>
 			<TableCell align="right">{ roundToDecimal(teamData.mode) }</TableCell>
 		</TableRow>
 	));

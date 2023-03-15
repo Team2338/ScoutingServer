@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, Language, Match, MatchResponse, RequestStatus } from '../models';
+import { AppState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
 
@@ -11,28 +12,35 @@ const INITIAL_STATE: AppState = {
 	eventCode: null,
 	secretCode: null,
 	csv: {
-		loadStatus: RequestStatus.none,
+		loadStatus: LoadStatus.none,
 		url: null
 	},
 	matches: {
-		loadStatus: RequestStatus.none,
+		loadStatus: LoadStatus.none,
 		raw: [],
 		data: [],
 		selectedMatch: null
 	},
 	teams: {
-		loadStatus: RequestStatus.none,
+		loadStatus: LoadStatus.none,
 		data: [],
 		selectedTeam: null
 	},
 	stats: {
-		loadStatus: RequestStatus.none,
+		loadStatus: LoadStatus.none,
 		data: [],
 		selectedStat: null
 	},
 	notes: {
-		loadStatus: RequestStatus.none,
+		loadStatus: LoadStatus.none,
 		data: []
+	},
+	planning: {
+		loadStatus: LoadStatus.none,
+		firstTeam: null,
+		secondTeam: null,
+		thirdTeam: null,
+		plan: null
 	}
 };
 
@@ -53,12 +61,15 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				secretCode: action.payload.secretCode
 			};
 		case Actions.LOGOUT:
-			return INITIAL_STATE;
+			return {
+				...INITIAL_STATE,
+				language: state.language
+			};
 		case Actions.GET_CSV_START:
 			return {
 				...state,
 				csv: {
-					loadStatus: RequestStatus.loading,
+					loadStatus: LoadStatus.loading,
 					url: null
 				}
 			};
@@ -66,7 +77,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				csv: {
-					loadStatus: RequestStatus.success,
+					loadStatus: LoadStatus.success,
 					url: action.payload
 				}
 			};
@@ -83,7 +94,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				notes: {
 					...state.notes,
-					loadStatus: RequestStatus.success,
+					loadStatus: LoadStatus.success,
 					data: action.payload
 				}
 			};
@@ -107,7 +118,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				matches: {
-					loadStatus: RequestStatus.success,
+					loadStatus: LoadStatus.success,
 					data: action.payload.matchModels,
 					raw: action.payload.raw,
 					selectedMatch: null
@@ -159,7 +170,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				teams: {
 					...state.teams,
-					loadStatus: RequestStatus.success,
+					loadStatus: LoadStatus.success,
 					data: action.payload,
 				}
 			};
@@ -176,7 +187,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				stats: {
 					...state.stats,
-					loadStatus: RequestStatus.loading
+					loadStatus: LoadStatus.loading
 				}
 			};
 		case Actions.CALCULATE_GLOBAL_STATS_SUCCESS:
@@ -184,7 +195,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				stats: {
 					...state.stats,
-					loadStatus: RequestStatus.success,
+					loadStatus: LoadStatus.success,
 					data: action.payload
 				}
 			};
@@ -199,13 +210,75 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					}
 				}
 			};
+		case Actions.SELECT_FIRST_TEAM_FOR_PLANNING:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					firstTeam: action.payload
+				}
+			};
+		case Actions.SELECT_SECOND_TEAM_FOR_PLANNING:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					secondTeam: action.payload
+				}
+			};
+		case Actions.SELECT_THIRD_TEAM_FOR_PLANNING:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					thirdTeam: action.payload
+				}
+			};
+		case Actions.APPLY_PLAN_SELECTION:
+			return {
+				...state,
+				planning: {
+					...state.planning,
+					loadStatus: LoadStatus.success,
+					firstTeam: action.payload.firstTeam,
+					secondTeam: action.payload.secondTeam,
+					thirdTeam: action.payload.thirdTeam,
+					plan: planningService.createPlan(
+						action.payload.firstTeam,
+						action.payload.secondTeam,
+						action.payload.thirdTeam
+					)
+				}
+			};
+		case Actions.CLEAR_PLAN:
+			return {
+				...state,
+				planning: INITIAL_STATE.planning
+			};
 		default:
 			return state;
 	}
 };
 
 export const store = configureStore({
-	reducer: reducer
+	reducer: reducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [
+					Actions.GET_MATCHES_SUCCESS,
+					Actions.CALCULATE_TEAM_STATS_START,
+					Actions.CALCULATE_TEAM_STATS_SUCCESS,
+					Actions.CALCULATE_GLOBAL_STATS_START,
+					Actions.CALCULATE_GLOBAL_STATS_SUCCESS,
+					Actions.SELECT_FIRST_TEAM_FOR_PLANNING,
+					Actions.SELECT_SECOND_TEAM_FOR_PLANNING,
+					Actions.SELECT_THIRD_TEAM_FOR_PLANNING,
+					Actions.APPLY_PLAN_SELECTION
+				],
+				ignoreState: true
+			}
+		})
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
@@ -228,10 +301,10 @@ function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchRe
 	return result;
 }
 
-function getNextStatusOnLoad(previousStatus: RequestStatus): RequestStatus {
-	if (previousStatus === RequestStatus.success || previousStatus === RequestStatus.loadingWithPriorSuccess) {
-		return RequestStatus.loadingWithPriorSuccess;
+function getNextStatusOnLoad(previousStatus: LoadStatus): LoadStatus {
+	if (previousStatus === LoadStatus.success || previousStatus === LoadStatus.loadingWithPriorSuccess) {
+		return LoadStatus.loadingWithPriorSuccess;
 	}
 
-	return RequestStatus.loading;
+	return LoadStatus.loading;
 }

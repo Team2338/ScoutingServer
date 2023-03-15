@@ -47,7 +47,8 @@ export interface TeamObjectiveStats {
 	teamNumber: number;
 	scores: number[];
 	lists: number[][];
-	meanList: number[];
+	sumList: number[]; // The sum of all lists
+	meanList: number[]; // The average of all lists
 	mean: number;
 	variance: number;
 	median: number;
@@ -83,4 +84,19 @@ export interface Note {
 	creator: string;
 	content: string;
 	timeCreated: string;
+}
+
+export interface Plan {
+	teams: Team[];
+	gamemodes: {
+		[gamemode: string]: {
+			name: string;
+			objectives: {
+				[objective: string]: {
+					name: string;
+					stats: TeamObjectiveStats[];
+				};
+			};
+		};
+	};
 }

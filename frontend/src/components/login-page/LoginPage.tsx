@@ -73,6 +73,8 @@ class ConnectedLoginPage extends React.Component<any, any> {
 								min: 0,
 								max: 9999
 							}}
+							autoComplete="off"
+							autoFocus={true}
 						/>
 						<TextField
 							id="username-input"
@@ -86,6 +88,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							inputProps={{
 								maxLength: 32
 							}}
+							autoComplete="section-login username"
 						/>
 						<TextField
 							id="event-code-input"
@@ -99,6 +102,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							inputProps={{
 								maxLength: 32
 							}}
+							autoComplete="off"
 						/>
 						<TextField
 							id="secret-code-input"
@@ -112,6 +116,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							inputProps={{
 								maxLength: 32
 							}}
+							autoComplete="off"
 						/>
 						<Button
 							className="login-page-form-submit"

@@ -1,5 +1,5 @@
 import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models';
-import { getListMean, getMean, getMedian, getMode } from './Stats';
+import { getMean, getMeanList, getMedian, getMode, getSumList } from './Stats';
 
 interface AggregateObjective extends Objective {
 	numMatchesToAverage: number;
@@ -154,7 +154,7 @@ class TeamModelService {
 
 				scores.get(key).scores.push(objective.count);
 
-				if (objective.list) {
+				if (objective.list && objective.list.length > 0) {
 					scores.get(key).lists.push(objective.list);
 				}
 			}
@@ -172,7 +172,8 @@ class TeamModelService {
 					teamNumber: teamNumber,
 					scores: objective.scores,
 					lists: objective.lists.length > 0 ? objective.lists : null,
-					meanList: objective.lists.length > 0 ? getListMean(objective.lists) : null,
+					sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,
+					meanList: objective.lists.length > 0 ? getMeanList(objective.lists) : null,
 					mean: getMean(objective.scores),
 					median: getMedian(objective.scores),
 					mode: getMode(objective.scores),

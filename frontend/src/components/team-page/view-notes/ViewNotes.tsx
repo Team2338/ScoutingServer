@@ -51,6 +51,7 @@ export default function ViewNotes(props: IProps) {
 					size="small"
 					startIcon={<Icon fontSize="small">notes</Icon>}
 					onClick={handleOpen}
+					disabled={props.notes.length === 0}
 					disableElevation
 				>
 					{ translate('NOTES') }

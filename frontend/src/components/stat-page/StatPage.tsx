@@ -1,70 +1,41 @@
-import './StatPage.scss';
 import React from 'react';
-import { connect } from 'react-redux';
 import {
-	AppState,
 	GlobalObjectiveStats,
 	ObjectiveDescriptor,
+	LoadStatus,
 	Team,
 	TeamObjectiveStats
 } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectStat } from '../../state/Actions';
-import { getGlobalStats, getMatches, getTeams } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
+import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
 import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
+import './StatPage.scss';
 
-const inputs = (state: AppState) => ({
-	areMatchesLoaded: state.matches.isLoaded,
-	areTeamsLoaded: state.teams.isLoaded,
-	areStatsLoaded: state.stats.isLoaded,
-});
 
-const outputs = (dispatch) => ({
-	getMatches: () => dispatch(getMatches()),
-	getTeamStats: () => dispatch(getTeams()),
-	getGlobalStats: () => dispatch(getGlobalStats()),
-});
-
-class ConnectedStatPage extends React.Component<any, null> {
-
-	componentDidMount() {
-		if (!this.props.areMatchesLoaded) {
-			this.props.getMatches();
-			return;
-		}
-
-		if (!this.props.areTeamsLoaded) {
-			this.props.getTeamStats();
-			return;
-		}
-
-		if (!this.props.areStatsLoaded) {
-			this.props.getGlobalStats();
-		}
-	}
-
-	render() {
-		return <StatPageContent/>;
-	}
-}
-
-function StatPageContent() {
+function StatPage() {
+	useDataInitializer();
+	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const _selectStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
-	const translate = useTranslator();
-	const areStatsLoaded: boolean = useAppSelector(state => state.stats.isLoaded);
+
+	// Selectors
+	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 
-	if (!areStatsLoaded) {
+	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
 		return <div className="stat-page">{ translate('LOADING') }</div>;
 	}
 
-	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>
+	if (statsLoadStatus === LoadStatus.failed) {
+		return <div className="stat-page">{ translate('FAILED_TO_LOAD_STATS') }</div>;
+	}
+
+	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
 	if (selectedStat) {
 		const teamStats: TeamObjectiveStats[] = teamData
 			.map((team: Team) => team.stats
@@ -101,5 +72,4 @@ function StatPageContent() {
 	);
 }
 
-const StatPage = connect(inputs, outputs)(ConnectedStatPage);
 export default StatPage;

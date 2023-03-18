@@ -4,14 +4,17 @@ import {
 	Match,
 	MatchResponse,
 	Note,
-	ObjectiveDescriptor, Plan,
+	ObjectiveDescriptor,
+	Plan,
 	Team
 } from './response.model';
 
 export enum LoadStatus {
 	none = 'none',
 	loading = 'loading',
+	loadingWithPriorSuccess = 'reloading',
 	failed = 'failed',
+	failedWithPriorSuccess = 'failed reload',
 	success = 'success',
 }
 
@@ -23,27 +26,27 @@ export interface AppState {
 	eventCode: string;
 	secretCode: string;
 	csv: {
-		isLoaded: boolean;
+		loadStatus: LoadStatus;
 		url: string;
 	};
 	matches: {
-		isLoaded: boolean;
+		loadStatus: LoadStatus;
 		raw: MatchResponse[];
 		data: Match[];
 		selectedMatch: Match;
 	};
 	teams: {
-		isLoaded: boolean;
+		loadStatus: LoadStatus;
 		data: Team[];
 		selectedTeam: Team;
 	};
 	stats: {
-		isLoaded: boolean;
+		loadStatus: LoadStatus;
 		data: GlobalObjectiveStats[];
 		selectedStat: ObjectiveDescriptor;
 	};
 	notes: {
-		isLoaded: boolean;
+		loadStatus: LoadStatus;
 		data: Note[];
 	};
 	planning: {

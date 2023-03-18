@@ -14,7 +14,29 @@ interface ObjectiveSums {
 
 class TeamModelService {
 
+	/**
+	 * Generates a list of Teams from the given match data.
+	 * Sorted in ascending order by team number.
+	 *
+	 * @param matches A list of matches from which to draw data.
+	 * @return A list of teams, sorted in ascending order by team number.
+	 */
 	createTeams = (matches: MatchResponse[]): Team[] => {
+		const visibleMatches: MatchResponse[] = matches.filter((match: MatchResponse) => !match.isHidden);
+		const groupedMatches: Map<number, MatchResponse[]> = this.groupMatchesByTeamNumber(visibleMatches);
+
+		// Calculate team statistics
+		const teams: Team[] = [];
+		groupedMatches.forEach((robotMatches: MatchResponse[]) => {
+			teams.push(this.createTeam(robotMatches));
+		});
+
+		teams.sort((a: Team, b: Team) => a.id - b.id); // Sort by team number, ascending
+
+		return teams;
+	};
+
+	private groupMatchesByTeamNumber = (matches: MatchResponse[]): Map<number, MatchResponse[]> => {
 		const groupedMatches = new Map<number, MatchResponse[]>();
 		for (const match of matches) {
 			if (!groupedMatches.has(match.robotNumber)) {
@@ -24,14 +46,8 @@ class TeamModelService {
 			groupedMatches.get(match.robotNumber).push(match);
 		}
 
-		// Calculate team statistics
-		const teams: Team[] = [];
-		groupedMatches.forEach((robotMatches: MatchResponse[]) => {
-			teams.push(this.createTeam(robotMatches));
-		});
-
-		return teams;
-	};
+		return groupedMatches;
+	}
 
 	createTeam = (matches: MatchResponse[]): Team => {
 		const teamNumber = matches[0].robotNumber;
@@ -41,7 +57,7 @@ class TeamModelService {
 		return {
 			id: teamNumber,
 			stats: stats
-		}
+		};
 	};
 
 	/**

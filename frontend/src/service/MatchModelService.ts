@@ -2,6 +2,10 @@ import { Match, MatchResponse, Objective } from '../models';
 
 class MatchModelService {
 
+	convertMatchResponsesToModels = (matches: MatchResponse[]): Match[] => {
+		return matches.map(this.convertMatchResponseToModel);
+	}
+
 	convertMatchResponseToModel = (match: MatchResponse): Match => {
 		const gamemodes: Map<string, Objective[]> = new Map();
 

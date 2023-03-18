@@ -20,6 +20,7 @@ export enum Actions {
 	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
+	GET_MATCHES_FAIL = '[MATCH] Failed to get matches',
 	SELECT_MATCH = '[MATCH] Select match',
 	REPLACE_MATCH = '[MATCH] Replace match',
 	CALCULATE_TEAM_STATS_START = '[TEAM] Started calculating team stats',
@@ -84,6 +85,10 @@ export const getMatchesSuccess = (matches: Match[], raw: MatchResponse[]): Actio
 		matchModels: matches,
 		raw: raw
 	}
+});
+
+export const getMatchesFail = (): Action => ({
+	type: Actions.GET_MATCHES_FAIL,
 });
 
 export const selectMatch = (match: Match): Action => ({

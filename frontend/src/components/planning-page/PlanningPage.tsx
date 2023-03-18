@@ -1,72 +1,33 @@
-import './PlanningPage.scss';
-import {
-	Button,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow
-} from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React, { ReactElement } from 'react';
-import { connect } from 'react-redux';
-import { AppState, Plan, Team, TeamObjectiveStats } from '../../models';
+import { LoadStatus, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
 import { useTranslator } from '../../service/TranslateService';
 import { applyPlanSelection, clearPlan, selectFirstTeamForPlanning, selectSecondTeamForPlanning, selectThirdTeamForPlanning } from '../../state/Actions';
-import { getMatches, getTeams } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
-import { AppDispatch } from '../../state/Store';
-import { TeamSelector } from '../shared/team-selector/TeamSelector';
+import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
 import { GridScore } from '../shared/GridScore';
+import { TeamSelector } from '../shared/team-selector/TeamSelector';
+import './PlanningPage.scss';
 
-interface IProps {
-	areMatchesLoaded: boolean;
-	areTeamsLoaded: boolean;
-	getMatches: () => void;
-	getTeamStats: () => void;
-}
 
-const inputs = (state: AppState) => ({
-	areMatchesLoaded: state.matches.isLoaded,
-	areTeamsLoaded: state.teams.isLoaded
-});
-
-const outputs = (dispatch: AppDispatch) => ({
-	getMatches: () => dispatch(getMatches()),
-	getTeamStats: () => dispatch(getTeams())
-});
-
-class ConnectedPlanningPage extends React.Component<IProps, {}> {
-
-	componentDidMount() {
-		if (!this.props.areMatchesLoaded) {
-			this.props.getMatches();
-			return;
-		}
-
-		if (!this.props.areTeamsLoaded) {
-			this.props.getTeamStats();
-		}
-	}
-
-	render() {
-		return <PlanningPageContent/>;
-	}
-}
-
-function PlanningPageContent() {
+function PlanningPage() {
+	useDataInitializer();
 	const translate = useTranslator();
+
 	const dispatch = useAppDispatch();
-	const isLoaded: boolean = useAppSelector(state => state.teams.isLoaded);
+	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const plan: Plan = useAppSelector(state => state.planning.plan);
 	const firstTeam: Team = useAppSelector(state => state.planning.firstTeam);
 	const secondTeam: Team = useAppSelector(state => state.planning.secondTeam);
 	const thirdTeam: Team = useAppSelector(state => state.planning.thirdTeam);
 
-	if (!isLoaded) {
+	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
 		return <div className="planning-page">{ translate('LOADING') }</div>;
+	}
+
+	if (teamsLoadStatus === LoadStatus.failed) {
+		return <div className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>
 	}
 
 	const isApplyDisabled: boolean = (firstTeam === null) || (secondTeam === null) || (thirdTeam === null);
@@ -114,7 +75,6 @@ function PlanningPageContent() {
 	);
 }
 
-const PlanningPage = connect(inputs, outputs)(ConnectedPlanningPage);
 export default PlanningPage;
 
 

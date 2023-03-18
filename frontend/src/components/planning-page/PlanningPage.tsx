@@ -30,7 +30,10 @@ function PlanningPage() {
 		return <div className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>
 	}
 
-	const isApplyDisabled: boolean = (firstTeam === null) || (secondTeam === null) || (thirdTeam === null);
+	const numberOfTeamsSelected: number = [firstTeam, secondTeam, thirdTeam]
+		.map<number>((team: Team) => team === null ? 0 : 1)
+		.reduce((sum: number, value: number) => sum + value);
+	const isApplyDisabled: boolean = numberOfTeamsSelected < 2;
 
 	return (
 		<div className="page planning-page">
@@ -123,6 +126,7 @@ interface IPlanComparisonProps {
 
 function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 	const translate = useTranslator();
+	console.log(stats);
 
 	const grids = [];
 	for (let i = 0; i < teams.length; i++) {
@@ -143,29 +147,49 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 					<TableHead>
 						<TableRow>
 							<TableCell>{ translate('STATS') }</TableCell>
-							<TableCell>{ teams[0].id }</TableCell>
-							<TableCell>{ teams[1].id }</TableCell>
-							<TableCell>{ teams[2].id }</TableCell>
+							{
+								teams.map((team: Team) => (
+									<TableCell>{ team.id }</TableCell>
+								))
+							}
+							{/*<TableCell>{ teams[0].id }</TableCell>*/}
+							{/*<TableCell>{ teams[1].id }</TableCell>*/}
+							{/*<TableCell>{ teams[2].id }</TableCell>*/}
 						</TableRow>
 					</TableHead>
 					<TableBody>
 						<TableRow>
 							<TableCell align="left">{ translate('MEAN') }</TableCell>
-							<TableCell>{ stats[0] ? stats[0].mean.toFixed(2) : '-' }</TableCell>
-							<TableCell>{ stats[1] ? stats[1].mean.toFixed(2) : '-' }</TableCell>
-							<TableCell>{ stats[2] ? stats[2].mean.toFixed(2) : '-' }</TableCell>
+							{
+								stats.map((teamStat: TeamObjectiveStats) => (
+									<TableCell>{ teamStat ? teamStat.mean.toFixed(2) : '-' }</TableCell>
+								))
+							}
+							{/*<TableCell>{ stats[0] ? stats[0].mean.toFixed(2) : '-' }</TableCell>*/}
+							{/*<TableCell>{ stats[1] ? stats[1].mean.toFixed(2) : '-' }</TableCell>*/}
+							{/*<TableCell>{ stats[2] ? stats[2].mean.toFixed(2) : '-' }</TableCell>*/}
 						</TableRow>
 						<TableRow>
 							<TableCell align="left">{ translate('MEDIAN') }</TableCell>
-							<TableCell>{ stats[0] ? roundToDecimal(stats[0].median) : '-' }</TableCell>
-							<TableCell>{ stats[1] ? roundToDecimal(stats[1].median) : '-' }</TableCell>
-							<TableCell>{ stats[2] ? roundToDecimal(stats[2].median) : '-' }</TableCell>
+							{
+								stats.map((teamStat: TeamObjectiveStats) => (
+									<TableCell>{ teamStat ? roundToDecimal(teamStat.median) : '-' }</TableCell>
+								))
+							}
+							{/*<TableCell>{ stats[0] ? roundToDecimal(stats[0].median) : '-' }</TableCell>*/}
+							{/*<TableCell>{ stats[1] ? roundToDecimal(stats[1].median) : '-' }</TableCell>*/}
+							{/*<TableCell>{ stats[2] ? roundToDecimal(stats[2].median) : '-' }</TableCell>*/}
 						</TableRow>
 						<TableRow>
 							<TableCell align="left">{ translate('MAX') }</TableCell>
-							<TableCell>{ stats[0] ? roundToDecimal(Math.max(...stats[0].scores)) : '-' }</TableCell>
-							<TableCell>{ stats[1] ? roundToDecimal(Math.max(...stats[1].scores)) : '-' }</TableCell>
-							<TableCell>{ stats[2] ? roundToDecimal(Math.max(...stats[2].scores)) : '-' }</TableCell>
+							{
+								stats.map((teamStat: TeamObjectiveStats) => (
+									<TableCell>{ teamStat ? roundToDecimal(Math.max(...teamStat.scores)) : '-' }</TableCell>
+								))
+							}
+							{/*<TableCell>{ stats[0] ? roundToDecimal(Math.max(...stats[0].scores)) : '-' }</TableCell>*/}
+							{/*<TableCell>{ stats[1] ? roundToDecimal(Math.max(...stats[1].scores)) : '-' }</TableCell>*/}
+							{/*<TableCell>{ stats[2] ? roundToDecimal(Math.max(...stats[2].scores)) : '-' }</TableCell>*/}
 						</TableRow>
 					</TableBody>
 				</Table>

@@ -8,7 +8,9 @@ class PlanningService {
 			gamemodes: {}
 		};
 
-		teams.forEach((team: Team, index: number) => {
+		const filteredTeams: Team[] = teams.filter((team: Team) => !!team);
+
+		filteredTeams.forEach((team: Team, index: number) => {
 			console.log('Team: ', team.id);
 			plan.teams.push(team);
 			team.stats.forEach((objective: Map<string, TeamObjectiveStats>, gamemode: string) => {
@@ -26,7 +28,7 @@ class PlanningService {
 					if (!Object.hasOwn(plan.gamemodes[gamemode].objectives, objectiveName)) { // Insert empty objective if not yet present
 						plan.gamemodes[gamemode].objectives[objectiveName] = {
 							name: objectiveName,
-							stats: new Array(teams.length)
+							stats: Array.apply(null, Array(filteredTeams.length)) // Create an array of nulls
 						};
 						console.log(`    Adding objective ${gamemode} | ${objectiveName}`);
 					}

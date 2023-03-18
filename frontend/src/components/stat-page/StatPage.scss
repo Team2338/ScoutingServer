@@ -18,17 +18,13 @@
 		flex-direction: column;
 		height: 100%;
 		width: calc(100% - var(--stat-sidenav-width));
+		overflow-y: auto;
 
 		.stat-table-wrapper {
 			display: flex;
-			margin-top: 16px;
-			margin-bottom: 32px;
-			margin-right: 32px;
-			margin-left: 32px;
-			max-height: 70%;
+			margin: 16px 32px 32px 32px;
 			border: 1px solid var(--border-color);
 			border-radius: 4px;
-			overflow-y: auto;
 		}
 	}
 }

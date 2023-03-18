@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Language, LanguageDescriptor, LanguageInfo } from '../../models';
+import { Language, LanguageDescriptor, LanguageInfo, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
@@ -100,7 +100,7 @@ export default function Header() {
 				startIcon={<Icon>download</Icon>}
 				href={csv.url}
 				download={filename}
-				disabled={!csv.isLoaded}
+				disabled={!(csv.loadStatus === LoadStatus.success)} // TODO: cover all the scenarios
 			>
 				{ translate('DATA') }
 			</Button>

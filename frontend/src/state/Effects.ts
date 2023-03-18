@@ -13,7 +13,7 @@ import {
 	getAllNotesStart,
 	getAllNotesSuccess,
 	getCsvStart,
-	getCsvSuccess,
+	getCsvSuccess, getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
 	getNotesForRobotStart,
@@ -69,37 +69,62 @@ export const logout = () => async (dispatch) => {
 	dispatch(logoutSuccess());
 };
 
-export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log('Getting all data');
-	dispatch(getCsvData());
-	await getMatches(dispatch, getState);
-	await getTeams()(dispatch, getState);
-	await getGlobalStats()(dispatch, getState);
-	console.log('Got all data');
-}
+// export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
+// 	console.log('Getting all data');
+// 	dispatch(getCsvData());
+// 	await getMatches(dispatch, getState);
+// 	await getTeams()(dispatch, getState);
+// 	await getGlobalStats()(dispatch, getState);
+// 	console.log('Got all data');
+// }
+//
+// const getMatches = async (dispatch, getState: GetState) => {
+// 	console.log('Getting matches');
+// 	dispatch(getMatchesStart());
+//
+// 	try {
+// 		const response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
+// 		const matchResponses: MatchResponse[] = response.data;
+// 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(matchResponses);
+//
+// 		dispatch(getMatchesSuccess(matches, matchResponses));
+// 	} catch (error) {
+// 		console.error('Error getting matches', error);
+// 	}
+// };
 
-const getMatches = async (dispatch, getState: GetState) => {
-	console.log('Getting matches');
+export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting matches sync')
 	dispatch(getMatchesStart());
+	dispatch(calculateTeamStatsStart());
+	dispatch(calculateGlobalStatsStart());
+	// dispatch(getCsvData());
 
 	try {
 		const response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
-		const matchResponses: MatchResponse[] = response.data;
-		const matches: Match[] = matchResponses.map((matchResponse: MatchResponse) => {
-			return matchModelService.convertMatchResponseToModel(matchResponse);
-		});
+		const rawMatches: MatchResponse[] = response.data;
+		const matches: Match[] = matchModelService.convertMatchResponsesToModels(rawMatches);
+		dispatch(getMatchesSuccess(matches, rawMatches));
 
-		dispatch(getMatchesSuccess(matches, matchResponses));
+		console.log('Getting teams sync');
+		const teams: Team[] = teamModelService.createTeams(rawMatches);
+		dispatch(calculateTeamStatsSuccess(teams));
+
+		console.log('Getting global statistics sync');
+		const globalStats = statModelService.calculateGlobalStats(teams);
+		dispatch(calculateGlobalStatsSuccess(globalStats));
+
 	} catch (error) {
 		console.error('Error getting matches', error);
+		dispatch(getMatchesFail());
 	}
-};
+}
 
 export const getCsvData = () => async (dispatch, getState: GetState) => {
 	console.log('Getting CSV');
 
-	const lastUrl = getState().csv.url;
 	dispatch(getCsvStart());
+	const lastUrl = getState().csv.url;
 
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
@@ -126,6 +151,7 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
 		dispatch(replaceMatch(match.id, updatedMatch, rawMatch));
+		calculateData(dispatch, getState);
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
@@ -139,30 +165,44 @@ export const unhideMatch = (match: Match) => async (dispatch, getState: GetState
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
 		dispatch(replaceMatch(match.id, updatedMatch, rawMatch));
+		calculateData(dispatch, getState);
 	} catch (error) {
 		console.error('Error hiding match', error);
 	}
 };
 
-export const getTeams = () => async (dispatch, getState: GetState) => {
-	console.log('Computing team statistics');
+const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(calculateTeamStatsStart());
-
-	const matches = getState().matches.raw.filter((match: MatchResponse) => !match.isHidden); // Filter out hidden matches
-	const teams: Team[] = teamModelService.createTeams(matches);
-	teams.sort((a: Team, b: Team) => a.id - b.id); // Sort by team number, ascending
-
-	dispatch(calculateTeamStatsSuccess(teams));
-};
-
-export const getGlobalStats = () => async (dispatch, getState: GetState) => {
-	console.log('Computing global statistics');
 	dispatch(calculateGlobalStatsStart());
 
-	const teams = getState().teams.data;
+	console.log('Getting teams sync');
+	const teams: Team[] = teamModelService.createTeams(getState().matches.raw);
+	dispatch(calculateTeamStatsSuccess(teams));
+
+	console.log('Getting global statistics sync');
 	const globalStats = statModelService.calculateGlobalStats(teams);
 	dispatch(calculateGlobalStatsSuccess(globalStats));
-};
+}
+
+// export const getTeams = () => async (dispatch, getState: GetState) => {
+// 	console.log('Computing team statistics');
+// 	dispatch(calculateTeamStatsStart());
+//
+// 	const matches = getState().matches.raw.filter((match: MatchResponse) => !match.isHidden); // Filter out hidden matches
+// 	const teams: Team[] = teamModelService.createTeams(matches);
+// 	teams.sort((a: Team, b: Team) => a.id - b.id); // Sort by team number, ascending
+//
+// 	dispatch(calculateTeamStatsSuccess(teams));
+// };
+
+// export const getGlobalStats = () => async (dispatch, getState: GetState) => {
+// 	console.log('Computing global statistics');
+// 	dispatch(calculateGlobalStatsStart());
+//
+// 	const teams = getState().teams.data;
+// 	const globalStats = statModelService.calculateGlobalStats(teams);
+// 	dispatch(calculateGlobalStatsSuccess(globalStats));
+// };
 
 export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
 	console.log('Getting notes for robot');

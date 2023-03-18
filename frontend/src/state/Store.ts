@@ -124,6 +124,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					selectedMatch: null
 				}
 			};
+		case Actions.GET_MATCHES_FAIL:
+			return {
+				...state,
+				matches: {
+					...state.matches,
+					loadStatus: getNextStatusOnFail(state.matches.loadStatus)
+				}
+			};
 		case Actions.SELECT_MATCH:
 			return {
 				...state,
@@ -148,14 +156,17 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				},
 				teams: {
 					...state.teams,
-					isLoaded: false, // Mark data as dirty, since we modified it
+					// isLoaded: false, // Mark data as dirty, since we modified it
+					loadStatus: LoadStatus.none,
 					selectedTeam: selectedTeam
 				},
 				stats: {
 					...state.stats,
-					isLoaded: false, // Mark as dirty, since we modified it
+					// isLoaded: false, // Mark as dirty, since we modified it
+					loadStatus: LoadStatus.none,
 					selectedStat: null // Guaranteed to have modified the data we were previously viewing, so hide it
-				}
+				},
+				planning: INITIAL_STATE.planning
 			};
 		case Actions.CALCULATE_TEAM_STATS_START:
 			return {
@@ -302,9 +313,21 @@ function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchRe
 }
 
 function getNextStatusOnLoad(previousStatus: LoadStatus): LoadStatus {
-	if (previousStatus === LoadStatus.success || previousStatus === LoadStatus.loadingWithPriorSuccess) {
+	if (
+		previousStatus === LoadStatus.success
+		|| previousStatus === LoadStatus.loadingWithPriorSuccess
+		|| previousStatus === LoadStatus.failedWithPriorSuccess
+	) {
 		return LoadStatus.loadingWithPriorSuccess;
 	}
 
 	return LoadStatus.loading;
+}
+
+function getNextStatusOnFail(previousStatus: LoadStatus): LoadStatus {
+	if (previousStatus === LoadStatus.loadingWithPriorSuccess) {
+		return LoadStatus.failedWithPriorSuccess;
+	}
+
+	return LoadStatus.failed;
 }

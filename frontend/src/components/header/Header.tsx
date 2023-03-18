@@ -189,6 +189,9 @@ export default function Header() {
 					</ListItemButton>
 				</List>
 			</div>
+			<div className="copyright-notice">
+				© { new Date().getFullYear() } Gear it Forward
+			</div>
 		</Drawer>
 	);
 

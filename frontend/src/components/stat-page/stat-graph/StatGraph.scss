@@ -2,8 +2,7 @@
 .stat-graph {
 	display: flex;
 	flex-direction: column;
-	//height: 30%;
-	min-height: 30%;
+	min-height: min(63%, 420px);
 	overflow-x: auto;
 	padding: 16px 32px;
 

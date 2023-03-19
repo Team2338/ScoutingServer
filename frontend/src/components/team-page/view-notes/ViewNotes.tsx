@@ -1,5 +1,5 @@
 import './ViewNotes.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Button,
 	Dialog,
@@ -19,7 +19,7 @@ interface IProps {
 
 export default function ViewNotes(props: IProps) {
 
-	const [isOpen, setOpen] = React.useState(false);
+	const [isOpen, setOpen] = useState(false);
 	const translate = useTranslator();
 
 	const handleOpen = () => {

@@ -9,7 +9,8 @@
 		flex-direction: column;
 
 		&-content {
-
+			overflow-wrap: break-word;
+			hyphens: auto;
 		}
 
 		&-author {

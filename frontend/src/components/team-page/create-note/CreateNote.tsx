@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Button,
 	Dialog,
@@ -22,16 +22,16 @@ interface IProps {
 
 export default function CreateNote(props: IProps) {
 
-	const [isOpen, setOpen] = React.useState(false);
-	const [robotNum, setRobotNum] = React.useState('');
-	const [noteContent, setNoteContent] = React.useState('');
+	const [isOpen, setOpen] = useState<boolean>(false);
+	const [robotNum, setRobotNum] = useState<string>('');
+	const [noteContent, setNoteContent] = useState<string>('');
 	const translate = useTranslator();
 
 	const handleOpen = () => {
 		const selectedTeamNum = props.selectedTeamNum ?? '';
 		setRobotNum('' + selectedTeamNum);
 		setOpen(true);
-	}
+	};
 
 	const handleCancel = () => {
 		setOpen(false);
@@ -47,11 +47,11 @@ export default function CreateNote(props: IProps) {
 
 		setRobotNum('');
 		setNoteContent('');
-	}
+	};
 
 	const isValid = (): boolean => {
 		return !!robotNum && !!noteContent;
-	}
+	};
 
 	return (
 		<React.Fragment>
@@ -78,6 +78,7 @@ export default function CreateNote(props: IProps) {
 				</DialogTitle>
 				<DialogContent>
 					<TextField
+						id="team-number"
 						variant="outlined"
 						margin="normal"
 						type="number"
@@ -94,17 +95,18 @@ export default function CreateNote(props: IProps) {
 						}}
 					/>
 					<TextField
+						id="note-content"
 						variant="outlined"
 						margin="normal"
 						placeholder={ translate('NOTE') }
 						label={ translate('NOTE') }
 						value={noteContent}
-						helperText={`${noteContent.length}/255`}
+						helperText={`${noteContent.length}/1024`}
 						onChange={(event) => setNoteContent(event.target.value)}
 						multiline={true}
 						fullWidth={true}
 						inputProps={{
-							maxLength: 255
+							maxLength: 1024
 						}}
 					/>
 				</DialogContent>

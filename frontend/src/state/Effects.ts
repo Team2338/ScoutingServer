@@ -13,7 +13,8 @@ import {
 	getAllNotesStart,
 	getAllNotesSuccess,
 	getCsvStart,
-	getCsvSuccess, getMatchesFail,
+	getCsvSuccess,
+	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
 	getNotesForRobotStart,
@@ -27,7 +28,7 @@ import { AppDispatch } from './Store';
 
 type GetState = () => AppState;
 
-export const initApp = () => async (dispatch) => {
+export const initApp = () => async (dispatch: AppDispatch) => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
 	const username: string = localStorage.getItem('username');
 	const eventCode: string = localStorage.getItem('eventCode');
@@ -44,7 +45,7 @@ export const initApp = () => async (dispatch) => {
 	}
 };
 
-export const selectLanguage = (language: Language) => async (dispatch) => {
+export const selectLanguage = (language: Language) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('language', language);
 	dispatch(selectLangSuccess(language));
 };
@@ -54,7 +55,7 @@ export const login = (
 	username: string,
 	eventCode: string,
 	secretCode: string
-) => async (dispatch) => {
+) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('teamNumber', teamNumber.toString());
 	localStorage.setItem('username', username);
 	localStorage.setItem('eventCode', eventCode);

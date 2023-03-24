@@ -5,7 +5,7 @@ import MainPage from './main-page/MainPage';
 import LoginPage from './login-page/LoginPage';
 
 function App() {
-  const isLoggedIn: boolean = useAppSelector(state => state.loadStatus === 'success');
+  const isLoggedIn: boolean = useAppSelector(state => state.login.loadStatus === 'success');
 
   return (
     <div className="App">

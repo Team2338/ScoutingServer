@@ -37,7 +37,7 @@ public class ImageService {
 		String timeCreated,
 		byte[] content
 	) {
-		imageInfoRepository.findImageForRobot(
+		imageInfoRepository.findFirstByTeamNumberAndRobotNumberAndGameYearAndSecretCodeOrderByTimeCreatedAsc(
 			teamNumber,
 			robotNumber,
 			gameYear,
@@ -73,7 +73,7 @@ public class ImageService {
 		String secretCode
 	) {
 		Optional<ImageInfoEntity> optionalInfo = imageInfoRepository
-			.findImageForRobot(
+			.findFirstByTeamNumberAndRobotNumberAndGameYearAndSecretCodeOrderByTimeCreatedAsc(
 				teamNumber,
 				gameYear,
 				robotNumber,
@@ -92,7 +92,7 @@ public class ImageService {
 		String secretCode
 	) {
 		return imageContentRepository
-			.findImageContentForRobot(imageId, secretCode)
+			.findFirstByIdAndSecretCodeOrderByIdAsc(imageId, secretCode)
 			.map(ImageContentEntity::getContent)
 			.map(content -> Base64.getDecoder().decode(content));
 	}

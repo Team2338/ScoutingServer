@@ -25,16 +25,24 @@ public interface ImageInfoRepository extends CrudRepository<ImageInfoEntity, Lon
 //		String secretCode
 //	);
 	
-	@Query(value = """
-	SELECT image
-	FROM ImageInfoEntity image
-	WHERE image.teamNumber = :teamNumber
-		AND image.robotNumber = :robotNumber
-		AND image.gameYear = :gameYear
-		AND image.secretCode = :secretCode
-	LIMIT 1
-	""")
-	Optional<ImageInfoEntity> findImageForRobot(
+	// LIMIT keyword doesn't exist in HQL
+//	@Query(value = """
+//	SELECT image
+//	FROM ImageInfoEntity image
+//	WHERE image.teamNumber = :teamNumber
+//		AND image.robotNumber = :robotNumber
+//		AND image.gameYear = :gameYear
+//		AND image.secretCode = :secretCode
+//	LIMIT 1
+//	""")
+//	Optional<ImageInfoEntity> findImageForRobot(
+//		Integer teamNumber,
+//		Integer robotNumber,
+//		Integer gameYear,
+//		String secretCode
+//	);
+	
+	Optional<ImageInfoEntity> findFirstByTeamNumberAndRobotNumberAndGameYearAndSecretCodeOrderByTimeCreatedAsc(
 		Integer teamNumber,
 		Integer robotNumber,
 		Integer gameYear,

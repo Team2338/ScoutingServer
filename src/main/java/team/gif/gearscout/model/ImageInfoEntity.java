@@ -45,20 +45,21 @@ public class ImageInfoEntity {
 	public ImageInfoEntity() {}
 	
 	public ImageInfoEntity(
-		NewImage image,
 		Integer teamNumber,
 		Integer gameYear,
-		Integer robotNumber,
 		String secretCode,
-		Long imageId
+		Integer robotNumber,
+		String creator,
+		Long imageId,
+		String timeCreated
 	) {
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
 		this.secretCode = secretCode;
 		this.robotNumber = robotNumber;
-		this.creator = image.getCreator();
+		this.creator = creator;
 		this.imageId = imageId;
-		this.timeCreated = image.getTimeCreated();
+		this.timeCreated = timeCreated;
 	}
 	
 	public Long getId() {

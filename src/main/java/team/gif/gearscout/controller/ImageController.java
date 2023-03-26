@@ -39,12 +39,21 @@ public class ImageController {
 		@PathVariable Integer gameYear,
 		@PathVariable Integer robotNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-		@RequestBody NewImage image,
+		@RequestHeader(value = "creator", defaultValue = "") String creator,
+		@RequestHeader(value = "timeCreated", defaultValue = "") String timeCreated,
 		@RequestParam(value = "image") MultipartFile file
 	) throws IOException {
 		logger.debug("Received addImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
 		
-		imageService.saveImage(teamNumber, gameYear, robotNumber, secretCode, image, file.getBytes());
+		imageService.saveImage(
+			teamNumber,
+			gameYear,
+			robotNumber,
+			secretCode,
+			creator,
+			timeCreated,
+			file.getBytes()
+		);
 		return ResponseEntity.ok().build();
 	}
 	

@@ -1,9 +1,12 @@
 import './MainPage.scss';
 import React, { useState } from 'react';
 import { Button, InputAdornment, TextField } from '@mui/material';
+import { uploadImage, useAppDispatch } from '../../state';
 
 export default function MainPage() {
+	const dispatch = useAppDispatch();
 	const [teamNumber, setTeamNumber] = useState<string>('');
+	const [file, setFile] = useState(null);
 
 	return (
 		<div className="main-page">
@@ -25,10 +28,16 @@ export default function MainPage() {
 					maxLength: 4
 				}}
 			/>
+			<input
+				type="file"
+				accept="image/jpeg, image/jpg, image/png"
+				onChange={event => setFile(event.target.files[0])}
+			/>
 			<Button
 				color="primary"
 				variant="contained"
-				disabled={teamNumber?.length === 0}
+				disabled={teamNumber?.length === 0 || !file}
+				onClick={() => dispatch(uploadImage(file, teamNumber))}
 			>
 				Upload Image
 			</Button>

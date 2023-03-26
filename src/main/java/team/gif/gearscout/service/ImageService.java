@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.model.ImageContentEntity;
 import team.gif.gearscout.model.ImageInfoEntity;
-import team.gif.gearscout.model.NewImage;
 import team.gif.gearscout.repository.ImageContentRepository;
 import team.gif.gearscout.repository.ImageInfoRepository;
 
@@ -34,7 +33,8 @@ public class ImageService {
 		Integer gameYear,
 		Integer robotNumber,
 		String secretCode,
-		NewImage image,
+		String creator,
+		String timeCreated,
 		byte[] content
 	) {
 		imageInfoRepository.findImageForRobot(
@@ -53,12 +53,13 @@ public class ImageService {
 		);
 		
 		ImageInfoEntity createdImage = new ImageInfoEntity(
-			image,
 			teamNumber,
 			gameYear,
-			robotNumber,
 			secretCode,
-			imageContentEntity.getId()
+			robotNumber,
+			creator,
+			imageContentEntity.getId(),
+			timeCreated
 		);
 		
 		return imageInfoRepository.save(createdImage);

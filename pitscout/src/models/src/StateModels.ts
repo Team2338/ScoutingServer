@@ -4,6 +4,9 @@ export interface IPitState {
 		loadStatus: 'none' | 'loading' | 'success' | 'failed';
 		error: string;
 		user: IUser;
+	},
+	upload: {
+		loadStatus: 'none' | 'loading' | 'success' | 'failed';
 	}
 }
 

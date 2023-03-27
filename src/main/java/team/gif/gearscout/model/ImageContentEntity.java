@@ -1,6 +1,7 @@
 package team.gif.gearscout.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class ImageContentEntity {
 	private Long id;
 	
 	@Lob
+	@Type(type="org.hibernate.type.BinaryType")
 	@Column(name = "content", nullable = false)
 	private byte[] content;
 	

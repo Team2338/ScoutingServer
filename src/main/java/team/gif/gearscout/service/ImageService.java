@@ -58,10 +58,10 @@ public class ImageService {
 		String timeCreated,
 		byte[] content
 	) {
-		imageInfoRepository.findFirstByTeamNumberAndRobotNumberAndGameYearAndSecretCodeOrderByTimeCreatedAsc(
+		imageInfoRepository.findImageForRobot(
 			teamNumber,
-			robotNumber,
 			gameYear,
+			robotNumber,
 			secretCode
 		).ifPresent(imageInfo -> {
 			imageInfoRepository.delete(imageInfo);
@@ -93,7 +93,7 @@ public class ImageService {
 		String secretCode
 	) {
 		Optional<ImageInfoEntity> optionalInfo = imageInfoRepository
-			.findFirstByTeamNumberAndRobotNumberAndGameYearAndSecretCodeOrderByTimeCreatedAsc(
+			.findImageForRobot(
 				teamNumber,
 				gameYear,
 				robotNumber,

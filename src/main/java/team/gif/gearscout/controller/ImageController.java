@@ -46,6 +46,7 @@ public class ImageController {
 	) throws IOException {
 		logger.debug("Received addImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
 		
+		imageService.validateImage(image);
 		imageService.saveImage(
 			teamNumber,
 			gameYear,

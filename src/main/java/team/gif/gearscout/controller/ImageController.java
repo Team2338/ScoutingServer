@@ -72,7 +72,7 @@ public class ImageController {
 	}
 	
 	
-	@GetMapping(value = "/images/{id}")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<byte[]> getImage(
 		@PathVariable Long id,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode

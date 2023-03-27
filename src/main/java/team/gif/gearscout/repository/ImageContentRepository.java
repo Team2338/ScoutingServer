@@ -21,6 +21,4 @@ public interface ImageContentRepository extends CrudRepository<ImageContentEntit
 		String secretCode
 	);
 	
-	Optional<ImageContentEntity> findFirstByIdAndSecretCodeOrderByIdAsc(Long id, String secretCode);
-	
 }

@@ -112,7 +112,7 @@ public class ImageService {
 		String secretCode
 	) {
 		return imageContentRepository
-			.findFirstByIdAndSecretCodeOrderByIdAsc(imageId, secretCode)
+			.findImageContentForRobot(imageId, secretCode)
 			.map(ImageContentEntity::getContent);
 	}
 	

@@ -15,7 +15,7 @@ class ApiService {
 		image: Blob
 	) => {
 
-		const url = `/team/${user.teamNumber}/gameYear/${gameYear}/robot/${robotNumber}`;
+		const url = `/images/team/${user.teamNumber}/gameYear/${gameYear}/robot/${robotNumber}`;
 		const config = {
 			headers: {
 				secretCode: user.secretCode,

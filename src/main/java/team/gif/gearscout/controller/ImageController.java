@@ -5,17 +5,18 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import team.gif.gearscout.exception.EmptyFileNotAllowedException;
+import team.gif.gearscout.exception.ImageTypeInvalidException;
 import team.gif.gearscout.model.ImageInfoEntity;
-import team.gif.gearscout.model.NewImage;
 import team.gif.gearscout.service.ImageService;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class ImageController {
 	}
 	
 	
-	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/robot/{robotNumber}", consumes = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
+	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/robot/{robotNumber}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Void> addImage(
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
@@ -76,6 +77,12 @@ public class ImageController {
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		return ResponseEntity.of(imageService.getImageContent(id, secretCode));
+	}
+	
+	
+	@ExceptionHandler(value = { EmptyFileNotAllowedException.class, ImageTypeInvalidException.class })
+	public ResponseEntity<Void> handleBadFileUpload(Exception e) {
+		return ResponseEntity.badRequest().build();
 	}
 	
 }

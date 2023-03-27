@@ -42,11 +42,4 @@ public interface ImageInfoRepository extends CrudRepository<ImageInfoEntity, Lon
 		String secretCode
 	);
 	
-	Optional<ImageInfoEntity> findFirstByTeamNumberAndRobotNumberAndGameYearAndSecretCodeOrderByTimeCreatedAsc(
-		Integer teamNumber,
-		Integer robotNumber,
-		Integer gameYear,
-		String secretCode
-	);
-
 }

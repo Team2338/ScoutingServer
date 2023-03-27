@@ -101,7 +101,7 @@ public class ImageService {
 			);
 		
 		ImageInfoEntity info = optionalInfo.orElse(new ImageInfoEntity());
-		info.setIsPresent(info.isPresent());
+		info.setIsPresent(optionalInfo.isPresent());
 		
 		return info;
 	}

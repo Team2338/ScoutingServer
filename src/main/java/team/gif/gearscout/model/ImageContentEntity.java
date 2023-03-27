@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -18,15 +19,16 @@ public class ImageContentEntity {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Long id;
 	
+	@Lob
 	@Column(name = "content", nullable = false)
-	private String content;
+	private byte[] content;
 	
 	@Column(name = "secretCode", nullable = false)
 	private String secretCode;
 	
 	public ImageContentEntity() {}
 	
-	public ImageContentEntity(String content, String secretCode) {
+	public ImageContentEntity(byte[] content, String secretCode) {
 		this.content = content;
 		this.secretCode = secretCode;
 	}
@@ -35,7 +37,7 @@ public class ImageContentEntity {
 		return id;
 	}
 	
-	public String getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 	
@@ -47,7 +49,7 @@ public class ImageContentEntity {
 		this.id = id;
 	}
 	
-	public void setContent(String content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 	

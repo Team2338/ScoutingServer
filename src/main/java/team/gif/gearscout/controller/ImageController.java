@@ -33,7 +33,7 @@ public class ImageController {
 	}
 	
 	
-	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/robot/{robotNumber}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/robot/{robotNumber}", consumes = { MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE })
 	public ResponseEntity<Void> addImage(
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
@@ -44,8 +44,6 @@ public class ImageController {
 		@RequestParam(value = "image") MultipartFile image
 	) throws IOException {
 		logger.debug("Received addImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
-		
-		System.out.println(image.getContentType());
 		
 		imageService.saveImage(
 			teamNumber,

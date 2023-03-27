@@ -8,7 +8,6 @@ import team.gif.gearscout.repository.ImageContentRepository;
 import team.gif.gearscout.repository.ImageInfoRepository;
 
 import javax.transaction.Transactional;
-import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -47,9 +46,8 @@ public class ImageService {
 			imageContentRepository.deleteById(imageInfo.getImageId());
 		});
 		
-		String encodedContent = Base64.getEncoder().encodeToString(content);
 		ImageContentEntity imageContentEntity = imageContentRepository.save(
-			new ImageContentEntity(encodedContent, secretCode)
+			new ImageContentEntity(content, secretCode)
 		);
 		
 		ImageInfoEntity createdImage = new ImageInfoEntity(
@@ -93,8 +91,7 @@ public class ImageService {
 	) {
 		return imageContentRepository
 			.findFirstByIdAndSecretCodeOrderByIdAsc(imageId, secretCode)
-			.map(ImageContentEntity::getContent)
-			.map(content -> Base64.getDecoder().decode(content));
+			.map(ImageContentEntity::getContent);
 	}
 	
 }

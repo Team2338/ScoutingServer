@@ -100,3 +100,14 @@ export interface Plan {
 		};
 	};
 }
+
+export interface ImageInfo {
+	id: number;
+	present: boolean;
+	teamNumber: number;
+	gameYear: number;
+	robotNumber: number;
+	creator: string;
+	imageId: number;
+	timeCreated: string;
+}

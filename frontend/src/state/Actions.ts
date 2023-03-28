@@ -1,5 +1,5 @@
 import {
-	GlobalObjectiveStats,
+	GlobalObjectiveStats, ImageInfo,
 	Language,
 	Match,
 	MatchResponse,
@@ -39,7 +39,10 @@ export enum Actions {
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
 	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
 	APPLY_PLAN_SELECTION = '[PLAN] Apply selection',
-	CLEAR_PLAN = '[Plan] Clear'
+	CLEAR_PLAN = '[PLAN] Clear',
+	GET_IMAGE_START = '[IMAGE] Start getting image',
+	GET_IMAGE_SUCCESS = '[IMAGE] Successfully got image',
+	GET_IMAGE_FAIL = '[IMAGE] Failed to get image'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -190,4 +193,23 @@ export const applyPlanSelection = (firstTeam: Team, secondTeam: Team, thirdTeam:
 
 export const clearPlan = (): Action => ({
 	type: Actions.CLEAR_PLAN
+});
+
+export const getImageStart = (robotNumber: number): Action => ({
+	type: Actions.GET_IMAGE_START,
+	payload: robotNumber
+});
+
+export const getImageSuccess = (robotNumber: number, info: ImageInfo, url: string): Action => ({
+	type: Actions.GET_IMAGE_SUCCESS,
+	payload: {
+		robotNumber: robotNumber,
+		info: info,
+		url: url
+	}
+});
+
+export const getImageFail = (robotNumber: number): Action => ({
+	type: Actions.GET_IMAGE_FAIL,
+	payload: robotNumber
 });

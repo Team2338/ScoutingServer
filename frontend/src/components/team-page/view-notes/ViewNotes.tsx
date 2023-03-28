@@ -1,19 +1,12 @@
-import './ViewNotes.scss';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
-import {
-	Button,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	Icon,
-	Tooltip
-} from '@mui/material';
-import { Note } from '../../../models';
+import { LoadStatus, Note } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
+import { useAppSelector } from '../../../state/Hooks';
+import './ViewNotes.scss';
 
 interface IProps {
-	isMobile: boolean;
+	robotNumber: number;
 	notes: Note[];
 }
 
@@ -22,12 +15,35 @@ export default function ViewNotes(props: IProps) {
 	const [isOpen, setOpen] = useState(false);
 	const translate = useTranslator();
 
+	const imageState = useAppSelector(state => state.images[props.robotNumber]);
+
 	const handleOpen = () => {
 		setOpen(true);
 	}
 
 	const handleClose = () => {
 		setOpen(false);
+	}
+
+	let image = null;
+	switch (imageState?.loadStatus) {
+		case undefined: // Fallthrough
+		case LoadStatus.none:
+			break;
+		case LoadStatus.failed:
+			image = <div>Failed to load image</div>; // TODO: translate
+			break;
+		case LoadStatus.loading:
+			image = <div>{ translate('LOADING') }</div>
+			break;
+		case LoadStatus.success:
+		case LoadStatus.loadingWithPriorSuccess: // Fallthrough
+		case LoadStatus.failedWithPriorSuccess: // Fallthrough
+			if (imageState.info.present) {
+				image = <img src={imageState.url} alt={`Robot of ${props.robotNumber}`} />; // TODO: translate
+				break;
+			}
+			break;
 	}
 
 	const noteElements = props.notes.map((note: Note) => (
@@ -65,6 +81,7 @@ export default function ViewNotes(props: IProps) {
 					{ translate('NOTES') }
 				</DialogTitle>
 				<DialogContent>
+					{ image }
 					<div className="team-notes-list">
 						{ noteElements }
 					</div>

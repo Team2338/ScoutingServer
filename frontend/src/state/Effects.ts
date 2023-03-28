@@ -1,4 +1,4 @@
-import { AppState, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import { AppState, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
@@ -13,7 +13,7 @@ import {
 	getAllNotesStart,
 	getAllNotesSuccess,
 	getCsvStart,
-	getCsvSuccess,
+	getCsvSuccess, getImageFail, getImageStart, getImageSuccess,
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
@@ -267,4 +267,47 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 	} catch (error) {
 		console.error('Error adding note', error);
 	}
+};
+
+export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log(`Getting image info for ${robotNumber}`);
+	dispatch(getImageStart(robotNumber));
+
+	let info: ImageInfo;
+	try {
+		const response = await gearscoutService.getImageInfo({
+			teamNumber: getState().teamNumber,
+			gameYear: new Date().getFullYear(),
+			robotNumber: robotNumber,
+			secretCode: getState().secretCode
+		});
+		info = response.data;
+
+	} catch (error) {
+		console.error(`Error getting image info for ${robotNumber}`);
+		dispatch(getImageFail(robotNumber));
+		return;
+	}
+
+	if (!info.present) {
+		dispatch(getImageSuccess(robotNumber, info, null));
+		return;
+	}
+
+	let content;
+	try {
+		console.log(`Getting image content for ${robotNumber}`);
+		const response = await gearscoutService.getImageContent({
+			imageId: info.imageId,
+			secretCode: getState().secretCode
+		});
+		content = response.data;
+	} catch (error) {
+		console.error(`Error getting image content for ${robotNumber}`);
+		dispatch(getImageFail(robotNumber));
+	}
+
+	const blob = new Blob([content], { type: 'image/jpeg' })
+	const url: string = window.URL.createObjectURL(blob);
+	dispatch(getImageSuccess(robotNumber, info, url));
 };

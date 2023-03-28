@@ -41,7 +41,8 @@ const INITIAL_STATE: AppState = {
 		secondTeam: null,
 		thirdTeam: null,
 		plan: null
-	}
+	},
+	images: {}
 };
 
 const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {
@@ -265,6 +266,40 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				planning: INITIAL_STATE.planning
+			};
+		case Actions.GET_IMAGE_START:
+			return {
+				...state,
+				images: {
+					...state.images,
+					[action.payload]: {
+						loadStatus: getNextStatusOnLoad(state.images[action.payload]?.loadStatus ?? LoadStatus.none),
+						url: state.images[action.payload]?.url,
+						info: state.images[action.payload]?.info
+					}
+				}
+			};
+		case Actions.GET_IMAGE_FAIL:
+			return {
+				...state,
+				images: {
+					...state.images,
+					[action.payload]: {
+						...state.images[action.payload],
+						loadStatus: getNextStatusOnFail(state.images[action.payload].loadStatus),
+					}
+				}
+			};
+		case Actions.GET_IMAGE_SUCCESS:
+			return {
+				...state,
+				images: {
+					[action.payload.robotNumber]: {
+						loadStatus: LoadStatus.success,
+						info: action.payload.info,
+						url: action.payload.url
+					}
+				}
 			};
 		default:
 			return state;

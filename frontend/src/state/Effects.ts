@@ -18,7 +18,7 @@ import {
 	getMatchesStart,
 	getMatchesSuccess,
 	getNotesForRobotStart,
-	getNotesForRobotSuccess,
+	getNotesForRobotSuccess, keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -289,9 +289,21 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		return;
 	}
 
+	// Don't fetch image content if none exist
 	if (!info.present) {
 		dispatch(getImageSuccess(robotNumber, info, null));
 		return;
+	}
+
+	// Use cached image if ID hasn't changed
+	if (info.imageId === getState().images[robotNumber]?.info?.imageId) {
+		dispatch(keepCachedImage(robotNumber));
+		return;
+	}
+
+	const previousUrl: string = getState().images[robotNumber]?.url;
+	if (previousUrl) {
+		window.URL.revokeObjectURL(previousUrl);
 	}
 
 	let content;

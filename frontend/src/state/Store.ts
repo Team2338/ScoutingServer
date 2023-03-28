@@ -274,8 +274,8 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					...state.images,
 					[action.payload]: {
 						loadStatus: getNextStatusOnLoad(state.images[action.payload]?.loadStatus ?? LoadStatus.none),
-						url: state.images[action.payload]?.url,
-						info: state.images[action.payload]?.info
+						url: state.images[action.payload]?.url, // Sets to null if this team previously was not saved
+						info: state.images[action.payload]?.info // Sets to null if this team previously was not saved
 					}
 				}
 			};
@@ -294,6 +294,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				images: {
+					...state.images,
 					[action.payload.robotNumber]: {
 						loadStatus: LoadStatus.success,
 						info: action.payload.info,
@@ -301,6 +302,17 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					}
 				}
 			};
+		case Actions.KEEP_CACHED_IMAGE:
+			return {
+				...state,
+				images: {
+					...state.images,
+					[action.payload]: {
+						...state.images[action.payload],
+						loadStatus: LoadStatus.success
+					}
+				}
+			}
 		default:
 			return state;
 	}

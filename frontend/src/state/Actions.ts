@@ -42,7 +42,8 @@ export enum Actions {
 	CLEAR_PLAN = '[PLAN] Clear',
 	GET_IMAGE_START = '[IMAGE] Start getting image',
 	GET_IMAGE_SUCCESS = '[IMAGE] Successfully got image',
-	GET_IMAGE_FAIL = '[IMAGE] Failed to get image'
+	GET_IMAGE_FAIL = '[IMAGE] Failed to get image',
+	KEEP_CACHED_IMAGE = '[IMAGE] Keep cached image'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -211,5 +212,10 @@ export const getImageSuccess = (robotNumber: number, info: ImageInfo, url: strin
 
 export const getImageFail = (robotNumber: number): Action => ({
 	type: Actions.GET_IMAGE_FAIL,
+	payload: robotNumber
+});
+
+export const keepCachedImage = (robotNumber: number): Action => ({
+	type: Actions.KEEP_CACHED_IMAGE,
 	payload: robotNumber
 });

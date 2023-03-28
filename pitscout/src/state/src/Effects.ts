@@ -32,7 +32,7 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 
 	try {
 		// TODO: Call login API
-		localStorage.setItem('teamNumber', credentials.teamNumber.toString());
+		localStorage.setItem('teamNumber', credentials.teamNumber);
 		localStorage.setItem('username', credentials.username);
 		localStorage.setItem('eventCode', credentials.eventCode);
 		localStorage.setItem('secretCode', credentials.secretCode);

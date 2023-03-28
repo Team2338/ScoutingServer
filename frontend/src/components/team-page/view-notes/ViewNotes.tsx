@@ -40,7 +40,13 @@ export default function ViewNotes(props: IProps) {
 		case LoadStatus.loadingWithPriorSuccess: // Fallthrough
 		case LoadStatus.failedWithPriorSuccess: // Fallthrough
 			if (imageState.info.present) {
-				image = <img src={imageState.url} alt={`Robot of ${props.robotNumber}`} />; // TODO: translate
+				image = (
+					<img
+						className="team-notes-image"
+						src={imageState.url} // TODO: translate
+						alt={`Robot of ${props.robotNumber}`}
+					/>
+				);
 				break;
 			}
 			break;

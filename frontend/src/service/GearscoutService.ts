@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ImageInfo, MatchResponse, NewNote, Note } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
@@ -120,7 +120,8 @@ class GearscoutService {
 		secretCode: string
 	}): GearscoutResponse<ArrayBuffer> => {
 		const url = `/v1/images/${data.imageId}`;
-		const config = {
+		const config: AxiosRequestConfig = {
+			responseType: 'arraybuffer',
 			headers: {
 				secretCode: data.secretCode
 			}

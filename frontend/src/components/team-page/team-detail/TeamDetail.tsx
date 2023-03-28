@@ -24,7 +24,7 @@ export default function TeamDetail(props: IProps) {
 				dispatch(getImageForRobot(props.team.id))
 			}
 		},
-		[dispatch, props.team?.id]
+		[dispatch, props.team]
 	);
 
 	if (!props.team) {

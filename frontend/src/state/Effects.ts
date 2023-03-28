@@ -307,6 +307,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 	}
 
 	let content;
+	let contentType: string;
 	try {
 		console.log(`Getting image content for ${robotNumber}`);
 		const response = await gearscoutService.getImageContent({
@@ -314,12 +315,13 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 			secretCode: getState().secretCode
 		});
 		content = response.data;
+		contentType = response.headers['content-type'];
 	} catch (error) {
 		console.error(`Error getting image content for ${robotNumber}`);
 		dispatch(getImageFail(robotNumber));
 	}
 
-	const blob = new Blob([content], { type: 'image/jpeg' })
+	const blob = new Blob([content], { type: contentType })
 	const url: string = window.URL.createObjectURL(blob);
 	dispatch(getImageSuccess(robotNumber, info, url));
 };

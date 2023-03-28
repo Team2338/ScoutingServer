@@ -6,7 +6,7 @@ import { uploadImage, useAppDispatch } from '../../state';
 export default function MainPage() {
 	const dispatch = useAppDispatch();
 	const [teamNumber, setTeamNumber] = useState<string>('');
-	const [file, setFile] = useState(null);
+	const [file, setFile] = useState<File>(null);
 
 	return (
 		<div className="main-page">
@@ -28,11 +28,18 @@ export default function MainPage() {
 					maxLength: 4
 				}}
 			/>
-			<input
-				type="file"
-				accept="image/jpeg, image/jpg, image/png"
-				onChange={event => setFile(event.target.files[0])}
-			/>
+			<label className="file-input-label">
+				<input
+					className="file-input-vanilla"
+					type="file"
+					accept="image/jpeg, image/jpg, image/png"
+					onChange={event => setFile(event.target.files[0])}
+				/>
+				<div className="file-input-prompt">Choose Image</div>
+				<div className="file-input-selection">
+					{ file ? file.name : 'No image selected'}
+				</div>
+			</label>
 			<Button
 				color="primary"
 				variant="contained"

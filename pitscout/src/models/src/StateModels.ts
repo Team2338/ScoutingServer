@@ -1,12 +1,12 @@
 
 export interface IPitState {
 	login: {
-		loadStatus: 'none' | 'loading' | 'success' | 'failed';
+		loadStatus: LoadStatus;
 		error: string;
 		user: IUser;
 	},
 	upload: {
-		loadStatus: 'none' | 'loading' | 'success' | 'failed';
+		loadStatus: LoadStatus;
 	}
 }
 
@@ -15,4 +15,11 @@ export interface IUser {
 	username: string;
 	eventCode: string;
 	secretCode: string;
+}
+
+export enum LoadStatus {
+	none = 'none',
+	loading = 'loading',
+	success = 'success',
+	failed = 'failed'
 }

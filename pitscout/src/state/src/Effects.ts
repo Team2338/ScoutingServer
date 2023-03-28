@@ -59,7 +59,7 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 			robotNumber,
 			file
 		);
-		dispatch(uploadSuccess);
+		dispatch(uploadSuccess());
 	} catch (error) {
 		dispatch(uploadFailed());
 	}

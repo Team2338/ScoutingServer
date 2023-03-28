@@ -1,6 +1,6 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { IPitState, IUser } from '../../models';
+import { IPitState, IUser, LoadStatus } from '../../models';
 
 export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<IUser>('login/login-success');
@@ -13,39 +13,39 @@ export const uploadFailed = createAction('upload/upload=failed');
 
 const initialState: IPitState = {
 	login: {
-		loadStatus: 'none',
+		loadStatus: LoadStatus.none,
 		error: null,
 		user: null
 	},
 	upload: {
-		loadStatus: 'none'
+		loadStatus: LoadStatus.none
 	}
 };
 
 const reducer = createReducer(initialState, builder => {
 	builder
 		.addCase(loginStart, (state: IPitState) => {
-			state.login.loadStatus = 'loading';
+			state.login.loadStatus = LoadStatus.loading;
 		})
 		.addCase(loginSuccess, (state: IPitState, action) => {
-			state.login.loadStatus = 'success';
+			state.login.loadStatus = LoadStatus.success;
 			state.login.user = action.payload;
 		})
 		.addCase(loginFailed, (state: IPitState, action) => {
-			state.login.loadStatus = 'failed';
+			state.login.loadStatus = LoadStatus.success;
 			state.login.error = action.payload;
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
 			state.login = initialState.login;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
-			state.upload.loadStatus = 'loading';
+			state.upload.loadStatus = LoadStatus.loading;
 		})
 		.addCase(uploadSuccess, (state: IPitState) => {
-			state.upload.loadStatus = 'success';
+			state.upload.loadStatus = LoadStatus.success;
 		})
 		.addCase(uploadFailed, (state: IPitState) => {
-			state.upload.loadStatus = 'failed';
+			state.upload.loadStatus = LoadStatus.failed;
 		});
 });
 

@@ -56,7 +56,8 @@ public class ImageService {
 		String secretCode,
 		String creator,
 		String timeCreated,
-		byte[] content
+		byte[] content,
+		String contentType
 	) {
 		imageInfoRepository.findImageForRobot(
 			teamNumber,
@@ -69,7 +70,7 @@ public class ImageService {
 		});
 		
 		ImageContentEntity imageContentEntity = imageContentRepository.save(
-			new ImageContentEntity(content, secretCode)
+			new ImageContentEntity(content, secretCode, contentType)
 		);
 		
 		ImageInfoEntity createdImage = new ImageInfoEntity(
@@ -107,13 +108,12 @@ public class ImageService {
 	}
 	
 	
-	public Optional<byte[]> getImageContent(
+	public Optional<ImageContentEntity> getImageContent(
 		Long imageId,
 		String secretCode
 	) {
 		return imageContentRepository
-			.findImageContentForRobot(imageId, secretCode)
-			.map(ImageContentEntity::getContent);
+			.findImageContentForRobot(imageId, secretCode);
 	}
 	
 }

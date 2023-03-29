@@ -6,7 +6,7 @@ type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 class ApiService {
 
 	service = axios.create({
-		baseURL: 'https://gearitforward.com/api/v1'
+		baseURL: process.env.REACT_APP_SERVER_URL
 	});
 
 
@@ -17,7 +17,7 @@ class ApiService {
 		token: IToken,
 		image: Blob
 	) => {
-		const url = `/images/team/${user.teamNumber}/gameYear/${gameYear}/robot/${robotNumber}`;
+		const url = `/v1/images/team/${user.teamNumber}/gameYear/${gameYear}/robot/${robotNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: user.secretCode,
@@ -40,7 +40,7 @@ class ApiService {
 		teamNumber: number,
 		username: string
 	}): GearscoutResponse<IToken> => {
-		const url = '/auth/login';
+		const url = '/v1/auth/login';
 		return this.service.post(url, data);
 	};
 

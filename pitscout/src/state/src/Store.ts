@@ -6,6 +6,7 @@ export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<IUser>('login/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
+export const clearLoginError = createAction('login/clear-error');
 
 export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
@@ -38,6 +39,9 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
 			state.login = initialState.login;
+		})
+		.addCase(clearLoginError, (state: IPitState) => {
+			state.login.error = null;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.loading;

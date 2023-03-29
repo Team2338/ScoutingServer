@@ -1,12 +1,7 @@
-import { IPitState, IUser } from '../../models';
+import { IPitState, IToken, IUser, LoginErrors, UserRoles } from '../../models';
+import apiService from '../../services/ApiService';
 import ApiService from '../../services/ApiService';
-import {
-	AppDispatch,
-	loginFailed,
-	loginStart,
-	loginSuccess,
-	logoutSuccess, uploadFailed, uploadStart, uploadSuccess
-} from './Store';
+import { AppDispatch, loginFailed, loginStart, loginSuccess, logoutSuccess, uploadFailed, uploadStart, uploadSuccess } from './Store';
 
 type GetState = () => IPitState;
 
@@ -31,15 +26,26 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 	dispatch(loginStart());
 
 	try {
-		// TODO: Call login API
+		const response = await apiService.login({
+			teamNumber: Number(credentials.teamNumber),
+			username: credentials.username
+		});
+
+		const token: IToken = response.data;
+		if (token.role !== UserRoles.admin) {
+			dispatch(loginFailed(LoginErrors.unauthorized));
+			return;
+		}
+
 		localStorage.setItem('teamNumber', credentials.teamNumber);
 		localStorage.setItem('username', credentials.username);
 		localStorage.setItem('eventCode', credentials.eventCode);
 		localStorage.setItem('secretCode', credentials.secretCode);
 
 		dispatch(loginSuccess(credentials));
-	} catch (exception) {
-		dispatch(loginFailed('Oops, something went wrong'));
+	} catch (error) {
+		console.error(error);
+		dispatch(loginFailed(LoginErrors.unknown));
 	}
 };
 

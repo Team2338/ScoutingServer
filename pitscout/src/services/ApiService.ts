@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { IUser } from '../models';
+import { IToken, IUser } from '../models';
+
+type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
 class ApiService {
 
@@ -32,6 +34,14 @@ class ApiService {
 			formData,
 			config
 		);
+	};
+
+	login = (data: {
+		teamNumber: number,
+		username: string
+	}): GearscoutResponse<IToken> => {
+		const url = '/auth/login';
+		return this.service.post(url, data);
 	};
 
 }

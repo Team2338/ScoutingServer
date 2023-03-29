@@ -17,9 +17,20 @@ export interface IUser {
 	secretCode: string;
 }
 
+export interface IToken {
+	teamNumber: number;
+	username: string;
+	role: UserRoles;
+}
+
 export enum LoadStatus {
 	none = 'none',
 	loading = 'loading',
 	success = 'success',
 	failed = 'failed'
+}
+
+export enum UserRoles {
+	admin = 'admin',
+	none = 'none'
 }

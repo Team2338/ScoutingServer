@@ -26,6 +26,7 @@ const reducer = createReducer(initialState, builder => {
 	builder
 		.addCase(loginStart, (state: IPitState) => {
 			state.login.loadStatus = LoadStatus.loading;
+			state.login.error = null;
 		})
 		.addCase(loginSuccess, (state: IPitState, action) => {
 			state.login.loadStatus = LoadStatus.success;

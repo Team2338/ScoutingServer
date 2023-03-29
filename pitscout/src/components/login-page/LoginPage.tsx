@@ -1,6 +1,6 @@
-import { Button, InputAdornment, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import { login, useAppDispatch } from '../../state';
+import { Alert, Button, InputAdornment, Slide, Snackbar, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { login, useAppDispatch, useAppSelector } from '../../state';
 import './LoginPage.scss';
 
 export default function LoginPage() {
@@ -10,6 +10,10 @@ export default function LoginPage() {
 	const [username, setUsername] = useState<string>('');
 	const [eventCode, setEventCode] = useState<string>('');
 	const [secretCode, setSecretCode] = useState<string>('');
+	const [isErrorToastOpen, setErrorToastOpen] = useState<boolean>(false);
+	const errorMessage: string = useAppSelector(state => state.login.error);
+
+	useEffect(() => setErrorToastOpen(!!errorMessage), [errorMessage]);
 
 	const isValid: boolean = (
 		teamNumber.length > 0
@@ -28,8 +32,36 @@ export default function LoginPage() {
 		}));
 	};
 
+	const handleErrorToastClose = (event, reason): void => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setErrorToastOpen(false);
+	}
+
 	return (
 		<div className="login-page">
+			<Snackbar
+				open={isErrorToastOpen}
+				autoHideDuration={6000}
+				onClose={handleErrorToastClose}
+				message={errorMessage}
+				sx={{ marginTop: '64px' }}
+				anchorOrigin={{
+					vertical: 'top',
+					horizontal: 'center'
+				}}
+			>
+				<Alert
+					severity="error"
+					variant="filled"
+					sx={{ width: '100%' }}
+				>
+					{errorMessage}
+				</Alert>
+			</Snackbar>
+
 			<form className="login-form" onSubmit={handleSubmit}>
 				<Typography variant="h4">Sign in</Typography>
 				<TextField

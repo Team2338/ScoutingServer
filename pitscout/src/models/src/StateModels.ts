@@ -4,6 +4,7 @@ export interface IPitState {
 		loadStatus: LoadStatus;
 		error: string;
 		user: IUser;
+		token: IToken;
 	},
 	upload: {
 		loadStatus: LoadStatus;

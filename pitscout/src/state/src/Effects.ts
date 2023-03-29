@@ -42,7 +42,7 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 		localStorage.setItem('eventCode', credentials.eventCode);
 		localStorage.setItem('secretCode', credentials.secretCode);
 
-		dispatch(loginSuccess(credentials));
+		dispatch(loginSuccess({ user: credentials, token }));
 	} catch (error) {
 		console.error(error);
 		dispatch(loginFailed(LoginErrors.unknown));
@@ -58,11 +58,13 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 	dispatch(uploadStart());
 
 	const user = getState().login.user;
+	const token = getState().login.token;
 	try {
 		await ApiService.uploadImage(
 			user,
 			2023,
 			robotNumber,
+			token,
 			file
 		);
 		dispatch(uploadSuccess());

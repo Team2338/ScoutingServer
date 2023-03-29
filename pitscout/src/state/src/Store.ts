@@ -1,9 +1,9 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { IPitState, IUser, LoadStatus, LoginErrors } from '../../models';
+import { IPitState, IToken, IUser, LoadStatus, LoginErrors } from '../../models';
 
 export const loginStart = createAction('login/login-start');
-export const loginSuccess = createAction<IUser>('login/login-success');
+export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
@@ -16,7 +16,8 @@ const initialState: IPitState = {
 	login: {
 		loadStatus: LoadStatus.none,
 		error: null,
-		user: null
+		user: null,
+		token: null
 	},
 	upload: {
 		loadStatus: LoadStatus.none
@@ -31,7 +32,8 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(loginSuccess, (state: IPitState, action) => {
 			state.login.loadStatus = LoadStatus.success;
-			state.login.user = action.payload;
+			state.login.user = action.payload.user;
+			state.login.token = action.payload.token;
 		})
 		.addCase(loginFailed, (state: IPitState, action) => {
 			state.login.loadStatus = LoadStatus.failed;

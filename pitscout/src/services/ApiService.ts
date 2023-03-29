@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IToken, IUser } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
@@ -14,15 +14,15 @@ class ApiService {
 		user: IUser,
 		gameYear: number,
 		robotNumber: string,
+		token: IToken,
 		image: Blob
 	) => {
-
 		const url = `/images/team/${user.teamNumber}/gameYear/${gameYear}/robot/${robotNumber}`;
-		const config = {
+		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: user.secretCode,
-				creator: user.username,
-				timeCreated: Date.now()
+				timeCreated: Date.now(),
+				token: JSON.stringify(token)
 			}
 		};
 

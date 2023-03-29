@@ -15,7 +15,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group 'team.gif'
-version '2.3.0'
+version '2.4.0'
 
 sourceCompatibility = 1.17
 targetCompatibility = 1.17
@@ -29,7 +29,7 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.17.2'
+	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.20.0'
 
 	runtimeOnly group: 'org.postgresql', name: 'postgresql'
 }

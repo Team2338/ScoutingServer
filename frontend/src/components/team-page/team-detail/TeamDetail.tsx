@@ -1,8 +1,10 @@
 import './TeamDetail.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Note, Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
+import { getImageForRobot } from '../../../state/Effects';
+import { useAppDispatch } from '../../../state/Hooks';
 import { GridScore } from '../../shared/GridScore';
 import ViewNotes from '../view-notes/ViewNotes';
 
@@ -14,6 +16,16 @@ interface IProps {
 export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
+	const dispatch = useAppDispatch();
+
+	useEffect(
+		() => {
+			if (!!props.team) {
+				dispatch(getImageForRobot(props.team.id))
+			}
+		},
+		[dispatch, props.team]
+	);
 
 	if (!props.team) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
@@ -38,7 +50,7 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				{ translate('TEAM') } { props.team.id }
-				<ViewNotes isMobile={false} notes={props.notes}/>
+				<ViewNotes robotNumber={props.team.id} notes={props.notes}/>
 			</div>
 			<div className="gamemode-list">{ gamemodeElements }</div>
 		</div>

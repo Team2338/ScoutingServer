@@ -1,6 +1,6 @@
 import { Language } from './languages.model';
 import {
-	GlobalObjectiveStats,
+	GlobalObjectiveStats, ImageInfo,
 	Match,
 	MatchResponse,
 	Note,
@@ -55,5 +55,12 @@ export interface AppState {
 		secondTeam: Team;
 		thirdTeam: Team;
 		plan: Plan;
-	}
+	};
+	images: {
+		[teamNumber: number]: {
+			loadStatus: LoadStatus;
+			info: ImageInfo;
+			url: string;
+		};
+	};
 }

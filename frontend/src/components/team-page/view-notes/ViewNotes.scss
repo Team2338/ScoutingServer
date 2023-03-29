@@ -1,4 +1,22 @@
 
+.team-notes-image {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 16px;
+
+	&-content {
+		width: 100%;
+		margin-bottom: 2px;
+	}
+
+	&-creator {
+		font-weight: 600;
+		font-size: 12px;
+		line-height: 16px;
+		color: grey;
+	}
+}
+
 .team-notes-list {
 	display: flex;
 	flex-direction: column;

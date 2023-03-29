@@ -1,0 +1,51 @@
+.main-page {
+	display: flex;
+	flex-direction: column;
+	width: min(200px, 100%);
+	height: fit-content;
+	align-self: center;
+	padding-top: 120px;
+
+	.file-input-label {
+		margin-top: 8px;
+		margin-bottom: 12px;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid rgba(0, 0, 0, 0.23);
+		border-radius: 4px;
+		padding: 6px 16px;
+		cursor: pointer;
+		transition: background-color 200ms ease-in-out;
+
+		&:hover {
+			background-color: #dbdedfaa;
+		}
+
+		&:focus-within {
+			border-width: 2px;
+			border-color: #1976d2;
+			padding: 5px 15px;
+		}
+
+		input[type="file"] {
+			height: 0;
+			width: 0;
+			overflow: hidden;
+		}
+	}
+
+	.file-input-prompt {
+		color: rgba(0, 0, 0, 0.87);
+		font-size: 16px;
+		line-height: 20px;
+	}
+
+	.file-input-selection {
+		color: grey;
+		font-weight: 600;
+		font-size: 12px;
+		line-height: 16px;
+	}
+}
+

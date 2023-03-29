@@ -1,4 +1,4 @@
-import { AppState, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import { AppState, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
@@ -13,11 +13,12 @@ import {
 	getAllNotesStart,
 	getAllNotesSuccess,
 	getCsvStart,
-	getCsvSuccess, getMatchesFail,
+	getCsvSuccess, getImageFail, getImageStart, getImageSuccess,
+	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
 	getNotesForRobotStart,
-	getNotesForRobotSuccess,
+	getNotesForRobotSuccess, keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -27,7 +28,7 @@ import { AppDispatch } from './Store';
 
 type GetState = () => AppState;
 
-export const initApp = () => async (dispatch) => {
+export const initApp = () => async (dispatch: AppDispatch) => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
 	const username: string = localStorage.getItem('username');
 	const eventCode: string = localStorage.getItem('eventCode');
@@ -44,7 +45,7 @@ export const initApp = () => async (dispatch) => {
 	}
 };
 
-export const selectLanguage = (language: Language) => async (dispatch) => {
+export const selectLanguage = (language: Language) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('language', language);
 	dispatch(selectLangSuccess(language));
 };
@@ -54,7 +55,7 @@ export const login = (
 	username: string,
 	eventCode: string,
 	secretCode: string
-) => async (dispatch) => {
+) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('teamNumber', teamNumber.toString());
 	localStorage.setItem('username', username);
 	localStorage.setItem('eventCode', eventCode);
@@ -266,4 +267,61 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 	} catch (error) {
 		console.error('Error adding note', error);
 	}
+};
+
+export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log(`Getting image info for ${robotNumber}`);
+	dispatch(getImageStart(robotNumber));
+
+	let info: ImageInfo;
+	try {
+		const response = await gearscoutService.getImageInfo({
+			teamNumber: getState().teamNumber,
+			gameYear: new Date().getFullYear(),
+			robotNumber: robotNumber,
+			secretCode: getState().secretCode
+		});
+		info = response.data;
+
+	} catch (error) {
+		console.error(`Error getting image info for ${robotNumber}`);
+		dispatch(getImageFail(robotNumber));
+		return;
+	}
+
+	// Don't fetch image content if none exist
+	if (!info.present) {
+		dispatch(getImageSuccess(robotNumber, info, null));
+		return;
+	}
+
+	// Use cached image if ID hasn't changed
+	if (info.imageId === getState().images[robotNumber]?.info?.imageId) {
+		dispatch(keepCachedImage(robotNumber));
+		return;
+	}
+
+	const previousUrl: string = getState().images[robotNumber]?.url;
+	if (previousUrl) {
+		window.URL.revokeObjectURL(previousUrl);
+	}
+
+	let content;
+	let contentType: string;
+	try {
+		console.log(`Getting image content for ${robotNumber}`);
+		const response = await gearscoutService.getImageContent({
+			imageId: info.imageId,
+			secretCode: getState().secretCode
+		});
+		content = response.data;
+		contentType = response.headers['content-type'];
+	} catch (error) {
+		console.error(`Error getting image content for ${robotNumber}`);
+		dispatch(getImageFail(robotNumber));
+	}
+
+	const blob = new Blob([content], { type: contentType })
+	const url: string = window.URL.createObjectURL(blob);
+	dispatch(getImageSuccess(robotNumber, info, url));
 };

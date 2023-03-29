@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import { MatchResponse, NewNote, Note } from '../models';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ImageInfo, MatchResponse, NewNote, Note } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -93,6 +93,37 @@ class GearscoutService {
 		const config = {
 			headers: {
 				secretCode: secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	};
+
+	getImageInfo = (data: {
+		teamNumber: number,
+		gameYear: number,
+		robotNumber: number,
+		secretCode: string,
+	}): GearscoutResponse<ImageInfo> => {
+		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/robot/${data.robotNumber}`;
+		const config = {
+			headers: {
+				secretCode: data.secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	};
+
+	getImageContent = (data: {
+		imageId: number,
+		secretCode: string
+	}): GearscoutResponse<ArrayBuffer> => {
+		const url = `/v1/images/${data.imageId}`;
+		const config: AxiosRequestConfig = {
+			responseType: 'arraybuffer',
+			headers: {
+				secretCode: data.secretCode
 			}
 		};
 

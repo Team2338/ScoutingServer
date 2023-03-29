@@ -1,5 +1,6 @@
 package team.gif.gearscout.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +15,33 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.exception.ImageTypeInvalidException;
 import team.gif.gearscout.model.ImageContentEntity;
 import team.gif.gearscout.model.ImageInfoEntity;
+import team.gif.gearscout.model.LoginResponse;
+import team.gif.gearscout.service.AuthService;
 import team.gif.gearscout.service.ImageService;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/v1/images", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ImageController {
 	
 	private static final Logger logger = LogManager.getLogger(ImageController.class);
+	private final AuthService authService;
 	private final ImageService imageService;
 	
 	@Autowired
-	public ImageController(ImageService imageService) {
+	public ImageController(
+		AuthService authService,
+		ImageService imageService
+	) {
+		this.authService = authService;
 		this.imageService = imageService;
 	}
 	
@@ -44,12 +51,28 @@ public class ImageController {
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
 		@PathVariable Integer robotNumber,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-		@RequestHeader(value = "creator", defaultValue = "") String creator,
+		@RequestHeader(value = "secretCode") String secretCode,
 		@RequestHeader(value = "timeCreated", defaultValue = "") String timeCreated,
+		@RequestHeader(value = "token") String token,
 		@RequestParam(value = "image") MultipartFile image
 	) throws IOException {
 		logger.debug("Received addImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
+		
+		LoginResponse credentials;
+		try {
+			credentials = authService.validateToken(token);
+		} catch (JsonProcessingException e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
+		
+		if (!Objects.equals(credentials.role(), "admin")) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+		
+		// In the future, we will allow a user to belong to multiple teams (if not only for testing)
+		if (!Objects.equals(teamNumber, credentials.teamNumber())) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		
 		imageService.validateImage(image);
 		imageService.saveImage(
@@ -57,7 +80,7 @@ public class ImageController {
 			gameYear,
 			robotNumber,
 			secretCode,
-			creator,
+			credentials.username(),
 			timeCreated,
 			image.getBytes(),
 			image.getContentType()

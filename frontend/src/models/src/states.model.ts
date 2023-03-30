@@ -56,11 +56,13 @@ export interface AppState {
 		thirdTeam: Team;
 		plan: Plan;
 	};
-	images: {
-		[teamNumber: number]: {
-			loadStatus: LoadStatus;
-			info: ImageInfo;
-			url: string;
-		};
+	images: ImageState;
+}
+
+export interface ImageState {
+	[teamNumber: number]: {
+		loadStatus: LoadStatus;
+		info: ImageInfo;
+		url: string;
 	};
 }

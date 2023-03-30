@@ -26,6 +26,9 @@ public class ImageInfoEntity {
 	@Column(name = "game_year", nullable = false)
 	private Integer gameYear;
 	
+	@Column(name = "event_code", nullable = false)
+	private String eventCode;
+	
 	@Column(name = "secret_code", nullable = false)
 	private String secretCode;
 	
@@ -47,6 +50,7 @@ public class ImageInfoEntity {
 	public ImageInfoEntity(
 		Integer teamNumber,
 		Integer gameYear,
+		String eventCode,
 		String secretCode,
 		Integer robotNumber,
 		String creator,
@@ -55,6 +59,7 @@ public class ImageInfoEntity {
 	) {
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
+		this.eventCode = eventCode;
 		this.secretCode = secretCode;
 		this.robotNumber = robotNumber;
 		this.creator = creator;
@@ -76,6 +81,10 @@ public class ImageInfoEntity {
 	
 	public Integer getGameYear() {
 		return gameYear;
+	}
+	
+	public String getEventCode() {
+		return eventCode;
 	}
 	
 	public String getSecretCode() {
@@ -112,6 +121,10 @@ public class ImageInfoEntity {
 	
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
+	}
+	
+	public void setEventCode(String eventCode) {
+		this.eventCode = eventCode;
 	}
 	
 	public void setSecretCode(String secretCode) {

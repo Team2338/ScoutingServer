@@ -58,8 +58,8 @@ export const logout = () => async (dispatch: AppDispatch) => {
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(uploadStart());
 
-	const user = getState().login.user;
-	const token = getState().login.token;
+	const user: IUser = getState().login.user;
+	const token: IToken = getState().login.token;
 	try {
 		await ApiService.uploadImage(
 			user,

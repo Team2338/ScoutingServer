@@ -1,6 +1,6 @@
 {
   "name": "gearscout-manager",
-  "version": "2023.2",
+  "version": "2023.2.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",

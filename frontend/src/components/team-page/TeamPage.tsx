@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { LoadStatus, Note, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectTeam } from '../../state/Actions';
-import { addNoteForRobot, getAllNotes } from '../../state/Effects';
+import { addNoteForRobot, getAllImageInfoForEvent, getAllNotes } from '../../state/Effects';
 import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import CreateNote from './create-note/CreateNote';
@@ -24,12 +24,14 @@ export default function TeamPage() {
 
 	useEffect(
 		() => {
-			dispatch(getAllNotes())
+			dispatch(getAllNotes());
+			dispatch(getAllImageInfoForEvent());
 		},
 		[dispatch]
 	);
 
 	// Selectors
+	const teamNumbersWithImages: number[] = useAppSelector(state => Object.getOwnPropertyNames(state.images).map(num => Number(num)));
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
@@ -37,8 +39,8 @@ export default function TeamPage() {
 	const filteredNotes: Note[] = notes.filter((note: Note) => note.robotNumber === selectedTeam?.id);
 
 	const allTeams: Team[] = useMemo(
-		() => getTeamsWithNotesOrData(teams, notes),
-		[teams, notes]
+		() => getTeamsWithNotesOrDataOrImages(teams, notes, teamNumbersWithImages),
+		[teams, notes, teamNumbersWithImages]
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
@@ -90,17 +92,17 @@ export default function TeamPage() {
 	);
 }
 
-const getTeamsWithNotesOrData = (teamsWithData: Team[], notes: Note[]): Team[] => {
-	const teamNumbersWithNotes = notes.map((note: Note) => note.robotNumber);
-	const uniqueTeamNumbersWithNotes = new Set(teamNumbersWithNotes);
+const getTeamsWithNotesOrDataOrImages = (teamsWithData: Team[], notes: Note[], teamNumbersWithImages: number[]): Team[] => {
+	const teamNumbersWithNotes: number[] = notes.map((note: Note) => note.robotNumber);
+	const uniqueTeamNumbersWithNotesOrImages: Set<number> = new Set([...teamNumbersWithNotes, ...teamNumbersWithImages]);
 
 	// This gives us the list of team numbers with notes but not match data
 	for (const team of teamsWithData) {
-		uniqueTeamNumbersWithNotes.delete(team.id);
+		uniqueTeamNumbersWithNotesOrImages.delete(team.id);
 	}
 
 	const completeListOfTeams: Team[] = teamsWithData.slice();
-	uniqueTeamNumbersWithNotes.forEach((teamNumber: number) => {
+	uniqueTeamNumbersWithNotesOrImages.forEach((teamNumber: number) => {
 		completeListOfTeams.push({
 			id: teamNumber,
 			stats: null

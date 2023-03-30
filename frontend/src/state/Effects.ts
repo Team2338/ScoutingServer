@@ -13,12 +13,19 @@ import {
 	getAllNotesStart,
 	getAllNotesSuccess,
 	getCsvStart,
-	getCsvSuccess, getImageFail, getImageStart, getImageSuccess,
+	getCsvSuccess,
+	getEventImageInfoFail,
+	getEventImageInfoStart,
+	getEventImageInfoSuccess,
+	getImageFail,
+	getImageStart,
+	getImageSuccess,
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
 	getNotesForRobotStart,
-	getNotesForRobotSuccess, keepCachedImage,
+	getNotesForRobotSuccess,
+	keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -278,6 +285,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		const response = await gearscoutService.getImageInfo({
 			teamNumber: getState().teamNumber,
 			gameYear: new Date().getFullYear(),
+			eventCode: getState().eventCode,
 			robotNumber: robotNumber,
 			secretCode: getState().secretCode
 		});
@@ -296,7 +304,8 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 	}
 
 	// Use cached image if ID hasn't changed
-	if (info.imageId === getState().images[robotNumber]?.info?.imageId) {
+	if (info.imageId === getState().images[robotNumber]?.info?.imageId && !!getState().images[robotNumber].url) {
+		console.log(`Reusing cached image for ${robotNumber}`);
 		dispatch(keepCachedImage(robotNumber));
 		return;
 	}
@@ -325,3 +334,23 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 	const url: string = window.URL.createObjectURL(blob);
 	dispatch(getImageSuccess(robotNumber, info, url));
 };
+
+export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting image info for event');
+	dispatch(getEventImageInfoStart());
+
+	try {
+		const response = await gearscoutService.getImageInfoForEvent({
+			teamNumber: getState().teamNumber,
+			gameYear: 2023,
+			eventCode: getState().eventCode,
+			secretCode: getState().secretCode
+		});
+
+		const info: ImageInfo[] = response.data;
+		dispatch(getEventImageInfoSuccess(info));
+	} catch (error) {
+		console.log('Error getting image info for event');
+		dispatch(getEventImageInfoFail);
+	}
+}

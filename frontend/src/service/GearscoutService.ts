@@ -100,13 +100,30 @@ class GearscoutService {
 	};
 
 	getImageInfo = (data: {
-		teamNumber: number,
-		gameYear: number,
-		robotNumber: number,
-		secretCode: string,
+		teamNumber: number;
+		gameYear: number;
+		eventCode: string;
+		robotNumber: number;
+		secretCode: string;
 	}): GearscoutResponse<ImageInfo> => {
-		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/robot/${data.robotNumber}`;
-		const config = {
+		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}/robot/${data.robotNumber}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				secretCode: data.secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	};
+
+	getImageInfoForEvent = (data: {
+		teamNumber: number;
+		gameYear: number;
+		eventCode: string;
+		secretCode: string;
+	}): GearscoutResponse<ImageInfo[]> => {
+		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
+		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: data.secretCode
 			}
@@ -116,8 +133,8 @@ class GearscoutService {
 	};
 
 	getImageContent = (data: {
-		imageId: number,
-		secretCode: string
+		imageId: number;
+		secretCode: string;
 	}): GearscoutResponse<ArrayBuffer> => {
 		const url = `/v1/images/${data.imageId}`;
 		const config: AxiosRequestConfig = {

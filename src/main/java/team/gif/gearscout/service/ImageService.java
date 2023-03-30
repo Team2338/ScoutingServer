@@ -53,6 +53,7 @@ public class ImageService {
 		Integer teamNumber,
 		Integer gameYear,
 		Integer robotNumber,
+		String eventCode,
 		String secretCode,
 		String creator,
 		String timeCreated,
@@ -63,6 +64,7 @@ public class ImageService {
 			teamNumber,
 			gameYear,
 			robotNumber,
+			eventCode,
 			secretCode
 		).ifPresent(imageInfo -> {
 			imageInfoRepository.delete(imageInfo);
@@ -76,6 +78,7 @@ public class ImageService {
 		ImageInfoEntity createdImage = new ImageInfoEntity(
 			teamNumber,
 			gameYear,
+			eventCode,
 			secretCode,
 			robotNumber,
 			creator,
@@ -91,6 +94,7 @@ public class ImageService {
 		Integer teamNumber,
 		Integer gameYear,
 		Integer robotNumber,
+		String eventCode,
 		String secretCode
 	) {
 		Optional<ImageInfoEntity> optionalInfo = imageInfoRepository
@@ -98,6 +102,7 @@ public class ImageService {
 				teamNumber,
 				gameYear,
 				robotNumber,
+				eventCode,
 				secretCode
 			);
 		
@@ -114,6 +119,21 @@ public class ImageService {
 	) {
 		return imageContentRepository
 			.findImageContentForRobot(imageId, secretCode);
+	}
+	
+	
+	public List<ImageInfoEntity> getImageInfoForEvent(
+		Integer teamNumber,
+		Integer gameYear,
+		String eventCode,
+		String secretCode
+	) {
+		return imageInfoRepository.findImagesForEvent(
+			teamNumber,
+			gameYear,
+			eventCode,
+			secretCode
+		);
 	}
 	
 }

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, Language, LoadStatus, Match, MatchResponse, Team } from '../models';
+import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse, Team } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -312,7 +312,16 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 						loadStatus: LoadStatus.success
 					}
 				}
-			}
+			};
+		case Actions.GET_EVENT_IMAGE_INFO_START:
+			return state;
+		case Actions.GET_EVENT_IMAGE_INFO_FAIL:
+			return state;
+		case Actions.GET_EVENT_IMAGE_INFO_SUCCESS:
+			return {
+				...state,
+				images: createImageStateFromInfo(action.payload)
+			};
 		default:
 			return state;
 	}
@@ -377,4 +386,18 @@ function getNextStatusOnFail(previousStatus: LoadStatus): LoadStatus {
 	}
 
 	return LoadStatus.failed;
+}
+
+function createImageStateFromInfo(info: ImageInfo[]): ImageState {
+	const next: ImageState = {};
+
+	info.forEach((image: ImageInfo) => {
+		next[image.robotNumber] = {
+			info: image,
+			url: null,
+			loadStatus: LoadStatus.none
+		};
+	});
+
+	return next;
 }

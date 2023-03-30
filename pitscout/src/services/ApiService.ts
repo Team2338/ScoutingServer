@@ -17,7 +17,7 @@ class ApiService {
 		token: IToken,
 		image: Blob
 	) => {
-		const url = `/v1/images/team/${user.teamNumber}/gameYear/${gameYear}/robot/${robotNumber}`;
+		const url = `/v1/images/team/${user.teamNumber}/gameYear/${gameYear}/event/${user.eventCode}/robot/${robotNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: user.secretCode,

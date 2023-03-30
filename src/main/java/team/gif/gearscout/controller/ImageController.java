@@ -26,6 +26,7 @@ import team.gif.gearscout.service.AuthService;
 import team.gif.gearscout.service.ImageService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -46,10 +47,11 @@ public class ImageController {
 	}
 	
 	
-	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/robot/{robotNumber}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/robot/{robotNumber}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Void> addImage(
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
+		@PathVariable String eventCode,
 		@PathVariable Integer robotNumber,
 		@RequestHeader(value = "secretCode") String secretCode,
 		@RequestHeader(value = "timeCreated", defaultValue = "") String timeCreated,
@@ -79,6 +81,7 @@ public class ImageController {
 			teamNumber,
 			gameYear,
 			robotNumber,
+			eventCode,
 			secretCode,
 			credentials.username(),
 			timeCreated,
@@ -89,15 +92,43 @@ public class ImageController {
 	}
 	
 	
-	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/robot/{robotNumber}")
+	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/robot/{robotNumber}")
 	public ResponseEntity<ImageInfoEntity> getImageInfo(
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
+		@PathVariable String eventCode,
 		@PathVariable Integer robotNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
-		return ResponseEntity.ok(imageService.getImageInfo(teamNumber, gameYear, robotNumber, secretCode));
+		return ResponseEntity.ok(
+			imageService.getImageInfo(
+				teamNumber,
+				gameYear,
+				robotNumber,
+				eventCode,
+				secretCode
+			)
+		);
+	}
+	
+	
+	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
+	public ResponseEntity<List<ImageInfoEntity>> getAllImageInfoForEvent(
+		@PathVariable Integer teamNumber,
+		@PathVariable Integer gameYear,
+		@PathVariable String eventCode,
+		@RequestHeader(value = "secretCode") String secretCode
+	) {
+		logger.debug("Received getAllImageInfoForEvent request");
+		return ResponseEntity.ok(
+			imageService.getImageInfoForEvent(
+				teamNumber,
+				gameYear,
+				eventCode,
+				secretCode
+			)
+		);
 	}
 	
 	

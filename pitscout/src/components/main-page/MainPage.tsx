@@ -37,10 +37,6 @@ export default function MainPage() {
 
 	const isFileTooLarge: boolean = file?.size >= FILE_SIZE_LIMIT;
 
-	const isSubmitDisabled: boolean =
-		(teamNumber.length === 0)
-		|| isFileTooLarge;
-
 	return (
 		<div className="main-page">
 			<Snackbar
@@ -87,7 +83,7 @@ export default function MainPage() {
 						className="file-input-vanilla"
 						type="file"
 						accept="image/jpeg, image/jpg, image/png"
-						onChange={event => setFile(event.target.files[0])}
+						onChange={event => {console.log(event.target.files); setFile(event.target.files[0])}}
 						aria-invalid={isFileTooLarge}
 					/>
 					<div className="file-input-prompt">Choose Image</div>
@@ -127,7 +123,7 @@ export default function MainPage() {
 			<Button
 				color="primary"
 				variant="contained"
-				disabled={isSubmitDisabled}
+				disabled={teamNumber.length === 0 || !file || isFileTooLarge}
 				onClick={() => dispatch(uploadImage(file, teamNumber))}
 			>
 				Upload Image

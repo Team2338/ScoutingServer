@@ -5,7 +5,7 @@ export enum LoginErrors {
 
 export enum UploadErrors {
 	unauthorized = 'You are not authorized to use this app yet',
-	fileTooLarge = 'Image too large; must be < 10MB',
+	fileTooLarge = 'Image must be less than 10MB',
 	badFileType = 'Image must be either .png or .jpeg',
 	unknown = 'Oops, something went wrong'
 }

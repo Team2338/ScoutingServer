@@ -1,4 +1,5 @@
-import { IPitState, IToken, IUser, LoginErrors, UserRoles } from '../../models';
+import { AxiosError, HttpStatusCode } from 'axios';
+import { IPitState, IToken, IUser, LoginErrors, UploadErrors, UserRoles } from '../../models';
 import apiService from '../../services/ApiService';
 import ApiService from '../../services/ApiService';
 import { AppDispatch, loginFailed, loginStart, loginSuccess, logoutSuccess, uploadFailed, uploadStart, uploadSuccess } from './Store';
@@ -69,6 +70,24 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 		);
 		dispatch(uploadSuccess());
 	} catch (error) {
-		dispatch(uploadFailed());
+		console.log(error);
+		const err = error as AxiosError;
+		let msg: UploadErrors = UploadErrors.unknown;
+		if (error.response) {
+			switch (err.response.status) {
+				case HttpStatusCode.Unauthorized: // Fallthrough
+				case HttpStatusCode.Forbidden:
+					msg = UploadErrors.unauthorized;
+					break;
+				case HttpStatusCode.PayloadTooLarge:
+					msg = UploadErrors.fileTooLarge;
+					break;
+				case HttpStatusCode.UnsupportedMediaType:
+					msg = UploadErrors.badFileType;
+					break;
+			}
+		}
+
+		dispatch(uploadFailed(msg));
 	}
 };

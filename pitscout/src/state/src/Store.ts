@@ -1,6 +1,6 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { IPitState, IToken, IUser, LoadStatus, LoginErrors } from '../../models';
+import { IPitState, IToken, IUser, LoadStatus, LoginErrors, UploadErrors } from '../../models';
 
 export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
@@ -10,7 +10,8 @@ export const clearLoginError = createAction('login/clear-error');
 
 export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
-export const uploadFailed = createAction('upload/upload=failed');
+export const uploadFailed = createAction<UploadErrors>('upload/upload-failed');
+export const clearUploadError = createAction('upload/clear-error');
 
 const initialState: IPitState = {
 	login: {
@@ -20,7 +21,8 @@ const initialState: IPitState = {
 		token: null
 	},
 	upload: {
-		loadStatus: LoadStatus.none
+		loadStatus: LoadStatus.none,
+		error: null
 	}
 };
 
@@ -51,8 +53,12 @@ const reducer = createReducer(initialState, builder => {
 		.addCase(uploadSuccess, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.success;
 		})
-		.addCase(uploadFailed, (state: IPitState) => {
+		.addCase(uploadFailed, (state: IPitState, action) => {
 			state.upload.loadStatus = LoadStatus.failed;
+			state.upload.error = action.payload;
+		})
+		.addCase(clearUploadError, (state: IPitState) => {
+			state.upload.error = null;
 		});
 });
 

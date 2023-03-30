@@ -8,6 +8,7 @@ export interface IPitState {
 	},
 	upload: {
 		loadStatus: LoadStatus;
+		error: string;
 	}
 }
 

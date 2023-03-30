@@ -1,7 +1,7 @@
-import { Button, InputAdornment, TextField } from '@mui/material';
+import { Alert, Button, InputAdornment, Snackbar, TextField } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { LoadStatus } from '../../models';
-import { uploadImage, useAppDispatch, useAppSelector } from '../../state';
+import { clearUploadError, uploadImage, useAppDispatch, useAppSelector } from '../../state';
 import './MainPage.scss';
 
 export default function MainPage() {
@@ -10,6 +10,7 @@ export default function MainPage() {
 	const [file, setFile] = useState<File>(null);
 	const fileInputRef = useRef(null);
 	const loadStatus: LoadStatus = useAppSelector(state => state.upload.loadStatus);
+	const errorMessage: string = useAppSelector(state => state.upload.error);
 
 	useEffect(
 		() => {
@@ -23,8 +24,35 @@ export default function MainPage() {
 		[loadStatus]
 	);
 
+	const handleErrorToastClose = (event, reason): void => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		dispatch(clearUploadError());
+	}
+
 	return (
 		<div className="main-page">
+			<Snackbar
+				open={!!errorMessage}
+				autoHideDuration={6000}
+				onClose={handleErrorToastClose}
+				message={errorMessage}
+				sx={{ marginTop: '64px' }}
+				anchorOrigin={{
+					vertical: 'top',
+					horizontal: 'center'
+				}}
+			>
+				<Alert
+					severity="error"
+					variant="filled"
+					sx={{ width: '100%' }}
+				>
+					{errorMessage}
+				</Alert>
+			</Snackbar>
 			<TextField
 				id="team-number"
 				variant="outlined"

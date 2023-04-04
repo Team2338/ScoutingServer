@@ -14,7 +14,7 @@ const translateKey = (language: string, key: string): string => {
 
 export const translate = (Component) => {
 	function AddTranslator(props) {
-		const translate = useTranslator();
+		const translate: Translator = useTranslator();
 		return <Component translate={translate} {...props} />;
 	}
 
@@ -87,7 +87,8 @@ const languages: ILanguageTranslation = {
 		"USERNAME": "Username",
 		"APPLY": "Apply",
 		"CLEAR": "Clear",
-		"CLOSE": "Close"
+		"CLOSE": "Close",
+		"SEARCH": "Search"
 	},
 	[Language.SPANISH]: {
 		"SIGN_IN": "Iniciar sesión",
@@ -147,7 +148,8 @@ const languages: ILanguageTranslation = {
 		"USERNAME": "Nombre de usuario",
 		"APPLY": "Aplicar",
 		"CLEAR": "Despejar",
-		"CLOSE": "Cerrar"
+		"CLOSE": "Cerrar",
+		"SEARCH": "Buscar"
 	},
 	[Language.FRENCH]: {
 		"SIGN_IN": "Connexion",
@@ -207,7 +209,8 @@ const languages: ILanguageTranslation = {
 		"USERNAME": "Nom d'utilisateur",
 		"APPLY": "Appliquer",
 		"CLEAR": "Supprimer",
-		"CLOSE": "Fermer"
+		"CLOSE": "Fermer",
+		"SEARCH": "Chercher"
 	},
 	[Language.TURKISH]: {
 		"SIGN_IN": "Kayıt Olmak",
@@ -267,8 +270,9 @@ const languages: ILanguageTranslation = {
 		"USERNAME": "Kullanıcı adı",
 		"APPLY": "Uygula",
 		"CLEAR": "Temizlemek",
-		"CLOSE": "Kapatmak"
-	},
+		"CLOSE": "Kapatmak",
+		"SEARCH": "Aramak"
+	}
 /*
 	[Language.HINDI]: {
 		"SIGN_IN": "साइन इन करें",

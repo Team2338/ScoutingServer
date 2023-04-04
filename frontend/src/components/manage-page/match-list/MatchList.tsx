@@ -2,6 +2,7 @@ import './MatchList.scss'
 import { Divider, List, ListItemButton } from '@mui/material';
 import React from 'react';
 import { Match } from '../../../models';
+import { useTranslator } from '../../../service/TranslateService';
 import MatchListItem from '../match-list-item/MatchListItem';
 
 type IProps = {
@@ -12,9 +13,20 @@ type IProps = {
 }
 
 export default function MatchList({ matches, selectMatch, selectedMatch, searchTerm }: IProps) {
+	const translate = useTranslator();
+
+	const translatedTeamLabel: string = translate('TEAM').toLowerCase();
+	const translatedMatchLabel: string = translate('MATCH').toLowerCase();
+
 	const filteredMatches: Match[] = matches.filter((match: Match) => {
-		const content = `match ${match.matchNumber} team ${match.robotNumber} ${match.creator.toLowerCase()}`;
-		console.log(`${content} | ${searchTerm.toLowerCase()}`)
+		const content: string = [
+			translatedMatchLabel,
+			match.matchNumber,
+			translatedTeamLabel,
+			match.robotNumber,
+			match.creator.toLowerCase()
+		].join(' ');
+
 		return content.includes(searchTerm.toLowerCase());
 	});
 

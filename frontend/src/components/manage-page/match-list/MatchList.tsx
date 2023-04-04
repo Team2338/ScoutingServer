@@ -13,7 +13,8 @@ type IProps = {
 
 export default function MatchList({ matches, selectMatch, selectedMatch, searchTerm }: IProps) {
 	const filteredMatches: Match[] = matches.filter((match: Match) => {
-		const content = `match ${match.matchNumber} team ${match.teamNumber} ${match.creator}`;
+		const content = `match ${match.matchNumber} team ${match.robotNumber} ${match.creator.toLowerCase()}`;
+		console.log(`${content} | ${searchTerm.toLowerCase()}`)
 		return content.includes(searchTerm.toLowerCase());
 	});
 

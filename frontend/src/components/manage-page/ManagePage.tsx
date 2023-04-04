@@ -1,4 +1,4 @@
-import { Divider, useMediaQuery } from '@mui/material';
+import { Divider, Typography, useMediaQuery } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Match, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
@@ -61,6 +61,14 @@ function ManagePage() {
 		<div className="page manage-page">
 			<div className="match-list-wrapper">
 				<div className="match-list-wrapper__header">
+					<Typography
+						variant="h6"
+						sx={{
+							marginBottom: '4px'
+						}}
+					>
+						{ translate('MATCHES') }
+					</Typography>
 					<SearchInput onSearch={setSearchTerm}/>
 				</div>
 				<Divider variant="fullWidth"/>

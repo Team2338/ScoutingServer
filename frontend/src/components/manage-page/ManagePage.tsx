@@ -60,7 +60,7 @@ function ManagePage() {
 	return (
 		<div className="page manage-page">
 			<div className="match-list-wrapper">
-				<div className="match-list__action-area">
+				<div className="match-list-wrapper__header">
 					<SearchInput onSearch={setSearchTerm}/>
 				</div>
 				<Divider variant="fullWidth"/>

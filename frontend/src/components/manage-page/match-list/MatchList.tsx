@@ -8,10 +8,16 @@ type IProps = {
 	matches: Match[];
 	selectMatch: (match: Match) => void;
 	selectedMatch: Match;
+	searchTerm: string;
 }
 
-export default function MatchList({ matches, selectMatch, selectedMatch }: IProps) {
-	const listItems = matches.map((match: Match, index: number) => {
+export default function MatchList({ matches, selectMatch, selectedMatch, searchTerm }: IProps) {
+	const filteredMatches: Match[] = matches.filter((match: Match) => {
+		const content = `match ${match.matchNumber} team ${match.teamNumber} ${match.creator}`;
+		return content.includes(searchTerm.toLowerCase());
+	});
+
+	const listItems = filteredMatches.map((match: Match, index: number) => {
 		const listItem = (
 			<ListItemButton
 				key={match.id}

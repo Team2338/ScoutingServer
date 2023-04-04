@@ -1,10 +1,10 @@
-import { useMediaQuery } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Divider, TextField, useMediaQuery } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { Match, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectMatch } from '../../state/Actions';
 import { getAllData, hideMatch, unhideMatch } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
+import { useAppDispatch, useAppSelector, useDebounce } from '../../state/Hooks';
 import './ManagePage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
@@ -22,6 +22,8 @@ function ManagePage() {
 	const loadStatus: LoadStatus = useAppSelector(state => state.matches.loadStatus);
 	const matches: Match[] = useAppSelector(state => state.matches.data);
 	const selectedMatch: Match = useAppSelector(state => state.matches.selectedMatch);
+	const [searchTerm, setSearchTerm] = useState<string>('');
+	const debouncedSearchTerm: string = useDebounce(searchTerm, 500);
 
 	useEffect(
 		() => {
@@ -58,10 +60,26 @@ function ManagePage() {
 	return (
 		<div className="page manage-page">
 			<div className="match-list-wrapper">
+				<div className="match-list__action-area">
+					<TextField
+						id="search-input"
+						label={translate('SEARCH')}
+						name="search"
+						type="text"
+						margin="none"
+						variant="outlined"
+						value={searchTerm}
+						onChange={(event) => setSearchTerm(event.target.value)}
+						autoComplete="off"
+					/>
+
+				</div>
+				<Divider variant="fullWidth"/>
 				<MatchList
 					matches={matches}
 					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
+					searchTerm={debouncedSearchTerm}
 				/>
 			</div>
 			<MatchDetail

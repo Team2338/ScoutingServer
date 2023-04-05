@@ -87,11 +87,21 @@ function ManagePage() {
 							{ translate('TEAM') } { selectedMatch?.robotNumber ?? '' }
 						</span>
 					</div>
-					<DialogContent>
+					<DialogContent
+						dividers={true}
+						sx={{
+							paddingLeft: '8px',
+							paddingRight: '8px'
+						}}
+					>
 						<MatchDetail
 							match={selectedMatch}
 							hide={_hideMatch}
 							unhide={_unhideMatch}
+							sx={{
+								paddingLeft: '12px',
+								paddingRight: '12px'
+							}}
 						/>
 					</DialogContent>
 				</Dialog>
@@ -126,6 +136,9 @@ function ManagePage() {
 				match={selectedMatch}
 				hide={_hideMatch}
 				unhide={_unhideMatch}
+				sx={{
+					margin: '12px 12px'
+				}}
 			/>
 		</div>
 	);

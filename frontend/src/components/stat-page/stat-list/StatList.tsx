@@ -49,7 +49,6 @@ export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 			>
 				{ translate('STATS') }
 			</Typography>
-			{/*<Divider variant="fullWidth"/>*/}
 			<List
 				sx={{
 					paddingTop: 0

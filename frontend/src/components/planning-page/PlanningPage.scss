@@ -2,7 +2,7 @@
 .planning-page {
 	display: flex;
 	flex-direction: column;
-	row-gap: 32px;
+	//row-gap: 32px;
 	padding: 16px;
 
 	.team-selectors {
@@ -11,6 +11,7 @@
 		min-width: 140px;
 		max-width: 480px;
 		row-gap: 16px;
+		margin: 16px 0 32px;
 
 		.action-area {
 			display: flex;

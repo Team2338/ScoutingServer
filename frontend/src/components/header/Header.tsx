@@ -279,14 +279,6 @@ function LanguageSelector() {
 				keepMounted
 			>
 				{ languageOptions }
-				{/*<MenuItem*/}
-				{/*	selected={lang === Language.HINDI}*/}
-				{/*	onClick={() => handleLanguageChange(Language.HINDI)}*/}
-				{/*	lang="hi"*/}
-				{/*	translate="no"*/}
-				{/*>*/}
-				{/*	हिन्दी*/}
-				{/*</MenuItem>*/}
 			</Menu>
 		</React.Fragment>
 	);

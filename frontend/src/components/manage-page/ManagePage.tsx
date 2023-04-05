@@ -1,11 +1,12 @@
-import { useMediaQuery } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Divider, Typography, useMediaQuery } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { Match, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectMatch } from '../../state/Actions';
 import { getAllData, hideMatch, unhideMatch } from '../../state/Effects';
 import { useAppDispatch, useAppSelector } from '../../state/Hooks';
 import './ManagePage.scss';
+import SearchInput from '../shared/search-input/SearchInput';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 import MatchSelector from './match-selector/MatchSelector';
@@ -22,6 +23,7 @@ function ManagePage() {
 	const loadStatus: LoadStatus = useAppSelector(state => state.matches.loadStatus);
 	const matches: Match[] = useAppSelector(state => state.matches.data);
 	const selectedMatch: Match = useAppSelector(state => state.matches.selectedMatch);
+	const [searchTerm, setSearchTerm] = useState<string>('');
 
 	useEffect(
 		() => {
@@ -58,10 +60,23 @@ function ManagePage() {
 	return (
 		<div className="page manage-page">
 			<div className="match-list-wrapper">
+				<div className="match-list-wrapper__header">
+					<Typography
+						variant="h6"
+						sx={{
+							marginBottom: '4px'
+						}}
+					>
+						{ translate('MATCHES') }
+					</Typography>
+					<SearchInput onSearch={setSearchTerm}/>
+				</div>
+				<Divider variant="fullWidth"/>
 				<MatchList
 					matches={matches}
 					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
+					searchTerm={searchTerm}
 				/>
 			</div>
 			<MatchDetail

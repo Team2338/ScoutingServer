@@ -7,6 +7,12 @@
     width: 300px;
     border-right: 1px solid #dbdedf;
     overflow-y: auto;
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
   }
 }
 

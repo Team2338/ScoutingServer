@@ -1,4 +1,4 @@
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import React, { ReactElement } from 'react';
 import { LoadStatus, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
@@ -37,6 +37,7 @@ function PlanningPage() {
 
 	return (
 		<div className="page planning-page">
+			<Typography variant="h6">{ translate('PLAN') }</Typography>
 			<div className="team-selectors">
 				<TeamSelector
 					teams={teams}
@@ -129,7 +130,7 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 	console.log(stats);
 
 	const grids = [];
-	for (let i = 0; i < teams.length; i++) {
+	for (let i: number = 0; i < teams.length; i++) {
 		if (stats[i] && stats[i].sumList) {
 			grids.push(
 				<div key={teams[i].id} className="comparison-grid">
@@ -152,9 +153,6 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 									<TableCell>{ team.id }</TableCell>
 								))
 							}
-							{/*<TableCell>{ teams[0].id }</TableCell>*/}
-							{/*<TableCell>{ teams[1].id }</TableCell>*/}
-							{/*<TableCell>{ teams[2].id }</TableCell>*/}
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -165,9 +163,6 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 									<TableCell>{ teamStat ? teamStat.mean.toFixed(2) : '-' }</TableCell>
 								))
 							}
-							{/*<TableCell>{ stats[0] ? stats[0].mean.toFixed(2) : '-' }</TableCell>*/}
-							{/*<TableCell>{ stats[1] ? stats[1].mean.toFixed(2) : '-' }</TableCell>*/}
-							{/*<TableCell>{ stats[2] ? stats[2].mean.toFixed(2) : '-' }</TableCell>*/}
 						</TableRow>
 						<TableRow>
 							<TableCell align="left">{ translate('MEDIAN') }</TableCell>
@@ -176,9 +171,6 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 									<TableCell>{ teamStat ? roundToDecimal(teamStat.median) : '-' }</TableCell>
 								))
 							}
-							{/*<TableCell>{ stats[0] ? roundToDecimal(stats[0].median) : '-' }</TableCell>*/}
-							{/*<TableCell>{ stats[1] ? roundToDecimal(stats[1].median) : '-' }</TableCell>*/}
-							{/*<TableCell>{ stats[2] ? roundToDecimal(stats[2].median) : '-' }</TableCell>*/}
 						</TableRow>
 						<TableRow>
 							<TableCell align="left">{ translate('MAX') }</TableCell>
@@ -187,9 +179,6 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 									<TableCell>{ teamStat ? roundToDecimal(Math.max(...teamStat.scores)) : '-' }</TableCell>
 								))
 							}
-							{/*<TableCell>{ stats[0] ? roundToDecimal(Math.max(...stats[0].scores)) : '-' }</TableCell>*/}
-							{/*<TableCell>{ stats[1] ? roundToDecimal(Math.max(...stats[1].scores)) : '-' }</TableCell>*/}
-							{/*<TableCell>{ stats[2] ? roundToDecimal(Math.max(...stats[2].scores)) : '-' }</TableCell>*/}
 						</TableRow>
 					</TableBody>
 				</Table>

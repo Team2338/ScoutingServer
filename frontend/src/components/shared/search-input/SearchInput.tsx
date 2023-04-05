@@ -6,9 +6,10 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface IProps {
 	onSearch: (searchTerm: string) => void;
+	size: 'small' | 'medium';
 }
 
-export default function SearchInput({ onSearch }: IProps) {
+export default function SearchInput({ onSearch, size }: IProps) {
 	const translate = useTranslator();
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const debouncedSearchTerm: string = useDebounce(searchTerm, 300);
@@ -27,9 +28,10 @@ export default function SearchInput({ onSearch }: IProps) {
 			placeholder={translate('SEARCH')}
 			name="search"
 			type="search"
-			size="small"
 			margin="none"
 			variant="outlined"
+			size={size}
+			fullWidth={true}
 			value={searchTerm}
 			onChange={(event) => setSearchTerm(event.target.value)}
 			autoComplete="off"

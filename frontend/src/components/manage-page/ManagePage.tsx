@@ -58,6 +58,10 @@ function ManagePage() {
 						unhide={_unhideMatch}
 					/>
 				*/}
+				<div className="match-list-wrapper__header">
+					<SearchInput onSearch={setSearchTerm} size="medium"/>
+				</div>
+				<Divider/>
 				<MatchList
 					matches={matches}
 					selectMatch={_selectMatch}
@@ -119,7 +123,7 @@ function ManagePage() {
 					>
 						{ translate('MATCHES') }
 					</Typography>
-					<SearchInput onSearch={setSearchTerm}/>
+					<SearchInput onSearch={setSearchTerm} size="small"/>
 				</div>
 				<Divider variant="fullWidth"/>
 				<MatchList

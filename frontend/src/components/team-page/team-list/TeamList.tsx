@@ -1,48 +1,70 @@
-import React from 'react';
-import { Divider, List, ListItemButton } from '@mui/material';
+import React, { useState } from 'react';
+import { Divider, List, ListItemButton, Typography } from '@mui/material';
 import { Team } from '../../../models';
+import './TeamList.scss';
+import { useTranslator } from '../../../service/TranslateService';
+import SearchInput from '../../shared/search-input/SearchInput';
 
 interface IProps {
 	teams: Team[];
 	selectTeam: (team: Team) => void;
-	selectedTeam: Team
+	selectedTeam: Team;
 }
 
 export default function TeamList({ teams, selectTeam, selectedTeam }: IProps) {
 
-	const listItems = teams.map((team: Team, index: number) => {
-		const listItem = (
-			<ListItemButton
-				key={team.id}
-				selected={team.id === selectedTeam?.id}
-				onClick={() => selectTeam(team)}
-				sx={{
-					paddingTop: '12px',
-					paddingBottom: '12px'
-				}}
-			>
-				<div className="team-list-item">
-					<div>{ team.id }</div>
-				</div>
-			</ListItemButton>
-		);
+	const translate = useTranslator();
+	const [searchTerm, setSearchTerm] = useState<string>('');
 
-		if (index === 0) {
-			return listItem;
-		}
+	const listItems = teams
+		.filter((team: Team) => String(team.id).includes(searchTerm))
+		.map((team: Team, index: number) => {
+			const listItem = (
+				<ListItemButton
+					key={team.id}
+					selected={team.id === selectedTeam?.id}
+					onClick={() => selectTeam(team)}
+					sx={{
+						paddingTop: '12px',
+						paddingBottom: '12px'
+					}}
+				>
+					<div className="team-list-item">
+						<div>{ team.id }</div>
+					</div>
+				</ListItemButton>
+			);
 
-		return (
-			<React.Fragment key={team.id}>
-				<Divider variant="fullWidth" component="li"/>
-				{ listItem }
-			</React.Fragment>
-		);
-	});
+			if (index === 0) {
+				return listItem;
+			}
+
+			return (
+				<React.Fragment key={team.id}>
+					<Divider variant="fullWidth" component="li"/>
+					{ listItem }
+				</React.Fragment>
+			);
+		});
 
 	return (
-		<List>
-			{ listItems }
-		</List>
+		<React.Fragment>
+			<div className="team-list__header">
+				<Typography
+					variant="h6"
+					sx={{
+						marginBottom: '4px'
+					}}
+				>
+					{ translate('TEAMS') }
+				</Typography>
+				<SearchInput onSearch={setSearchTerm}/>
+			</div>
+			<Divider variant="fullWidth"/>
+			<List>
+				{ listItems }
+			</List>
+		</React.Fragment>
 	);
 
 }

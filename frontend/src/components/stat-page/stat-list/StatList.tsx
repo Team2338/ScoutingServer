@@ -1,6 +1,7 @@
 import React from 'react';
-import { List } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { GlobalObjectiveStats } from '../../../models';
+import { useTranslator } from '../../../service/TranslateService';
 import StatListSection from './StatListSection';
 
 interface IProps {
@@ -9,10 +10,12 @@ interface IProps {
 		gamemode: string;
 		objective: string;
 	};
-	selectStat: (gamemode: string, objective: string) => void
+	selectStat: (gamemode: string, objective: string) => void;
 }
 
 export default function StatList({ stats, selectedStat, selectStat }: IProps) {
+
+	const translate = useTranslator();
 
 	const statsGroupedByGamemode = new Map<string, GlobalObjectiveStats[]>();
 	for (const stat of stats) {
@@ -37,8 +40,23 @@ export default function StatList({ stats, selectedStat, selectStat }: IProps) {
 	});
 
 	return (
-		<List>
-			{ listItems }
-		</List>
+		<React.Fragment>
+			<Typography
+				variant="h6"
+				sx={{
+					margin: '16px 16px 0 16px'
+				}}
+			>
+				{ translate('STATS') }
+			</Typography>
+			{/*<Divider variant="fullWidth"/>*/}
+			<List
+				sx={{
+					paddingTop: 0
+				}}
+			>
+				{ listItems }
+			</List>
+		</React.Fragment>
 	);
 }

@@ -15,7 +15,7 @@ function MatchSelector({ matches, selectedMatch, selectMatch }) {
 
 	const options = matches.map((match: Match) => (
 		<MenuItem key={match.id} value={match.id}>
-			<MatchListItem match={match}/>
+			<MatchListItem match={match} isMobile={false}/>
 		</MenuItem>
 	));
 

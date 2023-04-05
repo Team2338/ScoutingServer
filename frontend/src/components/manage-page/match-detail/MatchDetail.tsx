@@ -9,6 +9,8 @@ interface IProps {
 	match: Match;
 	hide: (match: Match) => void;
 	unhide: (match: Match) => void;
+	isMobile: boolean;
+	sx?: object;
 }
 
 export default function MatchDetail(props: IProps) {
@@ -39,10 +41,17 @@ export default function MatchDetail(props: IProps) {
 		props.hide(props.match);
 	}
 
-	const hiddenLabel = props.match.isHidden ? <span className="hidden">{ translate('HIDDEN') }</span> : null
+	const hiddenLabel = props.match.isHidden ? <span className="hidden">{ translate('HIDDEN') }</span> : null;
 
 	return (
-		<div className={'match-detail' + (props.match.isHidden ? ' hidden' : '')}>
+		<div
+			className={
+			'match-detail'
+				+ (props.match.isHidden ? ' hidden' : '')
+				+ (props.isMobile ? ' match-detail-mobile' : '')
+			}
+			style={props.sx}
+		>
 			<div className="info">
 				<div className="match-number">
 					{ translate('MATCH') } { props.match.matchNumber }

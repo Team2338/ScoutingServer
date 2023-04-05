@@ -58,7 +58,7 @@ export default function TeamList({ teams, selectTeam, selectedTeam }: IProps) {
 				>
 					{ translate('TEAMS') }
 				</Typography>
-				<SearchInput onSearch={setSearchTerm}/>
+				<SearchInput onSearch={setSearchTerm} size="small" />
 			</div>
 			<Divider variant="fullWidth"/>
 			<List>

@@ -1,22 +1,40 @@
 
 .match-list-item {
+	display: grid;
+	grid-template-columns: 1fr 1fr min-content;
 	width: 100%;
+	font-size: 16px;
+	line-height: 20px;
+
+	&.match-list-item-mobile {
+		padding: 4px 0;
+	}
 
 	&.hidden {
 		opacity: 0.3;
 	}
 
-	.match-number {
-		font-weight: 600;
+	.left-info {
+		display: flex;
+		flex-direction: column;
+
+		.match-number {
+			font-weight: 600;
+			font-size: 16px;
+			line-height: 20px;
+		}
 	}
 
-	.bottom-row {
+	.creator {
+		color: #444444;
 		display: flex;
-		flex-direction: row;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
 
-		.creator {
-			color: #444444;
-			margin-left: auto;
-		}
+	.chevron {
+		display: flex;
+		align-items: center;
+		padding-left: 20px;
 	}
 }

@@ -1,5 +1,5 @@
-import { Divider, Typography, useMediaQuery } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, Typography, useMediaQuery } from '@mui/material';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Match, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { selectMatch } from '../../state/Actions';
@@ -9,8 +9,11 @@ import './ManagePage.scss';
 import SearchInput from '../shared/search-input/SearchInput';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
-import MatchSelector from './match-selector/MatchSelector';
+// import MatchSelector from './match-selector/MatchSelector';
 
+const Transition = forwardRef(function Transition(props: any, ref) {
+	return <Slide direction="left" ref={ref} {...props} />;
+});
 
 function ManagePage() {
 
@@ -43,16 +46,54 @@ function ManagePage() {
 	if (isMobile) {
 		return (
 			<div className="page match-page-mobile">
-				<MatchSelector
+				{/*
+					<MatchSelector
+						matches={matches}
+						selectMatch={_selectMatch}
+						selectedMatch={selectedMatch}
+					/>
+					<MatchDetail
+						match={selectedMatch}
+						hide={_hideMatch}
+						unhide={_unhideMatch}
+					/>
+				*/}
+				<MatchList
 					matches={matches}
 					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
+					searchTerm={searchTerm}
 				/>
-				<MatchDetail
-					match={selectedMatch}
-					hide={_hideMatch}
-					unhide={_unhideMatch}
-				/>
+				<Dialog
+					fullScreen={true}
+					open={!!selectedMatch}
+					onClose={() => _selectMatch(null)}
+					aria-labelledby="match-detail-dialog__title"
+					TransitionComponent={Transition}
+				>
+					<div className="match-detail-dialog__header">
+						<IconButton
+							id="match-detail-dialog__back-button"
+							color="inherit"
+							aria-label="back" // TODO: translate
+							onClick={() => _selectMatch(null)}
+						>
+							<Icon>arrow_back</Icon>
+						</IconButton>
+						<span id="match-detail-dialog__title">
+							{ translate('MATCH') } { selectedMatch?.matchNumber ?? '' }
+							&nbsp;|&nbsp;
+							{ translate('TEAM') } { selectedMatch?.robotNumber ?? '' }
+						</span>
+					</div>
+					<DialogContent>
+						<MatchDetail
+							match={selectedMatch}
+							hide={_hideMatch}
+							unhide={_unhideMatch}
+						/>
+					</DialogContent>
+				</Dialog>
 			</div>
 		);
 	}

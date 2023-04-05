@@ -19,5 +19,22 @@
 .match-page-mobile {
   display: flex;
   flex-direction: column;
-  padding: 16px;
 }
+
+.match-detail-dialog__header {
+  display: grid;
+  padding: 12px;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  #match-detail-dialog__back-button {
+    margin-right: auto;
+  }
+
+  #match-detail-dialog__title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+}
+

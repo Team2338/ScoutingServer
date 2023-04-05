@@ -12,7 +12,7 @@ import MatchList from './match-list/MatchList';
 // import MatchSelector from './match-selector/MatchSelector';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
-	return <Slide direction="left" ref={ref} {...props} />;
+	return <Slide direction="left" ref={ref} children={props.children} {...props} />;
 });
 
 function ManagePage() {
@@ -91,17 +91,15 @@ function ManagePage() {
 						dividers={true}
 						sx={{
 							paddingLeft: '8px',
-							paddingRight: '8px'
+							paddingRight: '8px',
+							paddingTop: '12px'
 						}}
 					>
 						<MatchDetail
 							match={selectedMatch}
 							hide={_hideMatch}
 							unhide={_unhideMatch}
-							sx={{
-								paddingLeft: '12px',
-								paddingRight: '12px'
-							}}
+							isMobile={true}
 						/>
 					</DialogContent>
 				</Dialog>
@@ -136,6 +134,7 @@ function ManagePage() {
 				match={selectedMatch}
 				hide={_hideMatch}
 				unhide={_unhideMatch}
+				isMobile={false}
 				sx={{
 					margin: '12px 12px'
 				}}

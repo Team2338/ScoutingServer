@@ -33,7 +33,7 @@ function getBinaryElements(list: number[]) {
 			key={index}
 			className="grid-display-score"
 			style={{
-				backgroundColor: score > 0 ? 'green' : '#aaa'
+				backgroundColor: score > 0 ? '#43A047' : 'rgba(0, 0, 0, 0.24)'
 			}}
 		></div>
 	));

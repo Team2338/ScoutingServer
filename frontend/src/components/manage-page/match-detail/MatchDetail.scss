@@ -1,5 +1,6 @@
 
 .match-detail {
+  position: relative;
   display: flex;
   flex-direction: row;
   border-radius: 4px;
@@ -7,10 +8,12 @@
   height: fit-content;
   min-width: 200px;
 
+  &.match-detail-mobile {
+    padding: 12px;
+  }
+
   &.hidden {
     background-color: #eeeeee;
-    //border-style: dashed;
-    //border-color: #aaaaaa;
 
     .objectives {
       opacity: 0.3;
@@ -72,7 +75,8 @@
   }
 
   .action-area {
-    margin-left: auto;
+    position: absolute;
+    right: 8px;
   }
 
 }

@@ -9,6 +9,7 @@ interface IProps {
 	match: Match;
 	hide: (match: Match) => void;
 	unhide: (match: Match) => void;
+	isMobile: boolean;
 	sx?: object;
 }
 
@@ -44,7 +45,11 @@ export default function MatchDetail(props: IProps) {
 
 	return (
 		<div
-			className={'match-detail' + (props.match.isHidden ? ' hidden' : '')}
+			className={
+			'match-detail'
+				+ (props.match.isHidden ? ' hidden' : '')
+				+ (props.isMobile ? ' match-detail-mobile' : '')
+			}
 			style={props.sx}
 		>
 			<div className="info">

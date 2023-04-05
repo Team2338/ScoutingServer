@@ -63,6 +63,7 @@ function ManagePage() {
 					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
 					searchTerm={searchTerm}
+					isMobile={true}
 				/>
 				<Dialog
 					fullScreen={true}
@@ -118,6 +119,7 @@ function ManagePage() {
 					selectMatch={_selectMatch}
 					selectedMatch={selectedMatch}
 					searchTerm={searchTerm}
+					isMobile={false}
 				/>
 			</div>
 			<MatchDetail

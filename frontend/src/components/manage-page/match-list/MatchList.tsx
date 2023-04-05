@@ -10,9 +10,10 @@ type IProps = {
 	selectMatch: (match: Match) => void;
 	selectedMatch: Match;
 	searchTerm: string;
+	isMobile: boolean;
 }
 
-export default function MatchList({ matches, selectMatch, selectedMatch, searchTerm }: IProps) {
+export default function MatchList({ matches, selectMatch, selectedMatch, searchTerm, isMobile }: IProps) {
 	const translate = useTranslator();
 
 	const translatedTeamLabel: string = translate('TEAM').toLowerCase();
@@ -37,7 +38,7 @@ export default function MatchList({ matches, selectMatch, selectedMatch, searchT
 				selected={match.id === selectedMatch?.id}
 				onClick={() => selectMatch(match)}
 			>
-				<MatchListItem match={match}/>
+				<MatchListItem match={match} isMobile={isMobile}/>
 			</ListItemButton>
 		);
 

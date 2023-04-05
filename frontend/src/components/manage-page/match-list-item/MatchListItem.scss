@@ -2,17 +2,25 @@
 .match-list-item {
 	width: 100%;
 
+	&.match-list-item-mobile {
+		padding: 4px 0;
+	}
+
 	&.hidden {
 		opacity: 0.3;
 	}
 
 	.match-number {
 		font-weight: 600;
+		font-size: 16px;
+		line-height: 20px;
 	}
 
 	.bottom-row {
 		display: flex;
 		flex-direction: row;
+		font-size: 16px;
+		line-height: 20px;
 
 		.creator {
 			color: #444444;

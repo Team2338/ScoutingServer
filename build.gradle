@@ -15,7 +15,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group 'team.gif'
-version '2.5.0'
+version '2.5.1'
 
 sourceCompatibility = 1.17
 targetCompatibility = 1.17

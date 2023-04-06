@@ -12,6 +12,9 @@ import team.gif.gearscout.repository.ImageContentRepository;
 import team.gif.gearscout.repository.ImageInfoRepository;
 
 import javax.transaction.Transactional;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,18 @@ public class ImageService {
 		
 		if (file.isEmpty()) {
 			throw new EmptyFileNotAllowedException();
+		}
+	}
+	
+	
+	public String getChecksum(ImageContentEntity image) {
+		try {
+			byte[] hash = MessageDigest
+				.getInstance("MD5")
+				.digest(image.getContent());
+			return new BigInteger(1, hash).toString(16);
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("This should be impossible", e);
 		}
 	}
 	

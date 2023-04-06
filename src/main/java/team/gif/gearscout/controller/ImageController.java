@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,9 @@ import team.gif.gearscout.service.AuthService;
 import team.gif.gearscout.service.ImageService;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 
@@ -135,15 +139,27 @@ public class ImageController {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<byte[]> getImage(
 		@PathVariable Long id,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+		@RequestHeader(value = "If-None-Match", defaultValue = "") String oldChecksum
 	) {
 		ImageContentEntity image = imageService
 			.getImageContent(id, secretCode)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
+		String checksum = "\"%s\"".formatted(imageService.getChecksum(image));
+		
+		if (Objects.equals(oldChecksum, checksum)) {
+			return ResponseEntity
+				.status(HttpStatus.NOT_MODIFIED)
+				.body(null);
+		}
+		
 		return ResponseEntity
 			.ok()
 			.header("Content-Type", image.getContentType())
+			.header("Cache-Control", "private, no-cache, max-age=0")
+			.header("ETag", checksum)
+			.header("vary", "secretCode")
 			.body(image.getContent());
 	}
 	

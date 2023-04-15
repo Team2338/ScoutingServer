@@ -1,7 +1,7 @@
 import { InputAdornment, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslator } from '../../../service/TranslateService';
-import { useDebounce } from '../../../state/Hooks';
+import { useDebounce } from '../../../state';
 import SearchIcon from '@mui/icons-material/Search';
 
 interface IProps {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppState, LoadStatus } from '../models';
 import { getAllData } from './Effects';
 import type { AppDispatch } from './Store';
@@ -45,4 +45,4 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 	);
 
 	return debouncedValue;
-}
+};

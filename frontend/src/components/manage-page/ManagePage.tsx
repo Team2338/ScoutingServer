@@ -1,18 +1,15 @@
 import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, Typography, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { Match, LoadStatus } from '../../models';
+import { LoadStatus, Match } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { selectMatch } from '../../state/Actions';
-import { getAllData, hideMatch, unhideMatch } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
-import './ManagePage.scss';
+import { getAllData, hideMatch, selectMatch, unhideMatch, useAppDispatch, useAppSelector } from '../../state';
 import SearchInput from '../shared/search-input/SearchInput';
+import './ManagePage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
-// import MatchSelector from './match-selector/MatchSelector';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
-	return <Slide direction="left" ref={ref} children={props.children} {...props} />;
+	return <Slide direction="left" ref={ ref } children={ props.children } { ...props } />;
 });
 
 function ManagePage() {
@@ -30,7 +27,7 @@ function ManagePage() {
 
 	useEffect(
 		() => {
-			dispatch(getAllData())
+			dispatch(getAllData());
 		},
 		[dispatch]
 	);
@@ -46,42 +43,30 @@ function ManagePage() {
 	if (isMobile) {
 		return (
 			<div className="page match-page-mobile">
-				{/*
-					<MatchSelector
-						matches={matches}
-						selectMatch={_selectMatch}
-						selectedMatch={selectedMatch}
-					/>
-					<MatchDetail
-						match={selectedMatch}
-						hide={_hideMatch}
-						unhide={_unhideMatch}
-					/>
-				*/}
 				<div className="match-list-wrapper__header">
-					<SearchInput onSearch={setSearchTerm} size="medium"/>
+					<SearchInput onSearch={ setSearchTerm } size="medium" />
 				</div>
-				<Divider/>
+				<Divider />
 				<MatchList
-					matches={matches}
-					selectMatch={_selectMatch}
-					selectedMatch={selectedMatch}
-					searchTerm={searchTerm}
-					isMobile={true}
+					matches={ matches }
+					selectMatch={ _selectMatch }
+					selectedMatch={ selectedMatch }
+					searchTerm={ searchTerm }
+					isMobile={ true }
 				/>
 				<Dialog
-					fullScreen={true}
-					open={!!selectedMatch}
-					onClose={() => _selectMatch(null)}
+					fullScreen={ true }
+					open={ !!selectedMatch }
+					onClose={ () => _selectMatch(null) }
 					aria-labelledby="match-detail-dialog__title"
-					TransitionComponent={Transition}
+					TransitionComponent={ Transition }
 				>
 					<div className="match-detail-dialog__header">
 						<IconButton
 							id="match-detail-dialog__back-button"
 							color="inherit"
 							aria-label="back" // TODO: translate
-							onClick={() => _selectMatch(null)}
+							onClick={ () => _selectMatch(null) }
 						>
 							<Icon>arrow_back</Icon>
 						</IconButton>
@@ -92,18 +77,18 @@ function ManagePage() {
 						</span>
 					</div>
 					<DialogContent
-						dividers={true}
-						sx={{
+						dividers={ true }
+						sx={ {
 							paddingLeft: '8px',
 							paddingRight: '8px',
 							paddingTop: '12px'
-						}}
+						} }
 					>
 						<MatchDetail
-							match={selectedMatch}
-							hide={_hideMatch}
-							unhide={_unhideMatch}
-							isMobile={true}
+							match={ selectedMatch }
+							hide={ _hideMatch }
+							unhide={ _unhideMatch }
+							isMobile={ true }
 						/>
 					</DialogContent>
 				</Dialog>
@@ -117,31 +102,31 @@ function ManagePage() {
 				<div className="match-list-wrapper__header">
 					<Typography
 						variant="h6"
-						sx={{
+						sx={ {
 							marginBottom: '4px'
-						}}
+						} }
 					>
 						{ translate('MATCHES') }
 					</Typography>
-					<SearchInput onSearch={setSearchTerm} size="small"/>
+					<SearchInput onSearch={ setSearchTerm } size="small" />
 				</div>
-				<Divider variant="fullWidth"/>
+				<Divider variant="fullWidth" />
 				<MatchList
-					matches={matches}
-					selectMatch={_selectMatch}
-					selectedMatch={selectedMatch}
-					searchTerm={searchTerm}
-					isMobile={false}
+					matches={ matches }
+					selectMatch={ _selectMatch }
+					selectedMatch={ selectedMatch }
+					searchTerm={ searchTerm }
+					isMobile={ false }
 				/>
 			</div>
 			<MatchDetail
-				match={selectedMatch}
-				hide={_hideMatch}
-				unhide={_unhideMatch}
-				isMobile={false}
-				sx={{
+				match={ selectedMatch }
+				hide={ _hideMatch }
+				unhide={ _unhideMatch }
+				isMobile={ false }
+				sx={ {
 					margin: '12px 12px'
-				}}
+				} }
 			/>
 		</div>
 	);

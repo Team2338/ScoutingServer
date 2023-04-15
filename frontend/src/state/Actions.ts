@@ -1,5 +1,6 @@
 import {
-	GlobalObjectiveStats, ImageInfo,
+	GlobalObjectiveStats,
+	ImageInfo,
 	Language,
 	Match,
 	MatchResponse,
@@ -9,7 +10,7 @@ import {
 
 export interface Action {
 	type: Actions;
-	payload?: any
+	payload?: any;
 }
 
 export enum Actions {

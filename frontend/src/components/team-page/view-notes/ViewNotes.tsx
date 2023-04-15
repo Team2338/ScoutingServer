@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, Toolti
 import React, { useState } from 'react';
 import { LoadStatus, Note } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
-import { useAppSelector } from '../../../state/Hooks';
+import { useAppSelector } from '../../../state';
 import './ViewNotes.scss';
 
 interface IProps {

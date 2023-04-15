@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-	GlobalObjectiveStats,
-	ObjectiveDescriptor,
-	LoadStatus,
-	Team,
-	TeamObjectiveStats
-} from '../../models';
+import { GlobalObjectiveStats, LoadStatus, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { selectStat } from '../../state/Actions';
-import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
+import { selectStat, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';

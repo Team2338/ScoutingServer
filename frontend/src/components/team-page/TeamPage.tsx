@@ -2,9 +2,15 @@ import { useMediaQuery } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
 import { LoadStatus, Note, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { selectTeam } from '../../state/Actions';
-import { addNoteForRobot, getAllImageInfoForEvent, getAllNotes } from '../../state/Effects';
-import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
+import {
+	addNoteForRobot,
+	getAllImageInfoForEvent,
+	getAllNotes,
+	selectTeam,
+	useAppDispatch,
+	useAppSelector,
+	useDataInitializer
+} from '../../state';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';

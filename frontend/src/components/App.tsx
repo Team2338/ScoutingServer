@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../models';
-import { initApp } from '../state/Effects';
+import { initApp } from '../state';
 import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';

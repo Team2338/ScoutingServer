@@ -1,9 +1,9 @@
-import './MatchList.scss'
 import { Divider, List, ListItemButton } from '@mui/material';
 import React from 'react';
 import { Match } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import MatchListItem from '../match-list-item/MatchListItem';
+import './MatchList.scss';
 
 type IProps = {
 	matches: Match[];
@@ -34,11 +34,11 @@ export default function MatchList({ matches, selectMatch, selectedMatch, searchT
 	const listItems = filteredMatches.map((match: Match, index: number) => {
 		const listItem = (
 			<ListItemButton
-				key={match.id}
-				selected={match.id === selectedMatch?.id}
-				onClick={() => selectMatch(match)}
+				key={ match.id }
+				selected={ match.id === selectedMatch?.id }
+				onClick={ () => selectMatch(match) }
 			>
-				<MatchListItem match={match} isMobile={isMobile}/>
+				<MatchListItem match={ match } isMobile={ isMobile } />
 			</ListItemButton>
 		);
 
@@ -47,7 +47,7 @@ export default function MatchList({ matches, selectMatch, selectedMatch, searchT
 		}
 
 		return (
-			<React.Fragment key={match.id}>
+			<React.Fragment key={ match.id }>
 				<Divider variant="fullWidth" component="li" />
 				{ listItem }
 			</React.Fragment>

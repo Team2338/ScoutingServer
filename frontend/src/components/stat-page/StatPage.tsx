@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-	GlobalObjectiveStats,
-	ObjectiveDescriptor,
-	LoadStatus,
-	Team,
-	TeamObjectiveStats
-} from '../../models';
+import { GlobalObjectiveStats, LoadStatus, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { selectStat } from '../../state/Actions';
-import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
+import { selectStat, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
@@ -46,13 +39,13 @@ function StatPage() {
 
 		const translatedGamemodeName: string = translate(selectedStat.gamemode);
 		const translatedObjectiveName: string = translate(selectedStat.objective);
-		const graphName: string = `[${translatedGamemodeName}] ${translatedObjectiveName}`;
+		const graphName: string = `[${ translatedGamemodeName }] ${ translatedObjectiveName }`;
 
 		content = (
 			<div className="stat-content">
-				<StatGraph name={graphName} data={teamStats} metric="mean"/>
+				<StatGraph name={ graphName } data={ teamStats } metric="mean" />
 				<div className="stat-table-wrapper">
-					<StatTable data={teamStats}/>
+					<StatTable data={ teamStats } />
 				</div>
 			</div>
 		);
@@ -62,9 +55,9 @@ function StatPage() {
 		<div className="page stat-page">
 			<div className="stat-list-wrapper">
 				<StatList
-					stats={stats}
-					selectedStat={selectedStat}
-					selectStat={_selectStat}
+					stats={ stats }
+					selectedStat={ selectedStat }
+					selectStat={ _selectStat }
 				/>
 			</div>
 			{ content }

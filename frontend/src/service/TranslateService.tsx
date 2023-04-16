@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppState, ILanguageTranslation, Language } from '../models';
-import { useAppSelector } from '../state/Hooks';
+import { useAppSelector } from '../state';
 
 const translateKey = (language: string, key: string): string => {
 	const mapping = languages[language];

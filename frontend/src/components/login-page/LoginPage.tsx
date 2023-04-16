@@ -4,7 +4,7 @@ import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import { connect } from 'react-redux';
 import { AppState } from '../../models';
 import { translate } from '../../service/TranslateService';
-import { login } from '../../state/Effects';
+import { login } from '../../state';
 
 const inputs = (state: AppState) => ({
 	initialTeamNumber: state.teamNumber ?? '',

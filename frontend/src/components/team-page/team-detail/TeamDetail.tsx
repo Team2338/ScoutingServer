@@ -1,16 +1,15 @@
-import './TeamDetail.scss';
 import React, { useEffect } from 'react';
 import { Note, Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
-import { getImageForRobot } from '../../../state/Effects';
-import { useAppDispatch } from '../../../state/Hooks';
+import { getImageForRobot, useAppDispatch } from '../../../state';
 import { GridScore } from '../../shared/GridScore';
 import ViewNotes from '../view-notes/ViewNotes';
+import './TeamDetail.scss';
 
 interface IProps {
 	team: Team;
-	notes: Note[]
+	notes: Note[];
 }
 
 export default function TeamDetail(props: IProps) {
@@ -21,14 +20,14 @@ export default function TeamDetail(props: IProps) {
 	useEffect(
 		() => {
 			if (!!props.team) {
-				dispatch(getImageForRobot(props.team.id))
+				dispatch(getImageForRobot(props.team.id));
 			}
 		},
 		[dispatch, props.team]
 	);
 
 	if (!props.team) {
-		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
+		return <div>{translate('SELECT_TEAM_VIEW_MORE_DETAILS')}</div>;
 	}
 
 	let gamemodeElements: any = [];
@@ -43,16 +42,16 @@ export default function TeamDetail(props: IProps) {
 			);
 		});
 	} else {
-		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>
+		gamemodeElements = <div>{translate('NO_QUANTITATIVE_DATA')}</div>;
 	}
 
 	return (
 		<div className="team-detail">
 			<div className="team-number">
-				{ translate('TEAM') } { props.team.id }
+				{translate('TEAM')} {props.team.id}
 				<ViewNotes robotNumber={props.team.id} notes={props.notes}/>
 			</div>
-			<div className="gamemode-list">{ gamemodeElements }</div>
+			<div className="gamemode-list">{gamemodeElements}</div>
 		</div>
 	);
 }
@@ -68,12 +67,12 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 
 	return (
 		<div className="gamemode">
-			<div className="gamemode-title">{ translate(props.name) }</div>
+			<div className="gamemode-title">{translate(props.name)}</div>
 			<div className="gamemode-stats-wrapper">
-				{ objectiveElements }
+				{objectiveElements}
 			</div>
 		</div>
-	)
+	);
 }
 
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
@@ -85,9 +84,9 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	if (props.stats.sumList) {
 		sumListElement = (
 			<React.Fragment>
-				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
+				<div className="objective-stat">{translate('SUM_LIST')}:</div>
 				<div className="mean-list-wrapper">
-					<GridScore list={props.stats.sumList} />
+					<GridScore list={props.stats.sumList}/>
 				</div>
 			</React.Fragment>
 		);
@@ -95,12 +94,12 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 
 	return (
 		<div className="stats">
-			<div className="objective-name">{ translate(props.name) }:</div>
-			<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
-			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
-			<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
-			<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
-			{ sumListElement }
+			<div className="objective-name">{translate(props.name)}:</div>
+			<div className="objective-stat">{translate('SCORES')}: [ {scores.join(', ')} ]</div>
+			<div className="objective-stat">{translate('MEAN')}: {props.stats.mean.toFixed(2)}</div>
+			<div className="objective-stat">{translate('MEDIAN')}: {roundToDecimal(props.stats.median)}</div>
+			<div className="objective-stat">{translate('MODE')}: {roundToDecimal(props.stats.mode)}</div>
+			{sumListElement}
 		</div>
 	);
 

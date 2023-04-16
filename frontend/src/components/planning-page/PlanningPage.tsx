@@ -3,8 +3,16 @@ import React, { ReactElement } from 'react';
 import { LoadStatus, Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
 import { useTranslator } from '../../service/TranslateService';
-import { applyPlanSelection, clearPlan, selectFirstTeamForPlanning, selectSecondTeamForPlanning, selectThirdTeamForPlanning } from '../../state/Actions';
-import { useAppDispatch, useAppSelector, useDataInitializer } from '../../state/Hooks';
+import {
+	applyPlanSelection,
+	clearPlan,
+	selectFirstTeamForPlanning,
+	selectSecondTeamForPlanning,
+	selectThirdTeamForPlanning,
+	useAppDispatch,
+	useAppSelector,
+	useDataInitializer
+} from '../../state';
 import { GridScore } from '../shared/GridScore';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
@@ -27,7 +35,7 @@ function PlanningPage() {
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <div className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>
+		return <div className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
 	}
 
 	const numberOfTeamsSelected: number = [firstTeam, secondTeam, thirdTeam]
@@ -40,40 +48,40 @@ function PlanningPage() {
 			<Typography variant="h6">{ translate('PLAN') }</Typography>
 			<div className="team-selectors">
 				<TeamSelector
-					teams={teams}
-					selectedTeam={firstTeam}
-					selectTeam={(team) => dispatch(selectFirstTeamForPlanning(team))}
+					teams={ teams }
+					selectedTeam={ firstTeam }
+					selectTeam={ (team) => dispatch(selectFirstTeamForPlanning(team)) }
 				/>
 				<TeamSelector
-					teams={teams}
-					selectedTeam={secondTeam}
-					selectTeam={(team) => dispatch(selectSecondTeamForPlanning(team))}
+					teams={ teams }
+					selectedTeam={ secondTeam }
+					selectTeam={ (team) => dispatch(selectSecondTeamForPlanning(team)) }
 				/>
 				<TeamSelector
-					teams={teams}
-					selectedTeam={thirdTeam}
-					selectTeam={(team) => dispatch(selectThirdTeamForPlanning(team))}
+					teams={ teams }
+					selectedTeam={ thirdTeam }
+					selectTeam={ (team) => dispatch(selectThirdTeamForPlanning(team)) }
 				/>
 				<div className="action-area">
 					<Button
-						onClick={() => dispatch(clearPlan())}
+						onClick={ () => dispatch(clearPlan()) }
 						variant="outlined"
 						color="primary"
 					>
 						{ translate('CLEAR') }
 					</Button>
 					<Button
-						onClick={() => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam))}
+						onClick={ () => dispatch(applyPlanSelection(firstTeam, secondTeam, thirdTeam)) }
 						variant="contained"
 						color="primary"
-						disabled={isApplyDisabled}
+						disabled={ isApplyDisabled }
 					>
 						{ translate('APPLY') }
 					</Button>
 				</div>
 			</div>
 			<div className="plan">
-				{ plan ? <PlanDisplay plan={plan}/> : null }
+				{ plan ? <PlanDisplay plan={ plan } /> : null }
 			</div>
 		</div>
 	);
@@ -83,7 +91,7 @@ export default PlanningPage;
 
 
 interface IPlanDisplay {
-	plan: Plan
+	plan: Plan;
 }
 
 function PlanDisplay({ plan }: IPlanDisplay) {
@@ -94,19 +102,19 @@ function PlanDisplay({ plan }: IPlanDisplay) {
 	for (const gamemodeName of gamemodeNames) {
 		const objectiveNames: string[] = Object.getOwnPropertyNames(plan.gamemodes[gamemodeName].objectives);
 		const objectiveElements: ReactElement[] = objectiveNames.map((objectiveName: string) => (
-			<div key={objectiveName} className="objective">
+			<div key={ objectiveName } className="objective">
 				<div className="objective-header">{ translate(objectiveName) }</div>
 				<div>
 					<PlanComparison
-						teams={plan.teams}
-						stats={plan.gamemodes[gamemodeName].objectives[objectiveName].stats}
+						teams={ plan.teams }
+						stats={ plan.gamemodes[gamemodeName].objectives[objectiveName].stats }
 					/>
 				</div>
 			</div>
 		));
 
 		gamemodeElements.push((
-			<div key={gamemodeName} className="gamemode">
+			<div key={ gamemodeName } className="gamemode">
 				<div className="gamemode-header">{ translate(gamemodeName) }</div>
 				<div className="gamemode-objectives">{ objectiveElements }</div>
 			</div>
@@ -133,9 +141,9 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 	for (let i: number = 0; i < teams.length; i++) {
 		if (stats[i] && stats[i].sumList) {
 			grids.push(
-				<div key={teams[i].id} className="comparison-grid">
+				<div key={ teams[i].id } className="comparison-grid">
 					<div className="team-number">{ teams[i].id }</div>
-					<GridScore list={stats[i].sumList} variant="heatmap" />
+					<GridScore list={ stats[i].sumList } variant="heatmap" />
 				</div>
 			);
 		}

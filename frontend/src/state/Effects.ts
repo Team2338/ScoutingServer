@@ -102,7 +102,7 @@ export const logout = () => async (dispatch) => {
 // };
 
 export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log('Getting matches sync')
+	console.log('Getting matches sync');
 	dispatch(getMatchesStart());
 	dispatch(calculateTeamStatsStart());
 	dispatch(calculateGlobalStatsStart());
@@ -126,7 +126,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 		console.error('Error getting matches', error);
 		dispatch(getMatchesFail());
 	}
-}
+};
 
 export const getCsvData = () => async (dispatch, getState: GetState) => {
 	console.log('Getting CSV');
@@ -149,7 +149,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	} catch (error) {
 		console.error('Error getting CSV', error);
 	}
-}
+};
 
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	console.log('Hiding match');
@@ -190,7 +190,7 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting global statistics sync');
 	const globalStats = statModelService.calculateGlobalStats(teams);
 	dispatch(calculateGlobalStatsSuccess(globalStats));
-}
+};
 
 // export const getTeams = () => async (dispatch, getState: GetState) => {
 // 	console.log('Computing team statistics');
@@ -266,7 +266,7 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 		secretCode: getState().secretCode,
 		id: -getState().notes.data.length,
 		timeCreated: null
-	}
+	};
 
 	try {
 		await gearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
@@ -277,7 +277,7 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 };
 
 export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log(`Getting image info for ${robotNumber}`);
+	console.log(`Getting image info for ${ robotNumber }`);
 	dispatch(getImageStart(robotNumber));
 
 	let info: ImageInfo;
@@ -292,7 +292,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		info = response.data;
 
 	} catch (error) {
-		console.error(`Error getting image info for ${robotNumber}`);
+		console.error(`Error getting image info for ${ robotNumber }`);
 		dispatch(getImageFail(robotNumber));
 		return;
 	}
@@ -305,7 +305,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 
 	// Use cached image if ID hasn't changed
 	if (info.imageId === getState().images[robotNumber]?.info?.imageId && !!getState().images[robotNumber].url) {
-		console.log(`Reusing cached image for ${robotNumber}`);
+		console.log(`Reusing cached image for ${ robotNumber }`);
 		dispatch(keepCachedImage(robotNumber));
 		return;
 	}
@@ -318,7 +318,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 	let content;
 	let contentType: string;
 	try {
-		console.log(`Getting image content for ${robotNumber}`);
+		console.log(`Getting image content for ${ robotNumber }`);
 		const response = await gearscoutService.getImageContent({
 			imageId: info.imageId,
 			secretCode: getState().secretCode
@@ -326,11 +326,11 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		content = response.data;
 		contentType = response.headers['content-type'];
 	} catch (error) {
-		console.error(`Error getting image content for ${robotNumber}`);
+		console.error(`Error getting image content for ${ robotNumber }`);
 		dispatch(getImageFail(robotNumber));
 	}
 
-	const blob = new Blob([content], { type: contentType })
+	const blob = new Blob([content], { type: contentType });
 	const url: string = window.URL.createObjectURL(blob);
 	dispatch(getImageSuccess(robotNumber, info, url));
 };
@@ -353,4 +353,4 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 		console.log('Error getting image info for event');
 		dispatch(getEventImageInfoFail);
 	}
-}
+};

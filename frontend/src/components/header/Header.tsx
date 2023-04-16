@@ -1,4 +1,3 @@
-import './Header.scss';
 import {
 	AppBar,
 	Button,
@@ -20,8 +19,8 @@ import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Language, LanguageDescriptor, LanguageInfo, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { logout, selectLanguage } from '../../state/Effects';
-import { useAppDispatch, useAppSelector } from '../../state/Hooks';
+import { logout, selectLanguage, useAppDispatch, useAppSelector } from '../../state';
+import './Header.scss';
 
 
 interface IRoute {
@@ -49,24 +48,24 @@ export default function Header() {
 
 	const handleAccountMenuClick = (event) => {
 		setAccountAnchor(event.currentTarget);
-	}
+	};
 
 	const handleAccountMenuClose = () => {
 		setAccountAnchor(null);
-	}
+	};
 
 	const handleLogout = () => {
 		setDrawerOpen(false);
 		handleAccountMenuClose();
 		_logout();
-	}
+	};
 
 	const title = (
 		<Typography
 			variant="h5"
 			color="inherit"
 			lang="en"
-		  translate="no"
+			translate="no"
 			noWrap
 		>
 			GearScout
@@ -90,17 +89,17 @@ export default function Header() {
 	 * https://dev.to/imjoshellis/simple-download-text-file-link-with-react-29j3
 	 */
 	const downloadButton = (
-		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') } >
+		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') }>
 			<Button
 				className="download-button"
 				color="primary"
-				disableElevation={true}
+				disableElevation={ true }
 				variant="contained"
 				aria-label={ translate('DOWNLOAD_DATA') }
-				startIcon={<Icon>download</Icon>}
-				href={csv.url}
-				download={filename}
-				disabled={!(csv.loadStatus === LoadStatus.success)} // TODO: cover all the scenarios
+				startIcon={ <Icon>download</Icon> }
+				href={ csv.url }
+				download={ filename }
+				disabled={ !(csv.loadStatus === LoadStatus.success) } // TODO: cover all the scenarios
 			>
 				{ translate('DATA') }
 			</Button>
@@ -115,7 +114,7 @@ export default function Header() {
 				aria-label={ translate('ACCOUNT') }
 				aria-controls="account-menu"
 				aria-haspopup="true"
-				onClick={handleAccountMenuClick}
+				onClick={ handleAccountMenuClick }
 			>
 				<Icon>account_circle</Icon>
 			</IconButton>
@@ -125,12 +124,12 @@ export default function Header() {
 	const accountMenu = (
 		<Menu
 			id="account-menu"
-			anchorEl={accountAnchor}
-			open={Boolean(accountAnchor)}
-			onClose={handleAccountMenuClose}
+			anchorEl={ accountAnchor }
+			open={ Boolean(accountAnchor) }
+			onClose={ handleAccountMenuClose }
 			keepMounted
 		>
-			<MenuItem onClick={handleLogout}>{ translate('LOGOUT') }</MenuItem>
+			<MenuItem onClick={ handleLogout }>{ translate('LOGOUT') }</MenuItem>
 		</Menu>
 	);
 
@@ -159,33 +158,33 @@ export default function Header() {
 
 	const routeComponents = routes.map((route: IRoute) => (
 		<ListItemButton
-			key={route.name}
-			component={NavLink}
-			to={route.path}
-			onClick={toggleDrawer(false)}
+			key={ route.name }
+			component={ NavLink }
+			to={ route.path }
+			onClick={ toggleDrawer(false) }
 		>
 			<ListItemIcon>
 				<Icon>{ route.icon }</Icon>
 			</ListItemIcon>
-			<ListItemText primary={ translate(route.name) }/>
+			<ListItemText primary={ translate(route.name) } />
 		</ListItemButton>
 	));
 
 	const drawer = (
-		<Drawer className="nav-drawer" anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+		<Drawer className="nav-drawer" anchor="left" open={ isDrawerOpen } onClose={ toggleDrawer(false) }>
 			<div className="nav-drawer-content">
 				<div className="nav-drawer-header">
 					{ title }
-					<div>v{process.env.REACT_APP_VERSION}</div>
+					<div>v{ process.env.REACT_APP_VERSION }</div>
 				</div>
-				<div className="nav-drawer-divider"/>
+				<div className="nav-drawer-divider" />
 				<List>
 					{ routeComponents }
-					<ListItemButton onClick={handleLogout}>
+					<ListItemButton onClick={ handleLogout }>
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
-						<ListItemText primary={ translate('LOGOUT') }/>
+						<ListItemText primary={ translate('LOGOUT') } />
 					</ListItemButton>
 				</List>
 			</div>
@@ -201,7 +200,7 @@ export default function Header() {
 				<Toolbar>
 					<IconButton
 						className="menu-button"
-						onClick={toggleDrawer(true)}
+						onClick={ toggleDrawer(true) }
 						edge="start"
 						color="inherit"
 						aria-label="menu"
@@ -230,25 +229,25 @@ function LanguageSelector() {
 
 	const handleLanguageMenuClick = (event) => {
 		setLanguageAnchor(event.currentTarget);
-	}
+	};
 
 	const handleLanguageMenuClose = () => {
 		setLanguageAnchor(null);
-	}
+	};
 
 	const handleLanguageChange = (language: Language) => {
 		dispatch(selectLanguage(language));
 		handleLanguageMenuClose();
-	}
+	};
 
 	const languageOptions: ReactElement[] = Object.values(LanguageInfo)
 		.map((info: LanguageDescriptor) => (
 			<MenuItem
-				key={info.key}
-				lang={info.code}
+				key={ info.key }
+				lang={ info.code }
 				translate="no"
-				selected={selectedLanguage === info.key}
-				onClick={() => handleLanguageChange(info.key)}
+				selected={ selectedLanguage === info.key }
+				onClick={ () => handleLanguageChange(info.key) }
 			>
 				{ info.localName }
 			</MenuItem>
@@ -261,9 +260,9 @@ function LanguageSelector() {
 					className="language-button"
 					color="primary"
 					variant="contained"
-					disableElevation={true}
-					startIcon={<Icon>language</Icon>}
-					onClick={handleLanguageMenuClick}
+					disableElevation={ true }
+					startIcon={ <Icon>language</Icon> }
+					onClick={ handleLanguageMenuClick }
 					aria-label={ translate('CHANGE_LANGUAGE') }
 					aria-controls="language-menu"
 					aria-haspopup="true"
@@ -273,9 +272,9 @@ function LanguageSelector() {
 			</Tooltip>
 			<Menu
 				id="language-menu"
-				anchorEl={languageAnchor}
-				open={Boolean(languageAnchor)}
-				onClose={handleLanguageMenuClose}
+				anchorEl={ languageAnchor }
+				open={ Boolean(languageAnchor) }
+				onClose={ handleLanguageMenuClose }
 				keepMounted
 			>
 				{ languageOptions }

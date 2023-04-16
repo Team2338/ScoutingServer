@@ -4,15 +4,15 @@ import { GridScoreConfig } from './display.model';
 
 export const superchargeGridScoreConfig: GridScoreConfig = {
 	0: {
-		color: 'grey',
-		innerContent: null
+		background: 'rgba(0, 0, 0, 0.24)',
 	},
 	1: {
-		color: 'green',
-		innerContent: null
+		background: '#43A047',
 	},
 	2: {
-		color: 'blue',
+		// background: 'rgb(40, 170, 255)',
+		background: '#28aaff',
+		color: '#ffffff80',
 		innerContent: <BoltIcon />
 	}
 };

@@ -1,6 +1,6 @@
 import { Icon, IconButton, Tooltip } from '@mui/material';
 import React from 'react';
-import { Match, Objective } from '../../../models';
+import { Match, Objective, superchargeGridScoreConfig } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 import './MatchDetail.scss';
@@ -106,7 +106,11 @@ function ListObjective(props: { objective: Objective }) {
 	return (
 		<div className="objective-list">
 			<div className="objective-list-title">{ translate(props.objective.objective) }:</div>
-			<GridScore variant="binary" list={ props.objective.list } />
+			<GridScore
+				variant="custom"
+				config={ superchargeGridScoreConfig }
+				list={ props.objective.list }
+			/>
 		</div>
 	);
 }

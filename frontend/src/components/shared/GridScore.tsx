@@ -90,7 +90,8 @@ function getCustomElements(list: number[], config: GridScoreConfig) {
 			key={index}
 			className="grid-display-score custom"
 			style={{
-				backgroundColor: config[score]?.color ?? getBinaryColor(score)
+				backgroundColor: config[score]?.background ?? getBinaryColor(score),
+				color: config[score]?.color ?? '#000'
 			}}
 		>
 			{ config[score]?.innerContent }

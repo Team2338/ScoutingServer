@@ -2,7 +2,8 @@ import { ReactElement } from 'react';
 
 export interface GridScoreConfig {
 	[value: number]: {
-		color: string;
-		innerContent: ReactElement;
+		background: string;
+		color?: string;
+		innerContent?: ReactElement;
 	};
 }

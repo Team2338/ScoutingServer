@@ -1,23 +1,29 @@
 import React, { ReactElement } from 'react';
 import './GridScore.scss';
+import { superchargeGridScoreConfig } from '../../models';
+import { GridScoreConfig } from '../../models/src/display.model';
 import { roundToDecimal } from '../../service/DisplayUtility';
 
-type GridVariant = 'binary' | 'heatmap';
+type GridVariant = 'binary' | 'heatmap' | 'custom';
 type Size = 'normal' | 'large';
 interface IProps {
 	list: number[];
 	variant?: GridVariant;
 	size?: Size;
+	config?: GridScoreConfig;
 }
 
 export function GridScore(props: IProps) {
 
 	const variant: GridVariant = props.variant ?? 'heatmap';
 	const size: Size = props.size ?? 'normal';
+	const config: GridScoreConfig = props.config ?? superchargeGridScoreConfig;
 
 	let listElements: ReactElement[];
 	if (variant === 'binary') {
 		listElements = getBinaryElements(props.list);
+	} else if (variant === 'custom') {
+		listElements = getCustomElements(props.list, config);
 	} else {
 		listElements = getHeatmapElements(props.list);
 	}
@@ -27,13 +33,17 @@ export function GridScore(props: IProps) {
 	);
 }
 
+const getBinaryColor = (score: number): string => {
+	return score > 0 ? '#43A047' : 'rgba(0, 0, 0, 0.24)';
+};
+
 function getBinaryElements(list: number[]) {
 	return list.map((score: number, index: number) => (
 		<div
 			key={index}
 			className="grid-display-score"
 			style={{
-				backgroundColor: score > 0 ? '#43A047' : 'rgba(0, 0, 0, 0.24)'
+				backgroundColor: getBinaryColor(score)
 			}}
 		></div>
 	));
@@ -72,4 +82,19 @@ function getHeatmapElements(list: number[]) {
 			</div>
 		);
 	});
+}
+
+function getCustomElements(list: number[], config: GridScoreConfig) {
+	return list.map((score: number, index: number) => (
+		<div
+			key={index}
+			className="grid-display-score custom"
+			style={{
+				backgroundColor: config[score]?.background ?? getBinaryColor(score),
+				color: config[score]?.color ?? '#000'
+			}}
+		>
+			{ config[score]?.innerContent }
+		</div>
+	));
 }

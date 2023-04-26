@@ -19,7 +19,7 @@ public class Application {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-					.allowedOriginPatterns("http://localhost:*")
+					.allowedOriginPatterns("http://localhost:[*]", "https://*.gearitforward.com")
 					.allowedHeaders("*")
 					.allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE")
 					.exposedHeaders("*")

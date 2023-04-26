@@ -21,6 +21,7 @@ import { Language, LanguageDescriptor, LanguageInfo, LoadStatus } from '../../mo
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector } from '../../state';
 import './Header.scss';
+import ProfileCard from '../shared/profile-card/ProfileCard';
 
 
 interface IRoute {
@@ -129,6 +130,7 @@ export default function Header() {
 			onClose={ handleAccountMenuClose }
 			keepMounted
 		>
+			<ProfileCard sx={{ margin: '8px 12px' }} />
 			<MenuItem onClick={ handleLogout }>{ translate('LOGOUT') }</MenuItem>
 		</Menu>
 	);

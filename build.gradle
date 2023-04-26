@@ -6,7 +6,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.2'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.7.11'
 	}
 }
 
@@ -15,7 +15,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group 'team.gif'
-version '2.5.1'
+version '2.5.2'
 
 sourceCompatibility = 1.17
 targetCompatibility = 1.17

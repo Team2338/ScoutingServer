@@ -22,6 +22,7 @@ import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector } from '../../state';
 import './Header.scss';
 import ProfileCard from '../shared/profile-card/ProfileCard';
+import { ExitToApp } from '@mui/icons-material';
 
 
 interface IRoute {
@@ -131,7 +132,15 @@ export default function Header() {
 			keepMounted
 		>
 			<ProfileCard sx={{ margin: '8px 12px' }} />
-			<MenuItem onClick={ handleLogout }>{ translate('LOGOUT') }</MenuItem>
+			<MenuItem onClick={ handleLogout }>
+				<ListItemIcon>
+					{/*<Icon>exit_to_app</Icon>*/}
+					<ExitToApp />
+				</ListItemIcon>
+				<ListItemText>
+					{ translate('LOGOUT') }
+				</ListItemText>
+			</MenuItem>
 		</Menu>
 	);
 

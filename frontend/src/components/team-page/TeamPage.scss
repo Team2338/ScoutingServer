@@ -27,7 +27,6 @@
 .team-page-mobile {
 	display: flex;
 	flex-direction: column;
-	padding: 16px;
 
 	.team-detail-wrapper {
 		display: flex;
@@ -38,5 +37,22 @@
 		position: absolute;
 		right: 16px;
 		bottom: 16px;
+	}
+}
+
+.team-detail-dialog__header {
+	display: grid;
+	padding: 12px;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+
+	#team-detail-dialog__back-button {
+		margin-right: auto;
+	}
+
+	#team-detail-dialog__title {
+		font-size: 20px;
+		line-height: 24px;
+		font-weight: 600;
 	}
 }

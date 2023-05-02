@@ -1,0 +1,20 @@
+
+.match-list-skeleton {
+	&-item {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+		justify-content: space-between;
+		width: 100%;
+		padding: 2px 16px;
+
+		.left {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.right {
+			display: flex;
+		}
+	}
+}

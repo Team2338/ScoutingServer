@@ -1,5 +1,5 @@
-import { useMediaQuery } from '@mui/material';
-import React, { useEffect, useMemo } from 'react';
+import { Dialog, DialogContent, IconButton, Slide, useMediaQuery } from '@mui/material';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 import { LoadStatus, Note, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import {
@@ -11,12 +11,15 @@ import {
 	useAppSelector,
 	useDataInitializer
 } from '../../state';
-import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
+import { ArrowBack } from '@mui/icons-material';
 
+const Transition = forwardRef(function Transition(props: any, ref) {
+	return <Slide direction="left" ref={ ref } children={ props.children } { ...props } />;
+});
 
 export default function TeamPage() {
 	const isMobile = useMediaQuery('(max-width: 600px)');
@@ -57,22 +60,42 @@ export default function TeamPage() {
 		return <div className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
 	}
 
+	// TODO: Fix the padding and margins of TeamDetail
 	if (isMobile) {
 		return (
 			<div className="page team-page-mobile">
-				<div className="team-detail-wrapper">
-					<TeamSelector
-						teams={allTeams}
-						selectTeam={_selectTeam}
-						selectedTeam={selectedTeam}
-					/>
-					<TeamDetail team={selectedTeam} notes={filteredNotes}/>
-				</div>
-				<CreateNote
-					isMobile={true}
-					selectedTeamNum={selectedTeam?.id}
-					createNote={_createNote}
-				/>
+				<TeamList teams={ allTeams } selectTeam={ _selectTeam } selectedTeam={ selectedTeam }/>
+				<Dialog
+					fullScreen={ true }
+					open={ !!selectedTeam }
+					onClose={ () => _selectTeam(null) }
+					aria-labelledby="team-detail-dialog__title"
+					TransitionComponent={ Transition }
+				>
+					<div className="team-detail-dialog__header">
+						<IconButton
+							id="team-detail-dialog__back-button"
+							color="inherit"
+							aria-label="back" // TODO: translate
+							onClick={ () => _selectTeam(null) }
+						>
+							<ArrowBack/>
+						</IconButton>
+						<span id="team-detail-dialog__title">
+							{ translate('TEAM') } { selectedTeam?.id ?? '' }
+						</span>
+					</div>
+					<DialogContent
+						dividers={ true }
+						sx={ {
+							paddingLeft: '8px',
+							paddingRight: '8px',
+							paddingTop: '12px'
+						} }
+					>
+						<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
+					</DialogContent>
+				</Dialog>
 			</div>
 		);
 	}
@@ -81,18 +104,18 @@ export default function TeamPage() {
 		<div className="page team-page">
 			<div className="team-list-wrapper">
 				<TeamList
-					teams={allTeams}
-					selectTeam={_selectTeam}
-					selectedTeam={selectedTeam}
+					teams={ allTeams }
+					selectTeam={ _selectTeam }
+					selectedTeam={ selectedTeam }
 				/>
 			</div>
 			<div className="team-detail-wrapper">
-				<TeamDetail team={selectedTeam} notes={filteredNotes}/>
+				<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
 			</div>
 			<CreateNote
-				isMobile={false}
-				selectedTeamNum={selectedTeam?.id}
-				createNote={_createNote}
+				isMobile={ false }
+				selectedTeamNum={ selectedTeam?.id }
+				createNote={ _createNote }
 			/>
 		</div>
 	);

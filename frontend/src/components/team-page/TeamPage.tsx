@@ -18,7 +18,7 @@ import './TeamPage.scss';
 import { ArrowBack } from '@mui/icons-material';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
-	return <Slide direction="left" ref={ ref } children={ props.children } { ...props } />;
+	return <Slide direction="left" ref={ ref } { ...props } >{ props.children }</Slide>;
 });
 
 export default function TeamPage() {

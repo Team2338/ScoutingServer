@@ -9,7 +9,7 @@ import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
-	return <Slide direction="left" ref={ ref } children={ props.children } { ...props } />;
+	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;
 });
 
 function ManagePage() {

@@ -28,7 +28,8 @@ class PlanningService {
 					if (!Object.hasOwn(plan.gamemodes[gamemode].objectives, objectiveName)) { // Insert empty objective if not yet present
 						plan.gamemodes[gamemode].objectives[objectiveName] = {
 							name: objectiveName,
-							stats: Array.apply(null, Array(filteredTeams.length)) // Create an array of nulls
+							// stats: Array.apply(null, Array(filteredTeams.length)) // Create an array of nulls
+							stats: new Array(filteredTeams.length).fill(null)
 						};
 						console.log(`    Adding objective ${ gamemode } | ${ objectiveName }`);
 					}

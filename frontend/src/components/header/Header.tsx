@@ -199,7 +199,7 @@ export default function Header() {
 					</ListItemButton>
 				</List>
 			</div>
-			<div className="copyright-notice">
+			<div className="copyright-notice" translate="no">
 				© { new Date().getFullYear() } Gear it Forward
 			</div>
 		</Drawer>

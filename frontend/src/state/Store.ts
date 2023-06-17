@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse, Team } from '../models';
+import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -142,11 +142,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				}
 			};
 		case Actions.REPLACE_MATCH:
-			// If we're modifying data for the currently selected team, deselect it so that we don't
-			// see old data when we revisit the Teams page.
-			const selectedTeam: Team = (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
-				? null
-				: state.teams.selectedTeam;
 			return {
 				...state,
 				matches: {
@@ -159,7 +154,11 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					...state.teams,
 					// isLoaded: false, // Mark data as dirty, since we modified it
 					loadStatus: LoadStatus.none,
-					selectedTeam: selectedTeam
+					// If we're modifying data for the currently selected team, deselect it so that we don't
+					// see old data when we revisit the Teams page.
+					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
+						? null
+						: state.teams.selectedTeam
 				},
 				stats: {
 					...state.stats,

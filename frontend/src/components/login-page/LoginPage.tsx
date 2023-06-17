@@ -48,7 +48,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	};
 
 	isValid = (): boolean => {
-		return this.state.teamNumber && this.state.username && this.state.eventCode && this.state.secretCode;
+		return Boolean(this.state.teamNumber && this.state.username && this.state.eventCode && this.state.secretCode);
 	};
 
 	render() {

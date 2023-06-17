@@ -19,7 +19,7 @@ export default function TeamDetail(props: IProps) {
 
 	useEffect(
 		() => {
-			if (!!props.team) {
+			if (props.team) {
 				dispatch(getImageForRobot(props.team.id));
 			}
 		},

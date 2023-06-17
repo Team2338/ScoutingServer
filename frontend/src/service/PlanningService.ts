@@ -2,7 +2,7 @@ import { Plan, Team, TeamObjectiveStats } from '../models';
 
 class PlanningService {
 
-	createPlan(...teams: Team[]) {
+	createPlan(...teams: Team[]): Plan {
 		const plan: Plan = {
 			teams: [],
 			gamemodes: {}
@@ -30,7 +30,7 @@ class PlanningService {
 							name: objectiveName,
 							stats: Array.apply(null, Array(filteredTeams.length)) // Create an array of nulls
 						};
-						console.log(`    Adding objective ${gamemode} | ${objectiveName}`);
+						console.log(`    Adding objective ${ gamemode } | ${ objectiveName }`);
 					}
 
 					plan.gamemodes[gamemode]
@@ -41,7 +41,7 @@ class PlanningService {
 		});
 
 		return plan;
-	};
+	}
 }
 
 const service = new PlanningService();

@@ -5,7 +5,7 @@ import { useAppSelector } from '../state';
 const translateKey = (language: string, key: string): string => {
 	const mapping = languages[language];
 
-	if (mapping.hasOwnProperty(key)) {
+	if (Object.hasOwn(mapping, key)) {
 		return mapping[key];
 	}
 
@@ -28,6 +28,7 @@ export const useTranslator = (): Translator => {
 	return (key: string) => translateKey(language, key);
 };
 
+/* eslint-disable quotes */
 const languages: ILanguageTranslation = {
 	[Language.ENGLISH]: {
 		"SIGN_IN": "Sign In",

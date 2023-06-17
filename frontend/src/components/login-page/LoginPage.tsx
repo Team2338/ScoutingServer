@@ -34,7 +34,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		this.setState({
 			[event.target.name]: event.target.value
 		});
-	}
+	};
 
 	handleSubmit = (event) => {
 		event.preventDefault();
@@ -45,11 +45,11 @@ class ConnectedLoginPage extends React.Component<any, any> {
 			this.state.eventCode,
 			this.state.secretCode
 		);
-	}
+	};
 
 	isValid = (): boolean => {
 		return this.state.teamNumber && this.state.username && this.state.eventCode && this.state.secretCode;
-	}
+	};
 
 	render() {
 		return (

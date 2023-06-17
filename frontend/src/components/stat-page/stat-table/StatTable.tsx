@@ -36,7 +36,7 @@ export default function StatTable({ data }: IProps) {
 		const nextOrderIsDesc = (orderProperty !== property) || (orderDirection === Order.ASCENDING);
 		setOrderDirection(nextOrderIsDesc ? Order.DESCENDING : Order.ASCENDING);
 		setOrderProperty(property);
-	}
+	};
 
 	const rows = sortedData.map((teamData: TeamObjectiveStats) => (
 		<TableRow key={teamData.teamNumber}>

@@ -16,7 +16,7 @@ export default function SearchInput({ onSearch, size }: IProps) {
 
 	useEffect(
 		() => {
-			onSearch(debouncedSearchTerm)
+			onSearch(debouncedSearchTerm);
 		},
 		[onSearch, debouncedSearchTerm]
 	);

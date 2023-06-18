@@ -57,7 +57,7 @@ class StatModelService {
 				gamemode: teamStats[0].gamemode,
 				scores: [],
 				stats: null
-			}
+			};
 
 			// Append each team's score
 			for (const teamStat of teamStats) {

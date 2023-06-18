@@ -47,7 +47,7 @@ class TeamModelService {
 		}
 
 		return groupedMatches;
-	}
+	};
 
 	createTeam = (matches: MatchResponse[]): Team => {
 		const teamNumber = matches[0].robotNumber;
@@ -149,7 +149,7 @@ class TeamModelService {
 		first.forEach((value: number, index: number) => result[index] = value);
 		second.forEach((value: number, index: number) => result[index] = (result[index] ?? 0) + value); // Null check in case second list is longer
 		return result;
-	}
+	};
 
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
 		const scores = new Map<string, ObjectiveSums>();
@@ -198,7 +198,7 @@ class TeamModelService {
 		});
 
 		return stats;
-	}
+	};
 
 }
 

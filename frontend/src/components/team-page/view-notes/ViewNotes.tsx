@@ -19,11 +19,11 @@ export default function ViewNotes(props: IProps) {
 
 	const handleOpen = () => {
 		setOpen(true);
-	}
+	};
 
 	const handleClose = () => {
 		setOpen(false);
-	}
+	};
 
 	let image = null;
 	switch (imageState?.loadStatus) {
@@ -34,7 +34,7 @@ export default function ViewNotes(props: IProps) {
 			image = <div>Failed to load image</div>; // TODO: translate
 			break;
 		case LoadStatus.loading:
-			image = <div>{ translate('LOADING') }</div>
+			image = <div>{ translate('LOADING') }</div>;
 			break;
 		case LoadStatus.success:
 		case LoadStatus.loadingWithPriorSuccess: // Fallthrough
@@ -66,7 +66,7 @@ export default function ViewNotes(props: IProps) {
 				{note.creator}
 			</div>
 		</div>
-	))
+	));
 
 	return (
 		<React.Fragment>

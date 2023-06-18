@@ -37,7 +37,7 @@ export default function StatGraph({ name, data, metric }: IProps) {
 			</div>
 		);
 
-		let bar = (
+		const bar = (
 			<Tooltip key={team.teamNumber} title={tooltipText} arrow>
 				<div
 					className="bar"
@@ -50,7 +50,7 @@ export default function StatGraph({ name, data, metric }: IProps) {
 
 		bars.push(bar);
 
-		let label = <div key={team.teamNumber} className="team-number">{ team.teamNumber }</div>;
+		const label = <div key={team.teamNumber} className="team-number">{ team.teamNumber }</div>;
 		teamLabels.push(label);
 	}
 

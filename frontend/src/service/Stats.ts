@@ -7,7 +7,7 @@ export const getMean = (scores: number[]): number => {
 export const getMeanList = (lists: number[][]): number[] => {
 	const result = getSumList(lists);
 	return result.map((value: number) => value / lists.length);
-}
+};
 
 export const getSumList = (lists: number[][]): number[] => {
 	const result = [];
@@ -17,7 +17,7 @@ export const getSumList = (lists: number[][]): number[] => {
 	}
 
 	return result;
-}
+};
 
 export const getMedian = (scores: number[]): number => {
 	if (scores.length < 2) {
@@ -29,7 +29,7 @@ export const getMedian = (scores: number[]): number => {
 
 	// If there's an even number of elements, take average of both middle elements
 	if (sorted.length % 2 === 0) {
-		return (sorted[middleIndex] + sorted[middleIndex - 1]) / 2
+		return (sorted[middleIndex] + sorted[middleIndex - 1]) / 2;
 	}
 
 	// Else return middle element

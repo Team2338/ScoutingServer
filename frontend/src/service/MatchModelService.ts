@@ -4,7 +4,7 @@ class MatchModelService {
 
 	convertMatchResponsesToModels = (matches: MatchResponse[]): Match[] => {
 		return matches.map(this.convertMatchResponseToModel);
-	}
+	};
 
 	convertMatchResponseToModel = (match: MatchResponse): Match => {
 		const gamemodes: Map<string, Objective[]> = new Map();
@@ -30,7 +30,7 @@ class MatchModelService {
 			isHidden: match.isHidden,
 			gamemodes: gamemodes
 		};
-	}
+	};
 
 }
 

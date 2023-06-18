@@ -4,12 +4,18 @@ import { MenuItem, TextField } from '@mui/material';
 import { Team } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 
-export function TeamSelector({ teams, selectedTeam, selectTeam }) {
+interface IProps {
+	teams: Team[];
+	selectedTeam: Team;
+	selectTeam: (team: Team) => void;
+}
+
+export function TeamSelector({ teams, selectedTeam, selectTeam }: IProps) {
 	const translate = useTranslator();
 
 	const handleTeamChange = (event) => {
 		const teamNum = event.target.value;
-		let team: Team = teams.find((team: Team) => team.id === teamNum);
+		const team: Team = teams.find((team: Team) => team.id === teamNum);
 
 		selectTeam(team);
 	};

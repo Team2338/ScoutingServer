@@ -4,12 +4,18 @@ import { Match } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import MatchListItem from '../match-list-item/MatchListItem';
 
-function MatchSelector({ matches, selectedMatch, selectMatch }) {
+interface IProps {
+	matches: Match[];
+	selectedMatch: Match;
+	selectMatch: (match: Match) => void;
+}
+
+function MatchSelector({ matches, selectedMatch, selectMatch }: IProps) {
 	const translate = useTranslator();
 
 	const handleMatchChange = (event) => {
 		const matchId = event.target.value;
-		const match = matches.find((match: Match) => match.id === matchId);
+		const match: Match = matches.find((match: Match) => match.id === matchId);
 		selectMatch(match);
 	};
 

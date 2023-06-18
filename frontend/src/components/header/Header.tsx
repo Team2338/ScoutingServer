@@ -38,9 +38,9 @@ export default function Header() {
 	const isMobile: boolean = useMediaQuery('(max-width: 600px)');
 
 	const _logout = () => dispatch(logout());
-	const isLoggedIn: boolean = useAppSelector(state => state.isLoggedIn);
-	const teamNumber: number = useAppSelector(state => state.teamNumber);
-	const eventCode: string = useAppSelector(state => state.eventCode);
+	const isLoggedIn: boolean = useAppSelector(state => state.login.isLoggedIn);
+	const teamNumber: number = useAppSelector(state => state.login.teamNumber);
+	const eventCode: string = useAppSelector(state => state.login.eventCode);
 	const csv = useAppSelector(state => state.csv);
 
 	const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);

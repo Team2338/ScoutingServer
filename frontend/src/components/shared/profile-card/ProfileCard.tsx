@@ -8,9 +8,9 @@ interface IProps {
 
 export default function ProfileCard(props: IProps) {
 
-	const username: string = useAppSelector(state => state.username);
-	const teamNumber: number = useAppSelector(state => state.teamNumber);
-	const eventCode: string = useAppSelector(state => state.eventCode);
+	const username: string = useAppSelector(state => state.login.username);
+	const teamNumber: number = useAppSelector(state => state.login.teamNumber);
+	const eventCode: string = useAppSelector(state => state.login.eventCode);
 
 	return (
 		<div className="profile-card" style={props.sx}>

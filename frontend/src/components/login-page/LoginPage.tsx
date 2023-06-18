@@ -7,10 +7,10 @@ import { translate } from '../../service/TranslateService';
 import { login } from '../../state';
 
 const inputs = (state: AppState) => ({
-	initialTeamNumber: state.teamNumber ?? '',
-	initialEventCode: state.eventCode ?? '',
-	initialSecretCode: state.secretCode ?? '',
-	initialUsername: state.username ?? ''
+	initialTeamNumber: state.login.teamNumber ?? '',
+	initialEventCode: state.login.eventCode ?? '',
+	initialSecretCode: state.login.secretCode ?? '',
+	initialUsername: state.login.username ?? ''
 });
 
 const outputs = (dispatch) => ({

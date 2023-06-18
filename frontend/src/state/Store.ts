@@ -6,11 +6,13 @@ import { Action, Actions } from './Actions';
 
 const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
-	isLoggedIn: false,
-	teamNumber: null,
-	username: null,
-	eventCode: null,
-	secretCode: null,
+	login: {
+		isLoggedIn: false,
+		teamNumber: null,
+		username: null,
+		eventCode: null,
+		secretCode: null,
+	},
 	csv: {
 		loadStatus: LoadStatus.none,
 		url: null
@@ -55,11 +57,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 		case Actions.LOGIN:
 			return {
 				...state,
-				isLoggedIn: true,
-				teamNumber: action.payload.teamNumber,
-				username: action.payload.username,
-				eventCode: action.payload.eventCode,
-				secretCode: action.payload.secretCode
+				login: {
+					...state.login,
+					isLoggedIn: true,
+					teamNumber: action.payload.teamNumber,
+					username: action.payload.username,
+					eventCode: action.payload.eventCode,
+					secretCode: action.payload.secretCode
+				}
 			};
 		case Actions.LOGOUT:
 			return {
@@ -351,7 +356,7 @@ export const store = configureStore({
 // export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-function replaceMatch(matches: Match[], oldId: number, match: Match) {
+function replaceMatch(matches: Match[], oldId: number, match: Match): Match[] {
 	const targetIndex = matches.findIndex((match: Match) => match.id === oldId);
 	const result = matches.slice();
 	result[targetIndex] = match;
@@ -359,7 +364,7 @@ function replaceMatch(matches: Match[], oldId: number, match: Match) {
 	return result;
 }
 
-function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchResponse) {
+function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchResponse): MatchResponse[] {
 	const targetIndex = matches.findIndex((match: MatchResponse) => match.id === oldId);
 	const result = matches.slice();
 	result[targetIndex] = match;

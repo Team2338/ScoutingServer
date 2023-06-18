@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { AppState } from '../models';
 import { initApp } from '../state';
-import './App.css';
+import './App.scss';
 import Header from './header/Header';
 import LoginPage from './login-page/LoginPage';
 import ManagePage from './manage-page/ManagePage';
@@ -13,7 +13,7 @@ import TeamPage from './team-page/TeamPage';
 
 
 const select = (state: AppState) => ({
-	isLoggedIn: state.isLoggedIn,
+	isLoggedIn: state.login.isLoggedIn,
 });
 
 const outputs = (dispatch) => ({

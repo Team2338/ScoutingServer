@@ -20,11 +20,7 @@ export enum LoadStatus {
 
 export interface AppState {
 	language: Language;
-	isLoggedIn: boolean;
-	teamNumber: number;
-	username: string;
-	eventCode: string;
-	secretCode: string;
+	login: LoginState;
 	csv: {
 		loadStatus: LoadStatus;
 		url: string;
@@ -57,6 +53,14 @@ export interface AppState {
 		plan: Plan;
 	};
 	images: ImageState;
+}
+
+export interface LoginState {
+	isLoggedIn: boolean;
+	teamNumber: number;
+	username: string;
+	eventCode: string;
+	secretCode: string;
 }
 
 export interface ImageState {

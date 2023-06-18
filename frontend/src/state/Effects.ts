@@ -91,7 +91,7 @@ export const logout = () => async (dispatch) => {
 // 	dispatch(getMatchesStart());
 //
 // 	try {
-// 		const response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
+// 		const response = await gearscoutService.getMatches(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
 // 		const matchResponses: MatchResponse[] = response.data;
 // 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(matchResponses);
 //
@@ -109,7 +109,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	// dispatch(getCsvData());
 
 	try {
-		const response = await gearscoutService.getMatches(getState().teamNumber, getState().eventCode, getState().secretCode);
+		const response = await gearscoutService.getMatches(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
 		const rawMatches: MatchResponse[] = response.data;
 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(rawMatches);
 		dispatch(getMatchesSuccess(matches, rawMatches));
@@ -135,7 +135,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	const lastUrl = getState().csv.url;
 
 	try {
-		const response = await gearscoutService.getMatchesAsCsv(getState().teamNumber, getState().eventCode, getState().secretCode);
+		const response = await gearscoutService.getMatchesAsCsv(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
 
@@ -154,7 +154,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	console.log('Hiding match');
 	try {
-		const response = await gearscoutService.hideMatch(getState().teamNumber, match.id, getState().secretCode);
+		const response = await gearscoutService.hideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
 		const rawMatch: MatchResponse = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
@@ -168,7 +168,7 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
 	console.log('Unhiding match');
 	try {
-		const response = await gearscoutService.unhideMatch(getState().teamNumber, match.id, getState().secretCode);
+		const response = await gearscoutService.unhideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
 		const rawMatch = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
@@ -218,10 +218,10 @@ export const getNotesForRobot = (robotNumber: number) => async (dispatch, getSta
 
 	try {
 		const response = await gearscoutService.getNotesForRobot(
-			getState().teamNumber,
-			getState().eventCode,
+			getState().login.teamNumber,
+			getState().login.eventCode,
 			robotNumber,
-			getState().secretCode
+			getState().login.secretCode
 		);
 		const notes: Note[] = response.data;
 
@@ -237,9 +237,9 @@ export const getAllNotes = () => async (dispatch, getState: GetState) => {
 
 	try {
 		const response = await gearscoutService.getAllNotes(
-			getState().teamNumber,
-			getState().eventCode,
-			getState().secretCode
+			getState().login.teamNumber,
+			getState().login.eventCode,
+			getState().login.secretCode
 		);
 		const notes: Note[] = response.data;
 
@@ -255,21 +255,21 @@ export const addNoteForRobot = (robotNumber: number, content: string) => async (
 
 	const note: NewNote = {
 		robotNumber: robotNumber,
-		eventCode: getState().eventCode,
-		creator: getState().username,
+		eventCode: getState().login.eventCode,
+		creator: getState().login.username,
 		content: content
 	};
 
 	const dummyCompleteNote: Note = {
 		...note,
-		teamNumber: getState().teamNumber,
-		secretCode: getState().secretCode,
+		teamNumber: getState().login.teamNumber,
+		secretCode: getState().login.secretCode,
 		id: -getState().notes.data.length,
 		timeCreated: null
 	};
 
 	try {
-		await gearscoutService.addNote(getState().teamNumber, getState().secretCode, note);
+		await gearscoutService.addNote(getState().login.teamNumber, getState().login.secretCode, note);
 		dispatch(addNoteSuccess(dummyCompleteNote));
 	} catch (error) {
 		console.error('Error adding note', error);
@@ -283,11 +283,11 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 	let info: ImageInfo;
 	try {
 		const response = await gearscoutService.getImageInfo({
-			teamNumber: getState().teamNumber,
+			teamNumber: getState().login.teamNumber,
 			gameYear: new Date().getFullYear(),
-			eventCode: getState().eventCode,
+			eventCode: getState().login.eventCode,
 			robotNumber: robotNumber,
-			secretCode: getState().secretCode
+			secretCode: getState().login.secretCode
 		});
 		info = response.data;
 
@@ -321,7 +321,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		console.log(`Getting image content for ${ robotNumber }`);
 		const response = await gearscoutService.getImageContent({
 			imageId: info.imageId,
-			secretCode: getState().secretCode
+			secretCode: getState().login.secretCode
 		});
 		content = response.data;
 		contentType = response.headers['content-type'];
@@ -341,10 +341,10 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 
 	try {
 		const response = await gearscoutService.getImageInfoForEvent({
-			teamNumber: getState().teamNumber,
+			teamNumber: getState().login.teamNumber,
 			gameYear: 2023,
-			eventCode: getState().eventCode,
-			secretCode: getState().secretCode
+			eventCode: getState().login.eventCode,
+			secretCode: getState().login.secretCode
 		});
 
 		const info: ImageInfo[] = response.data;

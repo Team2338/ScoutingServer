@@ -9,6 +9,16 @@ export interface IPitState {
 	upload: {
 		loadStatus: LoadStatus;
 		error: string;
+	},
+	forms: {
+		robots: number[];
+		data: {
+			[robotNumber: number]: {
+				robotNumber: number;
+				question: string;
+				answer: string;
+			}
+		}
 	}
 }
 

@@ -1,0 +1,59 @@
+.image-upload-page {
+	display: flex;
+	flex-direction: column;
+	width: min(200px, 100%);
+	height: fit-content;
+	align-self: center;
+	padding-top: 120px;
+
+	.file-input {
+		margin-bottom: 12px;
+
+		&-label {
+			margin-top: 8px;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			border: 1px solid rgba(0, 0, 0, 0.23);
+			border-radius: 4px;
+			padding: 6px 16px;
+			cursor: pointer;
+			transition: background-color 200ms ease-in-out;
+
+			&:hover {
+				background-color: #dbdedfaa;
+			}
+
+			&:focus-within {
+				background-color: #fff;
+				border-width: 2px;
+				border-color: #1976d2;
+				padding: 5px 15px;
+			}
+
+			&.error {
+				border-color: #d32f2f;
+			}
+
+			input[type="file"] {
+				height: 0;
+				width: 0;
+				overflow: hidden;
+			}
+		}
+
+		&-prompt {
+			color: rgba(0, 0, 0, 0.87);
+			font-size: 16px;
+			line-height: 20px;
+		}
+
+		&-selection {
+			color: grey;
+			font-weight: 600;
+			font-size: 12px;
+			line-height: 16px;
+		}
+	}
+
+}

@@ -24,4 +24,23 @@ public interface DetailNoteRepository extends CrudRepository<DetailNoteEntity, L
 		String secretCode
 	);
 
+	@Query(value = """
+	DELETE
+	FROM DetailNoteEntity note
+	WHERE note.teamNumber = :teamNumber
+		AND note.gameYear = :gameYear
+		AND note.robotNumber = :robotNumber
+		AND note.eventCode = :eventCode
+		AND note.secretCode = :secretCode
+		AND note.question IN :questions
+	""")
+	void removeNotesByQuestion(
+		Integer teamNumber,
+		Integer gameYear,
+		Integer robotNumber,
+		String eventCode,
+		String secretCode,
+		List<String> questions
+	);
+
 }

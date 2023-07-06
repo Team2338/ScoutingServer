@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.model.CreateDetailNoteRequest;
 import team.gif.gearscout.model.DetailNoteEntity;
+import team.gif.gearscout.model.DetailNoteQuestion;
 import team.gif.gearscout.repository.DetailNoteRepository;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,20 +26,79 @@ public class DetailNoteService {
 	}
 
 
-	public DetailNoteEntity saveNote(
+	public List<DetailNoteEntity> saveNotes(
 		Integer teamNumber,
 		String secretCode,
-		CreateDetailNoteRequest note
+		CreateDetailNoteRequest form
 	) {
-		String currentTime = Long.toString(System.currentTimeMillis());
-		DetailNoteEntity complete = new DetailNoteEntity(
-			note,
+		List<DetailNoteEntity> notes = createNotesFromForm(
 			teamNumber,
 			secretCode,
-			currentTime
+			form
 		);
 
-		return noteRepo.save(complete);
+		removeDuplicateQuestions(form);
+		List<String> questionNames = getQuestionNames(form);
+		noteRepo.removeNotesByQuestion( // Remove any duplicate questions
+			teamNumber,
+			form.getGameYear(),
+			form.getRobotNumber(),
+			form.getEventCode(),
+			secretCode,
+			questionNames
+		);
+
+		Iterable<DetailNoteEntity> dbResponse = noteRepo.saveAll(notes);
+		List<DetailNoteEntity> results = new LinkedList<>();
+		dbResponse.forEach(results::add);
+
+
+		return results;
+	}
+
+
+	private List<String> getQuestionNames(CreateDetailNoteRequest form) {
+		return form.getQuestions()
+			.stream()
+			.map(DetailNoteQuestion::getQuestion)
+			.toList();
+	}
+
+
+	private void removeDuplicateQuestions(CreateDetailNoteRequest form) {
+		HashMap<String, DetailNoteQuestion> uniqueQuestions = new HashMap<>();
+		for (DetailNoteQuestion question : form.getQuestions()) {
+			uniqueQuestions.put(question.getQuestion(), question);
+		}
+
+		List<DetailNoteQuestion> collectedUniqueQuestions = uniqueQuestions.values().stream().toList();
+		form.setQuestions(collectedUniqueQuestions);
+	}
+
+
+	private List<DetailNoteEntity> createNotesFromForm(
+		Integer teamNumber,
+		String secretCode,
+		CreateDetailNoteRequest form
+	) {
+		String currentTime = Long.toString(System.currentTimeMillis());
+		return form.getQuestions()
+			.stream()
+			.map((question) -> {
+				DetailNoteEntity note = new DetailNoteEntity();
+				note.setTeamNumber(teamNumber);
+				note.setGameYear(form.getGameYear());
+				note.setEventCode(form.getEventCode());
+				note.setSecretCode(secretCode);
+				note.setRobotNumber(form.getRobotNumber());
+				note.setCreator(question.getCreator());
+				note.setQuestion(question.getQuestion());
+				note.setAnswer(question.getAnswer());
+				note.setTimeCreated(currentTime);
+
+				return note;
+			})
+			.toList();
 	}
 
 

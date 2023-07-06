@@ -1,7 +1,9 @@
 package team.gif.gearscout.model;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class CreateDetailNoteRequest {
 
@@ -14,14 +16,8 @@ public class CreateDetailNoteRequest {
 	@Size(min = 1, max = 32)
 	private String eventCode;
 
-	@Size(min = 1, max = 32)
-	private String question;
-
-	@Size(min = 1, max = 32)
-	private String answer;
-
-	@Size(min = 1, max = 32)
-	private String creator;
+	@NotEmpty
+	private List<DetailNoteQuestion> questions;
 
 
 	public CreateDetailNoteRequest() {}
@@ -39,16 +35,8 @@ public class CreateDetailNoteRequest {
 		return eventCode;
 	}
 
-	public String getQuestion() {
-		return question;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public String getCreator() {
-		return creator;
+	public List<DetailNoteQuestion> getQuestions() {
+		return questions;
 	}
 
 	public void setRobotNumber(Integer robotNumber) {
@@ -63,16 +51,8 @@ public class CreateDetailNoteRequest {
 		this.eventCode = eventCode;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
+	public void setQuestions(List<DetailNoteQuestion> questions) {
+		this.questions = questions;
 	}
 
 }

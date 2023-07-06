@@ -15,6 +15,7 @@ import team.gif.gearscout.model.CreateDetailNoteRequest;
 import team.gif.gearscout.model.DetailNoteEntity;
 import team.gif.gearscout.service.DetailNoteService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,11 +36,11 @@ public class DetailNoteController {
 	public ResponseEntity<Void> addNote(
 		@PathVariable Integer teamNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-		@RequestBody CreateDetailNoteRequest note
+		@RequestBody @Valid CreateDetailNoteRequest form
 	) {
 		logger.debug("Received addDetailNote request");
 
-		detailNoteService.saveNote(teamNumber, secretCode, note);
+		detailNoteService.saveNotes(teamNumber, secretCode, form);
 
 		return ResponseEntity.ok().build();
 	}

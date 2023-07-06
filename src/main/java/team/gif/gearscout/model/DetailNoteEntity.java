@@ -62,24 +62,6 @@ public class DetailNoteEntity {
 
 	public DetailNoteEntity() {}
 
-	public DetailNoteEntity(
-		CreateDetailNoteRequest note,
-		Integer teamNumber,
-		String secretCode,
-		String timeCreated
-	) {
-		this.teamNumber = teamNumber;
-		this.robotNumber = note.getRobotNumber();
-		this.gameYear = note.getGameYear();
-		this.eventCode = note.getEventCode();
-		this.secretCode = secretCode;
-		this.question = note.getQuestion();
-		this.answer = note.getAnswer();
-		this.creator = note.getCreator();
-		this.timeCreated = timeCreated;
-	}
-
-
 	public Long getId() {
 		return id;
 	}

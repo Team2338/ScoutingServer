@@ -16,11 +16,11 @@ import java.util.List;
 @Transactional
 public class DetailNoteService {
 
-	private final DetailNoteRepository noteRepo;
+	private final DetailNoteRepository noteRepository;
 
 	@Autowired
-	public DetailNoteService(DetailNoteRepository noteRepo) {
-		this.noteRepo = noteRepo;
+	public DetailNoteService(DetailNoteRepository noteRepository) {
+		this.noteRepository = noteRepository;
 	}
 
 
@@ -37,7 +37,7 @@ public class DetailNoteService {
 
 		removeDuplicateQuestions(form);
 		List<String> questionNames = getQuestionNames(form);
-		noteRepo.removeNotesByQuestion( // Remove any duplicate questions
+		noteRepository.removeNotesByQuestion( // Remove any duplicate questions
 			teamNumber,
 			form.getGameYear(),
 			form.getRobotNumber(),
@@ -46,7 +46,7 @@ public class DetailNoteService {
 			questionNames
 		);
 
-		Iterable<DetailNoteEntity> dbResponse = noteRepo.saveAll(notes);
+		Iterable<DetailNoteEntity> dbResponse = noteRepository.saveAll(notes);
 		List<DetailNoteEntity> results = new LinkedList<>();
 		dbResponse.forEach(results::add);
 
@@ -106,7 +106,7 @@ public class DetailNoteService {
 		String eventCode,
 		String secretCode
 	) {
-		return noteRepo.findNotesForEvent(
+		return noteRepository.findNotesForEvent(
 			teamNumber,
 			gameYear,
 			eventCode,

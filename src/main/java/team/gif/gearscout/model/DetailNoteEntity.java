@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -20,6 +21,10 @@ public class DetailNoteEntity {
 	@GeneratedValue(
 		strategy = GenerationType.SEQUENCE,
 		generator = "detail_notes_seq"
+	)
+	@SequenceGenerator(
+		name = "detail_notes_seq",
+		allocationSize = 1
 	)
 	private Long id;
 

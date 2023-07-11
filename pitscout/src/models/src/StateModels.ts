@@ -11,13 +11,12 @@ export interface IPitState {
 		error: string;
 	},
 	forms: {
+		loadStatus: LoadStatus;
+		error: string;
+		selected: IForm;
 		robots: number[];
 		data: {
-			[robotNumber: number]: {
-				robotNumber: number;
-				question: string;
-				answer: string;
-			}
+			[robotNumber: number]: IForm
 		}
 	}
 }
@@ -45,4 +44,16 @@ export enum LoadStatus {
 export enum UserRoles {
 	admin = 'admin',
 	none = 'none'
+}
+
+export interface IForm {
+	loadStatus: LoadStatus;
+	error: string;
+	robotNumber: number;
+	questions: IFormQuestion[];
+}
+
+export interface IFormQuestion {
+	question: string;
+	answer: string;
 }

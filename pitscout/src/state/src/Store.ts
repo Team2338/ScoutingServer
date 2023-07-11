@@ -1,6 +1,6 @@
-import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { IPitState, IToken, IUser, LoadStatus, LoginErrors, UploadErrors } from '../../models';
+import {configureStore, createAction, createReducer} from '@reduxjs/toolkit';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {FormErrors, IForm, IPitState, IToken, IUser, LoadStatus, LoginErrors, UploadErrors} from '../../models';
 
 export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
@@ -13,6 +13,13 @@ export const uploadSuccess = createAction('upload/upload-success');
 export const uploadFailed = createAction<UploadErrors>('upload/upload-failed');
 export const clearUploadError = createAction('upload/clear-error');
 
+export const createForm = createAction<number>('form/create-form');
+export const selectForm = createAction<number>('form/select-form');
+export const uploadFormStart = createAction<IForm>('form/upload-form-start');
+export const uploadFormSuccess = createAction<number>('form/upload-form-success');
+export const uploadFormFailed = createAction<{ robotNumber: number, error: FormErrors }>('form/upload-form-failed');
+// export const clearFormError = createAction('form/clear-error');
+
 const initialState: IPitState = {
 	login: {
 		loadStatus: LoadStatus.none,
@@ -23,6 +30,13 @@ const initialState: IPitState = {
 	upload: {
 		loadStatus: LoadStatus.none,
 		error: null
+	},
+	forms: {
+		loadStatus: LoadStatus.none,
+		error: null,
+		selected: null,
+		robots: [],
+		data: {}
 	}
 };
 
@@ -59,7 +73,42 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(clearUploadError, (state: IPitState) => {
 			state.upload.error = null;
-		});
+		})
+		.addCase(createForm, (state: IPitState, action) => {
+			if (state.forms.robots.includes(action.payload)) {
+				// TODO: put some kind of error?
+				console.error('Tried to create form, but one already existed for that robot');
+				return;
+			}
+
+			state.forms.robots.push(action.payload);
+			state.forms.robots.sort();
+			state.forms.data[action.payload] = {
+				loadStatus: LoadStatus.none,
+				error: null,
+				robotNumber: action.payload,
+				questions: []
+			}
+		})
+		.addCase(selectForm, (state: IPitState, action) => {
+			if (!state.forms.robots.includes(action.payload)) {
+				console.error('Tried to select form, but one does not exist for that robot');
+			}
+
+			state.forms.selected = state.forms.data[action.payload];
+		})
+		.addCase(uploadFormStart, (state: IPitState, action) => {
+			state.forms.data[action.payload.robotNumber] = action.payload;
+			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.loading;
+		})
+		.addCase(uploadFormSuccess, (state: IPitState, action) => {
+			state.forms.data[action.payload].loadStatus = LoadStatus.success;
+		})
+		.addCase(uploadFormFailed, (state: IPitState, action) => {
+			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.failed;
+			state.forms.data[action.payload.robotNumber].error = action.payload.error;
+		})
+	;
 });
 
 export const store = configureStore({

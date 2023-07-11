@@ -9,3 +9,8 @@ export enum UploadErrors {
 	badFileType = 'Image must be either .png or .jpeg',
 	unknown = 'Oops, something went wrong'
 }
+
+export enum FormErrors {
+	unauthorized = 'You are not authorized to use this app yet',
+	unknown = 'Oops, something went wrong'
+}

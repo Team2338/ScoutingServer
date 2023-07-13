@@ -1,5 +1,6 @@
 package team.gif.gearscout.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import team.gif.gearscout.model.DetailNoteEntity;
@@ -24,6 +25,7 @@ public interface DetailNoteRepository extends CrudRepository<DetailNoteEntity, L
 		String secretCode
 	);
 
+	@Modifying
 	@Query(value = """
 	DELETE
 	FROM DetailNoteEntity note

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IToken, IUser } from '../models';
+import { ICreateDetailNoteRequest } from '../models/src/RequestModels';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -8,6 +9,15 @@ class ApiService {
 	service = axios.create({
 		baseURL: process.env.REACT_APP_SERVER_URL
 	});
+
+
+	login = (data: {
+		teamNumber: number,
+		username: string
+	}): GearscoutResponse<IToken> => {
+		const url = '/v1/auth/login';
+		return this.service.post(url, data);
+	};
 
 
 	uploadImage = (
@@ -36,12 +46,21 @@ class ApiService {
 		);
 	};
 
-	login = (data: {
-		teamNumber: number,
-		username: string
-	}): GearscoutResponse<IToken> => {
-		const url = '/v1/auth/login';
-		return this.service.post(url, data);
+
+	uploadForm = (
+		user: IUser,
+		form: ICreateDetailNoteRequest,
+		token: IToken
+	): GearscoutResponse<null> => {
+		const url = `/v1/detailnotes/team/${user.teamNumber}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				secretCode: user.secretCode,
+				token: JSON.stringify(token)
+			}
+		};
+
+		return this.service.post(url, form, config);
 	};
 
 }

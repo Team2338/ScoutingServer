@@ -1,5 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import {
+	AppState,
+	ImageInfo,
+	ImageState,
+	Language,
+	LoadStatus,
+	Match,
+	MatchResponse
+} from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -329,6 +337,31 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				images: createImageStateFromInfo(action.payload)
+			};
+		case Actions.GET_DETAIL_NOTES_START:
+			return {
+				...state,
+				detailNotes: {
+					...state.detailNotes,
+					loadStatus: getNextStatusOnLoad(state.detailNotes.loadStatus)
+				}
+			};
+		case Actions.GET_DETAIL_NOTES_SUCCESS:
+			return {
+				...state,
+				detailNotes: {
+					...state.detailNotes,
+					loadStatus: LoadStatus.success,
+					data: action.payload
+				}
+			};
+		case Actions.GET_DETAIL_NOTES_FAIL:
+			return {
+				...state,
+				detailNotes: {
+					...state.detailNotes,
+					loadStatus: getNextStatusOnFail(state.detailNotes.loadStatus)
+				}
 			};
 		default:
 			return state;

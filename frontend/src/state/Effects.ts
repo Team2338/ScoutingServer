@@ -1,4 +1,5 @@
-import { AppState, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import { AppState, DetailNote, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import detailNotesModelService from '../service/DetailNotesModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
@@ -14,6 +15,9 @@ import {
 	getAllNotesSuccess,
 	getCsvStart,
 	getCsvSuccess,
+	getDetailNotesFail,
+	getDetailNotesStart,
+	getDetailNotesSuccess,
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
@@ -351,6 +355,27 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 		dispatch(getEventImageInfoSuccess(info));
 	} catch (error) {
 		console.log('Error getting image info for event');
-		dispatch(getEventImageInfoFail);
+		dispatch(getEventImageInfoFail());
 	}
 };
+
+export const getDetailNotes = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting detail notes for event');
+	dispatch(getDetailNotesStart());
+
+	try {
+		const response = await gearscoutService.getDetailNotes({
+			teamNumber: getState().login.teamNumber,
+			gameYear: 2023,
+			eventCode: getState().login.eventCode,
+			secretCode: getState().login.secretCode
+		});
+
+		const detailNotes: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
+
+		dispatch(getDetailNotesSuccess(detailNotes));
+	} catch (error) {
+		console.log('Error getting detail notes', error);
+		dispatch(getDetailNotesFail())
+	}
+}

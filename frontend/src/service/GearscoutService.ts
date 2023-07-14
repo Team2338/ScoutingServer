@@ -152,7 +152,7 @@ class GearscoutService {
 		gameYear: number;
 		eventCode: string;
 		secretCode: string;
-	}): GearscoutResponse<DetailNoteQuestionResponse> => {
+	}): GearscoutResponse<DetailNoteQuestionResponse[]> => {
 		const url: string = `/v1/detailnotes/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {

@@ -1,4 +1,5 @@
 import {
+	DetailNote,
 	GlobalObjectiveStats,
 	ImageInfo,
 	Language,
@@ -47,7 +48,10 @@ export enum Actions {
 	KEEP_CACHED_IMAGE = '[IMAGE] Keep cached image',
 	GET_EVENT_IMAGE_INFO_START = '[IMAGE] Start getting event info',
 	GET_EVENT_IMAGE_INFO_SUCCESS = '[IMAGE] Successfully got event info',
-	GET_EVENT_IMAGE_INFO_FAIL = '[IMAGE] Failed to get event info'
+	GET_EVENT_IMAGE_INFO_FAIL = '[IMAGE] Failed to get event info',
+	GET_DETAIL_NOTES_START = '[NOTES] Start getting detail notes',
+	GET_DETAIL_NOTES_SUCCESS = '[NOTES] Successfully got detail notes',
+	GET_DETAIL_NOTES_FAIL = '[NOTES] Failed to get detail notes'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -235,4 +239,17 @@ export const getEventImageInfoFail = (): Action => ({
 export const keepCachedImage = (robotNumber: number): Action => ({
 	type: Actions.KEEP_CACHED_IMAGE,
 	payload: robotNumber
+});
+
+export const getDetailNotesStart = (): Action => ({
+	type: Actions.GET_DETAIL_NOTES_START
+});
+
+export const getDetailNotesSuccess = (notes: DetailNote[]): Action => ({
+	type: Actions.GET_DETAIL_NOTES_SUCCESS,
+	payload: notes
+});
+
+export const getDetailNotesFail = (): Action => ({
+	type: Actions.GET_DETAIL_NOTES_FAIL
 });

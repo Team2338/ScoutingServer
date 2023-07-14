@@ -44,7 +44,11 @@ const INITIAL_STATE: AppState = {
 		thirdTeam: null,
 		plan: null
 	},
-	images: {}
+	images: {},
+	detailNotes: {
+		loadStatus: LoadStatus.none,
+		data: []
+	}
 };
 
 const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {

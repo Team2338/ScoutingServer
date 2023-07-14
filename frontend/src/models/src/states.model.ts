@@ -8,6 +8,7 @@ import {
 	Plan,
 	Team
 } from './response.model';
+import { DetailNote } from './display.model';
 
 export enum LoadStatus {
 	none = 'none',
@@ -53,6 +54,7 @@ export interface AppState {
 		plan: Plan;
 	};
 	images: ImageState;
+	detailNotes: DetailNotesState;
 }
 
 export interface LoginState {
@@ -69,4 +71,9 @@ export interface ImageState {
 		info: ImageInfo;
 		url: string;
 	};
+}
+
+export interface DetailNotesState {
+	loadStatus: LoadStatus;
+	data: DetailNote[];
 }

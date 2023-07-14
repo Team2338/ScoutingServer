@@ -111,3 +111,16 @@ export interface ImageInfo {
 	imageId: number;
 	timeCreated: string;
 }
+
+export interface DetailNoteQuestionResponse {
+	id: number;
+	teamNumber: number;
+	robotNumber: number;
+	gameYear: number;
+	eventCode: string;
+	secretCode: string;
+	question: string;
+	answer: string;
+	creator: string;
+	timeCreated: string;
+}

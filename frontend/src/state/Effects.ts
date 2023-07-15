@@ -141,7 +141,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
 		const csvContent = response.data;
-		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
 
 		// Revoke last URL
 		if (lastUrl) {
@@ -334,7 +334,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		dispatch(getImageFail(robotNumber));
 	}
 
-	const blob = new Blob([content], { type: contentType });
+	const blob = new Blob([content], {type: contentType});
 	const url: string = window.URL.createObjectURL(blob);
 	dispatch(getImageSuccess(robotNumber, info, url));
 };
@@ -376,6 +376,6 @@ export const getDetailNotes = () => async (dispatch: AppDispatch, getState: GetS
 		dispatch(getDetailNotesSuccess(detailNotes));
 	} catch (error) {
 		console.log('Error getting detail notes', error);
-		dispatch(getDetailNotesFail())
+		dispatch(getDetailNotesFail());
 	}
-}
+};

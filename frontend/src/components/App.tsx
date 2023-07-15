@@ -10,6 +10,7 @@ import ManagePage from './manage-page/ManagePage';
 import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
+import NotesPage from './notes-page/NotesPage';
 
 
 const select = (state: AppState) => ({
@@ -41,6 +42,7 @@ class ConnectedApp extends React.Component<any, null> {
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
 		const planningPage = <PlanningPage />;
+		const notesPage = <NotesPage />;
 
 		return (
 			<React.Fragment>
@@ -51,6 +53,7 @@ class ConnectedApp extends React.Component<any, null> {
 					<Route path="/teams" element={ teamPage } />
 					<Route path="/stats" element={ statPage } />
 					<Route path="/plan" element={ planningPage } />
+					<Route path="/notes" element={ notesPage } />
 				</Routes>
 			</React.Fragment>
 		);

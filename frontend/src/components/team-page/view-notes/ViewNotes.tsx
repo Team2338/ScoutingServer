@@ -44,8 +44,8 @@ export default function ViewNotes(props: IProps) {
 					<div className="team-notes-image">
 						<img
 							className="team-notes-image-content"
-							src={imageState.url} // TODO: translate
-							alt={`Robot of ${props.robotNumber}`}
+							src={imageState.url}
+							alt={`Robot of ${props.robotNumber}`} // TODO: translate
 						/>
 						<div className="team-notes-image-creator">
 							{ imageState.info.creator }

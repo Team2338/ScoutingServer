@@ -4,6 +4,7 @@ export enum Language {
 	SPANISH = 'spanish',
 	FRENCH = 'french',
 	TURKISH = 'turkish',
+	CZECH = 'czech'
 	// HINDI = 'hindi'
 }
 
@@ -42,6 +43,12 @@ export const LanguageInfo: ILanguageInfo = {
 		code: 'tr',
 		localName: 'Türkçe',
 		englishName: 'Turkish'
+	},
+	[Language.CZECH]: {
+		key: Language.CZECH,
+		code: 'cz',
+		localName: 'Čeština',
+		englishName: 'Czech'
 	}
 };
 

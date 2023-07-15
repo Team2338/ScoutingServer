@@ -9,7 +9,8 @@ export default function NotesPage() {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const loadStatus: LoadStatus = useAppSelector(state => state.detailNotes.loadStatus);
-	const notes: DetailNote[] = useAppSelector(state => state.detailNotes.data);
+	const notes: DetailNote[] = useAppSelector(state => state.detailNotes.notes);
+	const questionNames: string[] = useAppSelector(state => state.detailNotes.questionNames);
 
 	useEffect(
 		() => {
@@ -28,7 +29,6 @@ export default function NotesPage() {
 	}
 
 	const isLoadingInBackground: boolean = loadStatus === LoadStatus.loadingWithPriorSuccess;
-	const questionNames: string[] = ['DRIVETRAIN', 'PROGRAMMING_LANGUAGE', 'GAMEPIECE_PREF'];
 	const headers = questionNames.map((question: string) => (
 		<TableCell key={ question } align="center">
 			{ translate(question) }

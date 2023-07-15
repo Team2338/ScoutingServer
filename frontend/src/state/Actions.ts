@@ -245,9 +245,12 @@ export const getDetailNotesStart = (): Action => ({
 	type: Actions.GET_DETAIL_NOTES_START
 });
 
-export const getDetailNotesSuccess = (notes: DetailNote[]): Action => ({
+export const getDetailNotesSuccess = (notes: DetailNote[], questionNames: string[]): Action => ({
 	type: Actions.GET_DETAIL_NOTES_SUCCESS,
-	payload: notes
+	payload: {
+		notes,
+		questionNames
+	}
 });
 
 export const getDetailNotesFail = (): Action => ({

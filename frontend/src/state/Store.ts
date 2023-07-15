@@ -55,7 +55,8 @@ const INITIAL_STATE: AppState = {
 	images: {},
 	detailNotes: {
 		loadStatus: LoadStatus.none,
-		data: []
+		notes: [],
+		questionNames: []
 	}
 };
 
@@ -352,7 +353,8 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				detailNotes: {
 					...state.detailNotes,
 					loadStatus: LoadStatus.success,
-					data: action.payload
+					notes: action.payload.notes,
+					questionNames: action.payload.questionNames
 				}
 			};
 		case Actions.GET_DETAIL_NOTES_FAIL:

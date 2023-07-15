@@ -372,8 +372,9 @@ export const getDetailNotes = () => async (dispatch: AppDispatch, getState: GetS
 		});
 
 		const detailNotes: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
+		const questionNames: string[] = detailNotesModelService.getUniqueQuestionNames(response.data);
 
-		dispatch(getDetailNotesSuccess(detailNotes));
+		dispatch(getDetailNotesSuccess(detailNotes, questionNames));
 	} catch (error) {
 		console.log('Error getting detail notes', error);
 		dispatch(getDetailNotesFail());

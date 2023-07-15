@@ -47,6 +47,14 @@ class DetailNotesModelService {
 		};
 	};
 
+	getUniqueQuestionNames = (notes: DetailNoteQuestionResponse[]): string[] => {
+		const names: string[] = notes.map(note => note.question);
+		const uniqueNames: Set<string> = new Set(names);
+		const results: string[] = [];
+		uniqueNames.forEach((name: string) => results.push(name));
+		return results;
+	};
+
 }
 
 const service = new DetailNotesModelService();

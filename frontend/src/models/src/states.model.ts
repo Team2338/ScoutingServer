@@ -75,5 +75,6 @@ export interface ImageState {
 
 export interface DetailNotesState {
 	loadStatus: LoadStatus;
-	data: DetailNote[];
+	notes: DetailNote[];
+	questionNames: string[];
 }

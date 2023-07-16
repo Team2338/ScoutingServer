@@ -46,7 +46,8 @@ const languages: ILanguageTranslation = {
 		'LANGUAGE': 'Language',
 		'LOGOUT': 'Logout',
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details',
-		'STAT_TABLE': 'Stat table',
+		'NOTES_TABLE': 'Notes table',
+		'STATS_TABLE': 'Stats table',
 		'SUM_LIST': 'Totals',
 		'MEAN_LIST': 'Mean list',
 		'MEAN': 'Mean',
@@ -88,7 +89,9 @@ const languages: ILanguageTranslation = {
 		'APPLY': 'Apply',
 		'CLEAR': 'Clear',
 		'CLOSE': 'Close',
-		'SEARCH': 'Search'
+		'SEARCH': 'Search',
+		'FAILED_TO_LOAD_STATS': 'Failed to load stats',
+		'FAILED_TO_LOAD_NOTES': 'Failed to load notes'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -107,7 +110,8 @@ const languages: ILanguageTranslation = {
 		'LANGUAGE': 'Lengua',
 		'LOGOUT': 'Cerrar sesión',
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Seleccione un partido para ver más detalles',
-		'STAT_TABLE': 'Tabla de estadisticas',
+		'NOTES_TABLE': 'Tabla de notas',
+		'STATS_TABLE': 'Tabla de estadisticas',
 		'SUM_LIST': 'Totales',
 		'MEAN_LIST': 'Lista media',
 		'MEAN': 'Media',
@@ -149,7 +153,9 @@ const languages: ILanguageTranslation = {
 		'APPLY': 'Aplicar',
 		'CLEAR': 'Despejar',
 		'CLOSE': 'Cerrar',
-		'SEARCH': 'Buscar'
+		'SEARCH': 'Buscar',
+		'FAILED_TO_LOAD_STATS': 'Error al cargar estadísticas',
+		'FAILED_TO_LOAD_NOTES': 'Error al cargar notas'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -168,7 +174,8 @@ const languages: ILanguageTranslation = {
 		'LANGUAGE': 'Langue',
 		'LOGOUT': 'Se déconnecter',
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Sélectionnez une match pour afficher plus de détails',
-		'STAT_TABLE': 'Tableau statistique',
+		'NOTES_TABLE': 'Tableau des notes',
+		'STATS_TABLE': 'Tableau statistique',
 		'SUM_LIST': 'Totaux',
 		'MEAN_LIST': 'Liste moyenne',
 		'MEAN': 'Moyenne',
@@ -210,7 +217,9 @@ const languages: ILanguageTranslation = {
 		'APPLY': 'Appliquer',
 		'CLEAR': 'Supprimer',
 		'CLOSE': 'Fermer',
-		'SEARCH': 'Chercher'
+		'SEARCH': 'Chercher',
+		'FAILED_TO_LOAD_STATS': 'Échec du chargement des statistiques',
+		'FAILED_TO_LOAD_NOTES': 'Échec du chargement des notes'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -229,7 +238,8 @@ const languages: ILanguageTranslation = {
 		'LANGUAGE': 'Dilim',
 		'LOGOUT': 'Çıkış Yap',
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Daha fazla ayrıntı görmek için bir eşleşme seçin',
-		'STAT_TABLE': 'Istatistik tablosu',
+		'NOTES_TABLE': 'Not tablosu',
+		'STATS_TABLE': 'Istatistik tablosu',
 		'SUM_LIST': 'Toplamlar',
 		'MEAN_LIST': 'Ortalama liste',
 		'MEAN': 'Ortalama',
@@ -271,7 +281,9 @@ const languages: ILanguageTranslation = {
 		'APPLY': 'Uygula',
 		'CLEAR': 'Temizlemek',
 		'CLOSE': 'Kapatmak',
-		'SEARCH': 'Aramak'
+		'SEARCH': 'Aramak',
+		'FAILED_TO_LOAD_STATS': 'İstatistikler yüklenemedi',
+		'FAILED_TO_LOAD_NOTES': 'Notlar yüklenemedi'
 	}
 /*
 	[Language.HINDI]: {
@@ -290,7 +302,7 @@ const languages: ILanguageTranslation = {
 		"LANGUAGE": "भाषा",
 		"LOGOUT": "लॉग आउट",
 		"SELECT_MATCH_VIEW_MORE_DETAILS": "अधिक विवरण देखने के लिए एक मैच का चयन करें",
-		"STAT_TABLE": "सांख्यिकी तालिका",
+		"STATS_TABLE": "सांख्यिकी तालिका",
 		"MEAN_LIST": "औसत सूची",
 		"MEAN": "माध्य",
 		"MEDIAN": "माध्यिका",

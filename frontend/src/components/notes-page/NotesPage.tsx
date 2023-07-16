@@ -24,7 +24,6 @@ export default function NotesPage() {
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		// TODO: translate this
 		return <div className="state-page">{ translate('FAILED_TO_LOAD_NOTES') }</div>;
 	}
 
@@ -66,7 +65,6 @@ export default function NotesPage() {
 	return (
 		<div className="page notes-page">
 			<TableContainer>
-				{/* TODO: Translate 'NOTES_TABLE' and 'STATS_TABLE' */ }
 				<Table aria-label={ translate('NOTES_TABLE') }>
 					<TableHead>
 						<TableRow>

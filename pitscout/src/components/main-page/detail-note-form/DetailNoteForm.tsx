@@ -76,7 +76,7 @@ export default function DetailNoteForm() {
 				label="Describe auto paths"
 				value={ autoPaths }
 				onChange={ (event) => setAutoPaths(event.target.value) }
-			></TextField>
+			/>
 			<div className="score-locations-wrapper">
 				<FormGroup>
 					<div className="score-locations">
@@ -97,7 +97,7 @@ export default function DetailNoteForm() {
 				label="Notes on drivers"
 				value={ driverNotes }
 				onChange={ (event) => setDriverNotes(event.target.value) }
-			></TextField>
+			/>
 			<TextField
 				id="robot-notes"
 				name="RobotNotes"
@@ -106,8 +106,11 @@ export default function DetailNoteForm() {
 				label="Notes on robot"
 				value={ robotNotes }
 				onChange={ (event) => setRobotNotes(event.target.value) }
-			></TextField>
-			<Button id="submit-note" variant="contained">Submit</Button>
+			/>
+			<Button
+				id="submit-note"
+				variant="contained"
+			>Submit</Button>
 		</form>
 	);
 }

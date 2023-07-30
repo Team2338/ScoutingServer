@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import './MainPage.scss';
 import { createForm, selectForm, useAppDispatch, useAppSelector } from '../../state';
 import DetailNoteForm from './detail-note-form/DetailNoteForm';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	List,
+	ListItemButton,
+	TextField
+} from '@mui/material';
 
 export default function MainPage() {
 
@@ -12,13 +21,13 @@ export default function MainPage() {
 	const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
 	const listOptions = robotNumbers.map((robot: number) => (
-		<div
-			className="robot-list-item"
+		<ListItemButton
 			key={ robot }
+			selected={ robot === selectedRobot }
 			onClick={ () => dispatch(selectForm(robot)) }
 		>
-			<div className="robot-list-item__number">{ robot }</div>
-		</div>
+			<span className="robot-list-item__number">{ robot }</span>
+		</ListItemButton>
 	));
 
 	const detailSection = !!selectedRobot
@@ -35,7 +44,9 @@ export default function MainPage() {
 				>
 					(+) Add robot
 				</Button>
-				{ listOptions }
+				<List>
+					{ listOptions }
+				</List>
 			</div>
 			{ detailSection }
 			<AddRobotDialog

@@ -16,7 +16,11 @@ import {
 const CONE_SCORE_POSITIONS: string[] = ['Cone High', 'Cone Middle', 'Cone Low'];
 const CUBE_SCORE_POSITION: string[] = ['Cube High', 'Cube Middle', 'Cube Low'];
 
-export default function DetailNoteForm() {
+interface IProps {
+	robotNumber: number;
+}
+
+export default function DetailNoteForm(props: IProps) {
 
 	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
 	const [collectorType, setCollectorType]: Statelet<string> = useState('');
@@ -50,7 +54,7 @@ export default function DetailNoteForm() {
 
 	return (
 		<form className="detail-note-form">
-			<h1 className="detail-note-form__robot-number">2338</h1>
+			<h1 className="detail-note-form__robot-number">{ props.robotNumber }</h1>
 			<FormControl margin="dense">
 				<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>
 				<Select

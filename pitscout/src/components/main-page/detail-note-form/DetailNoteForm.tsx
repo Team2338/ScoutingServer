@@ -18,15 +18,15 @@ const CUBE_SCORE_POSITION: string[] = ['Cube High', 'Cube Middle', 'Cube Low'];
 
 export default function DetailNoteForm() {
 
-	const [drivetrain, setDrivetrain]: Statelet<string> = useState(null);
-	const [collectorType, setCollectorType]: Statelet<string> = useState(null);
-	const [elevatorType, setElevatorType]: Statelet<string> = useState(null);
+	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
+	const [collectorType, setCollectorType]: Statelet<string> = useState('');
+	const [elevatorType, setElevatorType]: Statelet<string> = useState('');
 	const [scoreLocations, setScoreLocations]: Statelet<string[]> = useState([]);
-	const [autoPaths, setAutoPaths]: Statelet<string> = useState(null);
-	const [driverNotes, setDriverNotes]: Statelet<string> = useState(null);
-	const [robotNotes, setRobotNotes]: Statelet<string> = useState(null);
+	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
+	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
+	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
 
-	const handleScoreLocationChange = (event, location: string) => {
+	const handleScoreLocationChange = (event, location: string): void => {
 		if (event.target.checked && !scoreLocations.includes(location)) {
 			setScoreLocations([...scoreLocations, location]);
 			return;
@@ -40,6 +40,7 @@ export default function DetailNoteForm() {
 
 	const convertLocationToCheckbox = (position: string) => (
 		<FormControlLabel
+			key={ position }
 			control={ <Checkbox/> }
 			label={ position }
 			checked={ scoreLocations.includes(position) }

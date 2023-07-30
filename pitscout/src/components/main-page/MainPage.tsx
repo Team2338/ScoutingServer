@@ -25,6 +25,10 @@ export default function MainPage() {
 			key={ robot }
 			selected={ robot === selectedRobot }
 			onClick={ () => dispatch(selectForm(robot)) }
+			sx={{
+				paddingTop: '12px',
+				paddingBottom: '12px'
+			}}
 		>
 			<span className="robot-list-item__number">{ robot }</span>
 		</ListItemButton>

@@ -1,6 +1,9 @@
 .detail-note-form {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  height: fit-content;
+  padding-bottom: 16px;
 
   .score-locations-wrapper {
     position: relative;

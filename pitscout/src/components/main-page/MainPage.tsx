@@ -52,7 +52,9 @@ export default function MainPage() {
 					{ listOptions }
 				</List>
 			</div>
-			{ detailSection }
+			<div className="detail-section">
+				{ detailSection }
+			</div>
 			<AddRobotDialog
 				open={ isModalOpen }
 				handleClose={ () => setModalOpen(false) }

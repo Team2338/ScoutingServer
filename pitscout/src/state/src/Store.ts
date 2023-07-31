@@ -82,7 +82,7 @@ const reducer = createReducer(initialState, builder => {
 			}
 
 			state.forms.robots.push(action.payload);
-			state.forms.robots.sort();
+			state.forms.robots.sort((a: number, b: number) => a - b);
 			state.forms.data[action.payload] = {
 				loadStatus: LoadStatus.none,
 				error: null,

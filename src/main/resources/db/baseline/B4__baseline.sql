@@ -115,7 +115,7 @@ CREATE TABLE detail_notes (
 	event_code   varchar(32) NOT NULL,
 	secret_code  varchar(32) NOT NULL,
 	question     varchar(32) NOT NULL,
-	answer       varchar(32) NOT NULL,
+	answer       varchar(1024) NOT NULL,
 	creator      varchar(32) NOT NULL,
 	time_created varchar(32) NOT NULL,
 	CONSTRAINT detail_notes_pkey PRIMARY KEY (id),

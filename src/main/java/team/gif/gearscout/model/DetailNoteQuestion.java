@@ -7,7 +7,7 @@ public class DetailNoteQuestion {
 	@Size(min = 1, max = 32)
 	private String question;
 
-	@Size(min = 1, max = 32)
+	@Size(min = 1, max = 1024)
 	private String answer;
 
 	@Size(min = 1, max = 32)

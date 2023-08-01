@@ -53,7 +53,7 @@ public class DetailNoteEntity {
 	private String question;
 
 	@Column(name = "answer", nullable = false)
-	@Size(min = 1, max = 32)
+	@Size(min = 1, max = 1024)
 	private String answer;
 
 	@Column(name = "creator", nullable = false)

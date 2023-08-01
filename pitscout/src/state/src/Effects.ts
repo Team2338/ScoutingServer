@@ -1,8 +1,30 @@
 import { AxiosError, HttpStatusCode } from 'axios';
-import { IPitState, IToken, IUser, LoginErrors, UploadErrors, UserRoles } from '../../models';
-import apiService from '../../services/ApiService';
+import {
+	FormErrors, IForm,
+	IFormQuestion,
+	IPitState,
+	IToken,
+	IUser,
+	LoginErrors,
+	UploadErrors,
+	UserRoles
+} from '../../models';
 import ApiService from '../../services/ApiService';
-import { AppDispatch, loginFailed, loginStart, loginSuccess, logoutSuccess, uploadFailed, uploadStart, uploadSuccess } from './Store';
+import FormModelService from '../../services/FormModelService';
+import {
+	AppDispatch,
+	loginFailed,
+	loginStart,
+	loginSuccess,
+	logoutSuccess,
+	uploadFailed,
+	uploadFormFailed,
+	uploadFormStart,
+	uploadFormSuccess,
+	uploadStart,
+	uploadSuccess
+} from './Store';
+import { ICreateDetailNoteRequest, IDetailNoteQuestion } from '../../models/src/RequestModels';
 
 type GetState = () => IPitState;
 
@@ -27,7 +49,7 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 	dispatch(loginStart());
 
 	try {
-		const response = await apiService.login({
+		const response = await ApiService.login({
 			teamNumber: Number(credentials.teamNumber),
 			username: credentials.username
 		});
@@ -89,5 +111,42 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 		}
 
 		dispatch(uploadFailed(msg));
+	}
+};
+
+export const uploadForm = (robotNumber: number, questions: IFormQuestion[]) => async (dispatch: AppDispatch, getState: GetState) => {
+	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
+		getState().login.user,
+		robotNumber,
+		questions
+	);
+	const formState: IForm = FormModelService.convertQuestionsToFormState(
+		getState().login.user,
+		robotNumber,
+		questions
+	);
+
+	dispatch(uploadFormStart(formState));
+
+	try {
+		await ApiService.uploadForm(getState().login.user, request, getState().login.token);
+		dispatch(uploadFormSuccess(robotNumber));
+	} catch (error) {
+		console.log(error);
+		const err = error as AxiosError;
+		let msg: FormErrors = FormErrors.unknown;
+		if (error.response) {
+			switch (err.response.status) {
+				case HttpStatusCode.Unauthorized: // Fallthrough
+				case HttpStatusCode.Forbidden:
+					msg = FormErrors.unauthorized;
+					break;
+			}
+		}
+
+		dispatch(uploadFormFailed({
+			robotNumber: robotNumber,
+			error: msg
+		}));
 	}
 };

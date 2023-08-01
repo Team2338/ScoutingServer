@@ -12,6 +12,7 @@ import {
 	Select,
 	TextField
 } from '@mui/material';
+import { AppDispatch, uploadForm, useAppDispatch } from '../../../state';
 
 const CONE_SCORE_POSITIONS: string[] = ['Cone High', 'Cone Middle', 'Cone Low'];
 const CUBE_SCORE_POSITION: string[] = ['Cube High', 'Cube Middle', 'Cube Low'];
@@ -22,6 +23,7 @@ interface IProps {
 
 export default function DetailNoteForm(props: IProps) {
 
+	const dispatch: AppDispatch = useAppDispatch();
 	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
 	const [collectorType, setCollectorType]: Statelet<string> = useState('');
 	const [elevatorType, setElevatorType]: Statelet<string> = useState('');
@@ -29,6 +31,31 @@ export default function DetailNoteForm(props: IProps) {
 	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
+
+	const submit = (): void => {
+		dispatch(uploadForm(props.robotNumber, [
+			{
+				question: 'Drivetrain',
+				answer: drivetrain
+			},
+			{
+				question: 'Score locations',
+				answer: scoreLocations.join(', ')
+			},
+			{
+				question: 'Auto paths',
+				answer: autoPaths
+			},
+			{
+				question: 'Driver notes',
+				answer: driverNotes
+			},
+			{
+				question: 'Robot notes',
+				answer: robotNotes
+			}
+		]));
+	};
 
 	const handleScoreLocationChange = (event, location: string): void => {
 		if (event.target.checked && !scoreLocations.includes(location)) {
@@ -115,7 +142,10 @@ export default function DetailNoteForm(props: IProps) {
 			<Button
 				id="submit-note"
 				variant="contained"
-			>Submit</Button>
+				onClick={ submit }
+			>
+				Submit
+			</Button>
 		</form>
 	);
 }

@@ -91,7 +91,10 @@ const languages: ILanguageTranslation = {
 		'CLOSE': 'Close',
 		'SEARCH': 'Search',
 		'FAILED_TO_LOAD_STATS': 'Failed to load stats',
-		'FAILED_TO_LOAD_NOTES': 'Failed to load notes'
+		'FAILED_TO_LOAD_NOTES': 'Failed to load notes',
+		'DRIVETRAIN': 'Drivetrain',
+		'PROGRAMMING_LANGUAGE': 'Programming Language',
+		'GAMEPIECE_PREF': 'Gamepiece Preference'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -155,7 +158,10 @@ const languages: ILanguageTranslation = {
 		'CLOSE': 'Cerrar',
 		'SEARCH': 'Buscar',
 		'FAILED_TO_LOAD_STATS': 'Error al cargar estadísticas',
-		'FAILED_TO_LOAD_NOTES': 'Error al cargar notas'
+		'FAILED_TO_LOAD_NOTES': 'Error al cargar notas',
+		'DRIVETRAIN': 'Transmisión',
+		'PROGRAMMING_LANGUAGE': 'Lenguaje de Programación',
+		'GAMEPIECE_PREF': 'Preferencia de piezas de Juego'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -219,7 +225,10 @@ const languages: ILanguageTranslation = {
 		'CLOSE': 'Fermer',
 		'SEARCH': 'Chercher',
 		'FAILED_TO_LOAD_STATS': 'Échec du chargement des statistiques',
-		'FAILED_TO_LOAD_NOTES': 'Échec du chargement des notes'
+		'FAILED_TO_LOAD_NOTES': 'Échec du chargement des notes',
+		'DRIVETRAIN': 'Transmission',
+		'PROGRAMMING_LANGUAGE': 'Langage de Programmation',
+		'GAMEPIECE_PREF': 'Préférence de Pièce de Jeu'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -283,7 +292,10 @@ const languages: ILanguageTranslation = {
 		'CLOSE': 'Kapatmak',
 		'SEARCH': 'Aramak',
 		'FAILED_TO_LOAD_STATS': 'İstatistikler yüklenemedi',
-		'FAILED_TO_LOAD_NOTES': 'Notlar yüklenemedi'
+		'FAILED_TO_LOAD_NOTES': 'Notlar yüklenemedi',
+		'DRIVETRAIN': 'Aktarma organları',
+		'PROGRAMMING_LANGUAGE': 'Programlama dili',
+		'GAMEPIECE_PREF': 'Oyun parçası tercihi'
 	}
 /*
 	[Language.HINDI]: {

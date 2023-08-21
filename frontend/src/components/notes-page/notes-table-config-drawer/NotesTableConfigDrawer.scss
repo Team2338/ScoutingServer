@@ -1,0 +1,17 @@
+
+.notes-table-config-drawer {
+	&__header {
+		display: flex;
+		align-items: center;
+		height: var(--header-height);
+		border-bottom: 1px solid var(--border-color);
+		padding: 0 24px 0 16px;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		row-gap: 4px;
+		padding: 12px 24px 16px 16px;
+	}
+}

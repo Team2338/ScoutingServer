@@ -77,4 +77,5 @@ export interface DetailNotesState {
 	loadStatus: LoadStatus;
 	notes: DetailNote[];
 	questionNames: string[];
+	hiddenQuestionNames: string[];
 }

@@ -93,8 +93,8 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_STATS': 'Failed to load stats',
 		'FAILED_TO_LOAD_NOTES': 'Failed to load notes',
 		'DRIVETRAIN': 'Drivetrain',
-		'PROGRAMMING_LANGUAGE': 'Programming Language',
-		'GAMEPIECE_PREF': 'Gamepiece Preference'
+		'PROGRAMMING_LANGUAGE': 'Programming language',
+		'GAMEPIECE_PREF': 'Gamepiece preference'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -160,7 +160,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_STATS': 'Error al cargar estadísticas',
 		'FAILED_TO_LOAD_NOTES': 'Error al cargar notas',
 		'DRIVETRAIN': 'Transmisión',
-		'PROGRAMMING_LANGUAGE': 'Lenguaje de Programación',
+		'PROGRAMMING_LANGUAGE': 'Lenguaje de programación',
 		'GAMEPIECE_PREF': 'Preferencia de piezas de Juego'
 	},
 	[Language.FRENCH]: {
@@ -227,8 +227,8 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_STATS': 'Échec du chargement des statistiques',
 		'FAILED_TO_LOAD_NOTES': 'Échec du chargement des notes',
 		'DRIVETRAIN': 'Transmission',
-		'PROGRAMMING_LANGUAGE': 'Langage de Programmation',
-		'GAMEPIECE_PREF': 'Préférence de Pièce de Jeu'
+		'PROGRAMMING_LANGUAGE': 'Langage de programmation',
+		'GAMEPIECE_PREF': 'Préférence de pièce de jeu'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',

@@ -51,7 +51,9 @@ export enum Actions {
 	GET_EVENT_IMAGE_INFO_FAIL = '[IMAGE] Failed to get event info',
 	GET_DETAIL_NOTES_START = '[NOTES] Start getting detail notes',
 	GET_DETAIL_NOTES_SUCCESS = '[NOTES] Successfully got detail notes',
-	GET_DETAIL_NOTES_FAIL = '[NOTES] Failed to get detail notes'
+	GET_DETAIL_NOTES_FAIL = '[NOTES] Failed to get detail notes',
+	HIDE_DETAIL_NOTE_COLUMN = '[NOTES] Hide column',
+	SHOW_DETAIL_NOTE_COLUMN = '[NOTES] Show column'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -255,4 +257,14 @@ export const getDetailNotesSuccess = (notes: DetailNote[], questionNames: string
 
 export const getDetailNotesFail = (): Action => ({
 	type: Actions.GET_DETAIL_NOTES_FAIL
+});
+
+export const hideNotesColumn = (column: string): Action => ({
+	type: Actions.HIDE_DETAIL_NOTE_COLUMN,
+	payload: column
+});
+
+export const showNotesColumn = (column: string): Action => ({
+	type: Actions.SHOW_DETAIL_NOTE_COLUMN,
+	payload: column
 });

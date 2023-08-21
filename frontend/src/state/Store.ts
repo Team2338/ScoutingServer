@@ -56,7 +56,8 @@ const INITIAL_STATE: AppState = {
 	detailNotes: {
 		loadStatus: LoadStatus.none,
 		notes: [],
-		questionNames: []
+		questionNames: [],
+		hiddenQuestionNames: []
 	}
 };
 
@@ -363,6 +364,22 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				detailNotes: {
 					...state.detailNotes,
 					loadStatus: getNextStatusOnFail(state.detailNotes.loadStatus)
+				}
+			};
+		case Actions.HIDE_DETAIL_NOTE_COLUMN:
+			return {
+				...state,
+				detailNotes: {
+					...state.detailNotes,
+					hiddenQuestionNames: state.detailNotes.hiddenQuestionNames.concat(action.payload)
+				}
+			};
+		case Actions.SHOW_DETAIL_NOTE_COLUMN:
+			return {
+				...state,
+				detailNotes: {
+					...state.detailNotes,
+					hiddenQuestionNames: state.detailNotes.hiddenQuestionNames.filter((col: string) => col !== action.payload)
 				}
 			};
 		default:

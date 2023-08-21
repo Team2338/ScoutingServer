@@ -1,9 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './NotesPage.scss';
 import { useTranslator } from '../../service/TranslateService';
 import { DetailNote, DetailNoteQuestion, LoadStatus } from '../../models';
-import { getDetailNotes, useAppDispatch, useAppSelector } from '../../state';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+	AppDispatch,
+	getDetailNotes,
+	hideNotesColumn,
+	showNotesColumn,
+	useAppDispatch,
+	useAppSelector
+} from '../../state';
+import {
+	Checkbox,
+	Drawer,
+	Icon,
+	IconButton,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography
+} from '@mui/material';
 
 export default function NotesPage() {
 	const translate = useTranslator();
@@ -11,10 +30,13 @@ export default function NotesPage() {
 	const loadStatus: LoadStatus = useAppSelector(state => state.detailNotes.loadStatus);
 	const notes: DetailNote[] = useAppSelector(state => state.detailNotes.notes);
 	const questionNames: string[] = useAppSelector(state => state.detailNotes.questionNames);
+	const hiddenQuestionNames: string[] = useAppSelector(state => state.detailNotes.hiddenQuestionNames);
+	const [isConfigDrawerOpen, setConfigDrawerOpen] = useState<boolean>(false);
+	const _loadPitNotes = () => dispatch(getDetailNotes());
 
 	useEffect(
 		() => {
-			dispatch(getDetailNotes());
+			_loadPitNotes();
 		},
 		[dispatch]
 	);
@@ -28,7 +50,10 @@ export default function NotesPage() {
 	}
 
 	const isLoadingInBackground: boolean = loadStatus === LoadStatus.loadingWithPriorSuccess;
-	const headers = questionNames.map((question: string) => (
+	const filteredQuestionNames: string[] = questionNames
+		.filter((questionName: string) => !hiddenQuestionNames.includes(questionName));
+
+	const headers = filteredQuestionNames.map((question: string) => (
 		<TableCell key={ question } align="center">
 			{ translate(question) }
 		</TableCell>
@@ -41,7 +66,7 @@ export default function NotesPage() {
 			robotQuestionMap.set(question.question, question);
 		}
 
-		const cells = questionNames.map((questionName: string) => {
+		const cells = filteredQuestionNames.map((questionName: string) => {
 			if (robotQuestionMap.has(questionName)) {
 				const question: DetailNoteQuestion = robotQuestionMap.get(questionName);
 				return (
@@ -64,6 +89,17 @@ export default function NotesPage() {
 
 	return (
 		<div className="page notes-page">
+			<div className="controls-area">
+				<Typography variant="h6">{ translate('NOTES') }</Typography>
+				<div className="controls">
+					<IconButton onClick={_loadPitNotes}>
+						<Icon>refresh</Icon>
+					</IconButton>
+					<IconButton onClick={() => setConfigDrawerOpen(true)}>
+						<Icon>settings</Icon>
+					</IconButton>
+				</div>
+			</div>
 			<TableContainer>
 				<Table aria-label={ translate('NOTES_TABLE') }>
 					<TableHead>
@@ -79,6 +115,63 @@ export default function NotesPage() {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<NotesTableConfigDrawer
+				isOpen={isConfigDrawerOpen}
+				handleClose={() => setConfigDrawerOpen(false)}
+			/>
 		</div>
+	);
+}
+
+function NotesTableConfigDrawer(props: {
+	isOpen: boolean;
+	handleClose: () => void;
+}) {
+	const dispatch: AppDispatch = useAppDispatch();
+	const translate = useTranslator();
+	const columns: string[] = useAppSelector(state => state.detailNotes.questionNames);
+	const hiddenColumns: string[] = useAppSelector(state => state.detailNotes.hiddenQuestionNames);
+
+	const _hideColumn = (column: string): void => {
+		dispatch(hideNotesColumn(column));
+	};
+
+	const _showColumn = (column: string): void => {
+		dispatch(showNotesColumn(column));
+	};
+
+	const handleCheckboxClick = (column: string, isChecked: boolean): void => {
+		if (isChecked) {
+			_showColumn(column);
+			return;
+		}
+
+		_hideColumn(column);
+	};
+
+	const checkboxes = columns.map((title: string) => (
+		<div key={title}>
+			<Checkbox
+				checked={!hiddenColumns.includes(title)}
+				onChange={(event) => handleCheckboxClick(title, event.target.checked)}
+			/>
+			<label>{ translate(title) }</label>
+		</div>
+	));
+
+	return (
+		<Drawer
+			anchor="right"
+			open={props.isOpen}
+			onClose={props.handleClose}
+			PaperProps={{
+				sx: {
+					padding: '16px 24px 16px 16px'
+				}
+			}}
+		>
+			<Typography variant="h6">Show columns</Typography>
+			{ checkboxes }
+		</Drawer>
 	);
 }

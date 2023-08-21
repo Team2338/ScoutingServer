@@ -173,6 +173,16 @@ function NotesTableConfigDrawer(props: {
 				<Typography variant="h6">Show columns</Typography>
 			</div>
 			<div className="notes-page-config-drawer__body">
+				<FormControlLabel
+					key="TEAM_NUMBER"
+					label={ translate('TEAM_NUMBER') }
+					control={
+						<Checkbox
+							checked={true}
+							disabled={true}
+						/>
+					}
+				/>
 				{ checkboxes }
 			</div>
 		</Drawer>

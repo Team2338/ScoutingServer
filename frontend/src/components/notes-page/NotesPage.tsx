@@ -15,7 +15,7 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow,
+	TableRow, Tooltip,
 	Typography
 } from '@mui/material';
 import NotesTableConfigDrawer from './notes-table-config-drawer/NotesTableConfigDrawer';
@@ -88,12 +88,16 @@ export default function NotesPage() {
 			<div className="controls-area">
 				<Typography variant="h6">{ translate('NOTES') }</Typography>
 				<div className="controls">
-					<IconButton onClick={ _loadPitNotes }>
-						<Icon>refresh</Icon>
-					</IconButton>
-					<IconButton onClick={ () => setConfigDrawerOpen(true) }>
-						<Icon>settings</Icon>
-					</IconButton>
+					<Tooltip title={ translate('REFRESH_DATA') }>
+						<IconButton onClick={ _loadPitNotes }>
+							<Icon>refresh</Icon>
+						</IconButton>
+					</Tooltip>
+					<Tooltip title={ translate('TABLE_SETTINGS') }>
+						<IconButton onClick={ () => setConfigDrawerOpen(true) }>
+							<Icon>settings</Icon>
+						</IconButton>
+					</Tooltip>
 				</div>
 			</div>
 			<TableContainer>

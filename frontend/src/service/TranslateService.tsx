@@ -94,7 +94,10 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_NOTES': 'Failed to load notes',
 		'DRIVETRAIN': 'Drivetrain',
 		'PROGRAMMING_LANGUAGE': 'Programming language',
-		'GAMEPIECE_PREF': 'Gamepiece preference'
+		'GAMEPIECE_PREF': 'Gamepiece preference',
+		'REFRESH_DATA': 'Refresh data',
+		'TABLE_SETTINGS': 'Table settings',
+		'SHOW_COLUMNS': 'Show columns'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -161,7 +164,10 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_NOTES': 'Error al cargar notas',
 		'DRIVETRAIN': 'Transmisión',
 		'PROGRAMMING_LANGUAGE': 'Lenguaje de programación',
-		'GAMEPIECE_PREF': 'Preferencia de piezas de Juego'
+		'GAMEPIECE_PREF': 'Preferencia de piezas de juego',
+		'REFRESH_DATA': 'Actualizar datos',
+		'TABLE_SETTINGS': 'Configuración de la mesa',
+		'SHOW_COLUMNS': 'Mostrar columnas'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -228,7 +234,10 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_NOTES': 'Échec du chargement des notes',
 		'DRIVETRAIN': 'Transmission',
 		'PROGRAMMING_LANGUAGE': 'Langage de programmation',
-		'GAMEPIECE_PREF': 'Préférence de pièce de jeu'
+		'GAMEPIECE_PREF': 'Préférence de pièce de jeu',
+		'REFRESH_DATA': 'Recharger les données',
+		'TABLE_SETTINGS': 'Paramètres du tableau',
+		'SHOW_COLUMNS': 'Afficher les colonnes'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -295,7 +304,10 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_NOTES': 'Notlar yüklenemedi',
 		'DRIVETRAIN': 'Aktarma organları',
 		'PROGRAMMING_LANGUAGE': 'Programlama dili',
-		'GAMEPIECE_PREF': 'Oyun parçası tercihi'
+		'GAMEPIECE_PREF': 'Oyun parçası tercihi',
+		'REFRESH_DATA': 'Sütunları göster',
+		'TABLE_SETTINGS': 'Tablo ayarları',
+		'SHOW_COLUMNS': 'Verileri yeniden yükle'
 	}
 /*
 	[Language.HINDI]: {

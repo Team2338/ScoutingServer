@@ -52,7 +52,7 @@ export default function NotesTableConfigDrawer(props: IProps) {
 			onClose={ props.handleClose }
 		>
 			<div className="notes-table-config-drawer__header">
-				<Typography variant="h6">Show columns</Typography>
+				<Typography variant="h6">{ translate('SHOW_COLUMNS') }</Typography>
 			</div>
 			<div className="notes-table-config-drawer__body">
 				<FormControlLabel

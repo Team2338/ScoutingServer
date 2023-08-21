@@ -13,6 +13,7 @@ import {
 import {
 	Checkbox,
 	Drawer,
+	FormControlLabel,
 	Icon,
 	IconButton,
 	Table,
@@ -92,10 +93,10 @@ export default function NotesPage() {
 			<div className="controls-area">
 				<Typography variant="h6">{ translate('NOTES') }</Typography>
 				<div className="controls">
-					<IconButton onClick={_loadPitNotes}>
+					<IconButton onClick={ _loadPitNotes }>
 						<Icon>refresh</Icon>
 					</IconButton>
-					<IconButton onClick={() => setConfigDrawerOpen(true)}>
+					<IconButton onClick={ () => setConfigDrawerOpen(true) }>
 						<Icon>settings</Icon>
 					</IconButton>
 				</div>
@@ -116,8 +117,8 @@ export default function NotesPage() {
 				</Table>
 			</TableContainer>
 			<NotesTableConfigDrawer
-				isOpen={isConfigDrawerOpen}
-				handleClose={() => setConfigDrawerOpen(false)}
+				isOpen={ isConfigDrawerOpen }
+				handleClose={ () => setConfigDrawerOpen(false) }
 			/>
 		</div>
 	);
@@ -150,28 +151,30 @@ function NotesTableConfigDrawer(props: {
 	};
 
 	const checkboxes = columns.map((title: string) => (
-		<div key={title}>
-			<Checkbox
-				checked={!hiddenColumns.includes(title)}
-				onChange={(event) => handleCheckboxClick(title, event.target.checked)}
-			/>
-			<label>{ translate(title) }</label>
-		</div>
+		<FormControlLabel
+			key={ title }
+			label={ translate(title) }
+			control={
+				<Checkbox
+					checked={ !hiddenColumns.includes(title) }
+					onChange={ (event) => handleCheckboxClick(title, event.target.checked) }
+				/>
+			}
+		/>
 	));
 
 	return (
 		<Drawer
 			anchor="right"
-			open={props.isOpen}
-			onClose={props.handleClose}
-			PaperProps={{
-				sx: {
-					padding: '16px 24px 16px 16px'
-				}
-			}}
+			open={ props.isOpen }
+			onClose={ props.handleClose }
 		>
-			<Typography variant="h6">Show columns</Typography>
-			{ checkboxes }
+			<div className="notes-page-config-drawer__header">
+				<Typography variant="h6">Show columns</Typography>
+			</div>
+			<div className="notes-page-config-drawer__body">
+				{ checkboxes }
+			</div>
 		</Drawer>
 	);
 }

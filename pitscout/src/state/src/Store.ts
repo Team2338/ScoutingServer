@@ -1,6 +1,6 @@
-import {configureStore, createAction, createReducer} from '@reduxjs/toolkit';
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {FormErrors, IForm, IPitState, IToken, IUser, LoadStatus, LoginErrors, UploadErrors} from '../../models';
+import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { FormErrors, IForm, IPitState, IToken, IUser, LoadStatus, LoginErrors, UploadErrors } from '../../models';
 
 export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
@@ -12,6 +12,7 @@ export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
 export const uploadFailed = createAction<UploadErrors>('upload/upload-failed');
 export const clearUploadError = createAction('upload/clear-error');
+export const resetImageUpload = createAction('upload/reset');
 
 export const createForm = createAction<number>('form/create-form');
 export const selectForm = createAction<number>('form/select-form');
@@ -73,6 +74,9 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(clearUploadError, (state: IPitState) => {
 			state.upload.error = null;
+		})
+		.addCase(resetImageUpload, (state: IPitState) => {
+			state.upload = initialState.upload;
 		})
 		.addCase(createForm, (state: IPitState, action) => {
 			if (state.forms.robots.includes(action.payload)) {

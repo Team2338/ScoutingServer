@@ -1,18 +1,14 @@
 import { Alert, Button, InputAdornment, Snackbar, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { LoadStatus, UploadErrors } from '../../models';
+import { FILE_SIZE_LIMIT_BYTES, LoadStatus, Statelet, UploadErrors } from '../../models';
 import { clearUploadError, uploadImage, useAppDispatch, useAppSelector } from '../../state';
 import './ImageUploadPage.scss';
 import ImagePicker from '../image-picker/ImagePicker';
 
-const ONE_MB: number = 1024 * 1024;
-const FILE_SIZE_LIMIT_MEGABYTES: number = 10;
-const FILE_SIZE_LIMIT: number = FILE_SIZE_LIMIT_MEGABYTES * ONE_MB;
-
 export default function ImageUploadPage() {
 	const dispatch = useAppDispatch();
-	const [teamNumber, setTeamNumber] = useState<string>('');
-	const [file, setFile] = useState<File>(null);
+	const [teamNumber, setTeamNumber]: Statelet<string> = useState<string>('');
+	const [file, setFile]: Statelet<File> = useState<File>(null);
 	const loadStatus: LoadStatus = useAppSelector(state => state.upload.loadStatus);
 	const errorMessage: string = useAppSelector(state => state.upload.error);
 
@@ -35,7 +31,7 @@ export default function ImageUploadPage() {
 		dispatch(clearUploadError());
 	};
 
-	const isFileTooLarge: boolean = file?.size >= FILE_SIZE_LIMIT;
+	const isFileTooLarge: boolean = file?.size >= FILE_SIZE_LIMIT_BYTES;
 
 	return (
 		<div className="image-upload-page">

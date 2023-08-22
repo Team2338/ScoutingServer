@@ -13,7 +13,8 @@ import {
 	TextField
 } from '@mui/material';
 import { AppDispatch, uploadForm, useAppDispatch } from '../../../state';
-import ImageUploadPage from '../../image-upload-page/ImageUploadPage';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import AddImageDialog from './add-image-dialog/AddImageDialog';
 
 const CONE_SCORE_POSITIONS: string[] = ['Cone High', 'Cone Middle', 'Cone Low'];
 const CUBE_SCORE_POSITION: string[] = ['Cube High', 'Cube Middle', 'Cube Low'];
@@ -25,6 +26,7 @@ interface IProps {
 export default function DetailNoteForm(props: IProps) {
 
 	const dispatch: AppDispatch = useAppDispatch();
+	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState(false);
 	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
 	// const [collectorType, setCollectorType]: Statelet<string> = useState('');
 	// const [elevatorType, setElevatorType]: Statelet<string> = useState('');
@@ -82,9 +84,21 @@ export default function DetailNoteForm(props: IProps) {
 
 	return (
 		<Fragment>
-			<ImageUploadPage/>
 			<form className="detail-note-form">
-				<h1 className="detail-note-form__robot-number">{ props.robotNumber }</h1>
+				<div className="title-area">
+					<h1 className="title">{ props.robotNumber }</h1>
+					<Button
+						id="add-image-button"
+						aria-label="Add image"
+						color="primary"
+						variant="contained"
+						startIcon={ <AddPhotoAlternateIcon/> }
+						disableElevation={ true }
+						onClick={ () => setImageModalOpen(true) }
+					>
+						Add image
+					</Button>
+				</div>
 				<FormControl margin="dense">
 					<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>
 					<Select
@@ -150,6 +164,11 @@ export default function DetailNoteForm(props: IProps) {
 					Submit
 				</Button>
 			</form>
+			<AddImageDialog
+				robotNumber={ props.robotNumber }
+				isOpen={ isImageModalOpen }
+				handleClose={ () => setImageModalOpen(false) }
+			/>
 		</Fragment>
 	);
 }

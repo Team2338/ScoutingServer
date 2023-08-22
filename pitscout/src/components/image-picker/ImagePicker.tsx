@@ -21,17 +21,17 @@ export default function ImagePicker(props: IProps) {
 
 	return (
 		<div className="image-picker">
-			<label className={ 'file-input-label' + (props.isError ? ' error' : '') }>
+			<label className={ 'image-picker-label' + (props.isError ? ' error' : '') }>
 				<input
 					ref={ fileInputRef }
-					className="file-input-vanilla"
+					className="image-picker-vanilla"
 					type="file"
 					accept="image/jpeg, image/jpg, image/png"
 					onChange={ event => { props.setFile(event.target.files[0])} }
 					aria-invalid={ props.isError }
 				/>
-				<div className="file-input-prompt">{ props.label }</div>
-				<div className="file-input-selection">
+				<div className="image-picker-prompt">{ props.label }</div>
+				<div className="image-picker-selection">
 					{ props.file ? props.file.name : 'No image selected'}
 				</div>
 			</label>
@@ -39,7 +39,7 @@ export default function ImagePicker(props: IProps) {
 				variant="caption"
 				component="div"
 				color={ props.isError ? 'error' : '#00000099' }
-				id={ props.isError ? 'file-input-error-text' : 'file-input-helper-text' }
+				id={ props.isError ? 'image-picker-error-text' : 'image-picker-helper-text' }
 				role={ props.isError ? 'alert' : null }
 				aria-label={ props.helperText }
 				sx={{ paddingLeft: '8px' }}

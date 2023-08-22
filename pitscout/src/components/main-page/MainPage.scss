@@ -5,10 +5,11 @@
 	max-height: calc(100vh - var(--header-height));
 	overflow-y: clip;
 
-	.robot-list {
+	.robot-list-wrapper {
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
+		border-right: 1px solid rgba(0, 0, 0, 0.12);
 		width: 192px;
 		height: 100vb;
 		max-height: 100%;

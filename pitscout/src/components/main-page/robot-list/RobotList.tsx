@@ -12,6 +12,7 @@ export default function RobotList() {
 	const listOptions = robotNumbers.map((robot: number) => (
 		<ListItemButton
 			key={ robot }
+			id="robot-list-item"
 			selected={ robot === selectedRobot }
 			onClick={ () => dispatch(selectForm(robot)) }
 			sx={{
@@ -24,7 +25,7 @@ export default function RobotList() {
 	));
 
 	return (
-		<List>
+		<List id="robot-list">
 			{ listOptions }
 		</List>
 	);

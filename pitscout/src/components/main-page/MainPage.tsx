@@ -21,7 +21,7 @@ export default function MainPage() {
 
 	return (
 		<div className="main-page">
-			<div className="robot-list">
+			<div className="robot-list-wrapper">
 				<Button
 					id="robot-list-add"
 					variant="text"

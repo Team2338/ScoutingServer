@@ -1,6 +1,16 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { FormErrors, IForm, IPitState, IToken, IUser, LoadStatus, LoginErrors, UploadErrors } from '../../models';
+import {
+	BasicMap,
+	FormErrors,
+	IForm,
+	IPitState,
+	IToken,
+	IUser,
+	LoadStatus,
+	LoginErrors,
+	UploadErrors
+} from '../../models';
 
 export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
@@ -19,6 +29,9 @@ export const selectForm = createAction<number>('form/select-form');
 export const uploadFormStart = createAction<IForm>('form/upload-form-start');
 export const uploadFormSuccess = createAction<number>('form/upload-form-success');
 export const uploadFormFailed = createAction<{ robotNumber: number, error: FormErrors }>('form/upload-form-failed');
+export const getAllFormsStart = createAction('form/get-all-start');
+export const getAllFormsSuccess = createAction<BasicMap<IForm>>('form/get-all-success');
+export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 // export const clearFormError = createAction('form/clear-error');
 
 const initialState: IPitState = {
@@ -112,12 +125,35 @@ const reducer = createReducer(initialState, builder => {
 			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.failed;
 			state.forms.data[action.payload.robotNumber].error = action.payload.error;
 		})
+		.addCase(getAllFormsStart, (state: IPitState) => {
+			state.forms.loadStatus = getNextStatusOnLoad(state.forms.loadStatus);
+		})
+		.addCase(getAllFormsSuccess, (state: IPitState, action) => {
+			state.forms.loadStatus = LoadStatus.success;
+			state.forms.data = action.payload;
+		})
+		.addCase(getAllFormsFailed, (state: IPitState, action) => {
+			state.forms.loadStatus = LoadStatus.failed;
+			state.forms.error = action.payload;
+		})
 	;
 });
 
 export const store = configureStore({
 	reducer: reducer
 });
+
+const getNextStatusOnLoad =(previousStatus: LoadStatus): LoadStatus => {
+	if (
+		previousStatus === LoadStatus.success
+		|| previousStatus === LoadStatus.loadingWithPriorSuccess
+		|| previousStatus === LoadStatus.failedWithPriorSuccess
+	) {
+		return LoadStatus.loadingWithPriorSuccess;
+	}
+
+	return LoadStatus.loading;
+};
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;

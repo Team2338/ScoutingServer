@@ -1,6 +1,8 @@
 import { AxiosError, HttpStatusCode } from 'axios';
 import {
-	FormErrors, IForm,
+	BasicMap,
+	FormErrors,
+	IForm,
 	IFormQuestion,
 	IPitState,
 	IToken,
@@ -12,7 +14,9 @@ import {
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
 import {
-	AppDispatch,
+	AppDispatch, getAllFormsFailed,
+	getAllFormsStart,
+	getAllFormsSuccess,
 	loginFailed,
 	loginStart,
 	loginSuccess,
@@ -24,7 +28,7 @@ import {
 	uploadStart,
 	uploadSuccess
 } from './Store';
-import { ICreateDetailNoteRequest, IDetailNoteQuestion } from '../../models/src/RequestModels';
+import { ICreateDetailNoteRequest } from '../../models/src/RequestModels';
 
 type GetState = () => IPitState;
 
@@ -150,3 +154,33 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestion[]) => a
 		}));
 	}
 };
+
+export const loadForms = () => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(getAllFormsStart());
+
+	try {
+		const questions = await ApiService.getAllForms(
+			new Date().getFullYear(),
+			getState().login.user,
+			getState().login.token
+		);
+
+		const forms: BasicMap<IForm> = FormModelService.convertResponseQuestionsToForms(questions.data);
+
+		dispatch(getAllFormsSuccess(forms));
+	} catch (error) {
+		console.log(error);
+		const err = error as AxiosError;
+		let msg: FormErrors = FormErrors.unknown;
+		if (error.response) {
+			switch (err.response.status) {
+				case HttpStatusCode.Unauthorized: // Fallthrough
+				case HttpStatusCode.Forbidden:
+					msg = FormErrors.unauthorized;
+					break;
+			}
+		}
+
+		dispatch(getAllFormsFailed(msg));
+	}
+}

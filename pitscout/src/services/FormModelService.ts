@@ -1,5 +1,13 @@
-import { IForm, IFormQuestion, IUser } from '../models';
-import { ICreateDetailNoteRequest, IDetailNoteQuestion } from '../models/src/RequestModels';
+import {
+	BasicMap,
+	ICreateDetailNoteRequest,
+	IDetailNoteQuestion,
+	IDetailNoteQuestionResponse,
+	IForm,
+	IFormQuestion,
+	IUser,
+	LoadStatus
+} from '../models';
 
 class FormModelService {
 
@@ -24,6 +32,28 @@ class FormModelService {
 			questions: questions
 		};
 	}
+
+
+	convertResponseQuestionsToForms = (questions: IDetailNoteQuestionResponse[]): BasicMap<IForm> => {
+		const response: BasicMap<IForm> = {};
+		for (const question of questions) {
+			if (!response.hasOwnProperty(question.robotNumber)) {
+				response[question.robotNumber] = {
+					loadStatus: LoadStatus.success,
+					error: null,
+					robotNumber: question.robotNumber,
+					questions: []
+				};
+			}
+
+			response[question.robotNumber].questions.push({
+				question: question.question,
+				answer: question.answer
+			});
+		}
+
+		return response;
+	};
 
 }
 

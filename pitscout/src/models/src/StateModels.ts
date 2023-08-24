@@ -40,8 +40,10 @@ export interface IToken {
 export enum LoadStatus {
 	none = 'none',
 	loading = 'loading',
+	loadingWithPriorSuccess = 'reloading',
 	success = 'success',
-	failed = 'failed'
+	failed = 'failed',
+	failedWithPriorSuccess = 'failed reload'
 }
 
 export enum UserRoles {

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IToken, IUser } from '../models';
-import { ICreateDetailNoteRequest } from '../models/src/RequestModels';
+import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -62,6 +62,22 @@ class ApiService {
 
 		return this.service.post(url, form, config);
 	};
+
+
+	getAllForms = (
+		gameYear: number,
+		user: IUser,
+		token: IToken
+	): GearscoutResponse<IDetailNoteQuestionResponse[]> => {
+		const url: string = `/v1/detailnotes/team/${user.teamNumber}/gameYear/${gameYear}/event/${user.eventCode}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				secretCode: user.secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	}
 
 }
 

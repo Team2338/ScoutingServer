@@ -165,7 +165,7 @@ export const loadForms = () => async (dispatch: AppDispatch, getState: GetState)
 			getState().login.token
 		);
 
-		const forms: BasicMap<IForm> = FormModelService.convertResponseQuestionsToForms(questions.data);
+		const forms = FormModelService.convertResponseQuestionsToForms(questions.data);
 
 		dispatch(getAllFormsSuccess(forms));
 	} catch (error) {

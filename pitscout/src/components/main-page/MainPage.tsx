@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MainPage.scss';
-import { selectForm, useAppDispatch, useAppSelector } from '../../state';
+import { loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
 import DetailNoteForm from './detail-note-form/DetailNoteForm';
 import {
 	Button,
@@ -18,6 +18,10 @@ export default function MainPage() {
 	const detailSection = !!selectedRobot
 		? <DetailNoteForm robotNumber={ selectedRobot }/>
 		: <div>Pick or add a robot number!</div>;
+
+	useEffect(() => {
+		dispatch(loadForms());
+	}, [dispatch]);
 
 	return (
 		<div className="main-page">

@@ -34,25 +34,33 @@ class FormModelService {
 	}
 
 
-	convertResponseQuestionsToForms = (questions: IDetailNoteQuestionResponse[]): BasicMap<IForm> => {
-		const response: BasicMap<IForm> = {};
+	convertResponseQuestionsToForms = (questions: IDetailNoteQuestionResponse[]): {
+		forms: BasicMap<IForm>,
+		robots: number[]
+	} => {
+		const forms: BasicMap<IForm> = {};
+		const robotNumbers = [];
 		for (const question of questions) {
-			if (!response.hasOwnProperty(question.robotNumber)) {
-				response[question.robotNumber] = {
+			if (!forms.hasOwnProperty(question.robotNumber)) {
+				forms[question.robotNumber] = {
 					loadStatus: LoadStatus.success,
 					error: null,
 					robotNumber: question.robotNumber,
 					questions: []
 				};
+				robotNumbers.push(question.robotNumber);
 			}
 
-			response[question.robotNumber].questions.push({
+			forms[question.robotNumber].questions.push({
 				question: question.question,
 				answer: question.answer
 			});
 		}
 
-		return response;
+		return {
+			forms: forms,
+			robots: robotNumbers
+		};
 	};
 
 }

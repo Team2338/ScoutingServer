@@ -30,7 +30,7 @@ export const uploadFormStart = createAction<IForm>('form/upload-form-start');
 export const uploadFormSuccess = createAction<number>('form/upload-form-success');
 export const uploadFormFailed = createAction<{ robotNumber: number, error: FormErrors }>('form/upload-form-failed');
 export const getAllFormsStart = createAction('form/get-all-start');
-export const getAllFormsSuccess = createAction<BasicMap<IForm>>('form/get-all-success');
+export const getAllFormsSuccess = createAction<{ forms: BasicMap<IForm>, robots: number[] }>('form/get-all-success');
 export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 // export const clearFormError = createAction('form/clear-error');
 
@@ -130,7 +130,8 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(getAllFormsSuccess, (state: IPitState, action) => {
 			state.forms.loadStatus = LoadStatus.success;
-			state.forms.data = action.payload;
+			state.forms.data = action.payload.forms;
+			state.forms.robots = action.payload.robots;
 		})
 		.addCase(getAllFormsFailed, (state: IPitState, action) => {
 			state.forms.loadStatus = LoadStatus.failed;

@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import './DetailNoteForm.scss';
-import { Statelet } from '../../../models';
+import { FormQuestions, IForm, Statelet } from '../../../models';
 import {
 	Button,
 	Checkbox,
@@ -12,7 +12,7 @@ import {
 	Select,
 	TextField
 } from '@mui/material';
-import { AppDispatch, uploadForm, useAppDispatch } from '../../../state';
+import { AppDispatch, uploadForm, useAppDispatch, useAppSelector } from '../../../state';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 
@@ -34,30 +34,25 @@ export default function DetailNoteForm(props: IProps) {
 	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
+	const savedForm: IForm = useAppSelector(state => state.forms.selected);
+
+	useEffect(() => {
+		setImageModalOpen(false);
+		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
+		setScoreLocations(savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []);
+		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
+		setDriverNotes(savedForm.questions[FormQuestions.driverNotes] ?? '');
+		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
+	}, [savedForm]);
 
 	const submit = (): void => {
-		dispatch(uploadForm(props.robotNumber, [
-			{
-				question: 'Drivetrain',
-				answer: drivetrain
-			},
-			{
-				question: 'Score locations',
-				answer: scoreLocations.join(', ')
-			},
-			{
-				question: 'Auto paths',
-				answer: autoPaths
-			},
-			{
-				question: 'Driver notes',
-				answer: driverNotes
-			},
-			{
-				question: 'Robot notes',
-				answer: robotNotes
-			}
-		]));
+		dispatch(uploadForm(props.robotNumber, {
+			[FormQuestions.drivetrain]: drivetrain,
+			[FormQuestions.scoreLocations]: scoreLocations.join(', '),
+			[FormQuestions.autoPaths]: autoPaths,
+			[FormQuestions.driverNotes]: driverNotes,
+			[FormQuestions.robotNotes]: robotNotes
+		}));
 	};
 
 	const handleScoreLocationChange = (event, location: string): void => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IForm } from './UiModels';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -49,16 +50,4 @@ export enum LoadStatus {
 export enum UserRoles {
 	admin = 'admin',
 	none = 'none'
-}
-
-export interface IForm {
-	loadStatus: LoadStatus;
-	error: string;
-	robotNumber: number;
-	questions: IFormQuestion[];
-}
-
-export interface IFormQuestion {
-	question: string;
-	answer: string;
 }

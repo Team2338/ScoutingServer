@@ -104,7 +104,7 @@ const reducer = createReducer(initialState, builder => {
 				loadStatus: LoadStatus.none,
 				error: null,
 				robotNumber: action.payload,
-				questions: []
+				questions: {}
 			}
 		})
 		.addCase(selectForm, (state: IPitState, action) => {
@@ -132,6 +132,7 @@ const reducer = createReducer(initialState, builder => {
 			state.forms.loadStatus = LoadStatus.success;
 			state.forms.data = action.payload.forms;
 			state.forms.robots = action.payload.robots;
+			console.log(action.payload.forms);
 		})
 		.addCase(getAllFormsFailed, (state: IPitState, action) => {
 			state.forms.loadStatus = LoadStatus.failed;

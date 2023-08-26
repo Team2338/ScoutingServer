@@ -1,30 +1,31 @@
 import {
 	BasicMap,
+	FormQuestions,
 	ICreateDetailNoteRequest,
 	IDetailNoteQuestion,
 	IDetailNoteQuestionResponse,
 	IForm,
-	IFormQuestion,
+	IFormQuestions,
 	IUser,
 	LoadStatus
 } from '../models';
 
 class FormModelService {
 
-	convertQuestionsToRequest = (user: IUser, robotNumber: number, questions: IFormQuestion[]): ICreateDetailNoteRequest => {
+	convertQuestionsToRequest = (user: IUser, gameYear: number, robotNumber: number, questions: IFormQuestions): ICreateDetailNoteRequest => {
 		return {
 			robotNumber: robotNumber,
-			gameYear: 2023,
+			gameYear: gameYear,
 			eventCode: user.eventCode,
-			questions: questions.map((q: IFormQuestion): IDetailNoteQuestion => ({
-				question: q.question,
-				answer: q.answer,
+			questions: Object.keys(questions).map((q: FormQuestions): IDetailNoteQuestion => ({
+				question: q,
+				answer: questions[q],
 				creator: user.username
 			}))
 		};
 	};
 
-	convertQuestionsToFormState = (user: IUser, robotNumber: number, questions: IFormQuestion[]): IForm => {
+	convertQuestionsToFormState = (user: IUser, robotNumber: number, questions: IFormQuestions): IForm => {
 		return {
 			robotNumber: robotNumber,
 			error: null,
@@ -46,15 +47,12 @@ class FormModelService {
 					loadStatus: LoadStatus.success,
 					error: null,
 					robotNumber: question.robotNumber,
-					questions: []
+					questions: {}
 				};
 				robotNumbers.push(question.robotNumber);
 			}
 
-			forms[question.robotNumber].questions.push({
-				question: question.question,
-				answer: question.answer
-			});
+			forms[question.robotNumber].questions[question.question] = question.answer;
 		}
 
 		return {

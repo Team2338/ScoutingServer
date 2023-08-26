@@ -1,9 +1,9 @@
 import { AxiosError, HttpStatusCode } from 'axios';
 import {
-	BasicMap,
 	FormErrors,
+	ICreateDetailNoteRequest,
 	IForm,
-	IFormQuestion,
+	IFormQuestions,
 	IPitState,
 	IToken,
 	IUser,
@@ -28,7 +28,6 @@ import {
 	uploadStart,
 	uploadSuccess
 } from './Store';
-import { ICreateDetailNoteRequest } from '../../models/src/RequestModels';
 
 type GetState = () => IPitState;
 
@@ -118,19 +117,20 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 	}
 };
 
-export const uploadForm = (robotNumber: number, questions: IFormQuestion[]) => async (dispatch: AppDispatch, getState: GetState) => {
-	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
-		getState().login.user,
-		robotNumber,
-		questions
-	);
+export const uploadForm = (robotNumber: number, questions: IFormQuestions) => async (dispatch: AppDispatch, getState: GetState) => {
 	const formState: IForm = FormModelService.convertQuestionsToFormState(
 		getState().login.user,
 		robotNumber,
 		questions
 	);
-
 	dispatch(uploadFormStart(formState));
+
+	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
+		getState().login.user,
+		2023,
+		robotNumber,
+		questions
+	);
 
 	try {
 		await ApiService.uploadForm(getState().login.user, request, getState().login.token);

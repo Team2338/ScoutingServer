@@ -17,7 +17,8 @@ export default function RobotList() {
 			onClick={ () => dispatch(selectForm(robot)) }
 			sx={{
 				paddingTop: '12px',
-				paddingBottom: '12px'
+				paddingBottom: '12px',
+				fontWeight: robot === selectedRobot ? 600 : 400
 			}}
 		>
 			<span className="robot-list-item__number">{ robot }</span>

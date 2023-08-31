@@ -58,10 +58,6 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 		});
 
 		const token: IToken = response.data;
-		if (token.role !== UserRoles.admin) {
-			dispatch(loginFailed(LoginErrors.unauthorized));
-			return;
-		}
 
 		localStorage.setItem('teamNumber', credentials.teamNumber);
 		localStorage.setItem('username', credentials.username);

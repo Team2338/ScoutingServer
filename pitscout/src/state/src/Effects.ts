@@ -8,8 +8,7 @@ import {
 	IToken,
 	IUser,
 	LoginErrors,
-	UploadErrors,
-	UserRoles
+	UploadErrors
 } from '../../models';
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';

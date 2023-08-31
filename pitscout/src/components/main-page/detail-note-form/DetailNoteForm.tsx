@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './DetailNoteForm.scss';
-import { FormQuestions, IForm, Statelet } from '../../../models';
+import { FormQuestions, IForm, Statelet, UserRoles } from '../../../models';
 import {
 	Button,
 	Checkbox,
@@ -35,6 +35,7 @@ export default function DetailNoteForm(props: IProps) {
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
 	const savedForm: IForm = useAppSelector(state => state.forms.selected);
+	const role: UserRoles = useAppSelector(state => state.login.token.role);
 
 	useEffect(() => {
 		setImageModalOpen(false);
@@ -77,22 +78,26 @@ export default function DetailNoteForm(props: IProps) {
 		/>
 	);
 
+	const addImageButton = role === UserRoles.admin && (
+		<Button
+			id="add-image-button"
+			aria-label="Add image"
+			color="primary"
+			variant="contained"
+			startIcon={ <AddPhotoAlternateIcon/> }
+			disableElevation={ true }
+			onClick={ () => setImageModalOpen(true) }
+		>
+			Add image
+		</Button>
+	);
+
 	return (
 		<Fragment>
 			<form className="detail-note-form">
 				<div className="title-area">
 					<h1 className="title">{ props.robotNumber }</h1>
-					<Button
-						id="add-image-button"
-						aria-label="Add image"
-						color="primary"
-						variant="contained"
-						startIcon={ <AddPhotoAlternateIcon/> }
-						disableElevation={ true }
-						onClick={ () => setImageModalOpen(true) }
-					>
-						Add image
-					</Button>
+					{ addImageButton }
 				</div>
 				<FormControl margin="dense">
 					<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>

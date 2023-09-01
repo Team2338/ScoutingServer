@@ -164,6 +164,11 @@ export default function Header() {
 			path: '/plan',
 			name: 'PLAN',
 			icon: 'mediation'
+		},
+		{
+			path: '/inspections',
+			name: 'INSPECTIONS',
+			icon: 'assignment_turned_in'
 		}
 	];
 

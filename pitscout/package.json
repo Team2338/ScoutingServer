@@ -1,6 +1,6 @@
 {
   "name": "pitscout",
-  "version": "2023.1",
+  "version": "2023.2",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",

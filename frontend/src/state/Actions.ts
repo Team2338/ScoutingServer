@@ -1,4 +1,5 @@
 import {
+	DetailNote,
 	GlobalObjectiveStats,
 	ImageInfo,
 	Language,
@@ -47,7 +48,12 @@ export enum Actions {
 	KEEP_CACHED_IMAGE = '[IMAGE] Keep cached image',
 	GET_EVENT_IMAGE_INFO_START = '[IMAGE] Start getting event info',
 	GET_EVENT_IMAGE_INFO_SUCCESS = '[IMAGE] Successfully got event info',
-	GET_EVENT_IMAGE_INFO_FAIL = '[IMAGE] Failed to get event info'
+	GET_EVENT_IMAGE_INFO_FAIL = '[IMAGE] Failed to get event info',
+	GET_INSPECTIONS_START = '[INSPECTION] Start getting inspections',
+	GET_INSPECTIONS_SUCCESS = '[INSPECTION] Successfully got inspections',
+	GET_INSPECTIONS_FAIL = '[INSPECTION] Failed to get inspections',
+	HIDE_INSPECTION_COLUMN = '[INSPECTION] Hide column',
+	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -235,4 +241,30 @@ export const getEventImageInfoFail = (): Action => ({
 export const keepCachedImage = (robotNumber: number): Action => ({
 	type: Actions.KEEP_CACHED_IMAGE,
 	payload: robotNumber
+});
+
+export const getInspectionsStart = (): Action => ({
+	type: Actions.GET_INSPECTIONS_START
+});
+
+export const getInspectionsSuccess = (notes: DetailNote[], questionNames: string[]): Action => ({
+	type: Actions.GET_INSPECTIONS_SUCCESS,
+	payload: {
+		notes,
+		questionNames
+	}
+});
+
+export const getInspectionsFail = (): Action => ({
+	type: Actions.GET_INSPECTIONS_FAIL
+});
+
+export const hideInspectionColumn = (column: string): Action => ({
+	type: Actions.HIDE_INSPECTION_COLUMN,
+	payload: column
+});
+
+export const showInspectionColumn = (column: string): Action => ({
+	type: Actions.SHOW_INSPECTION_COLUMN,
+	payload: column
 });

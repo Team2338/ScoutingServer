@@ -1,4 +1,5 @@
-import { AppState, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import { AppState, DetailNote, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import detailNotesModelService from '../service/DetailNotesModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
@@ -20,6 +21,9 @@ import {
 	getImageFail,
 	getImageStart,
 	getImageSuccess,
+	getInspectionsFail,
+	getInspectionsStart,
+	getInspectionsSuccess,
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
@@ -137,7 +141,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
 		const csvContent = response.data;
-		const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
 
 		// Revoke last URL
 		if (lastUrl) {
@@ -330,7 +334,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		dispatch(getImageFail(robotNumber));
 	}
 
-	const blob = new Blob([content], { type: contentType });
+	const blob = new Blob([content], {type: contentType});
 	const url: string = window.URL.createObjectURL(blob);
 	dispatch(getImageSuccess(robotNumber, info, url));
 };
@@ -351,6 +355,28 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 		dispatch(getEventImageInfoSuccess(info));
 	} catch (error) {
 		console.log('Error getting image info for event');
-		dispatch(getEventImageInfoFail);
+		dispatch(getEventImageInfoFail());
+	}
+};
+
+export const getInspections = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting detail notes for event');
+	dispatch(getInspectionsStart());
+
+	try {
+		const response = await gearscoutService.getDetailNotes({
+			teamNumber: getState().login.teamNumber,
+			gameYear: 2023,
+			eventCode: getState().login.eventCode,
+			secretCode: getState().login.secretCode
+		});
+
+		const inspections: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
+		const questionNames: string[] = detailNotesModelService.getUniqueQuestionNames(response.data);
+
+		dispatch(getInspectionsSuccess(inspections, questionNames));
+	} catch (error) {
+		console.log('Error getting detail notes', error);
+		dispatch(getInspectionsFail());
 	}
 };

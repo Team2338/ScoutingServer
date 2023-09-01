@@ -76,7 +76,7 @@ export default function TeamPage() {
 						<IconButton
 							id="team-detail-dialog__back-button"
 							color="inherit"
-							aria-label="back" // TODO: translate
+							aria-label={ translate('CLOSE') }
 							onClick={ () => _selectTeam(null) }
 						>
 							<ArrowBack/>

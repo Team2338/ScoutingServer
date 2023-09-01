@@ -8,6 +8,7 @@ import {
 	Plan,
 	Team
 } from './response.model';
+import { DetailNote } from './display.model';
 
 export enum LoadStatus {
 	none = 'none',
@@ -53,6 +54,7 @@ export interface AppState {
 		plan: Plan;
 	};
 	images: ImageState;
+	inspections: InspectionState;
 }
 
 export interface LoginState {
@@ -69,4 +71,11 @@ export interface ImageState {
 		info: ImageInfo;
 		url: string;
 	};
+}
+
+export interface InspectionState {
+	loadStatus: LoadStatus;
+	notes: DetailNote[];
+	questionNames: string[];
+	hiddenQuestionNames: string[];
 }

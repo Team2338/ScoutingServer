@@ -1,0 +1,19 @@
+
+.inspection-page {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+
+  .controls-area {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+
+    .controls {
+      display: flex;
+      flex-direction: row;
+      margin-left: auto;
+      column-gap: 8px;
+    }
+  }
+}

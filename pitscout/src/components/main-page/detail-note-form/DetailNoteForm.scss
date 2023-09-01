@@ -1,0 +1,65 @@
+.detail-note-form {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	height: fit-content;
+	padding-top: 32px;
+	padding-bottom: 16px;
+
+	.title-area {
+		display: flex;
+		align-items: center;
+		margin-bottom: 12px;
+
+		.title {
+			font-weight: 600;
+			font-size: 36px;
+			line-height: 44px;
+			margin: 0;
+		}
+
+		#add-image-button {
+			margin-left: auto;
+		}
+	}
+
+	.score-locations-wrapper {
+		position: relative;
+		display: flex;
+		margin-top: 16px;
+		margin-bottom: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.23);
+		border-radius: 4px;
+		padding: 8px 16px;
+
+    &::before {
+			content: 'Score locations';
+			position: absolute;
+			top: -10px;
+			left: 8px;
+			padding: 0 5px;
+			color: rgba(0, 0, 0, 0.6);
+			font-weight: 400;
+			font-size: 0.75rem;
+			line-height: 1.4375em;
+			letter-spacing: 0.00938em;
+			white-space: nowrap;
+			background-color: white;
+    }
+
+		.score-locations {
+			display: flex;
+			flex-direction: row;
+			column-gap: 4px;
+
+			&__section {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+
+	#submit-note {
+		margin-top: 32px;
+	}
+}

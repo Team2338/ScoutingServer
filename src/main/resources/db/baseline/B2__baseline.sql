@@ -3,6 +3,9 @@
 -- If I need to add a new baseline schema to Flyway,
 -- I can just copy this one to the `migrations` folder
 
+CREATE SEQUENCE IF NOT EXISTS hibernate_sequence
+	START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE IF NOT EXISTS matches (
 	id             bigint      NOT NULL,
 	team_number    integer     NOT NULL,

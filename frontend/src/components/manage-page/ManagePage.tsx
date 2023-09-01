@@ -65,7 +65,7 @@ function ManagePage() {
 						<IconButton
 							id="match-detail-dialog__back-button"
 							color="inherit"
-							aria-label="back" // TODO: translate
+							aria-label={ translate('CLOSE') }
 							onClick={ () => _selectMatch(null) }
 						>
 							<Icon>arrow_back</Icon>

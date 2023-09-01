@@ -1,5 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import {
+	AppState,
+	ImageInfo,
+	ImageState,
+	Language,
+	LoadStatus,
+	Match,
+	MatchResponse
+} from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -44,7 +52,13 @@ const INITIAL_STATE: AppState = {
 		thirdTeam: null,
 		plan: null
 	},
-	images: {}
+	images: {},
+	inspections: {
+		loadStatus: LoadStatus.none,
+		notes: [],
+		questionNames: [],
+		hiddenQuestionNames: []
+	}
 };
 
 const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {
@@ -325,6 +339,48 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				images: createImageStateFromInfo(action.payload)
+			};
+		case Actions.GET_INSPECTIONS_START:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					loadStatus: getNextStatusOnLoad(state.inspections.loadStatus)
+				}
+			};
+		case Actions.GET_INSPECTIONS_SUCCESS:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					loadStatus: LoadStatus.success,
+					notes: action.payload.notes,
+					questionNames: action.payload.questionNames
+				}
+			};
+		case Actions.GET_INSPECTIONS_FAIL:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					loadStatus: getNextStatusOnFail(state.inspections.loadStatus)
+				}
+			};
+		case Actions.HIDE_INSPECTION_COLUMN:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: state.inspections.hiddenQuestionNames.concat(action.payload)
+				}
+			};
+		case Actions.SHOW_INSPECTION_COLUMN:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: state.inspections.hiddenQuestionNames.filter((col: string) => col !== action.payload)
+				}
 			};
 		default:
 			return state;

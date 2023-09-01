@@ -168,7 +168,7 @@ export default function Header() {
 		{
 			path: '/inspections',
 			name: 'INSPECTIONS',
-			icon: 'notes'
+			icon: 'assignment_turned_in'
 		}
 	];
 

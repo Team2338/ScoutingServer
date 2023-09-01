@@ -49,11 +49,11 @@ export enum Actions {
 	GET_EVENT_IMAGE_INFO_START = '[IMAGE] Start getting event info',
 	GET_EVENT_IMAGE_INFO_SUCCESS = '[IMAGE] Successfully got event info',
 	GET_EVENT_IMAGE_INFO_FAIL = '[IMAGE] Failed to get event info',
-	GET_DETAIL_NOTES_START = '[NOTES] Start getting detail notes',
-	GET_DETAIL_NOTES_SUCCESS = '[NOTES] Successfully got detail notes',
-	GET_DETAIL_NOTES_FAIL = '[NOTES] Failed to get detail notes',
-	HIDE_DETAIL_NOTE_COLUMN = '[NOTES] Hide column',
-	SHOW_DETAIL_NOTE_COLUMN = '[NOTES] Show column'
+	GET_INSPECTIONS_START = '[INSPECTION] Start getting inspections',
+	GET_INSPECTIONS_SUCCESS = '[INSPECTION] Successfully got inspections',
+	GET_INSPECTIONS_FAIL = '[INSPECTION] Failed to get inspections',
+	HIDE_INSPECTION_COLUMN = '[INSPECTION] Hide column',
+	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -243,28 +243,28 @@ export const keepCachedImage = (robotNumber: number): Action => ({
 	payload: robotNumber
 });
 
-export const getDetailNotesStart = (): Action => ({
-	type: Actions.GET_DETAIL_NOTES_START
+export const getInspectionsStart = (): Action => ({
+	type: Actions.GET_INSPECTIONS_START
 });
 
-export const getDetailNotesSuccess = (notes: DetailNote[], questionNames: string[]): Action => ({
-	type: Actions.GET_DETAIL_NOTES_SUCCESS,
+export const getInspectionsSuccess = (notes: DetailNote[], questionNames: string[]): Action => ({
+	type: Actions.GET_INSPECTIONS_SUCCESS,
 	payload: {
 		notes,
 		questionNames
 	}
 });
 
-export const getDetailNotesFail = (): Action => ({
-	type: Actions.GET_DETAIL_NOTES_FAIL
+export const getInspectionsFail = (): Action => ({
+	type: Actions.GET_INSPECTIONS_FAIL
 });
 
-export const hideNotesColumn = (column: string): Action => ({
-	type: Actions.HIDE_DETAIL_NOTE_COLUMN,
+export const hideInspectionColumn = (column: string): Action => ({
+	type: Actions.HIDE_INSPECTION_COLUMN,
 	payload: column
 });
 
-export const showNotesColumn = (column: string): Action => ({
-	type: Actions.SHOW_DETAIL_NOTE_COLUMN,
+export const showInspectionColumn = (column: string): Action => ({
+	type: Actions.SHOW_INSPECTION_COLUMN,
 	payload: column
 });

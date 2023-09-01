@@ -53,7 +53,7 @@ const INITIAL_STATE: AppState = {
 		plan: null
 	},
 	images: {},
-	detailNotes: {
+	inspections: {
 		loadStatus: LoadStatus.none,
 		notes: [],
 		questionNames: [],
@@ -340,46 +340,46 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				images: createImageStateFromInfo(action.payload)
 			};
-		case Actions.GET_DETAIL_NOTES_START:
+		case Actions.GET_INSPECTIONS_START:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
-					loadStatus: getNextStatusOnLoad(state.detailNotes.loadStatus)
+				inspections: {
+					...state.inspections,
+					loadStatus: getNextStatusOnLoad(state.inspections.loadStatus)
 				}
 			};
-		case Actions.GET_DETAIL_NOTES_SUCCESS:
+		case Actions.GET_INSPECTIONS_SUCCESS:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
+				inspections: {
+					...state.inspections,
 					loadStatus: LoadStatus.success,
 					notes: action.payload.notes,
 					questionNames: action.payload.questionNames
 				}
 			};
-		case Actions.GET_DETAIL_NOTES_FAIL:
+		case Actions.GET_INSPECTIONS_FAIL:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
-					loadStatus: getNextStatusOnFail(state.detailNotes.loadStatus)
+				inspections: {
+					...state.inspections,
+					loadStatus: getNextStatusOnFail(state.inspections.loadStatus)
 				}
 			};
-		case Actions.HIDE_DETAIL_NOTE_COLUMN:
+		case Actions.HIDE_INSPECTION_COLUMN:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
-					hiddenQuestionNames: state.detailNotes.hiddenQuestionNames.concat(action.payload)
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: state.inspections.hiddenQuestionNames.concat(action.payload)
 				}
 			};
-		case Actions.SHOW_DETAIL_NOTE_COLUMN:
+		case Actions.SHOW_INSPECTION_COLUMN:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
-					hiddenQuestionNames: state.detailNotes.hiddenQuestionNames.filter((col: string) => col !== action.payload)
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: state.inspections.hiddenQuestionNames.filter((col: string) => col !== action.payload)
 				}
 			};
 		default:

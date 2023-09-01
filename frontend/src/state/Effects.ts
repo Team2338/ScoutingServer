@@ -15,15 +15,15 @@ import {
 	getAllNotesSuccess,
 	getCsvStart,
 	getCsvSuccess,
-	getDetailNotesFail,
-	getDetailNotesStart,
-	getDetailNotesSuccess,
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
 	getImageFail,
 	getImageStart,
 	getImageSuccess,
+	getInspectionsFail,
+	getInspectionsStart,
+	getInspectionsSuccess,
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
@@ -359,9 +359,9 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 	}
 };
 
-export const getDetailNotes = () => async (dispatch: AppDispatch, getState: GetState) => {
+export const getInspections = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting detail notes for event');
-	dispatch(getDetailNotesStart());
+	dispatch(getInspectionsStart());
 
 	try {
 		const response = await gearscoutService.getDetailNotes({
@@ -371,12 +371,12 @@ export const getDetailNotes = () => async (dispatch: AppDispatch, getState: GetS
 			secretCode: getState().login.secretCode
 		});
 
-		const detailNotes: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
+		const inspections: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
 		const questionNames: string[] = detailNotesModelService.getUniqueQuestionNames(response.data);
 
-		dispatch(getDetailNotesSuccess(detailNotes, questionNames));
+		dispatch(getInspectionsSuccess(inspections, questionNames));
 	} catch (error) {
 		console.log('Error getting detail notes', error);
-		dispatch(getDetailNotesFail());
+		dispatch(getInspectionsFail());
 	}
 };

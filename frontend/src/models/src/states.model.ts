@@ -54,7 +54,7 @@ export interface AppState {
 		plan: Plan;
 	};
 	images: ImageState;
-	detailNotes: DetailNotesState;
+	inspections: InspectionState;
 }
 
 export interface LoginState {
@@ -73,7 +73,7 @@ export interface ImageState {
 	};
 }
 
-export interface DetailNotesState {
+export interface InspectionState {
 	loadStatus: LoadStatus;
 	notes: DetailNote[];
 	questionNames: string[];

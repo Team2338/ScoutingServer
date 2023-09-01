@@ -1,6 +1,12 @@
 import React from 'react';
 import './InspectionTableConfigDrawer.scss';
-import { AppDispatch, hideNotesColumn, showNotesColumn, useAppDispatch, useAppSelector } from '../../../state';
+import {
+	AppDispatch,
+	hideInspectionColumn,
+	showInspectionColumn,
+	useAppDispatch,
+	useAppSelector
+} from '../../../state';
 import { useTranslator } from '../../../service/TranslateService';
 import { Checkbox, Drawer, FormControlLabel, Typography } from '@mui/material';
 
@@ -12,15 +18,15 @@ interface IProps {
 export default function InspectionTableConfigDrawer(props: IProps) {
 	const dispatch: AppDispatch = useAppDispatch();
 	const translate = useTranslator();
-	const columns: string[] = useAppSelector(state => state.detailNotes.questionNames);
-	const hiddenColumns: string[] = useAppSelector(state => state.detailNotes.hiddenQuestionNames);
+	const columns: string[] = useAppSelector(state => state.inspections.questionNames);
+	const hiddenColumns: string[] = useAppSelector(state => state.inspections.hiddenQuestionNames);
 
 	const _hideColumn = (column: string): void => {
-		dispatch(hideNotesColumn(column));
+		dispatch(hideInspectionColumn(column));
 	};
 
 	const _showColumn = (column: string): void => {
-		dispatch(showNotesColumn(column));
+		dispatch(showInspectionColumn(column));
 	};
 
 	const handleCheckboxClick = (column: string, isChecked: boolean): void => {

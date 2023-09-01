@@ -3,7 +3,7 @@ import './InspectionPage.scss';
 import { useTranslator } from '../../service/TranslateService';
 import { DetailNote, DetailNoteQuestion, LoadStatus } from '../../models';
 import {
-	getDetailNotes,
+	getInspections,
 	useAppDispatch,
 	useAppSelector
 } from '../../state';
@@ -24,12 +24,12 @@ import InspectionTableConfigDrawer from './inspection-table-config-drawer/Inspec
 export default function InspectionPage() {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
-	const loadStatus: LoadStatus = useAppSelector(state => state.detailNotes.loadStatus);
-	const notes: DetailNote[] = useAppSelector(state => state.detailNotes.notes);
-	const questionNames: string[] = useAppSelector(state => state.detailNotes.questionNames);
-	const hiddenQuestionNames: string[] = useAppSelector(state => state.detailNotes.hiddenQuestionNames);
+	const loadStatus: LoadStatus = useAppSelector(state => state.inspections.loadStatus);
+	const notes: DetailNote[] = useAppSelector(state => state.inspections.notes);
+	const questionNames: string[] = useAppSelector(state => state.inspections.questionNames);
+	const hiddenQuestionNames: string[] = useAppSelector(state => state.inspections.hiddenQuestionNames);
 	const [isConfigDrawerOpen, setConfigDrawerOpen] = useState<boolean>(false);
-	const _loadInspections = () => dispatch(getDetailNotes());
+	const _loadInspections = () => dispatch(getInspections());
 
 	useEffect(
 		() => {

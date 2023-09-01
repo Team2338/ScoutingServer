@@ -53,7 +53,7 @@ class ConnectedApp extends React.Component<any, null> {
 					<Route path="/teams" element={ teamPage } />
 					<Route path="/stats" element={ statPage } />
 					<Route path="/plan" element={ planningPage } />
-					<Route path="/notes" element={ inspectionPage } />
+					<Route path="/inspections" element={ inspectionPage } />
 				</Routes>
 			</React.Fragment>
 		);

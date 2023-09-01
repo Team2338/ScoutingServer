@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './NotesPage.scss';
+import './InspectionPage.scss';
 import { useTranslator } from '../../service/TranslateService';
 import { DetailNote, DetailNoteQuestion, LoadStatus } from '../../models';
 import {
@@ -15,12 +15,13 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow, Tooltip,
+	TableRow,
+	Tooltip,
 	Typography
 } from '@mui/material';
 import NotesTableConfigDrawer from './notes-table-config-drawer/NotesTableConfigDrawer';
 
-export default function NotesPage() {
+export default function InspectionPage() {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const loadStatus: LoadStatus = useAppSelector(state => state.detailNotes.loadStatus);
@@ -28,21 +29,21 @@ export default function NotesPage() {
 	const questionNames: string[] = useAppSelector(state => state.detailNotes.questionNames);
 	const hiddenQuestionNames: string[] = useAppSelector(state => state.detailNotes.hiddenQuestionNames);
 	const [isConfigDrawerOpen, setConfigDrawerOpen] = useState<boolean>(false);
-	const _loadPitNotes = () => dispatch(getDetailNotes());
+	const _loadInspections = () => dispatch(getDetailNotes());
 
 	useEffect(
 		() => {
-			_loadPitNotes();
+			_loadInspections();
 		},
 		[dispatch]
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <div className="notes-page">{ translate('LOADING') }</div>;
+		return <div className="inspection-page">{ translate('LOADING') }</div>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <div className="state-page">{ translate('FAILED_TO_LOAD_NOTES') }</div>;
+		return <div className="inspection-page">{ translate('FAILED_TO_LOAD_INSPECTIONS') }</div>;
 	}
 
 	const isLoadingInBackground: boolean = loadStatus === LoadStatus.loadingWithPriorSuccess;
@@ -71,7 +72,7 @@ export default function NotesPage() {
 			}
 
 			return (
-				<TableCell key={ questionName } align="left">-</TableCell>
+				<TableCell key={ questionName } align="center">-</TableCell>
 			);
 		});
 
@@ -84,12 +85,12 @@ export default function NotesPage() {
 	}
 
 	return (
-		<div className="page notes-page">
+		<div className="page inspection-page">
 			<div className="controls-area">
-				<Typography variant="h6">{ translate('NOTES') }</Typography>
+				<Typography variant="h6">{ translate('INSPECTIONS') }</Typography>
 				<div className="controls">
 					<Tooltip title={ translate('REFRESH_DATA') }>
-						<IconButton onClick={ _loadPitNotes }>
+						<IconButton onClick={ _loadInspections }>
 							<Icon>refresh</Icon>
 						</IconButton>
 					</Tooltip>
@@ -101,7 +102,7 @@ export default function NotesPage() {
 				</div>
 			</div>
 			<TableContainer>
-				<Table aria-label={ translate('NOTES_TABLE') }>
+				<Table aria-label={ translate('INSPECTIONS_TABLE') }>
 					<TableHead>
 						<TableRow>
 							<TableCell align="left">

@@ -166,8 +166,8 @@ export default function Header() {
 			icon: 'mediation'
 		},
 		{
-			path: '/notes',
-			name: 'NOTES',
+			path: '/inspections',
+			name: 'INSPECTIONS',
 			icon: 'notes'
 		}
 	];

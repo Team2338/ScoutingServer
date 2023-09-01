@@ -48,6 +48,7 @@ const languages: ILanguageTranslation = {
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Select a match to view more details',
 		'NOTES_TABLE': 'Notes table',
 		'STATS_TABLE': 'Stats table',
+		'INSPECTIONS_TABLE': 'Inspections table',
 		'SUM_LIST': 'Totals',
 		'MEAN_LIST': 'Mean list',
 		'MEAN': 'Mean',
@@ -97,7 +98,8 @@ const languages: ILanguageTranslation = {
 		'GAMEPIECE_PREF': 'Gamepiece preference',
 		'REFRESH_DATA': 'Refresh data',
 		'TABLE_SETTINGS': 'Table settings',
-		'SHOW_COLUMNS': 'Show columns'
+		'SHOW_COLUMNS': 'Show columns',
+		'INSPECTIONS': 'Inspections'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -118,6 +120,7 @@ const languages: ILanguageTranslation = {
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Seleccione un partido para ver más detalles',
 		'NOTES_TABLE': 'Tabla de notas',
 		'STATS_TABLE': 'Tabla de estadisticas',
+		'INSPECTIONS_TABLE': 'Table de inspecciones',
 		'SUM_LIST': 'Totales',
 		'MEAN_LIST': 'Lista media',
 		'MEAN': 'Media',
@@ -167,7 +170,8 @@ const languages: ILanguageTranslation = {
 		'GAMEPIECE_PREF': 'Preferencia de piezas de juego',
 		'REFRESH_DATA': 'Actualizar datos',
 		'TABLE_SETTINGS': 'Configuración de la mesa',
-		'SHOW_COLUMNS': 'Mostrar columnas'
+		'SHOW_COLUMNS': 'Mostrar columnas',
+		'INSPECTIONS': 'Inspecciones'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -188,6 +192,7 @@ const languages: ILanguageTranslation = {
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Sélectionnez une match pour afficher plus de détails',
 		'NOTES_TABLE': 'Tableau des notes',
 		'STATS_TABLE': 'Tableau statistique',
+		'INSPECTIONS_TABLE': 'Tableau des inspections',
 		'SUM_LIST': 'Totaux',
 		'MEAN_LIST': 'Liste moyenne',
 		'MEAN': 'Moyenne',
@@ -237,7 +242,8 @@ const languages: ILanguageTranslation = {
 		'GAMEPIECE_PREF': 'Préférence de pièce de jeu',
 		'REFRESH_DATA': 'Recharger les données',
 		'TABLE_SETTINGS': 'Paramètres du tableau',
-		'SHOW_COLUMNS': 'Afficher les colonnes'
+		'SHOW_COLUMNS': 'Afficher les colonnes',
+		'INSPECTIONS': 'Inspections'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -258,6 +264,7 @@ const languages: ILanguageTranslation = {
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Daha fazla ayrıntı görmek için bir eşleşme seçin',
 		'NOTES_TABLE': 'Not tablosu',
 		'STATS_TABLE': 'Istatistik tablosu',
+		'INSPECTIONS_TABLE': 'Muayene masası',
 		'SUM_LIST': 'Toplamlar',
 		'MEAN_LIST': 'Ortalama liste',
 		'MEAN': 'Ortalama',
@@ -307,7 +314,8 @@ const languages: ILanguageTranslation = {
 		'GAMEPIECE_PREF': 'Oyun parçası tercihi',
 		'REFRESH_DATA': 'Sütunları göster',
 		'TABLE_SETTINGS': 'Tablo ayarları',
-		'SHOW_COLUMNS': 'Verileri yeniden yükle'
+		'SHOW_COLUMNS': 'Verileri yeniden yükle',
+		'INSPECTIONS': 'Muayeneler'
 	}
 /*
 	[Language.HINDI]: {

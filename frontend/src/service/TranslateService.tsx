@@ -93,13 +93,15 @@ const languages: ILanguageTranslation = {
 		'SEARCH': 'Search',
 		'FAILED_TO_LOAD_STATS': 'Failed to load stats',
 		'FAILED_TO_LOAD_NOTES': 'Failed to load notes',
+		'FAILED_TO_LOAD_IMAGE': 'Failed to load image',
 		'DRIVETRAIN': 'Drivetrain',
 		'PROGRAMMING_LANGUAGE': 'Programming language',
 		'GAMEPIECE_PREF': 'Gamepiece preference',
 		'REFRESH_DATA': 'Refresh data',
 		'TABLE_SETTINGS': 'Table settings',
 		'SHOW_COLUMNS': 'Show columns',
-		'INSPECTIONS': 'Inspections'
+		'INSPECTIONS': 'Inspections',
+		'ROBOT_OF_TEAM': 'Robot of team {TEAM_NUMBER}'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -165,13 +167,15 @@ const languages: ILanguageTranslation = {
 		'SEARCH': 'Buscar',
 		'FAILED_TO_LOAD_STATS': 'Error al cargar estadísticas',
 		'FAILED_TO_LOAD_NOTES': 'Error al cargar notas',
+		'FAILED_TO_LOAD_IMAGE': 'Error al cargar la imagen',
 		'DRIVETRAIN': 'Transmisión',
 		'PROGRAMMING_LANGUAGE': 'Lenguaje de programación',
 		'GAMEPIECE_PREF': 'Preferencia de piezas de juego',
 		'REFRESH_DATA': 'Actualizar datos',
 		'TABLE_SETTINGS': 'Configuración de la mesa',
 		'SHOW_COLUMNS': 'Mostrar columnas',
-		'INSPECTIONS': 'Inspecciones'
+		'INSPECTIONS': 'Inspecciones',
+		'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -237,13 +241,15 @@ const languages: ILanguageTranslation = {
 		'SEARCH': 'Chercher',
 		'FAILED_TO_LOAD_STATS': 'Échec du chargement des statistiques',
 		'FAILED_TO_LOAD_NOTES': 'Échec du chargement des notes',
+		'FAILED_TO_LOAD_IMAGE': 'Échec du chargement de l\'image',
 		'DRIVETRAIN': 'Transmission',
 		'PROGRAMMING_LANGUAGE': 'Langage de programmation',
 		'GAMEPIECE_PREF': 'Préférence de pièce de jeu',
 		'REFRESH_DATA': 'Recharger les données',
 		'TABLE_SETTINGS': 'Paramètres du tableau',
 		'SHOW_COLUMNS': 'Afficher les colonnes',
-		'INSPECTIONS': 'Inspections'
+		'INSPECTIONS': 'Inspections',
+		'ROBOT_OF_TEAM': 'Robot de l\'équipe {TEAM_NUMBER}'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -309,62 +315,14 @@ const languages: ILanguageTranslation = {
 		'SEARCH': 'Aramak',
 		'FAILED_TO_LOAD_STATS': 'İstatistikler yüklenemedi',
 		'FAILED_TO_LOAD_NOTES': 'Notlar yüklenemedi',
+		'FAILED_TO_LOAD_IMAGE': 'Resim yüklenemedi',
 		'DRIVETRAIN': 'Aktarma organları',
 		'PROGRAMMING_LANGUAGE': 'Programlama dili',
 		'GAMEPIECE_PREF': 'Oyun parçası tercihi',
 		'REFRESH_DATA': 'Sütunları göster',
 		'TABLE_SETTINGS': 'Tablo ayarları',
 		'SHOW_COLUMNS': 'Verileri yeniden yükle',
-		'INSPECTIONS': 'Muayeneler'
+		'INSPECTIONS': 'Muayeneler',
+		'ROBOT_OF_TEAM': '{TEAM_NUMBER} Takımının Robotu'
 	}
-/*
-	[Language.HINDI]: {
-		"SIGN_IN": "साइन इन करें",
-		"YOUR_TEAM_NUMBER": "आपकी टीम नंबर",
-		"TEAM_NUMBER": "टीम नंबर",
-		"EVENT_CODE": "घटना कोड",
-		"SECRET_CODE": "गुप्त संकेत",
-		"LOADING": "Loading...", // TODO: translate
-		"MATCH": "खेल",
-		"MATCHES": "माचिस",
-		"TEAM": "टीम",
-		"TEAMS": "टीमों",
-		"STATS": "आंकड़े",
-		"DATA": "डेटा",
-		"LANGUAGE": "भाषा",
-		"LOGOUT": "लॉग आउट",
-		"SELECT_MATCH_VIEW_MORE_DETAILS": "अधिक विवरण देखने के लिए एक मैच का चयन करें",
-		"STATS_TABLE": "सांख्यिकी तालिका",
-		"MEAN_LIST": "औसत सूची",
-		"MEAN": "माध्य",
-		"MEDIAN": "माध्यिका",
-		"MODE": "मोड",
-		"SCORES": "स्कोर",
-		"SELECT_TEAM_VIEW_MORE_DETAILS": "अधिक विवरण देखने के लिए एक टीम का चयन करें",
-		"VALUE": "मूल्य",
-		"SELECT_STAT_VIEW_MORE_DETAILS": "गहन विश्लेषण देखने के लिए एक आँकड़ा चुनें",
-		"ACCOUNT": "हेतु",
-		"DOWNLOAD_DATA": "डेटा डाउनलोड करें",
-		"DOWNLOAD_DATA_AS_CSV": "डेटा को CSV फ़ाइल के रूप में डाउनलोड करें",
-		"CHANGE_LANGUAGE": "भाषा बदलें",
-		"EXCLUDE_FROM_STATS": "टीम के आँकड़ों से मिलान डेटा बहिष्कृत करें",
-		"INCLUDE_IN_STATS": "टीम के आंकड़ों में मिलान डेटा शामिल करें",
-		"HIDDEN": "छुपे हुए",
-		"AUTO": "स्वायत्तशासी",
-		"TELEOP": "मानव नियंत्रण",
-		"HIGH_GOAL_2022": "उच्च बंदरगाह",
-		"LOW_GOAL_2022": "कम बंदरगाह",
-		"MISS_GOAL_2022": "छूटी हुई गेंद",
-		"MOBILITY_2022": "टैक्सी",
-		"CLIMB_2022": "हैंगर",
-		"ADD_NOTE": "नोट जोड़े",
-		"CANCEL": "रद्द करें",
-		"SUBMIT": "भेजना",
-		"NOTE": "टिप्पणी",
-		"NOTES": "टिप्पणियाँ",
-		"VIEW_NOTES_FOR_THIS_TEAM": "इस टीम के लिए नोट देखें",
-		"NO_QUANTITATIVE_DATA": "इस टीम के लिए कोई मात्रात्मक डेटा नहीं",
-		"USERNAME": "उपयोगकर्ता नाम"
-	}
-*/
 };

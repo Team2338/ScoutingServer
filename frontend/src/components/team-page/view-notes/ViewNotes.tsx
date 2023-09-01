@@ -31,7 +31,7 @@ export default function ViewNotes(props: IProps) {
 		case LoadStatus.none:
 			break;
 		case LoadStatus.failed:
-			image = <div>Failed to load image</div>; // TODO: translate
+			image = <div>{ translate('FAILED_TO_LOAD_IMAGE') }</div>;
 			break;
 		case LoadStatus.loading:
 			image = <div>{ translate('LOADING') }</div>;
@@ -44,8 +44,8 @@ export default function ViewNotes(props: IProps) {
 					<div className="team-notes-image">
 						<img
 							className="team-notes-image-content"
-							src={imageState.url}
-							alt={`Robot of ${props.robotNumber}`} // TODO: translate
+							src={ imageState.url }
+							alt={ translate('ROBOT_OF_TEAM').replace('{TEAM_NUMBER}', String(props.robotNumber)) }
 						/>
 						<div className="team-notes-image-creator">
 							{ imageState.info.creator }
@@ -58,35 +58,35 @@ export default function ViewNotes(props: IProps) {
 	}
 
 	const noteElements = props.notes.map((note: Note) => (
-		<div className="team-note" key={note.id}>
+		<div className="team-note" key={ note.id }>
 			<div className="team-note-content">
-				{note.content}
+				{ note.content }
 			</div>
 			<div className="team-note-author">
-				{note.creator}
+				{ note.creator }
 			</div>
 		</div>
 	));
 
 	return (
 		<React.Fragment>
-			<Tooltip title={ translate('VIEW_NOTES_FOR_THIS_TEAM')}>
+			<Tooltip title={ translate('VIEW_NOTES_FOR_THIS_TEAM') }>
 				<Button
 					id="view-notes-button"
 					color="primary"
 					variant="outlined"
 					size="small"
-					startIcon={<Icon fontSize="small">notes</Icon>}
-					onClick={handleOpen}
-					disabled={props.notes.length === 0 && image === null}
+					startIcon={ <Icon fontSize="small">notes</Icon> }
+					onClick={ handleOpen }
+					disabled={ props.notes.length === 0 && image === null }
 					disableElevation
 				>
 					{ translate('NOTES') }
 				</Button>
 			</Tooltip>
 			<Dialog
-				open={isOpen}
-				onClose={handleClose}
+				open={ isOpen }
+				onClose={ handleClose }
 			>
 				<DialogTitle id="view-notes-title">
 					{ translate('NOTES') }
@@ -100,7 +100,7 @@ export default function ViewNotes(props: IProps) {
 				<DialogActions>
 					<Button
 						color="primary"
-						onClick={handleClose}
+						onClick={ handleClose }
 					>
 						{ translate('CLOSE') }
 					</Button>

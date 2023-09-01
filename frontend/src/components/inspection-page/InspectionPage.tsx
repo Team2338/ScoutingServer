@@ -19,7 +19,7 @@ import {
 	Tooltip,
 	Typography
 } from '@mui/material';
-import NotesTableConfigDrawer from './notes-table-config-drawer/NotesTableConfigDrawer';
+import InspectionTableConfigDrawer from './inspection-table-config-drawer/InspectionTableConfigDrawer';
 
 export default function InspectionPage() {
 	const translate = useTranslator();
@@ -116,7 +116,7 @@ export default function InspectionPage() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<NotesTableConfigDrawer
+			<InspectionTableConfigDrawer
 				isOpen={ isConfigDrawerOpen }
 				handleClose={ () => setConfigDrawerOpen(false) }
 			/>

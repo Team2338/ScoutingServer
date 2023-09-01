@@ -1,5 +1,5 @@
 import React from 'react';
-import './NotesTableConfigDrawer.scss';
+import './InspectionTableConfigDrawer.scss';
 import { AppDispatch, hideNotesColumn, showNotesColumn, useAppDispatch, useAppSelector } from '../../../state';
 import { useTranslator } from '../../../service/TranslateService';
 import { Checkbox, Drawer, FormControlLabel, Typography } from '@mui/material';
@@ -9,7 +9,7 @@ interface IProps {
 	handleClose: () => void;
 }
 
-export default function NotesTableConfigDrawer(props: IProps) {
+export default function InspectionTableConfigDrawer(props: IProps) {
 	const dispatch: AppDispatch = useAppDispatch();
 	const translate = useTranslator();
 	const columns: string[] = useAppSelector(state => state.detailNotes.questionNames);
@@ -51,10 +51,10 @@ export default function NotesTableConfigDrawer(props: IProps) {
 			open={ props.isOpen }
 			onClose={ props.handleClose }
 		>
-			<div className="notes-table-config-drawer__header">
+			<div className="inspection-table-config-drawer__header">
 				<Typography variant="h6">{ translate('SHOW_COLUMNS') }</Typography>
 			</div>
-			<div className="notes-table-config-drawer__body">
+			<div className="inspection-table-config-drawer__body">
 				<FormControlLabel
 					key="TEAM_NUMBER"
 					label={ translate('TEAM_NUMBER') }

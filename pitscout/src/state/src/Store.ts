@@ -71,6 +71,8 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
 			state.login = initialState.login;
+			state.forms = initialState.forms;
+			state.upload = initialState.upload;
 		})
 		.addCase(clearLoginError, (state: IPitState) => {
 			state.login.error = null;

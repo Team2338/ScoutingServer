@@ -22,6 +22,11 @@ export interface IPitState {
 		data: {
 			[robotNumber: number]: IForm
 		}
+	},
+	snackbar: {
+		message: string;
+		severity: 'error' | 'warning' | 'info' | 'success';
+		isOpen: boolean;
 	}
 }
 

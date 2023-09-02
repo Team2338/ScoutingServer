@@ -34,6 +34,8 @@ export const getAllFormsSuccess = createAction<{ forms: BasicMap<IForm>, robots:
 export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 // export const clearFormError = createAction('form/clear-error');
 
+export const closeSnackbar = createAction('snackbar/clear');
+
 const initialState: IPitState = {
 	login: {
 		loadStatus: LoadStatus.none,
@@ -51,6 +53,11 @@ const initialState: IPitState = {
 		selected: null,
 		robots: [],
 		data: {}
+	},
+	snackbar: {
+		message: null,
+		severity: 'error',
+		isOpen: false
 	}
 };
 
@@ -73,6 +80,7 @@ const reducer = createReducer(initialState, builder => {
 			state.login = initialState.login;
 			state.forms = initialState.forms;
 			state.upload = initialState.upload;
+			state.snackbar = initialState.snackbar;
 		})
 		.addCase(clearLoginError, (state: IPitState) => {
 			state.login.error = null;
@@ -95,8 +103,9 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(createForm, (state: IPitState, action) => {
 			if (state.forms.robots.includes(action.payload)) {
-				// TODO: put some kind of error?
-				console.error('Tried to create form, but one already existed for that robot');
+				const msg: string = 'Tried to create form, but one already existed for that robot';
+				console.error(msg);
+				showSnackbar(state, 'error', msg);
 				return;
 			}
 
@@ -122,10 +131,12 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(uploadFormSuccess, (state: IPitState, action) => {
 			state.forms.data[action.payload].loadStatus = LoadStatus.success;
+			showSnackbar(state, 'success', 'Successfully submitted inspection');
 		})
 		.addCase(uploadFormFailed, (state: IPitState, action) => {
 			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.failed;
 			state.forms.data[action.payload.robotNumber].error = action.payload.error;
+			showSnackbar(state, 'error', action.payload.error);
 		})
 		.addCase(getAllFormsStart, (state: IPitState) => {
 			state.forms.loadStatus = getNextStatusOnLoad(state.forms.loadStatus);
@@ -134,11 +145,14 @@ const reducer = createReducer(initialState, builder => {
 			state.forms.loadStatus = LoadStatus.success;
 			state.forms.data = action.payload.forms;
 			state.forms.robots = action.payload.robots;
-			console.log(action.payload.forms);
 		})
 		.addCase(getAllFormsFailed, (state: IPitState, action) => {
 			state.forms.loadStatus = LoadStatus.failed;
 			state.forms.error = action.payload;
+			showSnackbar(state, 'error', action.payload);
+		})
+		.addCase(closeSnackbar, (state: IPitState) => {
+			state.snackbar.isOpen = false;
 		})
 	;
 });
@@ -147,7 +161,7 @@ export const store = configureStore({
 	reducer: reducer
 });
 
-const getNextStatusOnLoad =(previousStatus: LoadStatus): LoadStatus => {
+const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {
 	if (
 		previousStatus === LoadStatus.success
 		|| previousStatus === LoadStatus.loadingWithPriorSuccess
@@ -157,6 +171,12 @@ const getNextStatusOnLoad =(previousStatus: LoadStatus): LoadStatus => {
 	}
 
 	return LoadStatus.loading;
+};
+
+const showSnackbar = (state: IPitState, severity: 'error' | 'success', message: string): void => {
+	state.snackbar.severity = severity;
+	state.snackbar.message = message;
+	state.snackbar.isOpen = true;
 };
 
 export type AppDispatch = typeof store.dispatch;

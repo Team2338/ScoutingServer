@@ -35,6 +35,7 @@ export default function InspectionForm(props: IProps) {
 	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
+	const [clickedSubmit, setClickedSubmit]: Statelet<boolean> = useState(false);
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 	const role: UserRoles = useAppSelector(state => state.login.token.role);
 

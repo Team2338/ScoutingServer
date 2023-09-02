@@ -42,7 +42,7 @@ function ManagePage() {
 
 	if (isMobile) {
 		return (
-			<div className="page match-page-mobile">
+			<main className="page match-page-mobile">
 				<div className="match-list-wrapper__header">
 					<SearchInput onSearch={ setSearchTerm } size="medium" />
 				</div>
@@ -92,12 +92,12 @@ function ManagePage() {
 						/>
 					</DialogContent>
 				</Dialog>
-			</div>
+			</main>
 		);
 	}
 
 	return (
-		<div className="page manage-page">
+		<main className="page manage-page">
 			<div className="match-list-wrapper">
 				<div className="match-list-wrapper__header">
 					<Typography
@@ -128,7 +128,7 @@ function ManagePage() {
 					margin: '12px 12px'
 				} }
 			/>
-		</div>
+		</main>
 	);
 }
 

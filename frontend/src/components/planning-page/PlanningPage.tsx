@@ -44,7 +44,7 @@ function PlanningPage() {
 	const isApplyDisabled: boolean = numberOfTeamsSelected < 2;
 
 	return (
-		<div className="page planning-page">
+		<main className="page planning-page">
 			<Typography variant="h6">{ translate('PLAN') }</Typography>
 			<div className="team-selectors">
 				<TeamSelector
@@ -83,7 +83,7 @@ function PlanningPage() {
 			<div className="plan">
 				{ plan ? <PlanDisplay plan={ plan } /> : null }
 			</div>
-		</div>
+		</main>
 	);
 }
 

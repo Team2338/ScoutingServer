@@ -52,7 +52,7 @@ function StatPage() {
 	}
 
 	return (
-		<div className="page stat-page">
+		<main className="page stat-page">
 			<div className="stat-list-wrapper">
 				<StatList
 					stats={ stats }
@@ -61,7 +61,7 @@ function StatPage() {
 				/>
 			</div>
 			{ content }
-		</div>
+		</main>
 	);
 }
 

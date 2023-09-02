@@ -85,7 +85,7 @@ export default function InspectionPage() {
 	}
 
 	return (
-		<div className="page inspection-page">
+		<main className="page inspection-page">
 			<div className="controls-area">
 				<Typography variant="h6">{ translate('INSPECTIONS') }</Typography>
 				<div className="controls">
@@ -120,6 +120,6 @@ export default function InspectionPage() {
 				isOpen={ isConfigDrawerOpen }
 				handleClose={ () => setConfigDrawerOpen(false) }
 			/>
-		</div>
+		</main>
 	);
 }

@@ -53,7 +53,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 
 	render() {
 		return (
-			<div className="login-page">
+			<main className="login-page">
 				<div className="content-wrapper">
 					<form className="login-page-form" onSubmit={this.handleSubmit}>
 						<Typography variant="h4">{ this.props.translate('SIGN_IN') }</Typography>
@@ -130,7 +130,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 						</Button>
 					</form>
 				</div>
-			</div>
+			</main>
 		);
 	}
 }

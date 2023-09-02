@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './MainPage.scss';
 import { loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
-import DetailNoteForm from './detail-note-form/DetailNoteForm';
+import InspectionForm from './inspection-form/InspectionForm';
 import {
 	Button,
 } from '@mui/material';
@@ -16,7 +16,7 @@ export default function MainPage() {
 	const [isModalOpen, setModalOpen]: Statelet<boolean> = useState<boolean>(false);
 
 	const detailSection = !!selectedRobot
-		? <DetailNoteForm robotNumber={ selectedRobot }/>
+		? <InspectionForm robotNumber={ selectedRobot }/>
 		: <div>Pick or add a robot number!</div>;
 
 	useEffect(() => {

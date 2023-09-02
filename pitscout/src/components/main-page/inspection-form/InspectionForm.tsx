@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import './DetailNoteForm.scss';
+import './InspectionForm.scss';
 import { FormQuestions, IForm, Statelet, UserRoles } from '../../../models';
 import {
 	Button,
@@ -23,7 +23,7 @@ interface IProps {
 	robotNumber: number;
 }
 
-export default function DetailNoteForm(props: IProps) {
+export default function InspectionForm(props: IProps) {
 
 	const dispatch: AppDispatch = useAppDispatch();
 	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState(false);

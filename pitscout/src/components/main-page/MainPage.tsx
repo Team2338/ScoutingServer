@@ -12,10 +12,10 @@ import RobotList from './robot-list/RobotList';
 export default function MainPage() {
 
 	const dispatch = useAppDispatch();
-	const selectedRobot: number = useAppSelector(state => state.forms.selected?.robotNumber);
+	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const [isModalOpen, setModalOpen]: Statelet<boolean> = useState<boolean>(false);
 
-	const detailSection = !!selectedRobot
+	const detailSection = (selectedRobot !== null)
 		? <InspectionForm robotNumber={ selectedRobot }/>
 		: <div>Pick or add a robot number!</div>;
 

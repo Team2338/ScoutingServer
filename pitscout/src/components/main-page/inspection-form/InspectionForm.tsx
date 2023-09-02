@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './InspectionForm.scss';
-import { FormQuestions, IForm, Statelet, UserRoles } from '../../../models';
+import { FormQuestions, IForm, LoadStatus, Statelet, UserRoles } from '../../../models';
 import {
 	Button,
 	Checkbox,
+	CircularProgress,
 	FormControl,
 	FormControlLabel,
 	FormGroup,
@@ -34,7 +35,7 @@ export default function InspectionForm(props: IProps) {
 	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
-	const savedForm: IForm = useAppSelector(state => state.forms.selected);
+	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 	const role: UserRoles = useAppSelector(state => state.login.token.role);
 
 	useEffect(() => {
@@ -91,6 +92,8 @@ export default function InspectionForm(props: IProps) {
 			Add image
 		</Button>
 	);
+
+	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
 
 	return (
 		<Fragment>
@@ -160,8 +163,18 @@ export default function InspectionForm(props: IProps) {
 					id="submit-note"
 					variant="contained"
 					onClick={ submit }
+					disabled={ isUploading }
 				>
 					Submit
+					{
+						isUploading && (
+							<CircularProgress
+								id="submit-note__loader"
+								color="secondary"
+								size={ 24 }
+							/>
+						)
+					}
 				</Button>
 			</form>
 			<AddImageDialog

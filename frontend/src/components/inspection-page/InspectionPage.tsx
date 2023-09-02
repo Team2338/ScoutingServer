@@ -39,11 +39,11 @@ export default function InspectionPage() {
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <div className="inspection-page">{ translate('LOADING') }</div>;
+		return <main className="inspection-page">{ translate('LOADING') }</main>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <div className="inspection-page">{ translate('FAILED_TO_LOAD_INSPECTIONS') }</div>;
+		return <main className="inspection-page">{ translate('FAILED_TO_LOAD_INSPECTIONS') }</main>;
 	}
 
 	const isLoadingInBackground: boolean = loadStatus === LoadStatus.loadingWithPriorSuccess;

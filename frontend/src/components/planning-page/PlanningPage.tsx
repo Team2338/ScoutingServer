@@ -31,11 +31,11 @@ function PlanningPage() {
 	const thirdTeam: Team = useAppSelector(state => state.planning.thirdTeam);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
-		return <div className="planning-page">{ translate('LOADING') }</div>;
+		return <main className="planning-page">{ translate('LOADING') }</main>;
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <div className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
+		return <main className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
 	}
 
 	const numberOfTeamsSelected: number = [firstTeam, secondTeam, thirdTeam]

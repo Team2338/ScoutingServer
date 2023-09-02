@@ -33,11 +33,11 @@ function ManagePage() {
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <div className="page manage-page">{ translate('LOADING') }</div>;
+		return <main className="page manage-page">{ translate('LOADING') }</main>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <div className="page manage-page">{ translate('FAILED') }</div>;
+		return <main className="page manage-page">{ translate('FAILED') }</main>;
 	}
 
 	if (isMobile) {

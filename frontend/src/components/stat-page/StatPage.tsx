@@ -21,11 +21,11 @@ function StatPage() {
 	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
-		return <div className="stat-page">{ translate('LOADING') }</div>;
+		return <main className="stat-page">{ translate('LOADING') }</main>;
 	}
 
 	if (statsLoadStatus === LoadStatus.failed) {
-		return <div className="stat-page">{ translate('FAILED_TO_LOAD_STATS') }</div>;
+		return <main className="stat-page">{ translate('FAILED_TO_LOAD_STATS') }</main>;
 	}
 
 	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;

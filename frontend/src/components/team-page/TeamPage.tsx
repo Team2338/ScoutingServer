@@ -53,11 +53,11 @@ export default function TeamPage() {
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
-		return <div className="team-page">{ translate('LOADING') }</div>;
+		return <main className="team-page">{ translate('LOADING') }</main>;
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <div className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
+		return <main className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
 	}
 
 	// TODO: Fix the padding and margins of TeamDetail

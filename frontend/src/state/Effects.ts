@@ -1,4 +1,15 @@
-import { AppState, DetailNote, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import {
+	AppState,
+	DetailNote,
+	ImageInfo,
+	Language,
+	LanguageInfo,
+	Match,
+	MatchResponse,
+	NewNote,
+	Note,
+	Team
+} from '../models';
 import detailNotesModelService from '../service/DetailNotesModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
@@ -35,7 +46,8 @@ import {
 	logoutSuccess,
 	replaceMatch,
 	selectLangSuccess,
-	setHiddenInspectionColumnsStart, showInspectionColumnStart
+	setHiddenInspectionColumnsStart,
+	showInspectionColumnStart
 } from './Actions';
 import { AppDispatch } from './Store';
 
@@ -52,7 +64,7 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 		dispatch(loginSuccess(Number(teamNumber), username, eventCode, secretCode));
 	}
 
-	const language: Language = localStorage.getItem('language') as Language;
+	const language: Language = getPreferredLanguage();
 	if (language) {
 		dispatch(selectLangSuccess(language));
 	}
@@ -62,6 +74,27 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
 		dispatch(setHiddenInspectionColumnsStart(splitColumns));
 	}
+};
+
+const getPreferredLanguage = (): Language => {
+	// Attempt to get saved language preference
+	let language: Language = localStorage.getItem('language') as Language;
+	if (language) {
+		return language;
+	}
+
+	// Attempt to get the browser's language
+	const browserPreference: string = window.navigator.language
+		.trim()
+		.split(/[-_]/)[0]; // Converts 'en-us' or 'en_us' to just 'en'
+	language = Object.entries(LanguageInfo)
+		.find(([, info]) => info.code === browserPreference)[1]
+		.key;
+	if (language) {
+		return language;
+	}
+
+	return undefined;
 };
 
 export const selectLanguage = (language: Language) => async (dispatch: AppDispatch) => {

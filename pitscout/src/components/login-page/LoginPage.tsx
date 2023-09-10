@@ -1,15 +1,16 @@
 import { Alert, Button, InputAdornment, Snackbar, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { clearLoginError, login, useAppDispatch, useAppSelector } from '../../state';
+import { AppDispatch, clearLoginError, login, useAppDispatch, useAppSelector } from '../../state';
 import './LoginPage.scss';
+import { Statelet } from '../../models';
 
 export default function LoginPage() {
 
-	const dispatch = useAppDispatch();
-	const [teamNumber, setTeamNumber] = useState<string>('');
-	const [username, setUsername] = useState<string>('');
-	const [eventCode, setEventCode] = useState<string>('');
-	const [secretCode, setSecretCode] = useState<string>('');
+	const dispatch: AppDispatch = useAppDispatch();
+	const [teamNumber, setTeamNumber]: Statelet<string> = useState<string>('');
+	const [username, setUsername]: Statelet<string> = useState<string>('');
+	const [eventCode, setEventCode]: Statelet<string> = useState<string>('');
+	const [secretCode, setSecretCode]: Statelet<string> = useState<string>('');
 	const errorMessage: string = useAppSelector(state => state.login.error);
 
 	const isValid: boolean = (
@@ -35,15 +36,15 @@ export default function LoginPage() {
 		}
 
 		dispatch(clearLoginError());
-	}
+	};
 
 	return (
 		<div className="login-page">
 			<Snackbar
-				open={!!errorMessage}
-				autoHideDuration={6000}
-				onClose={handleErrorToastClose}
-				message={errorMessage}
+				open={ !!errorMessage }
+				autoHideDuration={ 6000 }
+				onClose={ handleErrorToastClose }
+				message={ errorMessage }
 				sx={{ marginTop: '64px' }}
 				anchorOrigin={{
 					vertical: 'top',
@@ -55,11 +56,11 @@ export default function LoginPage() {
 					variant="filled"
 					sx={{ width: '100%' }}
 				>
-					{errorMessage}
+					{ errorMessage }
 				</Alert>
 			</Snackbar>
 
-			<form className="login-form" onSubmit={handleSubmit}>
+			<form className="login-form" onSubmit={ handleSubmit }>
 				<Typography variant="h4">Sign in</Typography>
 				<TextField
 					id="team-number-input"
@@ -68,8 +69,8 @@ export default function LoginPage() {
 					type="number"
 					margin="dense"
 					variant="outlined"
-					value={teamNumber}
-					onChange={event => setTeamNumber(event.target.value)}
+					value={ teamNumber }
+					onChange={ event => setTeamNumber(event.target.value) }
 					InputProps={{
 						startAdornment: <InputAdornment position="start">#</InputAdornment>
 					}}
@@ -78,7 +79,7 @@ export default function LoginPage() {
 						max: 9999
 					}}
 					autoComplete="off"
-					autoFocus={true}
+					autoFocus={ true }
 				/>
 				<TextField
 					id="username-input"
@@ -87,10 +88,10 @@ export default function LoginPage() {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={username}
-					onChange={event => setUsername(event.target.value)}
+					value={ username }
+					onChange={ event => setUsername(event.target.value) }
 					inputProps={{
-						maxLength: 32
+						maxlength: 32
 					}}
 					autoComplete="section-login username"
 				/>
@@ -101,10 +102,10 @@ export default function LoginPage() {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={eventCode}
-					onChange={event => setEventCode(event.target.value)}
+					value={ eventCode }
+					onChange={ event => setEventCode(event.target.value) }
 					inputProps={{
-						maxLength: 32
+						maxlength: 32
 					}}
 					autoComplete="off"
 				/>
@@ -115,10 +116,10 @@ export default function LoginPage() {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={secretCode}
-					onChange={event => setSecretCode(event.target.value)}
+					value={ secretCode }
+					onChange={ event => setSecretCode(event.target.value) }
 					inputProps={{
-						maxLength: 32
+						maxlength: 32
 					}}
 					autoComplete="off"
 				/>
@@ -127,8 +128,8 @@ export default function LoginPage() {
 					variant="contained"
 					color="primary"
 					type="submit"
-					onClick={handleSubmit}
-					disabled={!isValid}
+					onClick={ handleSubmit }
+					disabled={ !isValid }
 					sx={{
 						marginTop: '8px'
 					}}

@@ -35,7 +35,6 @@ export default function InspectionForm(props: IProps) {
 	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
-	const [clickedSubmit, setClickedSubmit]: Statelet<boolean> = useState(false);
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 	const role: UserRoles = useAppSelector(state => state.login.token.role);
 
@@ -124,10 +123,14 @@ export default function InspectionForm(props: IProps) {
 				<TextField
 					id="auto-paths"
 					name="AutoPaths"
+					multiline={ true }
 					margin="normal"
-					autoComplete="false"
+					autoComplete="off"
 					label="Describe auto paths"
 					value={ autoPaths }
+					inputProps={{
+						maxlength: 1024
+					}}
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
 				<div className="score-locations-wrapper">
@@ -146,18 +149,26 @@ export default function InspectionForm(props: IProps) {
 					id="driver-notes"
 					name="DriverNotes"
 					margin="normal"
-					autoComplete="false"
+					multiline={ true }
+					autoComplete="off"
 					label="Notes on drivers"
 					value={ driverNotes }
+					inputProps={{
+						maxlength: 1024
+					}}
 					onChange={ (event) => setDriverNotes(event.target.value) }
 				/>
 				<TextField
 					id="robot-notes"
 					name="RobotNotes"
 					margin="normal"
-					autoComplete="false"
+					multiline={ true }
+					autoComplete="off"
 					label="Notes on robot"
 					value={ robotNotes }
+					inputProps={{
+						maxlength: 1024
+					}}
 					onChange={ (event) => setRobotNotes(event.target.value) }
 				/>
 				<Button

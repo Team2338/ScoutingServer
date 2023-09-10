@@ -86,7 +86,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							value={ this.state.username }
 							onChange={ this.handleChange }
 							inputProps={{
-								maxlength: 32
+								maxLength: 32
 							}}
 							autoComplete="section-login username"
 						/>
@@ -100,7 +100,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							value={ this.state.eventCode }
 							onChange={ this.handleChange }
 							inputProps={{
-								maxlength: 32
+								maxLength: 32
 							}}
 							autoComplete="off"
 						/>
@@ -114,7 +114,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							value={ this.state.secretCode }
 							onChange={ this.handleChange }
 							inputProps={{
-								maxlength: 32
+								maxLength: 32
 							}}
 							autoComplete="off"
 						/>

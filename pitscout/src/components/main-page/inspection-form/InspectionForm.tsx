@@ -129,7 +129,7 @@ export default function InspectionForm(props: IProps) {
 					label="Describe auto paths"
 					value={ autoPaths }
 					inputProps={{
-						maxlength: 1024
+						maxLength: 1024
 					}}
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
@@ -154,7 +154,7 @@ export default function InspectionForm(props: IProps) {
 					label="Notes on drivers"
 					value={ driverNotes }
 					inputProps={{
-						maxlength: 1024
+						maxLength: 1024
 					}}
 					onChange={ (event) => setDriverNotes(event.target.value) }
 				/>
@@ -167,7 +167,7 @@ export default function InspectionForm(props: IProps) {
 					label="Notes on robot"
 					value={ robotNotes }
 					inputProps={{
-						maxlength: 1024
+						maxLength: 1024
 					}}
 					onChange={ (event) => setRobotNotes(event.target.value) }
 				/>

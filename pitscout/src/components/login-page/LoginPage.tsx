@@ -91,7 +91,7 @@ export default function LoginPage() {
 					value={ username }
 					onChange={ event => setUsername(event.target.value) }
 					inputProps={{
-						maxlength: 32
+						maxLength: 32
 					}}
 					autoComplete="section-login username"
 				/>
@@ -105,7 +105,7 @@ export default function LoginPage() {
 					value={ eventCode }
 					onChange={ event => setEventCode(event.target.value) }
 					inputProps={{
-						maxlength: 32
+						maxLength: 32
 					}}
 					autoComplete="off"
 				/>
@@ -119,7 +119,7 @@ export default function LoginPage() {
 					value={ secretCode }
 					onChange={ event => setSecretCode(event.target.value) }
 					inputProps={{
-						maxlength: 32
+						maxLength: 32
 					}}
 					autoComplete="off"
 				/>

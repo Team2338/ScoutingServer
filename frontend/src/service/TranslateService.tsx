@@ -101,7 +101,11 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Table settings',
 		'SHOW_COLUMNS': 'Show columns',
 		'INSPECTIONS': 'Inspections',
-		'ROBOT_OF_TEAM': 'Robot of team {TEAM_NUMBER}'
+		'ROBOT_OF_TEAM': 'Robot of team {TEAM_NUMBER}',
+		'DRIVER_NOTES': 'Driver notes',
+		'ROBOT_NOTES': 'Robot notes',
+		'SCORE_LOCATIONS': 'Score locations',
+		'AUTO_PATHS': 'Auto paths'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -175,7 +179,11 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Configuración de la mesa',
 		'SHOW_COLUMNS': 'Mostrar columnas',
 		'INSPECTIONS': 'Inspecciones',
-		'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}'
+		'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}',
+		'DRIVER_NOTES': 'Notas sobre los conductores',
+		'ROBOT_NOTES': 'Notas sobre el robot',
+		'SCORE_LOCATIONS': 'Lugares para marcando',
+		'AUTO_PATHS': 'Caminos para auto'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -249,7 +257,11 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Paramètres du tableau',
 		'SHOW_COLUMNS': 'Afficher les colonnes',
 		'INSPECTIONS': 'Inspections',
-		'ROBOT_OF_TEAM': 'Robot de l\'équipe {TEAM_NUMBER}'
+		'ROBOT_OF_TEAM': 'Robot de l\'équipe {TEAM_NUMBER}',
+		'DRIVER_NOTES': 'Remarques sur les pilotes',
+		'ROBOT_NOTES': 'Remarques sur le robot',
+		'SCORE_LOCATIONS': 'Emplacements de marquer',
+		'AUTO_PATHS': 'Trajectoire pour auto'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -323,6 +335,10 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Tablo ayarları',
 		'SHOW_COLUMNS': 'Verileri yeniden yükle',
 		'INSPECTIONS': 'Muayeneler',
-		'ROBOT_OF_TEAM': '{TEAM_NUMBER} Takımının Robotu'
+		'ROBOT_OF_TEAM': '{TEAM_NUMBER} Takımının Robotu',
+		'DRIVER_NOTES': 'Sürücüler hakkında notlar',
+		'ROBOT_NOTES': 'Robotla ilgili notlar',
+		'SCORE_LOCATIONS': 'Puan aldıkları yerler',
+		'AUTO_PATHS': 'Özerk rutinler'
 	}
 };

@@ -39,11 +39,11 @@ export default function InspectionPage() {
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <div className="inspection-page">{ translate('LOADING') }</div>;
+		return <main className="inspection-page">{ translate('LOADING') }</main>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <div className="inspection-page">{ translate('FAILED_TO_LOAD_INSPECTIONS') }</div>;
+		return <main className="inspection-page">{ translate('FAILED_TO_LOAD_INSPECTIONS') }</main>;
 	}
 
 	const isLoadingInBackground: boolean = loadStatus === LoadStatus.loadingWithPriorSuccess;
@@ -85,7 +85,7 @@ export default function InspectionPage() {
 	}
 
 	return (
-		<div className="page inspection-page">
+		<main className="page inspection-page">
 			<div className="controls-area">
 				<Typography variant="h6">{ translate('INSPECTIONS') }</Typography>
 				<div className="controls">
@@ -120,6 +120,6 @@ export default function InspectionPage() {
 				isOpen={ isConfigDrawerOpen }
 				handleClose={ () => setConfigDrawerOpen(false) }
 			/>
-		</div>
+		</main>
 	);
 }

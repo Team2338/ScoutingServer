@@ -1,4 +1,15 @@
-import { AppState, DetailNote, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import {
+	AppState,
+	DetailNote,
+	ImageInfo,
+	Language,
+	LanguageInfo,
+	Match,
+	MatchResponse,
+	NewNote,
+	Note,
+	Team
+} from '../models';
 import detailNotesModelService from '../service/DetailNotesModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
@@ -29,11 +40,14 @@ import {
 	getMatchesSuccess,
 	getNotesForRobotStart,
 	getNotesForRobotSuccess,
+	hideInspectionColumnStart,
 	keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
-	selectLangSuccess
+	selectLangSuccess,
+	setHiddenInspectionColumnsStart,
+	showInspectionColumnStart
 } from './Actions';
 import { AppDispatch } from './Store';
 
@@ -50,15 +64,61 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 		dispatch(loginSuccess(Number(teamNumber), username, eventCode, secretCode));
 	}
 
-	const language: Language = localStorage.getItem('language') as Language;
+	const language: Language = getPreferredLanguage();
 	if (language) {
 		dispatch(selectLangSuccess(language));
 	}
+
+	const hiddenInspectionColumns: string = localStorage.getItem('hiddenInspectionColumns');
+	if (hiddenInspectionColumns) {
+		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
+		dispatch(setHiddenInspectionColumnsStart(splitColumns));
+	}
+};
+
+const getPreferredLanguage = (): Language => {
+	// Attempt to get saved language preference
+	let language: Language = localStorage.getItem('language') as Language;
+	if (language) {
+		return language;
+	}
+
+	// Attempt to get the browser's language
+	const browserPreference: string = window.navigator.language
+		.trim()
+		.split(/[-_]/)[0]; // Converts 'en-us' or 'en_us' to just 'en'
+	language = Object.entries(LanguageInfo)
+		.find(([, info]) => info.code === browserPreference)[1]
+		.key;
+	if (language) {
+		return language;
+	}
+
+	return undefined;
 };
 
 export const selectLanguage = (language: Language) => async (dispatch: AppDispatch) => {
-	localStorage.setItem('language', language);
 	dispatch(selectLangSuccess(language));
+	localStorage.setItem('language', language);
+};
+
+export const setHiddenInspectionColumns = (columns: string[]) => async (dispatch: AppDispatch) => {
+	dispatch(setHiddenInspectionColumnsStart(columns));
+	localStorage.setItem('hiddenInspectionColumns', columns.join('|:'));
+};
+
+export const hideInspectionColumn = (column: string) => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(hideInspectionColumnStart(column));
+
+	const hiddenColumns: string[] = getState().inspections.hiddenQuestionNames;
+	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
+};
+
+export const showInspectionColumn = (column: string) => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(showInspectionColumnStart(column));
+
+	const hiddenColumns: string[] = getState().inspections.hiddenQuestionNames;
+	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
 };
 
 export const login = (
@@ -132,7 +192,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	}
 };
 
-export const getCsvData = () => async (dispatch, getState: GetState) => {
+export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting CSV');
 
 	dispatch(getCsvStart());
@@ -155,7 +215,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	}
 };
 
-export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
+export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Hiding match');
 	try {
 		const response = await gearscoutService.hideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
@@ -169,7 +229,7 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 	}
 };
 
-export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
+export const unhideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Unhiding match');
 	try {
 		const response = await gearscoutService.unhideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);

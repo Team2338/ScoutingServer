@@ -17,11 +17,16 @@ export interface IPitState {
 	forms: {
 		loadStatus: LoadStatus;
 		error: string;
-		selected: IForm;
+		selected: number;
 		robots: number[];
 		data: {
 			[robotNumber: number]: IForm
 		}
+	},
+	snackbar: {
+		message: string;
+		severity: 'error' | 'warning' | 'info' | 'success';
+		isOpen: boolean;
 	}
 }
 

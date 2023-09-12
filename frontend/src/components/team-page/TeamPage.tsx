@@ -53,17 +53,17 @@ export default function TeamPage() {
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
-		return <div className="team-page">{ translate('LOADING') }</div>;
+		return <main className="team-page">{ translate('LOADING') }</main>;
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <div className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
+		return <main className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
 	}
 
 	// TODO: Fix the padding and margins of TeamDetail
 	if (isMobile) {
 		return (
-			<div className="page team-page-mobile">
+			<main className="page team-page-mobile">
 				<TeamList teams={ allTeams } selectTeam={ _selectTeam } selectedTeam={ selectedTeam }/>
 				<Dialog
 					fullScreen={ true }
@@ -96,12 +96,12 @@ export default function TeamPage() {
 						<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
 					</DialogContent>
 				</Dialog>
-			</div>
+			</main>
 		);
 	}
 
 	return (
-		<div className="page team-page">
+		<main className="page team-page">
 			<div className="team-list-wrapper">
 				<TeamList
 					teams={ allTeams }
@@ -117,7 +117,7 @@ export default function TeamPage() {
 				selectedTeamNum={ selectedTeam?.id }
 				createNote={ _createNote }
 			/>
-		</div>
+		</main>
 	);
 }
 

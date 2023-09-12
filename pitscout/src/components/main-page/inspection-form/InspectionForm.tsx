@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import './DetailNoteForm.scss';
-import { FormQuestions, IForm, Statelet, UserRoles } from '../../../models';
+import './InspectionForm.scss';
+import { FormQuestions, IForm, LoadStatus, Statelet, UserRoles } from '../../../models';
 import {
 	Button,
 	Checkbox,
+	CircularProgress,
 	FormControl,
 	FormControlLabel,
 	FormGroup,
@@ -23,7 +24,7 @@ interface IProps {
 	robotNumber: number;
 }
 
-export default function DetailNoteForm(props: IProps) {
+export default function InspectionForm(props: IProps) {
 
 	const dispatch: AppDispatch = useAppDispatch();
 	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState(false);
@@ -34,7 +35,7 @@ export default function DetailNoteForm(props: IProps) {
 	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
 	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
 	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
-	const savedForm: IForm = useAppSelector(state => state.forms.selected);
+	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 	const role: UserRoles = useAppSelector(state => state.login.token.role);
 
 	useEffect(() => {
@@ -92,6 +93,8 @@ export default function DetailNoteForm(props: IProps) {
 		</Button>
 	);
 
+	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
+
 	return (
 		<Fragment>
 			<form className="detail-note-form">
@@ -120,10 +123,14 @@ export default function DetailNoteForm(props: IProps) {
 				<TextField
 					id="auto-paths"
 					name="AutoPaths"
+					multiline={ true }
 					margin="normal"
-					autoComplete="false"
+					autoComplete="off"
 					label="Describe auto paths"
 					value={ autoPaths }
+					inputProps={{
+						maxLength: 1024
+					}}
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
 				<div className="score-locations-wrapper">
@@ -142,26 +149,44 @@ export default function DetailNoteForm(props: IProps) {
 					id="driver-notes"
 					name="DriverNotes"
 					margin="normal"
-					autoComplete="false"
+					multiline={ true }
+					autoComplete="off"
 					label="Notes on drivers"
 					value={ driverNotes }
+					inputProps={{
+						maxLength: 1024
+					}}
 					onChange={ (event) => setDriverNotes(event.target.value) }
 				/>
 				<TextField
 					id="robot-notes"
 					name="RobotNotes"
 					margin="normal"
-					autoComplete="false"
+					multiline={ true }
+					autoComplete="off"
 					label="Notes on robot"
 					value={ robotNotes }
+					inputProps={{
+						maxLength: 1024
+					}}
 					onChange={ (event) => setRobotNotes(event.target.value) }
 				/>
 				<Button
 					id="submit-note"
 					variant="contained"
 					onClick={ submit }
+					disabled={ isUploading }
 				>
 					Submit
+					{
+						isUploading && (
+							<CircularProgress
+								id="submit-note__loader"
+								color="secondary"
+								size={ 24 }
+							/>
+						)
+					}
 				</Button>
 			</form>
 			<AddImageDialog

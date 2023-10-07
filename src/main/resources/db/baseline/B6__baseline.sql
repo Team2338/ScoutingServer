@@ -135,12 +135,14 @@ CREATE TABLE comments (
 	game_year    integer       NOT NULL,
 	event_code   varchar(32)   NOT NULL,
 	secret_code  varchar(32)   NOT NULL,
+	match_number integer       NOT NULL,
 	topic        varchar(32)   NOT NULL,
-	answer       varchar(1024) NOT NULL,
+	content      varchar(1024) NOT NULL,
 	creator      varchar(32)   NOT NULL,
 	time_created timestamp(0) with time zone NOT NULL,
 	CONSTRAINT comments_pkey PRIMARY KEY (id),
 	CONSTRAINT chk_comments_min_team_number CHECK (team_number >= 0),
 	CONSTRAINT chk_comments_min_robot_number CHECK (robot_number >= 0),
-	CONSTRAINT chk_comments_min_game_year CHECK (game_year >= 1995)
+	CONSTRAINT chk_comments_min_game_year CHECK (game_year >= 1995),
+	CONSTRAINT chk_comments_min_match_number CHECK (match_number >= 0)
 );

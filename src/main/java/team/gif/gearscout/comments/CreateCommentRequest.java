@@ -14,6 +14,9 @@ public class CreateCommentRequest {
 	@Size(min = 1, max = 32)
 	private String eventCode;
 
+	@Min(0)
+	private Integer matchNumber;
+
 	@Size(min = 1, max = 32)
 	private String topic;
 
@@ -35,6 +38,10 @@ public class CreateCommentRequest {
 
 	public String getEventCode() {
 		return eventCode;
+	}
+
+	public Integer getMatchNumber() {
+		return matchNumber;
 	}
 
 	public String getTopic() {
@@ -59,6 +66,10 @@ public class CreateCommentRequest {
 
 	public void setEventCode(String eventCode) {
 		this.eventCode = eventCode;
+	}
+
+	public void setMatchNumber(Integer matchNumber) {
+		this.matchNumber = matchNumber;
 	}
 
 	public void setTopic(String topic) {

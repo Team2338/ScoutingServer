@@ -49,6 +49,10 @@ public class CommentEntity {
 	@Size(min = 1, max = 32)
 	private String secretCode;
 
+	@Column(name = "match_number", nullable = false)
+	@Min(0)
+	private Integer matchNumber;
+
 	@Column(name = "topic", nullable = false)
 	@Size(min = 1, max = 32)
 	private String topic;
@@ -90,6 +94,10 @@ public class CommentEntity {
 		return secretCode;
 	}
 
+	public Integer getMatchNumber() {
+		return matchNumber;
+	}
+
 	public String getTopic() {
 		return topic;
 	}
@@ -128,6 +136,10 @@ public class CommentEntity {
 
 	public void setSecretCode(String secretCode) {
 		this.secretCode = secretCode;
+	}
+
+	public void setMatchNumber(Integer matchNumber) {
+		this.matchNumber = matchNumber;
 	}
 
 	public void setTopic(String topic) {

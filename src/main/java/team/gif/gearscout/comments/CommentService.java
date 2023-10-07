@@ -36,6 +36,7 @@ public class CommentService {
 		comment.setGameYear(form.getGameYear());
 		comment.setEventCode(form.getEventCode());
 		comment.setSecretCode(secretCode);
+		comment.setMatchNumber(form.getMatchNumber());
 		comment.setRobotNumber(form.getRobotNumber());
 		comment.setCreator(form.getCreator());
 		comment.setTopic(form.getTopic());

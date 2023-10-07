@@ -52,7 +52,7 @@ public class DetailNoteController {
 		@PathVariable String eventCode,
 		@RequestHeader(value = "secretCode") String secretCode
 	) {
-		logger.debug("Received getNotesForRobot request");
+		logger.debug("Received getDetailNotesForEvent request");
 
 		List<DetailNoteEntity> notes = detailNoteService
 			.getNotesForEvent(teamNumber, gameYear, eventCode, secretCode);

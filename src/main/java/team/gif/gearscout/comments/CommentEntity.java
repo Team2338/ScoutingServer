@@ -11,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -61,8 +62,7 @@ public class CommentEntity {
 	private String creator;
 
 	@Column(name = "time_created", nullable = false)
-	@Size(min = 1, max = 32)
-	private String timeCreated;
+	private OffsetDateTime timeCreated;
 
 	public CommentEntity() {}
 
@@ -102,7 +102,7 @@ public class CommentEntity {
 		return creator;
 	}
 
-	public String getTimeCreated() {
+	public OffsetDateTime getTimeCreated() {
 		return timeCreated;
 	}
 
@@ -142,7 +142,7 @@ public class CommentEntity {
 		this.creator = creator;
 	}
 
-	public void setTimeCreated(String timeCreated) {
+	public void setTimeCreated(OffsetDateTime timeCreated) {
 		this.timeCreated = timeCreated;
 	}
 

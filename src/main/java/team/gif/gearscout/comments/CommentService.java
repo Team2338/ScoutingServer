@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -25,9 +27,9 @@ public class CommentService {
 		String secretCode,
 		CreateCommentRequest form
 	) {
-		String currentTime = Instant.now()
-			.truncatedTo(ChronoUnit.SECONDS)
-			.toString();
+		OffsetDateTime currentTime = Instant.now()
+			.atOffset(ZoneOffset.UTC)
+			.truncatedTo(ChronoUnit.SECONDS);
 
 		CommentEntity comment = new CommentEntity();
 		comment.setTeamNumber(teamNumber);

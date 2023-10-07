@@ -8,12 +8,12 @@ import java.util.List;
 public interface CommentRepository extends CrudRepository<CommentEntity, Long> {
 
 	@Query(value = """
- 	SELECT comment
- 	FROM CommentEntity comment
- 	WHERE comment.teamNumber = :teamNumber
- 		AND comment.gameYear = :gameYear
- 		AND comment.eventCode = :eventCode
- 		AND comment.secretCode = :secretCode
+	SELECT comment
+	FROM CommentEntity comment
+	WHERE comment.teamNumber = :teamNumber
+		AND comment.gameYear = :gameYear
+		AND comment.eventCode = :eventCode
+		AND comment.secretCode = :secretCode
 	ORDER BY comment.robotNumber, comment.topic ASC
 	""")
 	List<CommentEntity> findCommentsForEvent(

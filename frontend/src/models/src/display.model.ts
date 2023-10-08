@@ -34,7 +34,7 @@ export interface Comment {
 }
 
 export interface CommentsForRobot {
-	[topic: string]: Comment;
+	[topic: string]: Comment[];
 }
 
 export interface CommentsForEvent {

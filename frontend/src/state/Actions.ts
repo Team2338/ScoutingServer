@@ -1,5 +1,5 @@
 import {
-	CommentResponse,
+	CommentResponse, CommentsForEvent,
 	DetailNote,
 	GlobalObjectiveStats,
 	ImageInfo,
@@ -277,9 +277,12 @@ export const getCommentsStart = (): Action => ({
 	type: Actions.GET_ALL_COMMENTS_START
 });
 
-export const getCommentsSuccess = (comments: CommentResponse[]): Action => ({
+export const getCommentsSuccess = (comments: CommentsForEvent, topics: string[]): Action => ({
 	type: Actions.GET_ALL_COMMENTS_SUCCESS,
-	payload: comments
+	payload: {
+		comments: comments,
+		topics: topics
+	}
 });
 
 export const getCommentsFail = (): Action => ({

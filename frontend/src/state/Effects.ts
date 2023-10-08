@@ -1,4 +1,16 @@
-import { AppState, DetailNote, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
+import {
+	AppState,
+	CommentsForEvent,
+	DetailNote,
+	ImageInfo,
+	Language,
+	Match,
+	MatchResponse,
+	NewNote,
+	Note,
+	Team
+} from '../models';
+import commentService from '../service/CommentService';
 import detailNotesModelService from '../service/DetailNotesModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
@@ -12,7 +24,9 @@ import {
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
 	getAllNotesStart,
-	getAllNotesSuccess, getCommentsStart,
+	getAllNotesSuccess,
+	getCommentsFail,
+	getCommentsStart, getCommentsSuccess,
 	getCsvStart,
 	getCsvSuccess,
 	getEventImageInfoFail,
@@ -384,4 +398,20 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 export const getComments = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting comments for event');
 	dispatch(getCommentsStart());
+
+	try {
+		const response = await gearscoutService.getCommentsForEvent({
+			teamNumber: getState().login.teamNumber,
+			gameYear: 2023,
+			eventCode: getState().login.eventCode,
+			secretCode: getState().login.secretCode
+		});
+
+		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);
+		const topics: string[] = commentService.getUniqueTopics(response.data);
+		dispatch(getCommentsSuccess(comments, topics));
+	} catch (error) {
+		console.log('Error getting comments', error);
+		dispatch(getCommentsFail());
+	}
 }

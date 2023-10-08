@@ -12,7 +12,7 @@ import {
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
 	getAllNotesStart,
-	getAllNotesSuccess,
+	getAllNotesSuccess, getCommentsStart,
 	getCsvStart,
 	getCsvSuccess,
 	getEventImageInfoFail,
@@ -380,3 +380,8 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 		dispatch(getInspectionsFail());
 	}
 };
+
+export const getComments = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting comments for event');
+	dispatch(getCommentsStart());
+}

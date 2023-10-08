@@ -1,13 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-	AppState,
-	ImageInfo,
-	ImageState,
-	Language,
-	LoadStatus,
-	Match,
-	MatchResponse
-} from '../models';
+import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -58,6 +50,11 @@ const INITIAL_STATE: AppState = {
 		notes: [],
 		questionNames: [],
 		hiddenQuestionNames: []
+	},
+	comments: {
+		loadStatus: LoadStatus.none,
+		comments: {},
+		topics: []
 	}
 };
 

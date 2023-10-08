@@ -124,3 +124,17 @@ export interface DetailNoteQuestionResponse {
 	creator: string;
 	timeCreated: string;
 }
+
+export interface CommentResponse {
+	id: number;
+	teamNumber: number;
+	robotNumber: number;
+	gameYear: number;
+	eventCode: string;
+	secretCode: string;
+	matchNumber: number;
+	topic: string;
+	content: string;
+	creator: string;
+	timeCreated: string;
+}

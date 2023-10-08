@@ -1,4 +1,5 @@
 import {
+	CommentResponse,
 	DetailNote,
 	GlobalObjectiveStats,
 	ImageInfo,
@@ -53,7 +54,10 @@ export enum Actions {
 	GET_INSPECTIONS_SUCCESS = '[INSPECTION] Successfully got inspections',
 	GET_INSPECTIONS_FAIL = '[INSPECTION] Failed to get inspections',
 	HIDE_INSPECTION_COLUMN = '[INSPECTION] Hide column',
-	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column'
+	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column',
+	GET_ALL_COMMENTS_START = '[COMMENTS] Start getting all comments',
+	GET_ALL_COMMENTS_SUCCESS = '[COMMENTS] Successfully got all comments',
+	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -267,4 +271,17 @@ export const hideInspectionColumn = (column: string): Action => ({
 export const showInspectionColumn = (column: string): Action => ({
 	type: Actions.SHOW_INSPECTION_COLUMN,
 	payload: column
+});
+
+export const getCommentsStart = (): Action => ({
+	type: Actions.GET_ALL_COMMENTS_START
+});
+
+export const getCommentsSuccess = (comments: CommentResponse[]): Action => ({
+	type: Actions.GET_ALL_COMMENTS_SUCCESS,
+	payload: comments
+});
+
+export const getCommentsFail = (): Action => ({
+	type: Actions.GET_ALL_COMMENTS_FAIL
 });

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { DetailNoteQuestionResponse, ImageInfo, MatchResponse, NewNote, Note } from '../models';
+import { CommentResponse, DetailNoteQuestionResponse, ImageInfo, MatchResponse, NewNote, Note } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -162,6 +162,22 @@ class GearscoutService {
 
 		return this.service.get(url, config);
 	};
+
+	getCommentsForEvent = (data: {
+		teamNumber: number,
+		gameYear: number;
+		eventCode: string;
+		secretCode: string;
+	}): GearscoutResponse<CommentResponse[]> => {
+		const url: string = `/v2/notes/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				secretCode: data.secretCode
+			}
+		};
+
+		return this.service.get(url, config);
+	}
 
 }
 

@@ -1,5 +1,6 @@
 import { Language } from './languages.model';
 import {
+	CommentResponse,
 	GlobalObjectiveStats, ImageInfo,
 	Match,
 	MatchResponse,
@@ -8,7 +9,7 @@ import {
 	Plan,
 	Team
 } from './response.model';
-import { DetailNote } from './display.model';
+import { CommentsForEvent, DetailNote } from './display.model';
 
 export enum LoadStatus {
 	none = 'none',
@@ -55,6 +56,7 @@ export interface AppState {
 	};
 	images: ImageState;
 	inspections: InspectionState;
+	comments: CommentState;
 }
 
 export interface LoginState {
@@ -78,4 +80,10 @@ export interface InspectionState {
 	notes: DetailNote[];
 	questionNames: string[];
 	hiddenQuestionNames: string[];
+}
+
+export interface CommentState {
+	loadStatus: LoadStatus;
+	comments: CommentsForEvent;
+	topics: string[];
 }

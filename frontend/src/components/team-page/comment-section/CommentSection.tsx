@@ -36,14 +36,18 @@ export default function CommentSection(props: IProps) {
 	}
 
 	const topicElements = [];
-	for (const topic in topics) {
+	console.log(comments);
+	for (const topic of topics) {
+		console.log(topic);
 		const commentElements = [];
 		for (const comment of comments[topic]) {
 			commentElements.push((
 				<div className="comment">
-					<div className="comment__match-number">{ translate('MATCH') + comment.matchNumber }</div>
+					<div className="comment__info">
+						<div className="comment__info__match-number">{ translate('MATCH') } { comment.matchNumber }</div>
+						<div className="comment__info__creator">{ comment.creator }</div>
+					</div>
 					<div className="comment__content">{ comment.content }</div>
-					<div className="comment__creator">{ comment.creator }</div>
 				</div>
 			));
 		}

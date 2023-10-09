@@ -379,6 +379,32 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					hiddenQuestionNames: state.inspections.hiddenQuestionNames.filter((col: string) => col !== action.payload)
 				}
 			};
+		case Actions.GET_ALL_COMMENTS_START:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_SUCCESS:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: LoadStatus.success,
+					comments: action.payload.comments,
+					topics: action.payload.topics
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_FAIL:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
+				}
+			};
 		default:
 			return state;
 	}

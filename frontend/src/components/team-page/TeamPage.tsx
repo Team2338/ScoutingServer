@@ -6,6 +6,7 @@ import {
 	addNoteForRobot,
 	getAllImageInfoForEvent,
 	getAllNotes,
+	getComments,
 	selectTeam,
 	useAppDispatch,
 	useAppSelector,
@@ -16,6 +17,7 @@ import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
 import { ArrowBack } from '@mui/icons-material';
+import CommentSection from './comment-section/CommentSection';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props } >{ props.children }</Slide>;
@@ -34,6 +36,7 @@ export default function TeamPage() {
 	useEffect(
 		() => {
 			dispatch(getAllNotes());
+			dispatch(getComments());
 			dispatch(getAllImageInfoForEvent());
 		},
 		[dispatch]
@@ -41,6 +44,7 @@ export default function TeamPage() {
 
 	// Selectors
 	const teamNumbersWithImages: number[] = useAppSelector(state => Object.getOwnPropertyNames(state.images).map(num => Number(num)));
+	const teamNumbersWithComments: number[] = useAppSelector(state => Object.getOwnPropertyNames(state.comments.comments).map(num => Number(num)));
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
@@ -48,8 +52,8 @@ export default function TeamPage() {
 	const filteredNotes: Note[] = notes.filter((note: Note) => note.robotNumber === selectedTeam?.id);
 
 	const allTeams: Team[] = useMemo(
-		() => getTeamsWithNotesOrDataOrImages(teams, notes, teamNumbersWithImages),
-		[teams, notes, teamNumbersWithImages]
+		() => getTeamsWithNotesOrDataOrImagesOrComments(teams, notes, teamNumbersWithImages, teamNumbersWithComments),
+		[teams, notes, teamNumbersWithImages, teamNumbersWithComments]
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
@@ -94,6 +98,7 @@ export default function TeamPage() {
 						} }
 					>
 						<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
+						<CommentSection teamNumber={ selectedTeam.id }/>
 					</DialogContent>
 				</Dialog>
 			</div>
@@ -111,6 +116,7 @@ export default function TeamPage() {
 			</div>
 			<div className="team-detail-wrapper">
 				<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
+				<CommentSection teamNumber={ selectedTeam.id }/>
 			</div>
 			<CreateNote
 				isMobile={ false }
@@ -121,17 +127,22 @@ export default function TeamPage() {
 	);
 }
 
-const getTeamsWithNotesOrDataOrImages = (teamsWithData: Team[], notes: Note[], teamNumbersWithImages: number[]): Team[] => {
+const getTeamsWithNotesOrDataOrImagesOrComments = (
+	teamsWithData: Team[],
+	notes: Note[],
+	teamNumbersWithImages: number[],
+	teamNumbersWithComments: number[]
+): Team[] => {
 	const teamNumbersWithNotes: number[] = notes.map((note: Note) => note.robotNumber);
-	const uniqueTeamNumbersWithNotesOrImages: Set<number> = new Set([...teamNumbersWithNotes, ...teamNumbersWithImages]);
+	const uniqueTeamNumbersWithNotesOrImagesOrComments: Set<number> = new Set([...teamNumbersWithNotes, ...teamNumbersWithImages, ...teamNumbersWithComments]);
 
 	// This gives us the list of team numbers with notes but not match data
 	for (const team of teamsWithData) {
-		uniqueTeamNumbersWithNotesOrImages.delete(team.id);
+		uniqueTeamNumbersWithNotesOrImagesOrComments.delete(team.id);
 	}
 
 	const completeListOfTeams: Team[] = teamsWithData.slice();
-	uniqueTeamNumbersWithNotesOrImages.forEach((teamNumber: number) => {
+	uniqueTeamNumbersWithNotesOrImagesOrComments.forEach((teamNumber: number) => {
 		completeListOfTeams.push({
 			id: teamNumber,
 			stats: null

@@ -1,4 +1,4 @@
-import { Comment, CommentResponse, CommentsForEvent, CommentsForRobot } from '../models';
+import { Comment, CommentResponse, CommentsForEvent } from '../models';
 
 class CommentService {
 

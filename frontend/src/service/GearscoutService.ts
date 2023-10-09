@@ -177,7 +177,7 @@ class GearscoutService {
 		};
 
 		return this.service.get(url, config);
-	}
+	};
 
 }
 

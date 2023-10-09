@@ -414,4 +414,4 @@ export const getComments = () => async (dispatch: AppDispatch, getState: GetStat
 		console.log('Error getting comments', error);
 		dispatch(getCommentsFail());
 	}
-}
+};

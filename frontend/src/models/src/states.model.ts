@@ -1,7 +1,7 @@
 import { Language } from './languages.model';
 import {
-	CommentResponse,
-	GlobalObjectiveStats, ImageInfo,
+	GlobalObjectiveStats,
+	ImageInfo,
 	Match,
 	MatchResponse,
 	Note,
@@ -10,6 +10,8 @@ import {
 	Team
 } from './response.model';
 import { CommentsForEvent, DetailNote } from './display.model';
+
+export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export enum LoadStatus {
 	none = 'none',

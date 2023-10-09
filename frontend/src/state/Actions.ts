@@ -1,5 +1,5 @@
 import {
-	CommentResponse, CommentsForEvent,
+	CommentsForEvent,
 	DetailNote,
 	GlobalObjectiveStats,
 	ImageInfo,

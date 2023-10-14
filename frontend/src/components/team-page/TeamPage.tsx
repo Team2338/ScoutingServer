@@ -116,7 +116,7 @@ export default function TeamPage() {
 			</div>
 			<div className="team-detail-wrapper">
 				<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
-				<CommentSection teamNumber={ selectedTeam.id }/>
+				{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id }/> }
 			</div>
 			<CreateNote
 				isMobile={ false }

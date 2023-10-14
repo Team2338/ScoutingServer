@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CommentSection.scss';
 import { CommentsForRobot, LoadStatus, Statelet } from '../../../models';
 import { useAppSelector } from '../../../state';
-import { MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
@@ -36,9 +36,7 @@ export default function CommentSection(props: IProps) {
 	}
 
 	const topicElements = [];
-	console.log(comments);
-	for (const topic of topics) {
-		console.log(topic);
+	for (const topic of topics.filter((topic: string) => selectedTopic === 'ALL' || selectedTopic === topic)) {
 		const commentElements = [];
 		for (const comment of comments[topic]) {
 			commentElements.push((
@@ -63,19 +61,25 @@ export default function CommentSection(props: IProps) {
 	return (
 		<div className="comment-section">
 			<h2>{ translate('COMMENTS') }</h2>
-			<Select
-				id="topic-filter"
-				value={ selectedTopic }
-				label={ translate('TOPIC') }
-				onChange={ (event) => setSelectedTopic(event.target.value) }
-			>
-				<MenuItem key="ALL" value="ALL">{ translate('ALL') }</MenuItem>
-				{
-					topics.map((topic: string) => (
-						<MenuItem key={ topic } value={ topic }>{ translate(topic) }</MenuItem>
-					))
-				}
-			</Select>
+			<FormControl>
+				<InputLabel id="topic-filter-label">
+					{ translate('TOPIC') }
+				</InputLabel>
+				<Select
+					labelId="topic-filter-label"
+					id="topic-filter"
+					value={ selectedTopic }
+					label={ translate('TOPIC') }
+					onChange={ (event) => setSelectedTopic(event.target.value) }
+				>
+					<MenuItem key="ALL" value="ALL">{ translate('ALL') }</MenuItem>
+					{
+						topics.map((topic: string) => (
+							<MenuItem key={ topic } value={ topic }>{ translate(topic) }</MenuItem>
+						))
+					}
+				</Select>
+			</FormControl>
 			{ topicElements }
 		</div>
 	);

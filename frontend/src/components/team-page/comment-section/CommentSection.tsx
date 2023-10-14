@@ -9,11 +9,13 @@ interface IProps {
 	teamNumber: number;
 }
 
+const ALL_TOPICS_VALUE: string = 'ALL';
+
 export default function CommentSection(props: IProps) {
 	const loadStatus: LoadStatus = useAppSelector(state => state.comments.loadStatus);
 	const topics: string[] = useAppSelector(state => state.comments.topics);
 	const comments: CommentsForRobot = useAppSelector(state => state.comments.comments[props.teamNumber]);
-	const [selectedTopic, setSelectedTopic]: Statelet<string> = useState('ALL');
+	const [selectedTopic, setSelectedTopic]: Statelet<string> = useState(ALL_TOPICS_VALUE);
 	const translate = useTranslator();
 
 	// TODO: show skeleton loader
@@ -36,7 +38,10 @@ export default function CommentSection(props: IProps) {
 	}
 
 	const topicElements = [];
-	for (const topic of topics.filter((topic: string) => selectedTopic === 'ALL' || selectedTopic === topic)) {
+	const filteredTopics: string[] = topics.filter((topic: string) =>
+		selectedTopic === ALL_TOPICS_VALUE || selectedTopic === topic
+	);
+	for (const topic of filteredTopics) {
 		const commentElements = [];
 		for (const comment of comments[topic]) {
 			commentElements.push((
@@ -60,8 +65,8 @@ export default function CommentSection(props: IProps) {
 
 	return (
 		<div className="comment-section">
-			<h2>{ translate('COMMENTS') }</h2>
-			<FormControl>
+			<h2 className="comment-section-title">{ translate('COMMENTS') }</h2>
+			<FormControl sx={{ minWidth: 12 }}>
 				<InputLabel id="topic-filter-label">
 					{ translate('TOPIC') }
 				</InputLabel>
@@ -71,8 +76,9 @@ export default function CommentSection(props: IProps) {
 					value={ selectedTopic }
 					label={ translate('TOPIC') }
 					onChange={ (event) => setSelectedTopic(event.target.value) }
+					autoWidth={ true }
 				>
-					<MenuItem key="ALL" value="ALL">{ translate('ALL') }</MenuItem>
+					<MenuItem key={ ALL_TOPICS_VALUE } value={ ALL_TOPICS_VALUE }>{ translate('ALL') }</MenuItem>
 					{
 						topics.map((topic: string) => (
 							<MenuItem key={ topic } value={ topic }>{ translate(topic) }</MenuItem>

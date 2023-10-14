@@ -91,13 +91,13 @@ export default function TeamPage() {
 					</div>
 					<DialogContent
 						dividers={ true }
-						sx={ {
+						sx={{
 							paddingLeft: '8px',
 							paddingRight: '8px',
 							paddingTop: '12px'
-						} }
+						}}
 					>
-						<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
+						<TeamDetail team={ selectedTeam } notes={ filteredNotes } />
 						<CommentSection teamNumber={ selectedTeam.id }/>
 					</DialogContent>
 				</Dialog>

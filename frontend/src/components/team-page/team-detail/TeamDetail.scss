@@ -2,8 +2,6 @@
 .team-detail {
 	display: flex;
 	flex-direction: column;
-	padding: 8px;
-	margin-top: 12px;
 	height: fit-content;
 
 	.team-number {
@@ -17,14 +15,18 @@
 	}
 
 	.gamemode-list {
+		display: flex;
+		flex-direction: column;
+		row-gap: 32px;
+		padding-top: 20px;
 
 		.gamemode {
-			margin-top: 16px;
 
 			&-title {
 				font-weight: 600;
-				font-size: 20px;
-				line-height: 24px;
+				font-size: 24px;
+				line-height: 28px;
+				text-decoration: underline;
 			}
 
 			&-stats-wrapper {
@@ -54,12 +56,5 @@
 			}
 		}
 
-	}
-}
-
-@media only screen and (max-width: 600px) {
-	.team-detail {
-		padding: 0;
-		margin-top: 20px;
 	}
 }

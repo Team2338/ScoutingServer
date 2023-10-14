@@ -12,7 +12,6 @@ import {
 	useAppSelector,
 	useDataInitializer
 } from '../../state';
-import CreateNote from './create-note/CreateNote';
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
@@ -118,11 +117,6 @@ export default function TeamPage() {
 				<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
 				{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id }/> }
 			</div>
-			<CreateNote
-				isMobile={ false }
-				selectedTeamNum={ selectedTeam?.id }
-				createNote={ _createNote }
-			/>
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './CommentSection.scss';
 import { CommentsForRobot, LoadStatus, Statelet } from '../../../models';
 import { useAppSelector } from '../../../state';
@@ -17,6 +17,7 @@ export default function CommentSection(props: IProps) {
 	const comments: CommentsForRobot = useAppSelector(state => state.comments.comments[props.teamNumber]);
 	const [selectedTopic, setSelectedTopic]: Statelet<string> = useState(ALL_TOPICS_VALUE);
 	const translate = useTranslator();
+	const commentScrollRef = useRef(null);
 
 	// TODO: show skeleton loader
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
@@ -45,7 +46,7 @@ export default function CommentSection(props: IProps) {
 		const commentElements = [];
 		for (const comment of comments[topic]) {
 			commentElements.push((
-				<div className="comment">
+				<div key={ commentElements.length } className="comment">
 					<div className="comment__info">
 						<div className="comment__info__match-number">{ translate('MATCH') } { comment.matchNumber }</div>
 						<div className="comment__info__creator">{ comment.creator }</div>
@@ -56,7 +57,7 @@ export default function CommentSection(props: IProps) {
 		}
 
 		topicElements.push((
-			<div className="topic">
+			<div key={ topic } className="topic">
 				<h3 className="topic-name">{ translate(topic) }</h3>
 				<div className="topic-comments">{ commentElements }</div>
 			</div>
@@ -64,9 +65,9 @@ export default function CommentSection(props: IProps) {
 	}
 
 	return (
-		<div className="comment-section">
+		<div className="comment-section" ref={ commentScrollRef }>
 			<h2 className="comment-section-title">{ translate('COMMENTS') }</h2>
-			<FormControl sx={{ minWidth: 12 }}>
+			<FormControl sx={{ minWidth: '12em', width: 'fit-content' }}>
 				<InputLabel id="topic-filter-label">
 					{ translate('TOPIC') }
 				</InputLabel>
@@ -75,7 +76,10 @@ export default function CommentSection(props: IProps) {
 					id="topic-filter"
 					value={ selectedTopic }
 					label={ translate('TOPIC') }
-					onChange={ (event) => setSelectedTopic(event.target.value) }
+					onChange={ (event) => {
+						setSelectedTopic(event.target.value);
+						setTimeout(() => commentScrollRef.current.scrollIntoView({ behavior: 'smooth' }), 0);
+					}}
 					autoWidth={ true }
 				>
 					<MenuItem key={ ALL_TOPICS_VALUE } value={ ALL_TOPICS_VALUE }>{ translate('ALL') }</MenuItem>

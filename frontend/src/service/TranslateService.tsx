@@ -15,7 +15,7 @@ const translateKey = (language: string, key: string): string => {
 export const translate = (Component) => {
 	function AddTranslator(props) {
 		const translate: Translator = useTranslator();
-		return <Component translate={translate} {...props} />;
+		return <Component translate={ translate } { ...props } />;
 	}
 
 	return AddTranslator;
@@ -101,7 +101,10 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Table settings',
 		'SHOW_COLUMNS': 'Show columns',
 		'INSPECTIONS': 'Inspections',
-		'ROBOT_OF_TEAM': 'Robot of team {TEAM_NUMBER}'
+		'ROBOT_OF_TEAM': 'Robot of team {TEAM_NUMBER}',
+		'COMMENTS': 'Comments',
+		'ALL': 'All',
+		'TOPIC': 'Topic'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -175,7 +178,10 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Configuración de la mesa',
 		'SHOW_COLUMNS': 'Mostrar columnas',
 		'INSPECTIONS': 'Inspecciones',
-		'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}'
+		'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}',
+		'COMMENTS': 'Comentarios',
+		'ALL': 'Todas',
+		'TOPIC': 'Tema'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -249,7 +255,10 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Paramètres du tableau',
 		'SHOW_COLUMNS': 'Afficher les colonnes',
 		'INSPECTIONS': 'Inspections',
-		'ROBOT_OF_TEAM': 'Robot de l\'équipe {TEAM_NUMBER}'
+		'ROBOT_OF_TEAM': 'Robot de l\'équipe {TEAM_NUMBER}',
+		'COMMENTS': 'Commentaires',
+		'ALL': 'Tous',
+		'TOPIC': 'Sujet'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -323,6 +332,9 @@ const languages: ILanguageTranslation = {
 		'TABLE_SETTINGS': 'Tablo ayarları',
 		'SHOW_COLUMNS': 'Verileri yeniden yükle',
 		'INSPECTIONS': 'Muayeneler',
-		'ROBOT_OF_TEAM': '{TEAM_NUMBER} Takımının Robotu'
+		'ROBOT_OF_TEAM': '{TEAM_NUMBER} Takımının Robotu',
+		'COMMENTS': 'Yorumlar',
+		'ALL': 'Tüm',
+		'TOPIC': 'Başlık'
 	}
 };

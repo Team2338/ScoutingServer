@@ -6,7 +6,6 @@ import {
 	Language,
 	Match,
 	MatchResponse,
-	NewNote,
 	Note,
 	Team
 } from '../models';
@@ -17,8 +16,6 @@ import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
 import teamModelService from '../service/TeamModelService';
 import {
-	addNoteStart,
-	addNoteSuccess,
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
@@ -26,7 +23,8 @@ import {
 	getAllNotesStart,
 	getAllNotesSuccess,
 	getCommentsFail,
-	getCommentsStart, getCommentsSuccess,
+	getCommentsStart,
+	getCommentsSuccess,
 	getCsvStart,
 	getCsvSuccess,
 	getEventImageInfoFail,
@@ -264,33 +262,6 @@ export const getAllNotes = () => async (dispatch, getState: GetState) => {
 		dispatch(getAllNotesSuccess(notes));
 	} catch (error) {
 		console.error('Error getting all notes', error);
-	}
-};
-
-export const addNoteForRobot = (robotNumber: number, content: string) => async (dispatch, getState: GetState) => {
-	console.log('Adding note for robot');
-	dispatch(addNoteStart());
-
-	const note: NewNote = {
-		robotNumber: robotNumber,
-		eventCode: getState().login.eventCode,
-		creator: getState().login.username,
-		content: content
-	};
-
-	const dummyCompleteNote: Note = {
-		...note,
-		teamNumber: getState().login.teamNumber,
-		secretCode: getState().login.secretCode,
-		id: -getState().notes.data.length,
-		timeCreated: null
-	};
-
-	try {
-		await gearscoutService.addNote(getState().login.teamNumber, getState().login.secretCode, note);
-		dispatch(addNoteSuccess(dummyCompleteNote));
-	} catch (error) {
-		console.error('Error adding note', error);
 	}
 };
 

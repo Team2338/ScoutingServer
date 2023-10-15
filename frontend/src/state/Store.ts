@@ -115,14 +115,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					data: action.payload
 				}
 			};
-		case Actions.ADD_NOTE_SUCCESS:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					data: state.notes.data.concat(action.payload)
-				}
-			};
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,
@@ -168,8 +160,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				},
 				teams: {
 					...state.teams,
-					// isLoaded: false, // Mark data as dirty, since we modified it
-					loadStatus: LoadStatus.none,
+					loadStatus: LoadStatus.none, // Mark data as dirty, since we modified it
 					// If we're modifying data for the currently selected team, deselect it so that we don't
 					// see old data when we revisit the Teams page.
 					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
@@ -178,8 +169,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				},
 				stats: {
 					...state.stats,
-					// isLoaded: false, // Mark as dirty, since we modified it
-					loadStatus: LoadStatus.none,
+					loadStatus: LoadStatus.none, // Mark as dirty, since we modified it
 					selectedStat: null // Guaranteed to have modified the data we were previously viewing, so hide it
 				},
 				planning: INITIAL_STATE.planning

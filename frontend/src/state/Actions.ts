@@ -36,8 +36,6 @@ export enum Actions {
 	GET_NOTES_FOR_ROBOT_SUCCESS = '[NOTES] Successfully got notes for robot',
 	GET_ALL_NOTES_START = '[NOTES] Start getting all notes',
 	GET_ALL_NOTES_SUCCESS = '[NOTES] Successfully got all notes',
-	ADD_NOTE_START = '[NOTES] Create new note',
-	ADD_NOTE_SUCCESS = '[NOTES] Successfully created new note',
 	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
 	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
@@ -171,15 +169,6 @@ export const getAllNotesStart = (): Action => ({
 export const getAllNotesSuccess = (notes: Note[]): Action => ({
 	type: Actions.GET_ALL_NOTES_SUCCESS,
 	payload: notes
-});
-
-export const addNoteStart = (): Action => ({
-	type: Actions.ADD_NOTE_START,
-});
-
-export const addNoteSuccess = (note: Note): Action => ({
-	type: Actions.ADD_NOTE_SUCCESS,
-	payload: note
 });
 
 export const selectFirstTeamForPlanning = (team: Team): Action => ({

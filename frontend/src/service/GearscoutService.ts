@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CommentResponse, DetailNoteQuestionResponse, ImageInfo, MatchResponse, NewNote, Note } from '../models';
+import { CommentResponse, DetailNoteQuestionResponse, ImageInfo, MatchResponse, Note } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -47,21 +47,6 @@ class GearscoutService {
 		return this.service.put(
 			url,
 			null,
-			config
-		);
-	};
-
-	addNote = (teamNumber: number, secretCode: string, note: NewNote): GearscoutResponse<null> => {
-		const url = `/v1/notes/team/${teamNumber}`;
-		const config = {
-			headers: {
-				secretCode: secretCode
-			}
-		};
-
-		return this.service.post(
-			url,
-			note,
 			config
 		);
 	};

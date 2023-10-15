@@ -68,13 +68,6 @@ export interface GlobalObjectiveStats {
 	}
 }
 
-export interface NewNote {
-	eventCode: string;
-	robotNumber: number;
-	creator: string;
-	content: string;
-}
-
 export interface Note {
 	id: number;
 	teamNumber: number;

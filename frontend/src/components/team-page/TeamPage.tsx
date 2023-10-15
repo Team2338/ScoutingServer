@@ -3,7 +3,6 @@ import React, { forwardRef, useEffect, useMemo } from 'react';
 import { LoadStatus, Note, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import {
-	addNoteForRobot,
 	getAllImageInfoForEvent,
 	getAllNotes,
 	getComments,
@@ -30,7 +29,6 @@ export default function TeamPage() {
 	// Dispatch and actions
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team));
-	const _createNote = (robotNum: number, content: string) => dispatch(addNoteForRobot(robotNum, content));
 
 	useEffect(
 		() => {

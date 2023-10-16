@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CommentResponse, DetailNoteQuestionResponse, ImageInfo, MatchResponse, Note } from '../models';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { CommentResponse, DetailNoteQuestionResponse, ImageInfo, MatchResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
 class GearscoutService {
 
-	service = axios.create({
+	private http: AxiosInstance = axios.create({
 		baseURL: process.env.REACT_APP_SERVER_URL
 	});
 
@@ -18,7 +18,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
@@ -29,7 +29,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.put(
+		return this.http.put(
 			url,
 			null,
 			config
@@ -44,33 +44,11 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.put(
+		return this.http.put(
 			url,
 			null,
 			config
 		);
-	};
-
-	getNotesForRobot = (teamNumber: number, eventCode: string, robotNumber: number, secretCode: string): GearscoutResponse<Note[]> => {
-		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}/robot/${robotNumber}`;
-		const config = {
-			headers: {
-				secretCode: secretCode
-			}
-		};
-
-		return this.service.get(url, config);
-	};
-
-	getAllNotes = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<Note[]> => {
-		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}`;
-		const config = {
-			headers: {
-				secretCode: secretCode
-			}
-		};
-
-		return this.service.get(url, config);
 	};
 
 	getMatchesAsCsv = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
@@ -81,7 +59,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getImageInfo = (data: {
@@ -98,7 +76,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getImageInfoForEvent = (data: {
@@ -114,7 +92,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getImageContent = (data: {
@@ -129,7 +107,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getDetailNotes = (data: {
@@ -145,7 +123,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getCommentsForEvent = (data: {
@@ -161,7 +139,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 }

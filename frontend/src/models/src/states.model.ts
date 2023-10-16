@@ -1,10 +1,10 @@
+import React from 'react';
 import { Language } from './languages.model';
 import {
 	GlobalObjectiveStats,
 	ImageInfo,
 	Match,
 	MatchResponse,
-	Note,
 	ObjectiveDescriptor,
 	Plan,
 	Team
@@ -44,10 +44,6 @@ export interface AppState {
 		loadStatus: LoadStatus;
 		data: GlobalObjectiveStats[];
 		selectedStat: ObjectiveDescriptor;
-	};
-	notes: {
-		loadStatus: LoadStatus;
-		data: Note[];
 	};
 	planning: {
 		loadStatus: LoadStatus;

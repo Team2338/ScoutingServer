@@ -68,17 +68,6 @@ export interface GlobalObjectiveStats {
 	}
 }
 
-export interface Note {
-	id: number;
-	teamNumber: number;
-	secretCode: string;
-	eventCode: string;
-	robotNumber: number;
-	creator: string;
-	content: string;
-	timeCreated: string;
-}
-
 export interface Plan {
 	teams: Team[];
 	gamemodes: {

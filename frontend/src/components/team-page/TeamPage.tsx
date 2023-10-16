@@ -1,10 +1,9 @@
 import { Dialog, DialogContent, IconButton, Slide, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useMemo } from 'react';
-import { CommentsForEvent, ImageState, LoadStatus, Note, Team } from '../../models';
+import { CommentsForEvent, ImageState, LoadStatus, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import {
 	getAllImageInfoForEvent,
-	getAllNotes,
 	getComments,
 	selectTeam,
 	useAppDispatch,
@@ -32,7 +31,6 @@ export default function TeamPage() {
 
 	useEffect(
 		() => {
-			dispatch(getAllNotes());
 			dispatch(getComments());
 			dispatch(getAllImageInfoForEvent());
 		},
@@ -45,17 +43,14 @@ export default function TeamPage() {
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
-	const notes: Note[] = useAppSelector(state => state.notes.data);
-	const filteredNotes: Note[] = notes.filter((note: Note) => note.robotNumber === selectedTeam?.id);
 
 	const allTeams: Team[] = useMemo(
-		() => getTeamsWithNotesOrDataOrImagesOrComments(
+		() => getTeamsWithDataOrImagesOrComments(
 			teams,
-			notes,
 			images,
 			comments
 		),
-		[teams, notes, images, comments]
+		[teams, images, comments]
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
@@ -99,7 +94,7 @@ export default function TeamPage() {
 							paddingTop: '12px'
 						}}
 					>
-						<TeamDetail team={ selectedTeam } notes={ filteredNotes } />
+						<TeamDetail team={ selectedTeam } />
 						<CommentSection teamNumber={ selectedTeam.id }/>
 					</DialogContent>
 				</Dialog>
@@ -117,23 +112,24 @@ export default function TeamPage() {
 				/>
 			</div>
 			<div className="team-detail-wrapper">
-				<TeamDetail team={ selectedTeam } notes={ filteredNotes }/>
+				<TeamDetail team={ selectedTeam } />
 				{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id }/> }
 			</div>
 		</div>
 	);
 }
 
-const getTeamsWithNotesOrDataOrImagesOrComments = (
+const getTeamsWithDataOrImagesOrComments = (
 	teamsWithData: Team[],
-	notes: Note[],
 	images: ImageState,
 	comments: CommentsForEvent
 ): Team[] => {
-	const teamNumbersWithNotes: number[] = notes.map((note: Note) => note.robotNumber);
 	const teamNumbersWithImages: number[] = Object.getOwnPropertyNames(images).map(num => Number(num));
 	const teamNumbersWithComments: number[] = Object.getOwnPropertyNames(comments).map(num => Number(num));
-	const uniqueTeamNumbersWithNotesOrImagesOrComments: Set<number> = new Set([...teamNumbersWithNotes, ...teamNumbersWithImages, ...teamNumbersWithComments]);
+	const uniqueTeamNumbersWithNotesOrImagesOrComments: Set<number> = new Set([
+		...teamNumbersWithImages,
+		...teamNumbersWithComments
+	]);
 
 	// This gives us the list of team numbers with notes but not match data
 	for (const team of teamsWithData) {

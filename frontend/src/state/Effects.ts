@@ -6,7 +6,6 @@ import {
 	Language,
 	Match,
 	MatchResponse,
-	Note,
 	Team
 } from '../models';
 import commentService from '../service/CommentService';
@@ -20,8 +19,6 @@ import {
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
-	getAllNotesStart,
-	getAllNotesSuccess,
 	getCommentsFail,
 	getCommentsStart,
 	getCommentsSuccess,
@@ -39,8 +36,6 @@ import {
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
-	getNotesForRobotStart,
-	getNotesForRobotSuccess,
 	keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
@@ -228,42 +223,6 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 // 	dispatch(calculateGlobalStatsSuccess(globalStats));
 // };
 
-export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
-	console.log('Getting notes for robot');
-	dispatch(getNotesForRobotStart(robotNumber));
-
-	try {
-		const response = await gearscoutService.getNotesForRobot(
-			getState().login.teamNumber,
-			getState().login.eventCode,
-			robotNumber,
-			getState().login.secretCode
-		);
-		const notes: Note[] = response.data;
-
-		dispatch(getNotesForRobotSuccess(notes));
-	} catch (error) {
-		console.error('Error getting notes for robot', error);
-	}
-};
-
-export const getAllNotes = () => async (dispatch, getState: GetState) => {
-	console.log('Getting all notes');
-	dispatch(getAllNotesStart());
-
-	try {
-		const response = await gearscoutService.getAllNotes(
-			getState().login.teamNumber,
-			getState().login.eventCode,
-			getState().login.secretCode
-		);
-		const notes: Note[] = response.data;
-
-		dispatch(getAllNotesSuccess(notes));
-	} catch (error) {
-		console.error('Error getting all notes', error);
-	}
-};
 
 export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log(`Getting image info for ${ robotNumber }`);

@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import { Note, Team, TeamObjectiveStats } from '../../../models';
+import { Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { getImageForRobot, useAppDispatch } from '../../../state';
 import { GridScore } from '../../shared/GridScore';
-import ViewNotes from '../view-notes/ViewNotes';
+import ViewImage from '../view-image/ViewImage';
 import './TeamDetail.scss';
 
 interface IProps {
 	team: Team;
-	notes: Note[];
 }
 
 export default function TeamDetail(props: IProps) {
@@ -49,7 +48,7 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				{ translate('TEAM') } { props.team.id }
-				<ViewNotes robotNumber={ props.team.id } notes={ props.notes }/>
+				<ViewImage robotNumber={ props.team.id } />
 			</div>
 			<div className="gamemode-list">{ gamemodeElements }</div>
 		</div>

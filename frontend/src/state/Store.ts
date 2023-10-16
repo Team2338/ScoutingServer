@@ -33,10 +33,6 @@ const INITIAL_STATE: AppState = {
 		data: [],
 		selectedStat: null
 	},
-	notes: {
-		loadStatus: LoadStatus.none,
-		data: []
-	},
 	planning: {
 		loadStatus: LoadStatus.none,
 		firstTeam: null,
@@ -96,23 +92,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				csv: {
 					loadStatus: LoadStatus.success,
 					url: action.payload
-				}
-			};
-		case Actions.GET_ALL_NOTES_START:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					loadStatus: getNextStatusOnLoad(state.notes.loadStatus)
-				}
-			};
-		case Actions.GET_ALL_NOTES_SUCCESS:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					loadStatus: LoadStatus.success,
-					data: action.payload
 				}
 			};
 		case Actions.GET_MATCHES_START:

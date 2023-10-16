@@ -22,3 +22,21 @@ export interface DetailNoteQuestion {
 	creator: string;
 	timeCreated: string;
 }
+
+export interface Comment {
+	id: number;
+	robotNumber: number;
+	matchNumber: number;
+	topic: string;
+	content: string;
+	creator: string;
+	timeCreated: string;
+}
+
+export interface CommentsForRobot {
+	[topic: string]: Comment[];
+}
+
+export interface CommentsForEvent {
+	[robotNumber: number]: CommentsForRobot;
+}

@@ -29,7 +29,6 @@ public class DetailNoteQuestion {
 		return creator;
 	}
 
-
 	public void setQuestion(String question) {
 		this.question = question;
 	}

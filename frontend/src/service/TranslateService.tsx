@@ -15,7 +15,7 @@ const translateKey = (language: string, key: string): string => {
 export const translate = (Component) => {
 	function AddTranslator(props) {
 		const translate: Translator = useTranslator();
-		return <Component translate={translate} {...props} />;
+		return <Component translate={ translate } { ...props } />;
 	}
 
 	return AddTranslator;
@@ -82,9 +82,11 @@ const languages: ILanguageTranslation = {
 		'ADD_NOTE': 'Add Note',
 		'CANCEL': 'Cancel',
 		'SUBMIT': 'Submit',
+		'IMAGE': 'Image',
 		'NOTE': 'Note',
 		'NOTES': 'Notes',
 		'VIEW_NOTES_FOR_THIS_TEAM': 'View notes for this team',
+		'VIEW_IMAGE_OF_ROBOT': 'View image of this robot',
 		'NO_QUANTITATIVE_DATA': 'No quantitative data for this team',
 		'USERNAME': 'Username',
 		'APPLY': 'Apply',
@@ -105,7 +107,11 @@ const languages: ILanguageTranslation = {
 		'DRIVER_NOTES': 'Driver notes',
 		'ROBOT_NOTES': 'Robot notes',
 		'SCORE_LOCATIONS': 'Score locations',
-		'AUTO_PATHS': 'Auto paths'
+		'AUTO_PATHS': 'Auto paths',
+		'COMMENTS': 'Comments',
+		'ALL': 'All',
+		'TOPIC': 'Topic',
+		'NO_COMMENTS_FOR_TOPIC': 'There are no comments on this topic'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -160,9 +166,11 @@ const languages: ILanguageTranslation = {
 		'ADD_NOTE': 'Añadir la Nota',
 		'CANCEL': 'Cancelar',
 		'SUBMIT': 'Entregar',
+		'IMAGE': 'Imagen',
 		'NOTE': 'Nota',
 		'NOTES': 'Notas',
 		'VIEW_NOTES_FOR_THIS_TEAM': 'Ver notas de este equipo',
+		'VIEW_IMAGE_OF_ROBOT': 'Ver imagen de este robot',
 		'NO_QUANTITATIVE_DATA': 'No hay datos cuantitativos para este equipo',
 		'USERNAME': 'Nombre de usuario',
 		'APPLY': 'Aplicar',
@@ -183,7 +191,11 @@ const languages: ILanguageTranslation = {
 		'DRIVER_NOTES': 'Notas sobre los conductores',
 		'ROBOT_NOTES': 'Notas sobre el robot',
 		'SCORE_LOCATIONS': 'Lugares para marcando',
-		'AUTO_PATHS': 'Caminos para auto'
+		'AUTO_PATHS': 'Caminos para auto',
+		'COMMENTS': 'Comentarios',
+		'ALL': 'Todas',
+		'TOPIC': 'Tema',
+		'NO_COMMENTS_FOR_TOPIC': 'No hay comentarios en este tema'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -238,9 +250,11 @@ const languages: ILanguageTranslation = {
 		'ADD_NOTE': 'Ajouter une Note',
 		'CANCEL': 'Annuler',
 		'SUBMIT': 'Soumettre',
+		'IMAGE': 'Image',
 		'NOTE': 'Note',
 		'NOTES': 'Notes',
 		'VIEW_NOTES_FOR_THIS_TEAM': 'Afficher les notes de cette équipe',
+		'VIEW_IMAGE_OF_ROBOT': 'Afficher l\'image de ce robot',
 		'NO_QUANTITATIVE_DATA': 'Pas de données quantitatives pour cette équipe',
 		'USERNAME': 'Nom d\'utilisateur',
 		'APPLY': 'Appliquer',
@@ -261,7 +275,11 @@ const languages: ILanguageTranslation = {
 		'DRIVER_NOTES': 'Remarques sur les pilotes',
 		'ROBOT_NOTES': 'Remarques sur le robot',
 		'SCORE_LOCATIONS': 'Emplacements de marquer',
-		'AUTO_PATHS': 'Trajectoire pour auto'
+		'AUTO_PATHS': 'Trajectoire pour auto',
+		'COMMENTS': 'Commentaires',
+		'ALL': 'Tous',
+		'TOPIC': 'Sujet',
+		'NO_COMMENTS_FOR_TOPIC': 'Il n\'y a pas de commentaires sur ce sujet'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -316,9 +334,11 @@ const languages: ILanguageTranslation = {
 		'ADD_NOTE': 'Not Ekle',
 		'CANCEL': 'İptal etmek',
 		'SUBMIT': 'Sunmak',
+		'IMAGE': 'Resim',
 		'NOTE': 'Not',
 		'NOTES': 'Notlar',
 		'VIEW_NOTES_FOR_THIS_TEAM': 'Bu ekip için notları görüntüle',
+		'VIEW_IMAGE_OF_ROBOT': 'Bu robotun resmini göster',
 		'NO_QUANTITATIVE_DATA': 'Bu ekip için nicel veri yok',
 		'USERNAME': 'Kullanıcı adı',
 		'APPLY': 'Uygula',
@@ -339,6 +359,10 @@ const languages: ILanguageTranslation = {
 		'DRIVER_NOTES': 'Sürücüler hakkında notlar',
 		'ROBOT_NOTES': 'Robotla ilgili notlar',
 		'SCORE_LOCATIONS': 'Puan aldıkları yerler',
-		'AUTO_PATHS': 'Özerk rutinler'
+		'AUTO_PATHS': 'Özerk rutinler',
+		'COMMENTS': 'Yorumlar',
+		'ALL': 'Tüm',
+		'TOPIC': 'Konu',
+		'NO_COMMENTS_FOR_TOPIC': 'Bu konu hakkında yorum yok'
 	}
 };

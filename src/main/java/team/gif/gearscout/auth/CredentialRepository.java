@@ -1,8 +1,7 @@
-package team.gif.gearscout.repository;
+package team.gif.gearscout.auth;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import team.gif.gearscout.model.CredentialEntity;
 
 import java.util.Optional;
 

@@ -1,10 +1,8 @@
-package team.gif.gearscout.service;
+package team.gif.gearscout.matches;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import team.gif.gearscout.model.NewMatch;
-import team.gif.gearscout.model.ObjectiveEntity;
 
 import java.util.Arrays;
 import java.util.List;

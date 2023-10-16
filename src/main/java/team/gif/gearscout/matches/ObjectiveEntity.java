@@ -1,7 +1,8 @@
-package team.gif.gearscout.model;
+package team.gif.gearscout.matches;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Type;
+import team.gif.gearscout.matches.MatchEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

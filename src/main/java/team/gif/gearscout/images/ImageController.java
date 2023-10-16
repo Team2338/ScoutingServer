@@ -1,10 +1,9 @@
-package team.gif.gearscout.controller;
+package team.gif.gearscout.images;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.exception.ImageTypeInvalidException;
-import team.gif.gearscout.model.ImageContentEntity;
-import team.gif.gearscout.model.ImageInfoEntity;
-import team.gif.gearscout.model.LoginResponse;
-import team.gif.gearscout.service.AuthService;
-import team.gif.gearscout.service.ImageService;
+import team.gif.gearscout.auth.LoginResponse;
+import team.gif.gearscout.auth.AuthService;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 

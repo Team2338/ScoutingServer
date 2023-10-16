@@ -1,4 +1,4 @@
-package team.gif.gearscout.controller;
+package team.gif.gearscout.matches;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team.gif.gearscout.model.MatchEntity;
-import team.gif.gearscout.model.NewMatch;
-import team.gif.gearscout.service.MatchProcessor2023;
-import team.gif.gearscout.service.MatchService;
 
 import java.util.List;
 

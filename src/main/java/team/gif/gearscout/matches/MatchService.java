@@ -1,12 +1,12 @@
-package team.gif.gearscout.service;
+package team.gif.gearscout.matches;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.exception.MatchNotFoundException;
-import team.gif.gearscout.model.MatchEntity;
-import team.gif.gearscout.model.NewMatch;
-import team.gif.gearscout.model.ObjectiveEntity;
-import team.gif.gearscout.repository.MatchRepository;
+import team.gif.gearscout.matches.MatchEntity;
+import team.gif.gearscout.matches.NewMatch;
+import team.gif.gearscout.matches.ObjectiveEntity;
+import team.gif.gearscout.matches.MatchRepository;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;

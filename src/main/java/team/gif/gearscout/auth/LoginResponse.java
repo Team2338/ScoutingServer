@@ -1,4 +1,4 @@
-package team.gif.gearscout.model;
+package team.gif.gearscout.auth;
 
 public record LoginResponse(
 	Integer teamNumber,

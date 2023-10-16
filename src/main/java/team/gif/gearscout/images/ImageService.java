@@ -1,4 +1,4 @@
-package team.gif.gearscout.service;
+package team.gif.gearscout.images;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -6,10 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import team.gif.gearscout.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.exception.ImageTypeInvalidException;
-import team.gif.gearscout.model.ImageContentEntity;
-import team.gif.gearscout.model.ImageInfoEntity;
-import team.gif.gearscout.repository.ImageContentRepository;
-import team.gif.gearscout.repository.ImageInfoRepository;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;

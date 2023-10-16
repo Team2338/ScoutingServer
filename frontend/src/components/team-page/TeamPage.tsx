@@ -91,11 +91,15 @@ export default function TeamPage() {
 						sx={{
 							paddingLeft: '8px',
 							paddingRight: '8px',
-							paddingTop: '12px'
+							paddingTop: '12px',
+							paddingBottom: '32px',
+							rowGap: '32px',
+							display: 'flex',
+							flexDirection: 'column'
 						}}
 					>
 						<TeamDetail team={ selectedTeam } />
-						<CommentSection teamNumber={ selectedTeam.id }/>
+						{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id }/> }
 					</DialogContent>
 				</Dialog>
 			</div>

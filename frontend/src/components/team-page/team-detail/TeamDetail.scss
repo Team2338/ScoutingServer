@@ -34,12 +34,11 @@
 				flex-direction: row;
 				flex-flow: wrap;
 				row-gap: 12px;
-				margin-top: 8px;
+				column-gap: 24px;
+				padding-top: 12px;
+				padding-left: 8px;
 
 				.stats {
-					padding-left: 12px;
-					padding-right: 12px;
-
 					.objective-name {
 						font-weight: 500;
 						font-size: 18px;

@@ -4,6 +4,7 @@ import { CommentsForRobot, Comment, LoadStatus, Statelet } from '../../../models
 import { useAppSelector } from '../../../state';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
+import Topic from './topic/Topic';
 
 interface IProps {
 	teamNumber: number;
@@ -38,41 +39,19 @@ export default function CommentSection(props: IProps) {
 		);
 	}
 
-	const topicElements = [];
-	const filteredTopics: string[] = topics.filter((topic: string) =>
-		selectedTopic === ALL_TOPICS_VALUE || selectedTopic === topic
+	const filteredTopics: string[] = topics.filter(
+		(topic: string) => selectedTopic === ALL_TOPICS_VALUE || selectedTopic === topic
 	);
-	for (const topic of filteredTopics) {
-		const commentsForTopic: Comment[] = comments?.[topic] ?? [];
-		const commentElements = [];
-		for (const comment of commentsForTopic) {
-			commentElements.push((
-				<div key={ commentElements.length } className="comment">
-					<div className="comment__info">
-						<div className="comment__info__match-number">{ translate('MATCH') } { comment.matchNumber }</div>
-						<div className="comment__info__creator">{ comment.creator }</div>
-					</div>
-					<div className="comment__content">{ comment.content }</div>
-				</div>
-			));
-		}
 
-		topicElements.push((
-			<div key={ topic } className="topic">
-				<h3 className="topic-name">{ translate(topic) }</h3>
-				{
-					commentElements.length === 0
-						? <div className="topic-no-comments">{ translate('NO_COMMENTS_FOR_TOPIC') }</div>
-						: <div className="topic-comments">{ commentElements }</div>
-				}
-			</div>
-		));
-	}
+	const topicElements = filteredTopics.map((topic: string) => {
+		const commentsForTopic: Comment[] = comments?.[topic] ?? [];
+		return (<Topic key={ topic } topic={ topic } comments={ commentsForTopic } />);
+	});
 
 	return (
 		<div className="comment-section" ref={ commentScrollRef }>
 			<h2 className="comment-section-title">{ translate('COMMENTS') }</h2>
-			<FormControl sx={{ minWidth: '12em', width: 'fit-content' }}>
+			<FormControl id="topic-filter-control">
 				<InputLabel id="topic-filter-label">
 					{ translate('TOPIC') }
 				</InputLabel>
@@ -95,7 +74,9 @@ export default function CommentSection(props: IProps) {
 					}
 				</Select>
 			</FormControl>
-			{ topicElements }
+			<div className="topics-list">
+				{ topicElements }
+			</div>
 		</div>
 	);
 }

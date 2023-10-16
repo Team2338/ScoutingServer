@@ -348,6 +348,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					hiddenQuestionNames: state.inspections.hiddenQuestionNames.filter((col: string) => col !== action.payload)
 				}
 			};
+		case Actions.SET_HIDDEN_INSPECTION_COLUMNS_START:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: action.payload
+				}
+			};
 		case Actions.GET_ALL_COMMENTS_START:
 			return {
 				...state,

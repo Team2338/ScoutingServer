@@ -7,7 +7,7 @@ export default function RobotList() {
 
 	const dispatch: AppDispatch = useAppDispatch();
 	const robotNumbers: number[] = useAppSelector(state => state.forms.robots);
-	const selectedRobot: number = useAppSelector(state => state.forms.selected?.robotNumber);
+	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 
 	const listOptions = robotNumbers.map((robot: number) => (
 		<ListItemButton

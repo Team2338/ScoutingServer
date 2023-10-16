@@ -48,6 +48,7 @@ export enum Actions {
 	GET_INSPECTIONS_FAIL = '[INSPECTION] Failed to get inspections',
 	HIDE_INSPECTION_COLUMN = '[INSPECTION] Hide column',
 	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column',
+	SET_HIDDEN_INSPECTION_COLUMNS_START = '[INSPECTION] Set hidden columns',
 	GET_ALL_COMMENTS_START = '[COMMENTS] Start getting all comments',
 	GET_ALL_COMMENTS_SUCCESS = '[COMMENTS] Successfully got all comments',
 	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments'
@@ -228,14 +229,19 @@ export const getInspectionsFail = (): Action => ({
 	type: Actions.GET_INSPECTIONS_FAIL
 });
 
-export const hideInspectionColumn = (column: string): Action => ({
+export const hideInspectionColumnStart = (column: string): Action => ({
 	type: Actions.HIDE_INSPECTION_COLUMN,
 	payload: column
 });
 
-export const showInspectionColumn = (column: string): Action => ({
+export const showInspectionColumnStart = (column: string): Action => ({
 	type: Actions.SHOW_INSPECTION_COLUMN,
 	payload: column
+});
+
+export const setHiddenInspectionColumnsStart = (columns: string[]): Action => ({
+	type: Actions.SET_HIDDEN_INSPECTION_COLUMNS_START,
+	payload: columns
 });
 
 export const getCommentsStart = (): Action => ({

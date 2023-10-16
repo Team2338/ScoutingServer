@@ -25,6 +25,10 @@ body {
 	padding: 0;
 }
 
+main {
+	box-sizing: border-box;
+}
+
 div {
 	box-sizing: border-box;
 }

@@ -106,7 +106,8 @@ const languages: ILanguageTranslation = {
 		'ROBOT_OF_TEAM': 'Robot of team {TEAM_NUMBER}',
 		'COMMENTS': 'Comments',
 		'ALL': 'All',
-		'TOPIC': 'Topic'
+		'TOPIC': 'Topic',
+		'NO_COMMENTS_FOR_TOPIC': 'There are no comments on this topic'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -185,7 +186,8 @@ const languages: ILanguageTranslation = {
 		'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}',
 		'COMMENTS': 'Comentarios',
 		'ALL': 'Todas',
-		'TOPIC': 'Tema'
+		'TOPIC': 'Tema',
+		'NO_COMMENTS_FOR_TOPIC': 'No hay comentarios en este tema'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -264,7 +266,8 @@ const languages: ILanguageTranslation = {
 		'ROBOT_OF_TEAM': 'Robot de l\'équipe {TEAM_NUMBER}',
 		'COMMENTS': 'Commentaires',
 		'ALL': 'Tous',
-		'TOPIC': 'Sujet'
+		'TOPIC': 'Sujet',
+		'NO_COMMENTS_FOR_TOPIC': 'Il n\'y a pas de commentaires sur ce sujet'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -343,6 +346,7 @@ const languages: ILanguageTranslation = {
 		'ROBOT_OF_TEAM': '{TEAM_NUMBER} Takımının Robotu',
 		'COMMENTS': 'Yorumlar',
 		'ALL': 'Tüm',
-		'TOPIC': 'Başlık'
+		'TOPIC': 'Konu',
+		'NO_COMMENTS_FOR_TOPIC': 'Bu konu hakkında yorum yok'
 	}
 };

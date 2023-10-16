@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './CommentSection.scss';
-import { CommentsForRobot, LoadStatus, Statelet } from '../../../models';
+import { CommentsForRobot, Comment, LoadStatus, Statelet } from '../../../models';
 import { useAppSelector } from '../../../state';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
@@ -43,8 +43,9 @@ export default function CommentSection(props: IProps) {
 		selectedTopic === ALL_TOPICS_VALUE || selectedTopic === topic
 	);
 	for (const topic of filteredTopics) {
+		const commentsForTopic: Comment[] = comments?.[topic] ?? [];
 		const commentElements = [];
-		for (const comment of comments[topic]) {
+		for (const comment of commentsForTopic) {
 			commentElements.push((
 				<div key={ commentElements.length } className="comment">
 					<div className="comment__info">
@@ -59,7 +60,11 @@ export default function CommentSection(props: IProps) {
 		topicElements.push((
 			<div key={ topic } className="topic">
 				<h3 className="topic-name">{ translate(topic) }</h3>
-				<div className="topic-comments">{ commentElements }</div>
+				{
+					commentElements.length === 0
+						? <div className="topic-no-comments">{ translate('NO_COMMENTS_FOR_TOPIC') }</div>
+						: <div className="topic-comments">{ commentElements }</div>
+				}
 			</div>
 		));
 	}

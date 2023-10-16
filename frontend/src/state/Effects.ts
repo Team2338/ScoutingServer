@@ -1,29 +1,28 @@
 import {
 	AppState,
+	CommentsForEvent,
 	DetailNote,
 	ImageInfo,
 	Language,
 	LanguageInfo,
 	Match,
 	MatchResponse,
-	NewNote,
-	Note,
 	Team
 } from '../models';
+import commentService from '../service/CommentService';
 import detailNotesModelService from '../service/DetailNotesModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
 import teamModelService from '../service/TeamModelService';
 import {
-	addNoteStart,
-	addNoteSuccess,
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
-	getAllNotesStart,
-	getAllNotesSuccess,
+	getCommentsFail,
+	getCommentsStart,
+	getCommentsSuccess,
 	getCsvStart,
 	getCsvSuccess,
 	getEventImageInfoFail,
@@ -38,8 +37,6 @@ import {
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
-	getNotesForRobotStart,
-	getNotesForRobotSuccess,
 	hideInspectionColumnStart,
 	keepCachedImage,
 	loginSuccess,
@@ -276,69 +273,6 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 // 	dispatch(calculateGlobalStatsSuccess(globalStats));
 // };
 
-export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
-	console.log('Getting notes for robot');
-	dispatch(getNotesForRobotStart(robotNumber));
-
-	try {
-		const response = await gearscoutService.getNotesForRobot(
-			getState().login.teamNumber,
-			getState().login.eventCode,
-			robotNumber,
-			getState().login.secretCode
-		);
-		const notes: Note[] = response.data;
-
-		dispatch(getNotesForRobotSuccess(notes));
-	} catch (error) {
-		console.error('Error getting notes for robot', error);
-	}
-};
-
-export const getAllNotes = () => async (dispatch, getState: GetState) => {
-	console.log('Getting all notes');
-	dispatch(getAllNotesStart());
-
-	try {
-		const response = await gearscoutService.getAllNotes(
-			getState().login.teamNumber,
-			getState().login.eventCode,
-			getState().login.secretCode
-		);
-		const notes: Note[] = response.data;
-
-		dispatch(getAllNotesSuccess(notes));
-	} catch (error) {
-		console.error('Error getting all notes', error);
-	}
-};
-
-export const addNoteForRobot = (robotNumber: number, content: string) => async (dispatch, getState: GetState) => {
-	console.log('Adding note for robot');
-	dispatch(addNoteStart());
-
-	const note: NewNote = {
-		robotNumber: robotNumber,
-		eventCode: getState().login.eventCode,
-		creator: getState().login.username,
-		content: content
-	};
-
-	const dummyCompleteNote: Note = {
-		...note,
-		teamNumber: getState().login.teamNumber,
-		secretCode: getState().login.secretCode,
-		id: -getState().notes.data.length,
-		timeCreated: null
-	};
-
-	try {
-		await gearscoutService.addNote(getState().login.teamNumber, getState().login.secretCode, note);
-		dispatch(addNoteSuccess(dummyCompleteNote));
-	} catch (error) {
-		console.error('Error adding note', error);
-	}
-};
 
 export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log(`Getting image info for ${ robotNumber }`);
@@ -438,5 +372,26 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 	} catch (error) {
 		console.log('Error getting detail notes', error);
 		dispatch(getInspectionsFail());
+	}
+};
+
+export const getComments = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting comments for event');
+	dispatch(getCommentsStart());
+
+	try {
+		const response = await gearscoutService.getCommentsForEvent({
+			teamNumber: getState().login.teamNumber,
+			gameYear: 2023,
+			eventCode: getState().login.eventCode,
+			secretCode: getState().login.secretCode
+		});
+
+		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);
+		const topics: string[] = commentService.getUniqueTopics(response.data);
+		dispatch(getCommentsSuccess(comments, topics));
+	} catch (error) {
+		console.log('Error getting comments', error);
+		dispatch(getCommentsFail());
 	}
 };

@@ -1,11 +1,11 @@
 import {
+	CommentsForEvent,
 	DetailNote,
 	GlobalObjectiveStats,
 	ImageInfo,
 	Language,
 	Match,
 	MatchResponse,
-	Note,
 	Team
 } from '../models';
 
@@ -31,12 +31,6 @@ export enum Actions {
 	CALCULATE_GLOBAL_STATS_START = '[STATS] Started calculating global stats',
 	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats',
 	SELECT_STAT = '[STATS] Select stat',
-	GET_NOTES_FOR_ROBOT_START = '[NOTES] Start getting notes for robot',
-	GET_NOTES_FOR_ROBOT_SUCCESS = '[NOTES] Successfully got notes for robot',
-	GET_ALL_NOTES_START = '[NOTES] Start getting all notes',
-	GET_ALL_NOTES_SUCCESS = '[NOTES] Successfully got all notes',
-	ADD_NOTE_START = '[NOTES] Create new note',
-	ADD_NOTE_SUCCESS = '[NOTES] Successfully created new note',
 	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
 	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
@@ -54,7 +48,10 @@ export enum Actions {
 	GET_INSPECTIONS_FAIL = '[INSPECTION] Failed to get inspections',
 	HIDE_INSPECTION_COLUMN = '[INSPECTION] Hide column',
 	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column',
-	SET_HIDDEN_INSPECTION_COLUMNS_START = '[INSPECTION] Set hidden columns'
+	SET_HIDDEN_INSPECTION_COLUMNS_START = '[INSPECTION] Set hidden columns',
+	GET_ALL_COMMENTS_START = '[COMMENTS] Start getting all comments',
+	GET_ALL_COMMENTS_SUCCESS = '[COMMENTS] Successfully got all comments',
+	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -151,34 +148,6 @@ export const selectStat = (gamemode: string, objective: string): Action => ({
 	}
 });
 
-export const getNotesForRobotStart = (robotNumber: number): Action => ({
-	type: Actions.GET_NOTES_FOR_ROBOT_START,
-	payload: robotNumber
-});
-
-export const getNotesForRobotSuccess = (notes: Note[]): Action => ({
-	type: Actions.GET_NOTES_FOR_ROBOT_SUCCESS,
-	payload: notes
-});
-
-export const getAllNotesStart = (): Action => ({
-	type: Actions.GET_ALL_NOTES_START
-});
-
-export const getAllNotesSuccess = (notes: Note[]): Action => ({
-	type: Actions.GET_ALL_NOTES_SUCCESS,
-	payload: notes
-});
-
-export const addNoteStart = (): Action => ({
-	type: Actions.ADD_NOTE_START,
-});
-
-export const addNoteSuccess = (note: Note): Action => ({
-	type: Actions.ADD_NOTE_SUCCESS,
-	payload: note
-});
-
 export const selectFirstTeamForPlanning = (team: Team): Action => ({
 	type: Actions.SELECT_FIRST_TEAM_FOR_PLANNING,
 	payload: team
@@ -273,4 +242,20 @@ export const showInspectionColumnStart = (column: string): Action => ({
 export const setHiddenInspectionColumnsStart = (columns: string[]): Action => ({
 	type: Actions.SET_HIDDEN_INSPECTION_COLUMNS_START,
 	payload: columns
+});
+
+export const getCommentsStart = (): Action => ({
+	type: Actions.GET_ALL_COMMENTS_START
+});
+
+export const getCommentsSuccess = (comments: CommentsForEvent, topics: string[]): Action => ({
+	type: Actions.GET_ALL_COMMENTS_SUCCESS,
+	payload: {
+		comments: comments,
+		topics: topics
+	}
+});
+
+export const getCommentsFail = (): Action => ({
+	type: Actions.GET_ALL_COMMENTS_FAIL
 });

@@ -11,33 +11,17 @@
 	}
 
 	.team-detail-wrapper {
-		padding-left: 8px;
-		padding-right: 8px;
-		padding-bottom: 8px;
+		display: flex;
+		flex-direction: column;
+		row-gap: 32px;
+		padding: 20px 16px 32px 16px;
 		overflow-y: auto;
-	}
-
-	#team-page-add-note {
-		position: absolute;
-		right: 20px;
-		bottom: 16px;
 	}
 }
 
 .team-page-mobile {
 	display: flex;
 	flex-direction: column;
-
-	.team-detail-wrapper {
-		display: flex;
-		flex-direction: column;
-	}
-
-	#team-page-add-note {
-		position: absolute;
-		right: 16px;
-		bottom: 16px;
-	}
 }
 
 .team-detail-dialog__header {

@@ -1,13 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-	AppState,
-	ImageInfo,
-	ImageState,
-	Language,
-	LoadStatus,
-	Match,
-	MatchResponse
-} from '../models';
+import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -41,10 +33,6 @@ const INITIAL_STATE: AppState = {
 		data: [],
 		selectedStat: null
 	},
-	notes: {
-		loadStatus: LoadStatus.none,
-		data: []
-	},
 	planning: {
 		loadStatus: LoadStatus.none,
 		firstTeam: null,
@@ -58,6 +46,11 @@ const INITIAL_STATE: AppState = {
 		notes: [],
 		questionNames: [],
 		hiddenQuestionNames: []
+	},
+	comments: {
+		loadStatus: LoadStatus.none,
+		comments: {},
+		topics: []
 	}
 };
 
@@ -99,31 +92,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				csv: {
 					loadStatus: LoadStatus.success,
 					url: action.payload
-				}
-			};
-		case Actions.GET_ALL_NOTES_START:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					loadStatus: getNextStatusOnLoad(state.notes.loadStatus)
-				}
-			};
-		case Actions.GET_ALL_NOTES_SUCCESS:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					loadStatus: LoadStatus.success,
-					data: action.payload
-				}
-			};
-		case Actions.ADD_NOTE_SUCCESS:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					data: state.notes.data.concat(action.payload)
 				}
 			};
 		case Actions.GET_MATCHES_START:
@@ -171,8 +139,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				},
 				teams: {
 					...state.teams,
-					// isLoaded: false, // Mark data as dirty, since we modified it
-					loadStatus: LoadStatus.none,
+					loadStatus: LoadStatus.none, // Mark data as dirty, since we modified it
 					// If we're modifying data for the currently selected team, deselect it so that we don't
 					// see old data when we revisit the Teams page.
 					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
@@ -181,8 +148,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				},
 				stats: {
 					...state.stats,
-					// isLoaded: false, // Mark as dirty, since we modified it
-					loadStatus: LoadStatus.none,
+					loadStatus: LoadStatus.none, // Mark as dirty, since we modified it
 					selectedStat: null // Guaranteed to have modified the data we were previously viewing, so hide it
 				},
 				planning: INITIAL_STATE.planning
@@ -388,6 +354,32 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				inspections: {
 					...state.inspections,
 					hiddenQuestionNames: action.payload
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_START:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_SUCCESS:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: LoadStatus.success,
+					comments: action.payload.comments,
+					topics: action.payload.topics
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_FAIL:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
 				}
 			};
 		default:

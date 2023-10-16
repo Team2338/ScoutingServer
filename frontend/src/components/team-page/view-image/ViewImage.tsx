@@ -1,16 +1,15 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Icon, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
-import { LoadStatus, Note } from '../../../models';
+import { LoadStatus } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { useAppSelector } from '../../../state';
-import './ViewNotes.scss';
+import './ViewImage.scss';
 
 interface IProps {
 	robotNumber: number;
-	notes: Note[];
 }
 
-export default function ViewNotes(props: IProps) {
+export default function ViewImage(props: IProps) {
 
 	const [isOpen, setOpen] = useState(false);
 	const translate = useTranslator();
@@ -57,17 +56,6 @@ export default function ViewNotes(props: IProps) {
 			break;
 	}
 
-	const noteElements = props.notes.map((note: Note) => (
-		<div className="team-note" key={ note.id }>
-			<div className="team-note-content">
-				{ note.content }
-			</div>
-			<div className="team-note-author">
-				{ note.creator }
-			</div>
-		</div>
-	));
-
 	return (
 		<React.Fragment>
 			<Tooltip title={ translate('VIEW_NOTES_FOR_THIS_TEAM') }>
@@ -76,12 +64,12 @@ export default function ViewNotes(props: IProps) {
 					color="primary"
 					variant="outlined"
 					size="small"
-					startIcon={ <Icon fontSize="small">notes</Icon> }
+					startIcon={ <Icon fontSize="small">image</Icon> }
 					onClick={ handleOpen }
-					disabled={ props.notes.length === 0 && image === null }
+					disabled={ image === null }
 					disableElevation
 				>
-					{ translate('NOTES') }
+					{ translate('IMAGE') }
 				</Button>
 			</Tooltip>
 			<Dialog
@@ -89,13 +77,10 @@ export default function ViewNotes(props: IProps) {
 				onClose={ handleClose }
 			>
 				<DialogTitle id="view-notes-title">
-					{ translate('NOTES') }
+					{ translate('IMAGE') }
 				</DialogTitle>
 				<DialogContent>
 					{ image }
-					<div className="team-notes-list">
-						{ noteElements }
-					</div>
 				</DialogContent>
 				<DialogActions>
 					<Button

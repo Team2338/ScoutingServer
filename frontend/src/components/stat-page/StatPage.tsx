@@ -6,6 +6,7 @@ import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 
 function StatPage() {
@@ -25,7 +26,11 @@ function StatPage() {
 	}
 
 	if (statsLoadStatus === LoadStatus.failed) {
-		return <main className="stat-page">{ translate('FAILED_TO_LOAD_STATS') }</main>;
+		return (
+			<main className="page stat-page stat-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_STATS" />
+			</main>
+		);
 	}
 
 	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;

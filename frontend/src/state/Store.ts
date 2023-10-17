@@ -118,6 +118,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				matches: {
 					...state.matches,
 					loadStatus: getNextStatusOnFail(state.matches.loadStatus)
+				},
+				teams: {
+					...state.teams,
+					loadStatus: getNextStatusOnFail(state.teams.loadStatus)
+				},
+				stats: {
+					...state.stats,
+					loadStatus: getNextStatusOnFail(state.stats.loadStatus)
 				}
 			};
 		case Actions.SELECT_MATCH:

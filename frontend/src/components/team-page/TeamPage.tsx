@@ -15,6 +15,7 @@ import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
 import { ArrowBack } from '@mui/icons-material';
 import CommentSection from './comment-section/CommentSection';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props } >{ props.children }</Slide>;
@@ -58,7 +59,12 @@ export default function TeamPage() {
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <main className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
+		return (
+			<main className="page team-page team-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_TEAMS" />
+			</main>
+		);
+		// return <main className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
 	}
 
 	// TODO: Fix the padding and margins of TeamDetail

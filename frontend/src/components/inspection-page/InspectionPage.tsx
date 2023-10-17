@@ -20,6 +20,7 @@ import {
 	Typography
 } from '@mui/material';
 import InspectionTableConfigDrawer from './inspection-table-config-drawer/InspectionTableConfigDrawer';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 export default function InspectionPage() {
 	const translate = useTranslator();
@@ -43,7 +44,11 @@ export default function InspectionPage() {
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <main className="inspection-page">{ translate('FAILED_TO_LOAD_INSPECTIONS') }</main>;
+		return (
+			<main className="page inspection-page inspection-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_INSPECTIONS" />
+			</main>
+		);
 	}
 
 	const isLoadingInBackground: boolean = loadStatus === LoadStatus.loadingWithPriorSuccess;

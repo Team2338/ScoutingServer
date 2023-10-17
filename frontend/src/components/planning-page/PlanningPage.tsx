@@ -16,6 +16,7 @@ import {
 import { GridScore } from '../shared/GridScore';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 
 function PlanningPage() {
@@ -35,7 +36,11 @@ function PlanningPage() {
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <main className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
+		return (
+			<main className="page planning-page planning-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_TEAMS" />
+			</main>
+		);
 	}
 
 	const numberOfTeamsSelected: number = [firstTeam, secondTeam, thirdTeam]

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import team.gif.gearscout.exception.EmptyFileNotAllowedException;
-import team.gif.gearscout.exception.ImageTypeInvalidException;
+import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
+import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 import team.gif.gearscout.auth.LoginResponse;
 import team.gif.gearscout.auth.AuthService;
 

@@ -1,8 +1,8 @@
-package team.gif.gearscout.model;
+package team.gif.gearscout.inspections;
 
 import javax.validation.constraints.Size;
 
-public class DetailNoteQuestion {
+public class InspectionQuestion {
 
 	@Size(min = 1, max = 32)
 	private String question;
@@ -14,7 +14,7 @@ public class DetailNoteQuestion {
 	private String creator;
 
 
-	public DetailNoteQuestion() {}
+	public InspectionQuestion() {}
 
 
 	public String getQuestion() {

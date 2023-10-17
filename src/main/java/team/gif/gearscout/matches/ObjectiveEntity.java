@@ -2,7 +2,6 @@ package team.gif.gearscout.matches;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Type;
-import team.gif.gearscout.matches.MatchEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +36,7 @@ public class ObjectiveEntity {
 	private Integer count;
 	
 	@Column(columnDefinition = "int[]", nullable = true)
-	@Type(type = "team.gif.gearscout.repository.PostgresIntegerArrayType")
+	@Type(type = "team.gif.gearscout.shared.PostgresIntegerArrayType")
 	private Integer[] list;
 	
 	

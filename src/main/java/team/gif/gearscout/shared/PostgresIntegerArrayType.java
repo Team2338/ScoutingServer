@@ -1,4 +1,4 @@
-package team.gif.gearscout.repository;
+package team.gif.gearscout.shared;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

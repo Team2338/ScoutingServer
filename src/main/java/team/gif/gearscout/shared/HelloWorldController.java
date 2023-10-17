@@ -1,4 +1,4 @@
-package team.gif.gearscout.controller;
+package team.gif.gearscout.shared;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

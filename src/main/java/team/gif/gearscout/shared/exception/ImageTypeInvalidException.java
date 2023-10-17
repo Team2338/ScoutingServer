@@ -1,4 +1,4 @@
-package team.gif.gearscout.exception;
+package team.gif.gearscout.shared.exception;
 
 import java.util.List;
 

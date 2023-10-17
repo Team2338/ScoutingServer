@@ -1,4 +1,4 @@
-package team.gif.gearscout.controller;
+package team.gif.gearscout.inspections;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,53 +11,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team.gif.gearscout.model.CreateDetailNoteRequest;
-import team.gif.gearscout.model.DetailNoteEntity;
-import team.gif.gearscout.service.DetailNoteService;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/detailnotes", produces = MediaType.APPLICATION_JSON_VALUE)
-public class DetailNoteController {
+public class InspectionController {
 
-	private static final Logger logger = LogManager.getLogger(DetailNoteController.class);
-	private final DetailNoteService detailNoteService;
+	private static final Logger logger = LogManager.getLogger(InspectionController.class);
+	private final InspectionService inspectionService;
 
-	public DetailNoteController(
-		DetailNoteService detailNoteService
+	public InspectionController(
+		InspectionService inspectionService
 	) {
-		this.detailNoteService = detailNoteService;
+		this.inspectionService = inspectionService;
 	}
 
 
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> addNote(
+	public ResponseEntity<Void> addInspection(
 		@PathVariable Integer teamNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-		@RequestBody @Valid CreateDetailNoteRequest form
+		@RequestBody @Valid CreateInspectionRequest form
 	) {
-		logger.debug("Received addDetailNote request");
+		logger.debug("Received addInspection request");
 
-		detailNoteService.saveNotes(teamNumber, secretCode, form);
+		inspectionService.saveInspections(teamNumber, secretCode, form);
 
 		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
-	public ResponseEntity<List<DetailNoteEntity>> getAllNotesForEvent(
+	public ResponseEntity<List<InspectionEntity>> getAllInspectionsForEvent(
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
 		@PathVariable String eventCode,
 		@RequestHeader(value = "secretCode") String secretCode
 	) {
-		logger.debug("Received getDetailNotesForEvent request");
+		logger.debug("Received getInspectionsForEvent request");
 
-		List<DetailNoteEntity> notes = detailNoteService
-			.getNotesForEvent(teamNumber, gameYear, eventCode, secretCode);
+		List<InspectionEntity> inspections = inspectionService
+			.getInspectionsForEvent(teamNumber, gameYear, eventCode, secretCode);
 
-		return ResponseEntity.ok(notes);
+		return ResponseEntity.ok(inspections);
 	}
 
 }

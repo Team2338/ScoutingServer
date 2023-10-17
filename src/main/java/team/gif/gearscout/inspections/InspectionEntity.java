@@ -1,4 +1,4 @@
-package team.gif.gearscout.model;
+package team.gif.gearscout.inspections;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "detail_notes")
-public class DetailNoteEntity {
+public class InspectionEntity {
 
 	@Id
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -65,7 +65,7 @@ public class DetailNoteEntity {
 	private String timeCreated;
 
 
-	public DetailNoteEntity() {}
+	public InspectionEntity() {}
 
 	public Long getId() {
 		return id;

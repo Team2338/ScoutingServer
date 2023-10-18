@@ -8,14 +8,14 @@ export interface GridScoreConfig {
 	};
 }
 
-export interface DetailNote {
+export interface Inspection {
 	robotNumber: number;
 	gameYear: number;
 	eventCode: string;
-	questions: DetailNoteQuestion[];
+	questions: InspectionQuestion[];
 }
 
-export interface DetailNoteQuestion {
+export interface InspectionQuestion {
 	id: number;
 	question: string;
 	answer: string;

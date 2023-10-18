@@ -43,7 +43,7 @@ const INITIAL_STATE: AppState = {
 	images: {},
 	inspections: {
 		loadStatus: LoadStatus.none,
-		notes: [],
+		inspections: [],
 		questionNames: [],
 		hiddenQuestionNames: []
 	},
@@ -328,7 +328,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				inspections: {
 					...state.inspections,
 					loadStatus: LoadStatus.success,
-					notes: action.payload.notes,
+					inspections: action.payload.notes,
 					questionNames: action.payload.questionNames
 				}
 			};

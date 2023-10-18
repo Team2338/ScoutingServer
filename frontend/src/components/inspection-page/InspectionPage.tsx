@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './InspectionPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { DetailNote, DetailNoteQuestion, LoadStatus } from '../../models';
+import { Inspection, InspectionQuestion, LoadStatus } from '../../models';
 import {
 	getInspections,
 	useAppDispatch,
@@ -26,7 +26,7 @@ export default function InspectionPage() {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const loadStatus: LoadStatus = useAppSelector(state => state.inspections.loadStatus);
-	const notes: DetailNote[] = useAppSelector(state => state.inspections.notes);
+	const inspections: Inspection[] = useAppSelector(state => state.inspections.inspections);
 	const questionNames: string[] = useAppSelector(state => state.inspections.questionNames);
 	const hiddenQuestionNames: string[] = useAppSelector(state => state.inspections.hiddenQuestionNames);
 	const [isConfigDrawerOpen, setConfigDrawerOpen] = useState<boolean>(false);
@@ -62,15 +62,15 @@ export default function InspectionPage() {
 	));
 
 	const rows = [];
-	for (const note of notes) {
-		const robotQuestionMap: Map<string, DetailNoteQuestion> = new Map();
-		for (const question of note.questions) {
+	for (const inspection of inspections) {
+		const robotQuestionMap: Map<string, InspectionQuestion> = new Map();
+		for (const question of inspection.questions) {
 			robotQuestionMap.set(question.question, question);
 		}
 
 		const cells = filteredQuestionNames.map((questionName: string) => {
 			if (robotQuestionMap.has(questionName)) {
-				const question: DetailNoteQuestion = robotQuestionMap.get(questionName);
+				const question: InspectionQuestion = robotQuestionMap.get(questionName);
 				return (
 					<TableCell key={ questionName } align="center">{ question.answer }</TableCell>
 				);
@@ -82,8 +82,8 @@ export default function InspectionPage() {
 		});
 
 		rows.push(
-			<TableRow key={ note.robotNumber }>
-				<TableCell align="left">{ note.robotNumber }</TableCell>
+			<TableRow key={ inspection.robotNumber }>
+				<TableCell align="left">{ inspection.robotNumber }</TableCell>
 				{ cells }
 			</TableRow>
 		);

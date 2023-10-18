@@ -1,6 +1,6 @@
 import {
 	CommentsForEvent,
-	DetailNote,
+	Inspection,
 	GlobalObjectiveStats,
 	ImageInfo,
 	Language,
@@ -217,7 +217,7 @@ export const getInspectionsStart = (): Action => ({
 	type: Actions.GET_INSPECTIONS_START
 });
 
-export const getInspectionsSuccess = (notes: DetailNote[], questionNames: string[]): Action => ({
+export const getInspectionsSuccess = (notes: Inspection[], questionNames: string[]): Action => ({
 	type: Actions.GET_INSPECTIONS_SUCCESS,
 	payload: {
 		notes,

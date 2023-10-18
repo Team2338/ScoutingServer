@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CommentResponse, DetailNoteQuestionResponse, ImageInfo, MatchResponse } from '../models';
+import { CommentResponse, InspectionQuestionResponse, ImageInfo, MatchResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -110,12 +110,12 @@ class GearscoutService {
 		return this.http.get(url, config);
 	};
 
-	getDetailNotes = (data: {
+	getInspections = (data: {
 		teamNumber: number;
 		gameYear: number;
 		eventCode: string;
 		secretCode: string;
-	}): GearscoutResponse<DetailNoteQuestionResponse[]> => {
+	}): GearscoutResponse<InspectionQuestionResponse[]> => {
 		const url: string = `/v1/detailnotes/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {

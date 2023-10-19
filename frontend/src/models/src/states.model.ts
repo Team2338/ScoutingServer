@@ -38,7 +38,7 @@ export interface AppState {
 	teams: {
 		loadStatus: LoadStatus;
 		data: Team[];
-		selectedTeam: Team;
+		selectedTeam: number;
 	};
 	stats: {
 		loadStatus: LoadStatus;

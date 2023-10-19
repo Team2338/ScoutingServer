@@ -150,7 +150,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					loadStatus: LoadStatus.none, // Mark data as dirty, since we modified it
 					// If we're modifying data for the currently selected team, deselect it so that we don't
 					// see old data when we revisit the Teams page.
-					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
+					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam)
 						? null
 						: state.teams.selectedTeam
 				},

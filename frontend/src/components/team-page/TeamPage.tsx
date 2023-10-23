@@ -29,7 +29,6 @@ export default function TeamPage() {
 
 	// Dispatch and actions
 	const dispatch = useAppDispatch();
-	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));
 	const _deselectTeam = () => dispatch(selectTeam(null));
 
 	useEffect(
@@ -74,7 +73,7 @@ export default function TeamPage() {
 	if (isMobile) {
 		return (
 			<main className="page team-page-mobile">
-				<TeamList teams={ allTeams } selectTeam={ _selectTeam } selectedTeam={ selectedTeam }/>
+				<TeamList teams={ allTeams } />
 				<Dialog
 					fullScreen={ true }
 					open={ !!selectedTeam }
@@ -118,11 +117,7 @@ export default function TeamPage() {
 	return (
 		<main className="page team-page">
 			<div className="team-list-wrapper">
-				<TeamList
-					teams={ allTeams }
-					selectTeam={ _selectTeam }
-					selectedTeam={ selectedTeam }
-				/>
+				<TeamList teams={ allTeams } />
 			</div>
 			<div className="team-detail-wrapper">
 				<TeamDetail team={ selectedTeam } />

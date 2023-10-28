@@ -15,6 +15,8 @@ import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
 import { ArrowBack } from '@mui/icons-material';
 import CommentSection from './comment-section/CommentSection';
+import DataFailure from '../shared/data-failure/DataFailure';
+import TeamListSkeleton from './team-list-skeleton/TeamListSkeleton';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props } >{ props.children }</Slide>;
@@ -27,7 +29,7 @@ export default function TeamPage() {
 
 	// Dispatch and actions
 	const dispatch = useAppDispatch();
-	const _selectTeam = (team: Team) => dispatch(selectTeam(team));
+	const _deselectTeam = () => dispatch(selectTeam(null));
 
 	useEffect(
 		() => {
@@ -42,7 +44,7 @@ export default function TeamPage() {
 	const comments: CommentsForEvent = useAppSelector(state => state.comments.comments);
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
-	const selectedTeam: Team = useAppSelector(state => state.teams.selectedTeam);
+	const selectedTeam: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === state.teams.selectedTeam));
 
 	const allTeams: Team[] = useMemo(
 		() => getTeamsWithDataOrImagesOrComments(
@@ -54,22 +56,28 @@ export default function TeamPage() {
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
-		return <main className="team-page">{ translate('LOADING') }</main>;
+		return <main className="team-page">
+			<TeamListSkeleton isMobile={ isMobile } />
+		</main>;
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <main className="team-page">{ translate('FAILED_TO_LOAD_TEAMS') }</main>;
+		return (
+			<main className="page team-page team-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_TEAMS" />
+			</main>
+		);
 	}
 
 	// TODO: Fix the padding and margins of TeamDetail
 	if (isMobile) {
 		return (
 			<main className="page team-page-mobile">
-				<TeamList teams={ allTeams } selectTeam={ _selectTeam } selectedTeam={ selectedTeam }/>
+				<TeamList teams={ allTeams } />
 				<Dialog
 					fullScreen={ true }
 					open={ !!selectedTeam }
-					onClose={ () => _selectTeam(null) }
+					onClose={ () => _deselectTeam() }
 					aria-labelledby="team-detail-dialog__title"
 					TransitionComponent={ Transition }
 				>
@@ -78,7 +86,7 @@ export default function TeamPage() {
 							id="team-detail-dialog__back-button"
 							color="inherit"
 							aria-label={ translate('CLOSE') }
-							onClick={ () => _selectTeam(null) }
+							onClick={ () => _deselectTeam() }
 						>
 							<ArrowBack/>
 						</IconButton>
@@ -109,11 +117,7 @@ export default function TeamPage() {
 	return (
 		<main className="page team-page">
 			<div className="team-list-wrapper">
-				<TeamList
-					teams={ allTeams }
-					selectTeam={ _selectTeam }
-					selectedTeam={ selectedTeam }
-				/>
+				<TeamList teams={ allTeams } />
 			</div>
 			<div className="team-detail-wrapper">
 				<TeamDetail team={ selectedTeam } />

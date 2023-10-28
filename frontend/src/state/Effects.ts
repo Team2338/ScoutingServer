@@ -1,7 +1,7 @@
 import {
 	AppState,
 	CommentsForEvent,
-	DetailNote,
+	Inspection,
 	ImageInfo,
 	Language,
 	LanguageInfo,
@@ -10,7 +10,7 @@ import {
 	Team
 } from '../models';
 import commentService from '../service/CommentService';
-import detailNotesModelService from '../service/DetailNotesModelService';
+import inspectionModelService from '../service/InspectionModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
@@ -354,23 +354,23 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 };
 
 export const getInspections = () => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log('Getting detail notes for event');
+	console.log('Getting inspections for event');
 	dispatch(getInspectionsStart());
 
 	try {
-		const response = await gearscoutService.getDetailNotes({
+		const response = await gearscoutService.getInspections({
 			teamNumber: getState().login.teamNumber,
 			gameYear: 2023,
 			eventCode: getState().login.eventCode,
 			secretCode: getState().login.secretCode
 		});
 
-		const inspections: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
-		const questionNames: string[] = detailNotesModelService.getUniqueQuestionNames(response.data);
+		const inspections: Inspection[] = inspectionModelService.convertResponsesToModels(response.data);
+		const questionNames: string[] = inspectionModelService.getUniqueQuestionNames(response.data);
 
 		dispatch(getInspectionsSuccess(inspections, questionNames));
 	} catch (error) {
-		console.log('Error getting detail notes', error);
+		console.log('Error getting inspections', error);
 		dispatch(getInspectionsFail());
 	}
 };

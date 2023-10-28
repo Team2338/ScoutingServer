@@ -13,7 +13,8 @@ import {
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
 import {
-	AppDispatch, getAllFormsFailed,
+	AppDispatch,
+	getAllFormsFailed,
 	getAllFormsStart,
 	getAllFormsSuccess,
 	loginFailed,
@@ -38,12 +39,19 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 
 	// Only login if all information is present
 	if (teamNumber && username && eventCode && secretCode) {
-		dispatch(login({
+		const user: IUser = {
 			teamNumber: teamNumber,
 			username: username,
 			eventCode: eventCode,
 			secretCode: secretCode
-		}));
+		};
+		const token = JSON.parse(localStorage.getItem('token'));
+
+		if (token) {
+			dispatch(loginSuccess({ user, token }));
+		} else {
+			dispatch(login(user));
+		}
 	}
 };
 
@@ -62,6 +70,7 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 		localStorage.setItem('username', credentials.username);
 		localStorage.setItem('eventCode', credentials.eventCode);
 		localStorage.setItem('secretCode', credentials.secretCode);
+		localStorage.setItem('token', JSON.stringify(token));
 
 		dispatch(loginSuccess({ user: credentials, token }));
 	} catch (error) {

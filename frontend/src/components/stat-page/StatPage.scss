@@ -28,3 +28,10 @@
 		}
 	}
 }
+
+.stat-page-failed {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: min(100px, 12vb);
+}

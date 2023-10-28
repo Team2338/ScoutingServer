@@ -1,6 +1,6 @@
 import {
 	CommentsForEvent,
-	DetailNote,
+	Inspection,
 	GlobalObjectiveStats,
 	ImageInfo,
 	Language,
@@ -126,9 +126,9 @@ export const calculateTeamStatsSuccess = (teams: Team[]): Action => ({
 	payload: teams
 });
 
-export const selectTeam = (team: Team): Action => ({
+export const selectTeam = (teamNumber: number): Action => ({
 	type: Actions.SELECT_TEAM,
-	payload: team
+	payload: teamNumber
 });
 
 export const calculateGlobalStatsStart = (): Action => ({
@@ -217,7 +217,7 @@ export const getInspectionsStart = (): Action => ({
 	type: Actions.GET_INSPECTIONS_START
 });
 
-export const getInspectionsSuccess = (notes: DetailNote[], questionNames: string[]): Action => ({
+export const getInspectionsSuccess = (notes: Inspection[], questionNames: string[]): Action => ({
 	type: Actions.GET_INSPECTIONS_SUCCESS,
 	payload: {
 		notes,

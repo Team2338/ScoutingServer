@@ -94,7 +94,7 @@ export interface ImageInfo {
 	timeCreated: string;
 }
 
-export interface DetailNoteQuestionResponse {
+export interface InspectionQuestionResponse {
 	id: number;
 	teamNumber: number;
 	robotNumber: number;

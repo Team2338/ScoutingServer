@@ -16,6 +16,25 @@ paths:
             text/plain:
               schema:
                 type: string
+  /auth/login:
+    post:
+      description: Attempts to authenticate a user and provide a login token
+      requestBody:
+        description: The user's login credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: 'Credentials of authenticated user'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credentials'
+        default:
+          $ref: '#/components/responses/GeneralError'
   /team/{teamNum}/event/{eventCode}:
     parameters:
       - $ref: '#/components/parameters/teamNumParam'
@@ -170,6 +189,28 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorModel'
   schemas:
+    Login:
+      type: object
+      properties:
+        teamNumber:
+          $ref: '#/components/parameters/teamNumParam'
+        username:
+          type: string
+          minLength: 1
+          maxLength: 32
+    Credentials:
+      type: object
+      properties:
+        teamNumber:
+          $ref: '#/components/parameters/teamNumParam'
+        username:
+          type: string
+          minLength: 1
+          maxLength: 32
+        role:
+          type: string
+          minLength: 1
+          maxLength: 32
     NewMatch:
       type: object
       properties:

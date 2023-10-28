@@ -9,7 +9,7 @@ import {
 	Plan,
 	Team
 } from './response.model';
-import { CommentsForEvent, DetailNote } from './display.model';
+import { CommentsForEvent, Inspection } from './display.model';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -38,7 +38,7 @@ export interface AppState {
 	teams: {
 		loadStatus: LoadStatus;
 		data: Team[];
-		selectedTeam: Team;
+		selectedTeam: number;
 	};
 	stats: {
 		loadStatus: LoadStatus;
@@ -75,7 +75,7 @@ export interface ImageState {
 
 export interface InspectionState {
 	loadStatus: LoadStatus;
-	notes: DetailNote[];
+	inspections: Inspection[];
 	questionNames: string[];
 	hiddenQuestionNames: string[];
 }

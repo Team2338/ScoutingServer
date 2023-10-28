@@ -43,7 +43,7 @@ const INITIAL_STATE: AppState = {
 	images: {},
 	inspections: {
 		loadStatus: LoadStatus.none,
-		notes: [],
+		inspections: [],
 		questionNames: [],
 		hiddenQuestionNames: []
 	},
@@ -118,6 +118,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				matches: {
 					...state.matches,
 					loadStatus: getNextStatusOnFail(state.matches.loadStatus)
+				},
+				teams: {
+					...state.teams,
+					loadStatus: getNextStatusOnFail(state.teams.loadStatus)
+				},
+				stats: {
+					...state.stats,
+					loadStatus: getNextStatusOnFail(state.stats.loadStatus)
 				}
 			};
 		case Actions.SELECT_MATCH:
@@ -142,7 +150,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					loadStatus: LoadStatus.none, // Mark data as dirty, since we modified it
 					// If we're modifying data for the currently selected team, deselect it so that we don't
 					// see old data when we revisit the Teams page.
-					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
+					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam)
 						? null
 						: state.teams.selectedTeam
 				},
@@ -320,7 +328,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				inspections: {
 					...state.inspections,
 					loadStatus: LoadStatus.success,
-					notes: action.payload.notes,
+					inspections: action.payload.notes,
 					questionNames: action.payload.questionNames
 				}
 			};

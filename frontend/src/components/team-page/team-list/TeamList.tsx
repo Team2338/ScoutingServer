@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
 import { Divider, List, ListItemButton, Typography } from '@mui/material';
-import { Team } from '../../../models';
+import { Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
 import SearchInput from '../../shared/search-input/SearchInput';
+import { selectSelectedTeam } from '../../../state/src/Selectors';
+import { selectTeam, useAppDispatch } from '../../../state';
 
 interface IProps {
 	teams: Team[];
-	selectTeam: (team: Team) => void;
-	selectedTeam: Team;
 }
 
-export default function TeamList({ teams, selectTeam, selectedTeam }: IProps) {
+export default function TeamList({teams}: IProps) {
 
 	const translate = useTranslator();
-	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
+	const selectedTeam: Team = selectSelectedTeam();
+
+	const dispatch = useAppDispatch();
+	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));
 
 	const listItems = teams
 		.filter((team: Team) => String(team.id).includes(searchTerm))
 		.map((team: Team, index: number) => {
 			const listItem = (
 				<ListItemButton
-					key={team.id}
-					selected={team.id === selectedTeam?.id}
-					onClick={() => selectTeam(team)}
+					key={ team.id }
+					selected={ team.id === selectedTeam?.id }
+					onClick={ () => _selectTeam(team) }
 					sx={{
 						paddingTop: '12px',
 						paddingBottom: '12px'
@@ -40,7 +44,7 @@ export default function TeamList({ teams, selectTeam, selectedTeam }: IProps) {
 			}
 
 			return (
-				<React.Fragment key={team.id}>
+				<React.Fragment key={ team.id }>
 					<Divider variant="fullWidth" component="li"/>
 					{ listItem }
 				</React.Fragment>
@@ -58,7 +62,7 @@ export default function TeamList({ teams, selectTeam, selectedTeam }: IProps) {
 				>
 					{ translate('TEAMS') }
 				</Typography>
-				<SearchInput onSearch={setSearchTerm} size="small" />
+				<SearchInput onSearch={ setSearchTerm } size="small"/>
 			</div>
 			<Divider variant="fullWidth"/>
 			<List>

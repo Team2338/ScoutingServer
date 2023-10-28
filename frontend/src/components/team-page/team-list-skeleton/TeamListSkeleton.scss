@@ -1,0 +1,25 @@
+
+.team-list-skeleton {
+	display: flex;
+	flex-direction: column;
+	width: 180px;
+	min-width: 180px;
+
+	&-item {
+		padding: 12px 16px;
+		font-size: 16px;
+		line-height: 20px;
+	}
+}
+
+.team-list-skeleton-mobile {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	.team-list-skeleton-item {
+		padding: 12px 16px;
+		font-size: 16px;
+		line-height: 20px;
+	}
+}

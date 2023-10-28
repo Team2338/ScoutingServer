@@ -13,7 +13,8 @@ import {
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
 import {
-	AppDispatch, getAllFormsFailed,
+	AppDispatch,
+	getAllFormsFailed,
 	getAllFormsStart,
 	getAllFormsSuccess,
 	loginFailed,

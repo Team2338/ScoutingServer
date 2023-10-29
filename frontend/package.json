@@ -1,6 +1,6 @@
 {
   "name": "gearscout-analytics",
-  "version": "2023.10",
+  "version": "2023.10.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",

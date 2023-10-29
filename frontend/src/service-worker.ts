@@ -104,6 +104,10 @@ self.addEventListener('install', (event) => {
 	// 	'/style.css',
 	// 	'/index.html'
 	// ]));
+	event.waitUntil(
+		caches.open('v1')
+			.then((cache: Cache) => cache.add('/manifest.json'))
+	);
 });
 
 const putInCache = async (request, response): Promise<void> => {
@@ -129,7 +133,6 @@ const networkFirst = async (request: Request): Promise<Response> => {
 };
 
 self.addEventListener('fetch', (event: FetchEvent) => {
-	console.log('Fetch interceptor', event);
 
 	if (event.request.url.includes('/api/v')) {
 		return;

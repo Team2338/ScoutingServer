@@ -1,12 +1,13 @@
 import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, Typography, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { LoadStatus, Match } from '../../models';
+import { LoadStatus, Match, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getAllData, hideMatch, selectMatch, unhideMatch, useAppDispatch, useAppSelector } from '../../state';
 import SearchInput from '../shared/search-input/SearchInput';
 import './ManagePage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;
@@ -23,7 +24,7 @@ function ManagePage() {
 	const loadStatus: LoadStatus = useAppSelector(state => state.matches.loadStatus);
 	const matches: Match[] = useAppSelector(state => state.matches.data);
 	const selectedMatch: Match = useAppSelector(state => state.matches.selectedMatch);
-	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
 
 	useEffect(
 		() => {
@@ -33,20 +34,24 @@ function ManagePage() {
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <div className="page manage-page">{ translate('LOADING') }</div>;
+		return <main className="page manage-page">{ translate('LOADING') }</main>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <div className="page manage-page">{ translate('FAILED') }</div>;
+		return (
+			<main className="page manage-page manage-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_MATCHES"/>
+			</main>
+		);
 	}
 
 	if (isMobile) {
 		return (
-			<div className="page match-page-mobile">
+			<main className="page match-page-mobile">
 				<div className="match-list-wrapper__header">
-					<SearchInput onSearch={ setSearchTerm } size="medium" />
+					<SearchInput onSearch={ setSearchTerm } size="medium"/>
 				</div>
-				<Divider />
+				<Divider/>
 				<MatchList
 					matches={ matches }
 					selectMatch={ _selectMatch }
@@ -65,7 +70,7 @@ function ManagePage() {
 						<IconButton
 							id="match-detail-dialog__back-button"
 							color="inherit"
-							aria-label="back" // TODO: translate
+							aria-label={ translate('CLOSE') }
 							onClick={ () => _selectMatch(null) }
 						>
 							<Icon>arrow_back</Icon>
@@ -78,11 +83,11 @@ function ManagePage() {
 					</div>
 					<DialogContent
 						dividers={ true }
-						sx={ {
+						sx={{
 							paddingLeft: '8px',
 							paddingRight: '8px',
 							paddingTop: '12px'
-						} }
+						}}
 					>
 						<MatchDetail
 							match={ selectedMatch }
@@ -92,25 +97,25 @@ function ManagePage() {
 						/>
 					</DialogContent>
 				</Dialog>
-			</div>
+			</main>
 		);
 	}
 
 	return (
-		<div className="page manage-page">
+		<main className="page manage-page">
 			<div className="match-list-wrapper">
 				<div className="match-list-wrapper__header">
 					<Typography
 						variant="h6"
-						sx={ {
+						sx={{
 							marginBottom: '4px'
-						} }
+						}}
 					>
 						{ translate('MATCHES') }
 					</Typography>
-					<SearchInput onSearch={ setSearchTerm } size="small" />
+					<SearchInput onSearch={ setSearchTerm } size="small"/>
 				</div>
-				<Divider variant="fullWidth" />
+				<Divider variant="fullWidth"/>
 				<MatchList
 					matches={ matches }
 					selectMatch={ _selectMatch }
@@ -124,11 +129,11 @@ function ManagePage() {
 				hide={ _hideMatch }
 				unhide={ _unhideMatch }
 				isMobile={ false }
-				sx={ {
+				sx={{
 					margin: '12px 12px'
-				} }
+				}}
 			/>
-		</div>
+		</main>
 	);
 }
 

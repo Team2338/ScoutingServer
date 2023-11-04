@@ -3,7 +3,7 @@ export interface ICreateDetailNoteRequest {
 	robotNumber: number;
 	gameYear: number;
 	eventCode: string;
-	question: IDetailNoteQuestion[];
+	questions: IDetailNoteQuestion[];
 }
 
 export interface IDetailNoteQuestion {

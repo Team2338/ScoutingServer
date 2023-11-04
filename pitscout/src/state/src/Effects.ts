@@ -1,8 +1,33 @@
 import { AxiosError, HttpStatusCode } from 'axios';
-import { IPitState, IToken, IUser, LoginErrors, UploadErrors, UserRoles } from '../../models';
-import apiService from '../../services/ApiService';
+import {
+	FormErrors,
+	ICreateDetailNoteRequest,
+	IForm,
+	IFormQuestions,
+	IPitState,
+	IToken,
+	IUser,
+	LoginErrors,
+	UploadErrors
+} from '../../models';
 import ApiService from '../../services/ApiService';
-import { AppDispatch, loginFailed, loginStart, loginSuccess, logoutSuccess, uploadFailed, uploadStart, uploadSuccess } from './Store';
+import FormModelService from '../../services/FormModelService';
+import {
+	AppDispatch,
+	getAllFormsFailed,
+	getAllFormsStart,
+	getAllFormsSuccess,
+	loginFailed,
+	loginStart,
+	loginSuccess,
+	logoutSuccess,
+	uploadFailed,
+	uploadFormFailed,
+	uploadFormStart,
+	uploadFormSuccess,
+	uploadStart,
+	uploadSuccess
+} from './Store';
 
 type GetState = () => IPitState;
 
@@ -14,12 +39,19 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 
 	// Only login if all information is present
 	if (teamNumber && username && eventCode && secretCode) {
-		dispatch(login({
+		const user: IUser = {
 			teamNumber: teamNumber,
 			username: username,
 			eventCode: eventCode,
 			secretCode: secretCode
-		}));
+		};
+		const token = JSON.parse(localStorage.getItem('token'));
+
+		if (token) {
+			dispatch(loginSuccess({ user, token }));
+		} else {
+			dispatch(login(user));
+		}
 	}
 };
 
@@ -27,21 +59,18 @@ export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
 	dispatch(loginStart());
 
 	try {
-		const response = await apiService.login({
+		const response = await ApiService.login({
 			teamNumber: Number(credentials.teamNumber),
 			username: credentials.username
 		});
 
 		const token: IToken = response.data;
-		if (token.role !== UserRoles.admin) {
-			dispatch(loginFailed(LoginErrors.unauthorized));
-			return;
-		}
 
 		localStorage.setItem('teamNumber', credentials.teamNumber);
 		localStorage.setItem('username', credentials.username);
 		localStorage.setItem('eventCode', credentials.eventCode);
 		localStorage.setItem('secretCode', credentials.secretCode);
+		localStorage.setItem('token', JSON.stringify(token));
 
 		dispatch(loginSuccess({ user: credentials, token }));
 	} catch (error) {
@@ -91,3 +120,71 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 		dispatch(uploadFailed(msg));
 	}
 };
+
+export const uploadForm = (robotNumber: number, questions: IFormQuestions) => async (dispatch: AppDispatch, getState: GetState) => {
+	const formState: IForm = FormModelService.convertQuestionsToFormState(
+		getState().login.user,
+		robotNumber,
+		questions
+	);
+	dispatch(uploadFormStart(formState));
+
+	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
+		getState().login.user,
+		2023,
+		robotNumber,
+		questions
+	);
+
+	try {
+		await ApiService.uploadForm(getState().login.user, request, getState().login.token);
+		dispatch(uploadFormSuccess(robotNumber));
+	} catch (error) {
+		console.log(error);
+		const err = error as AxiosError;
+		let msg: FormErrors = FormErrors.unknown;
+		if (error.response) {
+			switch (err.response.status) {
+				case HttpStatusCode.Unauthorized: // Fallthrough
+				case HttpStatusCode.Forbidden:
+					msg = FormErrors.unauthorized;
+					break;
+			}
+		}
+
+		dispatch(uploadFormFailed({
+			robotNumber: robotNumber,
+			error: msg
+		}));
+	}
+};
+
+export const loadForms = () => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(getAllFormsStart());
+
+	try {
+		const questions = await ApiService.getAllForms(
+			new Date().getFullYear(),
+			getState().login.user,
+			getState().login.token
+		);
+
+		const forms = FormModelService.convertResponseQuestionsToForms(questions.data);
+
+		dispatch(getAllFormsSuccess(forms));
+	} catch (error) {
+		console.log(error);
+		const err = error as AxiosError;
+		let msg: FormErrors = FormErrors.unknown;
+		if (error.response) {
+			switch (err.response.status) {
+				case HttpStatusCode.Unauthorized: // Fallthrough
+				case HttpStatusCode.Forbidden:
+					msg = FormErrors.unauthorized;
+					break;
+			}
+		}
+
+		dispatch(getAllFormsFailed(msg));
+	}
+}

@@ -6,6 +6,7 @@ import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 
 function StatPage() {
@@ -21,11 +22,15 @@ function StatPage() {
 	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
-		return <div className="stat-page">{ translate('LOADING') }</div>;
+		return <main className="stat-page">{ translate('LOADING') }</main>;
 	}
 
 	if (statsLoadStatus === LoadStatus.failed) {
-		return <div className="stat-page">{ translate('FAILED_TO_LOAD_STATS') }</div>;
+		return (
+			<main className="page stat-page stat-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_STATS" />
+			</main>
+		);
 	}
 
 	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
@@ -52,7 +57,7 @@ function StatPage() {
 	}
 
 	return (
-		<div className="page stat-page">
+		<main className="page stat-page">
 			<div className="stat-list-wrapper">
 				<StatList
 					stats={ stats }
@@ -61,7 +66,7 @@ function StatPage() {
 				/>
 			</div>
 			{ content }
-		</div>
+		</main>
 	);
 }
 

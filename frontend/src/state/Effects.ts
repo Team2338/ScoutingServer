@@ -1,39 +1,50 @@
-import { AppState, DetailNote, ImageInfo, Language, Match, MatchResponse, NewNote, Note, Team } from '../models';
-import detailNotesModelService from '../service/DetailNotesModelService';
+import {
+	AppState,
+	CommentsForEvent,
+	Inspection,
+	ImageInfo,
+	Language,
+	LanguageInfo,
+	Match,
+	MatchResponse,
+	Team
+} from '../models';
+import commentService from '../service/CommentService';
+import inspectionModelService from '../service/InspectionModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
 import statModelService from '../service/StatModelService';
 import teamModelService from '../service/TeamModelService';
 import {
-	addNoteStart,
-	addNoteSuccess,
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
-	getAllNotesStart,
-	getAllNotesSuccess,
+	getCommentsFail,
+	getCommentsStart,
+	getCommentsSuccess,
 	getCsvStart,
 	getCsvSuccess,
-	getDetailNotesFail,
-	getDetailNotesStart,
-	getDetailNotesSuccess,
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
 	getImageFail,
 	getImageStart,
 	getImageSuccess,
+	getInspectionsFail,
+	getInspectionsStart,
+	getInspectionsSuccess,
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
-	getNotesForRobotStart,
-	getNotesForRobotSuccess,
+	hideInspectionColumnStart,
 	keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
-	selectLangSuccess
+	selectLangSuccess,
+	setHiddenInspectionColumnsStart,
+	showInspectionColumnStart
 } from './Actions';
 import { AppDispatch } from './Store';
 
@@ -50,15 +61,61 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 		dispatch(loginSuccess(Number(teamNumber), username, eventCode, secretCode));
 	}
 
-	const language: Language = localStorage.getItem('language') as Language;
+	const language: Language = getPreferredLanguage();
 	if (language) {
 		dispatch(selectLangSuccess(language));
 	}
+
+	const hiddenInspectionColumns: string = localStorage.getItem('hiddenInspectionColumns');
+	if (hiddenInspectionColumns) {
+		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
+		dispatch(setHiddenInspectionColumnsStart(splitColumns));
+	}
+};
+
+const getPreferredLanguage = (): Language => {
+	// Attempt to get saved language preference
+	let language: Language = localStorage.getItem('language') as Language;
+	if (language) {
+		return language;
+	}
+
+	// Attempt to get the browser's language
+	const browserPreference: string = window.navigator.language
+		.trim()
+		.split(/[-_]/)[0]; // Converts 'en-us' or 'en_us' to just 'en'
+	language = Object.entries(LanguageInfo)
+		.find(([, info]) => info.code === browserPreference)[1]
+		.key;
+	if (language) {
+		return language;
+	}
+
+	return undefined;
 };
 
 export const selectLanguage = (language: Language) => async (dispatch: AppDispatch) => {
-	localStorage.setItem('language', language);
 	dispatch(selectLangSuccess(language));
+	localStorage.setItem('language', language);
+};
+
+export const setHiddenInspectionColumns = (columns: string[]) => async (dispatch: AppDispatch) => {
+	dispatch(setHiddenInspectionColumnsStart(columns));
+	localStorage.setItem('hiddenInspectionColumns', columns.join('|:'));
+};
+
+export const hideInspectionColumn = (column: string) => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(hideInspectionColumnStart(column));
+
+	const hiddenColumns: string[] = getState().inspections.hiddenQuestionNames;
+	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
+};
+
+export const showInspectionColumn = (column: string) => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(showInspectionColumnStart(column));
+
+	const hiddenColumns: string[] = getState().inspections.hiddenQuestionNames;
+	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
 };
 
 export const login = (
@@ -132,7 +189,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	}
 };
 
-export const getCsvData = () => async (dispatch, getState: GetState) => {
+export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting CSV');
 
 	dispatch(getCsvStart());
@@ -155,7 +212,7 @@ export const getCsvData = () => async (dispatch, getState: GetState) => {
 	}
 };
 
-export const hideMatch = (match: Match) => async (dispatch, getState: GetState) => {
+export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Hiding match');
 	try {
 		const response = await gearscoutService.hideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
@@ -169,7 +226,7 @@ export const hideMatch = (match: Match) => async (dispatch, getState: GetState) 
 	}
 };
 
-export const unhideMatch = (match: Match) => async (dispatch, getState: GetState) => {
+export const unhideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Unhiding match');
 	try {
 		const response = await gearscoutService.unhideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
@@ -216,69 +273,6 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 // 	dispatch(calculateGlobalStatsSuccess(globalStats));
 // };
 
-export const getNotesForRobot = (robotNumber: number) => async (dispatch, getState: GetState) => {
-	console.log('Getting notes for robot');
-	dispatch(getNotesForRobotStart(robotNumber));
-
-	try {
-		const response = await gearscoutService.getNotesForRobot(
-			getState().login.teamNumber,
-			getState().login.eventCode,
-			robotNumber,
-			getState().login.secretCode
-		);
-		const notes: Note[] = response.data;
-
-		dispatch(getNotesForRobotSuccess(notes));
-	} catch (error) {
-		console.error('Error getting notes for robot', error);
-	}
-};
-
-export const getAllNotes = () => async (dispatch, getState: GetState) => {
-	console.log('Getting all notes');
-	dispatch(getAllNotesStart());
-
-	try {
-		const response = await gearscoutService.getAllNotes(
-			getState().login.teamNumber,
-			getState().login.eventCode,
-			getState().login.secretCode
-		);
-		const notes: Note[] = response.data;
-
-		dispatch(getAllNotesSuccess(notes));
-	} catch (error) {
-		console.error('Error getting all notes', error);
-	}
-};
-
-export const addNoteForRobot = (robotNumber: number, content: string) => async (dispatch, getState: GetState) => {
-	console.log('Adding note for robot');
-	dispatch(addNoteStart());
-
-	const note: NewNote = {
-		robotNumber: robotNumber,
-		eventCode: getState().login.eventCode,
-		creator: getState().login.username,
-		content: content
-	};
-
-	const dummyCompleteNote: Note = {
-		...note,
-		teamNumber: getState().login.teamNumber,
-		secretCode: getState().login.secretCode,
-		id: -getState().notes.data.length,
-		timeCreated: null
-	};
-
-	try {
-		await gearscoutService.addNote(getState().login.teamNumber, getState().login.secretCode, note);
-		dispatch(addNoteSuccess(dummyCompleteNote));
-	} catch (error) {
-		console.error('Error adding note', error);
-	}
-};
 
 export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log(`Getting image info for ${ robotNumber }`);
@@ -359,24 +353,45 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 	}
 };
 
-export const getDetailNotes = () => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log('Getting detail notes for event');
-	dispatch(getDetailNotesStart());
+export const getInspections = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting inspections for event');
+	dispatch(getInspectionsStart());
 
 	try {
-		const response = await gearscoutService.getDetailNotes({
+		const response = await gearscoutService.getInspections({
 			teamNumber: getState().login.teamNumber,
 			gameYear: 2023,
 			eventCode: getState().login.eventCode,
 			secretCode: getState().login.secretCode
 		});
 
-		const detailNotes: DetailNote[] = detailNotesModelService.convertResponsesToModels(response.data);
-		const questionNames: string[] = detailNotesModelService.getUniqueQuestionNames(response.data);
+		const inspections: Inspection[] = inspectionModelService.convertResponsesToModels(response.data);
+		const questionNames: string[] = inspectionModelService.getUniqueQuestionNames(response.data);
 
-		dispatch(getDetailNotesSuccess(detailNotes, questionNames));
+		dispatch(getInspectionsSuccess(inspections, questionNames));
 	} catch (error) {
-		console.log('Error getting detail notes', error);
-		dispatch(getDetailNotesFail());
+		console.log('Error getting inspections', error);
+		dispatch(getInspectionsFail());
+	}
+};
+
+export const getComments = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting comments for event');
+	dispatch(getCommentsStart());
+
+	try {
+		const response = await gearscoutService.getCommentsForEvent({
+			teamNumber: getState().login.teamNumber,
+			gameYear: 2023,
+			eventCode: getState().login.eventCode,
+			secretCode: getState().login.secretCode
+		});
+
+		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);
+		const topics: string[] = commentService.getUniqueTopics(response.data);
+		dispatch(getCommentsSuccess(comments, topics));
+	} catch (error) {
+		console.log('Error getting comments', error);
+		dispatch(getCommentsFail());
 	}
 };

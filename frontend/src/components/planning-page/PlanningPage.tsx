@@ -16,6 +16,7 @@ import {
 import { GridScore } from '../shared/GridScore';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 
 function PlanningPage() {
@@ -31,11 +32,15 @@ function PlanningPage() {
 	const thirdTeam: Team = useAppSelector(state => state.planning.thirdTeam);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
-		return <div className="planning-page">{ translate('LOADING') }</div>;
+		return <main className="planning-page">{ translate('LOADING') }</main>;
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {
-		return <div className="planning-page">{ translate('FAILED_TO_LOAD_TEAMS') }</div>;
+		return (
+			<main className="page planning-page planning-page-failed">
+				<DataFailure messageKey="FAILED_TO_LOAD_TEAMS" />
+			</main>
+		);
 	}
 
 	const numberOfTeamsSelected: number = [firstTeam, secondTeam, thirdTeam]
@@ -44,7 +49,7 @@ function PlanningPage() {
 	const isApplyDisabled: boolean = numberOfTeamsSelected < 2;
 
 	return (
-		<div className="page planning-page">
+		<main className="page planning-page">
 			<Typography variant="h6">{ translate('PLAN') }</Typography>
 			<div className="team-selectors">
 				<TeamSelector
@@ -83,7 +88,7 @@ function PlanningPage() {
 			<div className="plan">
 				{ plan ? <PlanDisplay plan={ plan } /> : null }
 			</div>
-		</div>
+		</main>
 	);
 }
 

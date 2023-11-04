@@ -1,13 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-	AppState,
-	ImageInfo,
-	ImageState,
-	Language,
-	LoadStatus,
-	Match,
-	MatchResponse
-} from '../models';
+import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -41,10 +33,6 @@ const INITIAL_STATE: AppState = {
 		data: [],
 		selectedStat: null
 	},
-	notes: {
-		loadStatus: LoadStatus.none,
-		data: []
-	},
 	planning: {
 		loadStatus: LoadStatus.none,
 		firstTeam: null,
@@ -53,10 +41,16 @@ const INITIAL_STATE: AppState = {
 		plan: null
 	},
 	images: {},
-	detailNotes: {
+	inspections: {
 		loadStatus: LoadStatus.none,
-		notes: [],
-		questionNames: []
+		inspections: [],
+		questionNames: [],
+		hiddenQuestionNames: []
+	},
+	comments: {
+		loadStatus: LoadStatus.none,
+		comments: {},
+		topics: []
 	}
 };
 
@@ -100,31 +94,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					url: action.payload
 				}
 			};
-		case Actions.GET_ALL_NOTES_START:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					loadStatus: getNextStatusOnLoad(state.notes.loadStatus)
-				}
-			};
-		case Actions.GET_ALL_NOTES_SUCCESS:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					loadStatus: LoadStatus.success,
-					data: action.payload
-				}
-			};
-		case Actions.ADD_NOTE_SUCCESS:
-			return {
-				...state,
-				notes: {
-					...state.notes,
-					data: state.notes.data.concat(action.payload)
-				}
-			};
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,
@@ -149,6 +118,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				matches: {
 					...state.matches,
 					loadStatus: getNextStatusOnFail(state.matches.loadStatus)
+				},
+				teams: {
+					...state.teams,
+					loadStatus: getNextStatusOnFail(state.teams.loadStatus)
+				},
+				stats: {
+					...state.stats,
+					loadStatus: getNextStatusOnFail(state.stats.loadStatus)
 				}
 			};
 		case Actions.SELECT_MATCH:
@@ -170,18 +147,16 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				},
 				teams: {
 					...state.teams,
-					// isLoaded: false, // Mark data as dirty, since we modified it
-					loadStatus: LoadStatus.none,
+					loadStatus: LoadStatus.none, // Mark data as dirty, since we modified it
 					// If we're modifying data for the currently selected team, deselect it so that we don't
 					// see old data when we revisit the Teams page.
-					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam?.id)
+					selectedTeam: (action.payload.match.robotNumber === state.teams.selectedTeam)
 						? null
 						: state.teams.selectedTeam
 				},
 				stats: {
 					...state.stats,
-					// isLoaded: false, // Mark as dirty, since we modified it
-					loadStatus: LoadStatus.none,
+					loadStatus: LoadStatus.none, // Mark as dirty, since we modified it
 					selectedStat: null // Guaranteed to have modified the data we were previously viewing, so hide it
 				},
 				planning: INITIAL_STATE.planning
@@ -339,30 +314,80 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				images: createImageStateFromInfo(action.payload)
 			};
-		case Actions.GET_DETAIL_NOTES_START:
+		case Actions.GET_INSPECTIONS_START:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
-					loadStatus: getNextStatusOnLoad(state.detailNotes.loadStatus)
+				inspections: {
+					...state.inspections,
+					loadStatus: getNextStatusOnLoad(state.inspections.loadStatus)
 				}
 			};
-		case Actions.GET_DETAIL_NOTES_SUCCESS:
+		case Actions.GET_INSPECTIONS_SUCCESS:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
+				inspections: {
+					...state.inspections,
 					loadStatus: LoadStatus.success,
-					notes: action.payload.notes,
+					inspections: action.payload.notes,
 					questionNames: action.payload.questionNames
 				}
 			};
-		case Actions.GET_DETAIL_NOTES_FAIL:
+		case Actions.GET_INSPECTIONS_FAIL:
 			return {
 				...state,
-				detailNotes: {
-					...state.detailNotes,
-					loadStatus: getNextStatusOnFail(state.detailNotes.loadStatus)
+				inspections: {
+					...state.inspections,
+					loadStatus: getNextStatusOnFail(state.inspections.loadStatus)
+				}
+			};
+		case Actions.HIDE_INSPECTION_COLUMN:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: state.inspections.hiddenQuestionNames.concat(action.payload)
+				}
+			};
+		case Actions.SHOW_INSPECTION_COLUMN:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: state.inspections.hiddenQuestionNames.filter((col: string) => col !== action.payload)
+				}
+			};
+		case Actions.SET_HIDDEN_INSPECTION_COLUMNS_START:
+			return {
+				...state,
+				inspections: {
+					...state.inspections,
+					hiddenQuestionNames: action.payload
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_START:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_SUCCESS:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: LoadStatus.success,
+					comments: action.payload.comments,
+					topics: action.payload.topics
+				}
+			};
+		case Actions.GET_ALL_COMMENTS_FAIL:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
 				}
 			};
 		default:

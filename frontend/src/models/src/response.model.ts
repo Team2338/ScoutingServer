@@ -68,24 +68,6 @@ export interface GlobalObjectiveStats {
 	}
 }
 
-export interface NewNote {
-	eventCode: string;
-	robotNumber: number;
-	creator: string;
-	content: string;
-}
-
-export interface Note {
-	id: number;
-	teamNumber: number;
-	secretCode: string;
-	eventCode: string;
-	robotNumber: number;
-	creator: string;
-	content: string;
-	timeCreated: string;
-}
-
 export interface Plan {
 	teams: Team[];
 	gamemodes: {
@@ -112,7 +94,7 @@ export interface ImageInfo {
 	timeCreated: string;
 }
 
-export interface DetailNoteQuestionResponse {
+export interface InspectionQuestionResponse {
 	id: number;
 	teamNumber: number;
 	robotNumber: number;
@@ -121,6 +103,20 @@ export interface DetailNoteQuestionResponse {
 	secretCode: string;
 	question: string;
 	answer: string;
+	creator: string;
+	timeCreated: string;
+}
+
+export interface CommentResponse {
+	id: number;
+	teamNumber: number;
+	robotNumber: number;
+	gameYear: number;
+	eventCode: string;
+	secretCode: string;
+	matchNumber: number;
+	topic: string;
+	content: string;
 	creator: string;
 	timeCreated: string;
 }

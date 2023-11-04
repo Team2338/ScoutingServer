@@ -25,8 +25,18 @@ body {
 	padding: 0;
 }
 
+main {
+	box-sizing: border-box;
+}
+
 div {
 	box-sizing: border-box;
+}
+
+h2, h3 {
+	display: flex;
+	margin-inline: 0;
+	margin-block: 0;
 }
 
 .page {

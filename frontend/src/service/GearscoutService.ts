@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { DetailNoteQuestionResponse, ImageInfo, MatchResponse, NewNote, Note } from '../models';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { CommentResponse, InspectionQuestionResponse, ImageInfo, MatchResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
 class GearscoutService {
 
-	service = axios.create({
+	private http: AxiosInstance = axios.create({
 		baseURL: process.env.REACT_APP_SERVER_URL
 	});
 
@@ -18,7 +18,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
@@ -29,7 +29,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.put(
+		return this.http.put(
 			url,
 			null,
 			config
@@ -44,48 +44,11 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.put(
+		return this.http.put(
 			url,
 			null,
 			config
 		);
-	};
-
-	addNote = (teamNumber: number, secretCode: string, note: NewNote): GearscoutResponse<null> => {
-		const url = `/v1/notes/team/${teamNumber}`;
-		const config = {
-			headers: {
-				secretCode: secretCode
-			}
-		};
-
-		return this.service.post(
-			url,
-			note,
-			config
-		);
-	};
-
-	getNotesForRobot = (teamNumber: number, eventCode: string, robotNumber: number, secretCode: string): GearscoutResponse<Note[]> => {
-		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}/robot/${robotNumber}`;
-		const config = {
-			headers: {
-				secretCode: secretCode
-			}
-		};
-
-		return this.service.get(url, config);
-	};
-
-	getAllNotes = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<Note[]> => {
-		const url = `/v1/notes/team/${teamNumber}/event/${eventCode}`;
-		const config = {
-			headers: {
-				secretCode: secretCode
-			}
-		};
-
-		return this.service.get(url, config);
 	};
 
 	getMatchesAsCsv = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
@@ -96,7 +59,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getImageInfo = (data: {
@@ -113,7 +76,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getImageInfoForEvent = (data: {
@@ -129,7 +92,7 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
 	getImageContent = (data: {
@@ -144,15 +107,15 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
 	};
 
-	getDetailNotes = (data: {
+	getInspections = (data: {
 		teamNumber: number;
 		gameYear: number;
 		eventCode: string;
 		secretCode: string;
-	}): GearscoutResponse<DetailNoteQuestionResponse[]> => {
+	}): GearscoutResponse<InspectionQuestionResponse[]> => {
 		const url: string = `/v1/detailnotes/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {
@@ -160,7 +123,23 @@ class GearscoutService {
 			}
 		};
 
-		return this.service.get(url, config);
+		return this.http.get(url, config);
+	};
+
+	getCommentsForEvent = (data: {
+		teamNumber: number,
+		gameYear: number;
+		eventCode: string;
+		secretCode: string;
+	}): GearscoutResponse<CommentResponse[]> => {
+		const url: string = `/v2/notes/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				secretCode: data.secretCode
+			}
+		};
+
+		return this.http.get(url, config);
 	};
 
 }

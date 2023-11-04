@@ -1,14 +1,17 @@
+import React from 'react';
 import { Language } from './languages.model';
 import {
-	GlobalObjectiveStats, ImageInfo,
+	GlobalObjectiveStats,
+	ImageInfo,
 	Match,
 	MatchResponse,
-	Note,
 	ObjectiveDescriptor,
 	Plan,
 	Team
 } from './response.model';
-import { DetailNote } from './display.model';
+import { CommentsForEvent, Inspection } from './display.model';
+
+export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export enum LoadStatus {
 	none = 'none',
@@ -35,16 +38,12 @@ export interface AppState {
 	teams: {
 		loadStatus: LoadStatus;
 		data: Team[];
-		selectedTeam: Team;
+		selectedTeam: number;
 	};
 	stats: {
 		loadStatus: LoadStatus;
 		data: GlobalObjectiveStats[];
 		selectedStat: ObjectiveDescriptor;
-	};
-	notes: {
-		loadStatus: LoadStatus;
-		data: Note[];
 	};
 	planning: {
 		loadStatus: LoadStatus;
@@ -54,7 +53,8 @@ export interface AppState {
 		plan: Plan;
 	};
 	images: ImageState;
-	detailNotes: DetailNotesState;
+	inspections: InspectionState;
+	comments: CommentState;
 }
 
 export interface LoginState {
@@ -73,8 +73,15 @@ export interface ImageState {
 	};
 }
 
-export interface DetailNotesState {
+export interface InspectionState {
 	loadStatus: LoadStatus;
-	notes: DetailNote[];
+	inspections: Inspection[];
 	questionNames: string[];
+	hiddenQuestionNames: string[];
+}
+
+export interface CommentState {
+	loadStatus: LoadStatus;
+	comments: CommentsForEvent;
+	topics: string[];
 }

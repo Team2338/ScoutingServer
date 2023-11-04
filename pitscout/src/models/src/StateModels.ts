@@ -1,3 +1,7 @@
+import React from 'react';
+import { IForm } from './UiModels';
+
+export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export interface IPitState {
 	login: {
@@ -13,11 +17,16 @@ export interface IPitState {
 	forms: {
 		loadStatus: LoadStatus;
 		error: string;
-		selected: IForm;
+		selected: number;
 		robots: number[];
 		data: {
 			[robotNumber: number]: IForm
 		}
+	},
+	snackbar: {
+		message: string;
+		severity: 'error' | 'warning' | 'info' | 'success';
+		isOpen: boolean;
 	}
 }
 
@@ -37,23 +46,13 @@ export interface IToken {
 export enum LoadStatus {
 	none = 'none',
 	loading = 'loading',
+	loadingWithPriorSuccess = 'reloading',
 	success = 'success',
-	failed = 'failed'
+	failed = 'failed',
+	failedWithPriorSuccess = 'failed reload'
 }
 
 export enum UserRoles {
 	admin = 'admin',
 	none = 'none'
-}
-
-export interface IForm {
-	loadStatus: LoadStatus;
-	error: string;
-	robotNumber: number;
-	questions: IFormQuestion[];
-}
-
-export interface IFormQuestion {
-	question: string;
-	answer: string;
 }

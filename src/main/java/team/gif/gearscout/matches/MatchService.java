@@ -45,8 +45,8 @@ public class MatchService {
 		return matchRepository.save(matchEntity);
 	}
 	
-	public List<MatchEntity> getAllMatchesForEvent(Integer teamNumber, String secretCode, String eventCode) {
-		return matchRepository.findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, secretCode, eventCode);
+	public List<MatchEntity> getAllMatchesForEvent(Integer teamNumber, Integer gameYear, String secretCode, String eventCode) {
+		return matchRepository.findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeAndGameYearOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, secretCode, eventCode, gameYear);
 	}
 	
 	public MatchEntity setMatchHiddenStatus(Long matchId, String secretCode, boolean isHidden) {
@@ -64,8 +64,8 @@ public class MatchService {
 		return matchRepository.findDistinctTeamNumbers();
 	}
 	
-	public String getEventDataAsCsv(Integer teamNumber, String secretCode, String eventCode) {
-		List<MatchEntity> matches = matchRepository.findVisibleMatches(teamNumber, secretCode, eventCode);
+	public String getEventDataAsCsv(Integer teamNumber, Integer gameYear, String secretCode, String eventCode) {
+		List<MatchEntity> matches = matchRepository.findVisibleMatches(teamNumber, gameYear, secretCode, eventCode);
 		
 		HashSet<String> scoreNames = getUniqueScoreNames(matches); // Collect names of all objectives
 		String[] sortedScoreNames = getSortedScoreNames(scoreNames); // Sort score names

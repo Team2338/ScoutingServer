@@ -10,13 +10,19 @@ import java.util.Optional;
 
 public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 
-	List<MatchEntity> findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeOrderByMatchNumberAscRobotNumberAscCreatorAsc(Integer teamNumber, String secretCode, String eventCode);
+	List<MatchEntity> findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeAndGameYearOrderByMatchNumberAscRobotNumberAscCreatorAsc(Integer teamNumber, String secretCode, String eventCode, Integer gameYear);
 	
 	Optional<MatchEntity> findMatchEntryByIdAndSecretCode(Long id, String secretCode);
 	
-	@Query(value = "SELECT match FROM MatchEntity match WHERE match.teamNumber = :teamNumber AND match.secretCode = :secretCode AND match.eventCode = :eventCode AND match.isHidden = FALSE ORDER BY match.robotNumber, match.matchNumber, match.creator ASC")
-	List<MatchEntity> findVisibleMatches(@Param("teamNumber") Integer teamNumber, @Param("secretCode") String secretCode, @Param("eventCode") String eventCode);
-	
+	@Query(value = "SELECT match FROM MatchEntity match WHERE match.teamNumber = :teamNumber AND match.gameYear = :gameYear AND match.secretCode = :secretCode AND match.eventCode = :eventCode AND match.isHidden = FALSE ORDER BY match.robotNumber, match.matchNumber, match.creator ASC")
+	List<MatchEntity> findVisibleMatches(
+		@Param("teamNumber") Integer teamNumber,
+		@Param("gameYear") Integer gameYear,
+		@Param("secretCode") String secretCode,
+		@Param("eventCode") String eventCode
+	);
+
+	// TODO: Doesn't account for events with same code but different year
 	@Query(value = "SELECT DISTINCT match.eventCode FROM MatchEntity match WHERE match.teamNumber = :teamNumber")
 	List<String> findDistinctEventCodesByTeamNumber(@Param("teamNumber") Integer teamNumber);
 	

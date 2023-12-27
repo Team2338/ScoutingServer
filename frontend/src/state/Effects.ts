@@ -170,7 +170,12 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	// dispatch(getCsvData());
 
 	try {
-		const response = await gearscoutService.getMatches(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
+		const response = await gearscoutService.getMatches(
+			getState().login.teamNumber,
+			new Date().getFullYear(), // TODO: make this adjustable by the user
+			getState().login.eventCode,
+			getState().login.secretCode
+		);
 		const rawMatches: MatchResponse[] = response.data;
 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(rawMatches);
 		dispatch(getMatchesSuccess(matches, rawMatches));
@@ -196,7 +201,12 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 	const lastUrl = getState().csv.url;
 
 	try {
-		const response = await gearscoutService.getMatchesAsCsv(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
+		const response = await gearscoutService.getMatchesAsCsv(
+			getState().login.teamNumber,
+			new Date().getFullYear(),
+			getState().login.eventCode,
+			getState().login.secretCode
+		);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
 

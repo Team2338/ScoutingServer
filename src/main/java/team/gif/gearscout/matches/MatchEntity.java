@@ -22,6 +22,9 @@ public class MatchEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Long id;
+
+	@Column(nullable = false)
+	private Integer gameYear;
 	
 	@Column(nullable = false)
 	private Integer teamNumber; // Team num of data collector
@@ -67,6 +70,7 @@ public class MatchEntity {
 		String secretCode,
 		String timeCreated
 	) {
+		this.gameYear = match.getGameYear();
 		this.teamNumber = teamNumber;
 		this.secretCode = secretCode;
 		this.eventCode = match.getEventCode();
@@ -83,7 +87,12 @@ public class MatchEntity {
 	public Long getId() {
 		return id;
 	}
-	
+
+
+	public Integer getGameYear() {
+		return gameYear;
+	}
+
 	
 	public Integer getTeamNumber() {
 		return teamNumber;
@@ -137,6 +146,11 @@ public class MatchEntity {
 	
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	public void setGameYear(Integer gameYear) {
+		this.gameYear = gameYear;
 	}
 	
 	

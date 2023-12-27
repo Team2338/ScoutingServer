@@ -16,12 +16,27 @@ import java.util.List;
 public class MatchService {
 	
 	private final MatchRepository matchRepository;
+	private final HashMap<Integer, MatchPreprocessor> preprocessors;
+	private final MatchPreprocessor dummyPreprocessor;
 	
 	@Autowired
-	public MatchService(MatchRepository matchRepository) {
+	public MatchService(
+		MatchRepository matchRepository,
+		MatchProcessor2023 matchProcessor2023
+	) {
 		this.matchRepository = matchRepository;
+		this.preprocessors = new HashMap<>();
+		this.dummyPreprocessor = (NewMatch match) -> {};
+
+		preprocessors.put(2023, matchProcessor2023);
 	}
-	
+
+	public void preprocessMatch(NewMatch match) {
+		int gameYear = match.getGameYear();
+		MatchPreprocessor preprocessor = preprocessors.getOrDefault(gameYear, dummyPreprocessor);
+		preprocessor.process(match);
+	}
+
 	public MatchEntity saveMatch(NewMatch match, Integer teamNumber, String secretCode) {
 		// Convert Match to MatchEntry
 		String currentTime = Long.toString(System.currentTimeMillis());

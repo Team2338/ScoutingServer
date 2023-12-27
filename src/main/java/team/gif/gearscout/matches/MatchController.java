@@ -21,17 +21,12 @@ import java.util.List;
 public class MatchController {
 	
 	private final MatchService matchService;
-	private final MatchProcessor2023 matchProcessor;
 	private static final Logger logger = LogManager.getLogger(MatchController.class);
 	
 	
 	@Autowired
-	public MatchController(
-		MatchService matchService,
-		MatchProcessor2023 matchProcessor
-	) {
+	public MatchController(MatchService matchService) {
 		this.matchService = matchService;
-		this.matchProcessor = matchProcessor;
 	}
 	
 	
@@ -43,7 +38,7 @@ public class MatchController {
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 		
-		matchProcessor.process(match);
+		matchService.preprocessMatch(match);
 		matchService.saveMatch(match, teamNumber, secretCode);
 		
 		return ResponseEntity.accepted().build();

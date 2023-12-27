@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Service
-public class MatchProcessor2023 {
+public class MatchProcessor2023 implements MatchPreprocessor {
 	
 	private static final Logger logger = LogManager.getLogger(MatchProcessor2023.class);
 	

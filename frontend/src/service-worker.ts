@@ -138,6 +138,10 @@ self.addEventListener('fetch', (event: FetchEvent) => {
 		return;
 	}
 
+	if (event.request.url.includes('localhost')) {
+		return;
+	}
+
 	caches.match(event.request)
 		.then((response: Response) => event.respondWith(response))
 		.catch(() => console.error('Cache miss', event.request.url));

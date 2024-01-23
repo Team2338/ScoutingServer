@@ -21,17 +21,12 @@ import java.util.List;
 public class MatchController {
 	
 	private final MatchService matchService;
-	private final MatchProcessor2023 matchProcessor;
 	private static final Logger logger = LogManager.getLogger(MatchController.class);
 	
 	
 	@Autowired
-	public MatchController(
-		MatchService matchService,
-		MatchProcessor2023 matchProcessor
-	) {
+	public MatchController(MatchService matchService) {
 		this.matchService = matchService;
-		this.matchProcessor = matchProcessor;
 	}
 	
 	
@@ -43,22 +38,23 @@ public class MatchController {
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 		
-		matchProcessor.process(match);
+		matchService.preprocessMatch(match);
 		matchService.saveMatch(match, teamNumber, secretCode);
 		
 		return ResponseEntity.accepted().build();
 	}
 	
 	
-	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}")
+	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<MatchEntity>> getAllMatchesForEvent(
 			@PathVariable Integer teamNumber,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-			@PathVariable String eventCode
+			@PathVariable Integer gameYear,
+			@PathVariable String eventCode,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
 		
-		List<MatchEntity> result = matchService.getAllMatchesForEvent(teamNumber, secretCode, eventCode);
+		List<MatchEntity> result = matchService.getAllMatchesForEvent(teamNumber, gameYear, secretCode, eventCode);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -96,15 +92,16 @@ public class MatchController {
 	}
 	
 	
-	@GetMapping(value = "/team/{teamNumber}/event/{eventCode}/download", produces = "text/csv")
+	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(
 			@PathVariable Integer teamNumber,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-			@PathVariable String eventCode
+			@PathVariable Integer gameYear,
+			@PathVariable String eventCode,
+			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
 		
-		String content = matchService.getEventDataAsCsv(teamNumber, secretCode, eventCode);
+		String content = matchService.getEventDataAsCsv(teamNumber, gameYear, secretCode, eventCode);
 		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);
 		
 		return ResponseEntity.ok()

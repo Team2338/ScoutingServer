@@ -3,7 +3,8 @@ package team.gif.gearscout.matches;
 import java.util.List;
 
 public class NewMatch {
-	
+
+	private Integer gameYear;
 	private String eventCode;
 	private Integer matchNumber;
 	private Integer robotNumber;
@@ -14,7 +15,11 @@ public class NewMatch {
 	
 	public NewMatch() {}
 	
-	
+
+	public Integer getGameYear() {
+		return gameYear;
+	}
+
 	public String getEventCode() {
 		return eventCode;
 	}
@@ -37,6 +42,10 @@ public class NewMatch {
 	
 	public List<ObjectiveEntity> getObjectives() {
 		return this.objectives;
+	}
+
+	public void setGameYear(Integer gameYear) {
+		this.gameYear = gameYear;
 	}
 	
 	public void setEventCode(String eventCode) {

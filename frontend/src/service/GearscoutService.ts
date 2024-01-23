@@ -10,8 +10,8 @@ class GearscoutService {
 	});
 
 
-	getMatches = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<MatchResponse[]> => {
-		const url = `/v1/team/${teamNumber}/event/${eventCode}`;
+	getMatches = (teamNumber: number, gameYear: number, eventCode: string, secretCode: string): GearscoutResponse<MatchResponse[]> => {
+		const url = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}`;
 		const config = {
 			headers: {
 				secretCode: secretCode
@@ -51,8 +51,8 @@ class GearscoutService {
 		);
 	};
 
-	getMatchesAsCsv = (teamNumber: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
-		const url = `/v1/team/${teamNumber}/event/${eventCode}/download`;
+	getMatchesAsCsv = (teamNumber: number, gameYear: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
+		const url = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}/download`;
 		const config = {
 			headers: {
 				secretCode: secretCode

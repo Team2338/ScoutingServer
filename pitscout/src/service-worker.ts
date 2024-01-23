@@ -130,7 +130,11 @@ const cacheFirst = async (request: Request): Promise<Response> => {
 
 self.addEventListener('fetch', (event: FetchEvent) => {
 
-	if (event.request.url.startsWith(`${process.env.REACT_APP_SERVER_URL}`)) {
+	if (event.request.url.includes('/api/v')) {
+		return;
+	}
+
+	if (event.request.url.includes('localhost')) {
 		return;
 	}
 

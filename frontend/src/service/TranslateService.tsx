@@ -450,7 +450,7 @@ const languages: ILanguageTranslation = {
 		'HIGH_GOAL_2024': 'Reproduktor',
 		'LOW_GOAL_2024': 'Zesilovač',
 		'MOBILITY_2024': 'Odejít',
-		'CLIMB_2024': 'Divadlo', // TODO: or jeviště or scéna
+		'CLIMB_2024': 'Jeviště',
 		'ENDGAME_2024': 'Past',
 		'ADD_NOTE': 'Přidat poznámku',
 		'CANCEL': 'Zrušení',

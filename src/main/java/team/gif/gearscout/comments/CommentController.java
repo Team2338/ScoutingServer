@@ -28,16 +28,16 @@ public class CommentController {
 	}
 
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CommentEntity> addComment(
+	public ResponseEntity<Iterable<CommentEntity>> addComment(
 		@PathVariable Integer teamNumber,
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-		@RequestBody @Valid CreateCommentRequest form
+		@RequestBody @Valid CreateCommentBulkRequest form
 	) {
 		logger.debug("Received addComment request");
 
-		CommentEntity comment = commentService.saveComment(teamNumber, secretCode, form);
+		Iterable<CommentEntity> comments = commentService.saveComments(teamNumber, secretCode, form);
 
-		return ResponseEntity.ok(comment);
+		return ResponseEntity.ok(comments);
 	}
 
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")

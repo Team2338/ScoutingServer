@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 @Transactional
@@ -22,28 +23,34 @@ public class CommentService {
 	}
 
 
-	public CommentEntity saveComment(
+	public Iterable<CommentEntity> saveComments(
 		Integer teamNumber,
 		String secretCode,
-		CreateCommentRequest form
+		CreateCommentBulkRequest form
 	) {
 		OffsetDateTime currentTime = Instant.now()
 			.atOffset(ZoneOffset.UTC)
 			.truncatedTo(ChronoUnit.SECONDS);
 
-		CommentEntity comment = new CommentEntity();
-		comment.setTeamNumber(teamNumber);
-		comment.setGameYear(form.getGameYear());
-		comment.setEventCode(form.getEventCode());
-		comment.setSecretCode(secretCode);
-		comment.setMatchNumber(form.getMatchNumber());
-		comment.setRobotNumber(form.getRobotNumber());
-		comment.setCreator(form.getCreator());
-		comment.setTopic(form.getTopic());
-		comment.setContent(form.getContent());
-		comment.setTimeCreated(currentTime);
+		List<CommentEntity> comments = form.getComments()
+			.stream()
+			.map((singleCommentContent) -> {
+				CommentEntity comment = new CommentEntity();
+				comment.setTeamNumber(teamNumber);
+				comment.setGameYear(form.getGameYear());
+				comment.setEventCode(form.getEventCode());
+				comment.setSecretCode(secretCode);
+				comment.setMatchNumber(form.getMatchNumber());
+				comment.setRobotNumber(form.getRobotNumber());
+				comment.setTopic(singleCommentContent.getTopic());
+				comment.setContent(singleCommentContent.getContent());
+				comment.setTimeCreated(currentTime);
 
-		return commentRepository.save(comment);
+				return comment;
+			})
+			.toList();
+
+		return commentRepository.saveAll(comments);
 	}
 
 

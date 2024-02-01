@@ -2,8 +2,9 @@ package team.gif.gearscout.comments;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.List;
 
-public class CreateCommentRequest {
+public class CreateCommentBulkRequest {
 
 	@Min(0)
 	private Integer robotNumber;
@@ -18,15 +19,12 @@ public class CreateCommentRequest {
 	private Integer matchNumber;
 
 	@Size(min = 1, max = 32)
-	private String topic;
-
-	@Size(min = 1, max = 1024)
-	private String content;
-
-	@Size(min = 1, max = 32)
 	private String creator;
 
-	public CreateCommentRequest() {}
+	private List<SingleCommentContent> comments;
+
+
+	public CreateCommentBulkRequest() {}
 
 	public Integer getRobotNumber() {
 		return robotNumber;
@@ -44,16 +42,12 @@ public class CreateCommentRequest {
 		return matchNumber;
 	}
 
-	public String getTopic() {
-		return topic;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
 	public String getCreator() {
 		return creator;
+	}
+
+	public List<SingleCommentContent> getComments() {
+		return comments;
 	}
 
 	public void setRobotNumber(Integer robotNumber) {
@@ -72,12 +66,8 @@ public class CreateCommentRequest {
 		this.matchNumber = matchNumber;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
+	public void setComments(List<SingleCommentContent> comments) {
+		this.comments = comments;
 	}
 
 	public void setCreator(String creator) {

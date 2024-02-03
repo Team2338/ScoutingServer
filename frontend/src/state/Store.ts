@@ -9,6 +9,7 @@ const INITIAL_STATE: AppState = {
 	login: {
 		isLoggedIn: false,
 		teamNumber: null,
+		gameYear: new Date().getFullYear(),
 		username: null,
 		eventCode: null,
 		secretCode: null,
@@ -68,6 +69,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					...state.login,
 					isLoggedIn: true,
 					teamNumber: action.payload.teamNumber,
+					gameYear: action.payload.gameYear,
 					username: action.payload.username,
 					eventCode: action.payload.eventCode,
 					secretCode: action.payload.secretCode

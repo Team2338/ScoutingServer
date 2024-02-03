@@ -61,6 +61,7 @@ export const selectLangSuccess = (language: Language): Action => ({
 
 export const loginSuccess = (
 	teamNumber: number,
+	gameYear: number,
 	username: string,
 	eventCode: string,
 	secretCode: string
@@ -68,6 +69,7 @@ export const loginSuccess = (
 	type: Actions.LOGIN,
 	payload: {
 		teamNumber,
+		gameYear,
 		username,
 		eventCode,
 		secretCode

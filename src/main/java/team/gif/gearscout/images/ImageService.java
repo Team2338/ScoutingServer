@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

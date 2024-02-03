@@ -1,6 +1,6 @@
 package team.gif.gearscout.comments;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 public class SingleCommentContent {
 

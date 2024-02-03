@@ -1,24 +1,35 @@
 package team.gif.gearscout.matches;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.SequenceGenerator;
+import org.hibernate.annotations.JavaType;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "objectives")
 public class ObjectiveEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "objectives_seq"
+	)
+	@SequenceGenerator(
+		name = "objectives_seq",
+		allocationSize = 1
+	)
 	private Long id;
 	
 	@ManyToOne
@@ -36,7 +47,8 @@ public class ObjectiveEntity {
 	private Integer count;
 	
 	@Column(columnDefinition = "int[]", nullable = true)
-	@Type(type = "team.gif.gearscout.shared.PostgresIntegerArrayType")
+	@JdbcTypeCode(SqlTypes.ARRAY)
+//	@Type(type = "team.gif.gearscout.shared.PostgresIntegerArrayType")
 	private Integer[] list;
 	
 	

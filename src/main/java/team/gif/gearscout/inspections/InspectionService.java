@@ -3,7 +3,7 @@ package team.gif.gearscout.inspections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

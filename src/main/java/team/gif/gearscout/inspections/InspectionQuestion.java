@@ -1,6 +1,6 @@
 package team.gif.gearscout.inspections;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 public class InspectionQuestion {
 

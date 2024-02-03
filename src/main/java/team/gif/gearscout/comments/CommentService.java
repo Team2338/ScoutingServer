@@ -3,13 +3,12 @@ package team.gif.gearscout.comments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 @Transactional
@@ -37,13 +36,14 @@ public class CommentService {
 			.map((singleCommentContent) -> {
 				CommentEntity comment = new CommentEntity();
 				comment.setTeamNumber(teamNumber);
+				comment.setRobotNumber(form.getRobotNumber());
 				comment.setGameYear(form.getGameYear());
 				comment.setEventCode(form.getEventCode());
 				comment.setSecretCode(secretCode);
 				comment.setMatchNumber(form.getMatchNumber());
-				comment.setRobotNumber(form.getRobotNumber());
 				comment.setTopic(singleCommentContent.getTopic());
 				comment.setContent(singleCommentContent.getContent());
+				comment.setCreator(form.getCreator());
 				comment.setTimeCreated(currentTime);
 
 				return comment;

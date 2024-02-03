@@ -2,9 +2,7 @@ package team.gif.gearscout.images;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.SequenceGenerator;
-import org.hibernate.annotations.JavaType;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import org.hibernate.type.SqlTypes;
-import org.hibernate.type.descriptor.java.ByteArrayJavaType;
 
 @Entity
 @Table(name = "image_content")
@@ -33,7 +30,6 @@ public class ImageContentEntity {
 	private Long id;
 	
 	@Lob
-//	@Type(type="org.hibernate.type.BinaryType")
 	@JdbcTypeCode(SqlTypes.VARBINARY)
 	@Column(name = "content", nullable = false)
 	private byte[] content;

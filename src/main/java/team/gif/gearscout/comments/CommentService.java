@@ -36,13 +36,14 @@ public class CommentService {
 			.map((singleCommentContent) -> {
 				CommentEntity comment = new CommentEntity();
 				comment.setTeamNumber(teamNumber);
+				comment.setRobotNumber(form.getRobotNumber());
 				comment.setGameYear(form.getGameYear());
 				comment.setEventCode(form.getEventCode());
 				comment.setSecretCode(secretCode);
 				comment.setMatchNumber(form.getMatchNumber());
-				comment.setRobotNumber(form.getRobotNumber());
 				comment.setTopic(singleCommentContent.getTopic());
 				comment.setContent(singleCommentContent.getContent());
+				comment.setCreator(form.getCreator());
 				comment.setTimeCreated(currentTime);
 
 				return comment;

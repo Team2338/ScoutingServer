@@ -2,9 +2,7 @@ package team.gif.gearscout.matches;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.SequenceGenerator;
-import org.hibernate.annotations.JavaType;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,7 +46,6 @@ public class ObjectiveEntity {
 	
 	@Column(columnDefinition = "int[]", nullable = true)
 	@JdbcTypeCode(SqlTypes.ARRAY)
-//	@Type(type = "team.gif.gearscout.shared.PostgresIntegerArrayType")
 	private Integer[] list;
 	
 	

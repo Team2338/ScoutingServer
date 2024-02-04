@@ -31,6 +31,7 @@ export const useTranslator = (): Translator => {
 const languages: ILanguageTranslation = {
 	[Language.ENGLISH]: {
 		'SIGN_IN': 'Sign In',
+		'GAME_YEAR': 'Game year',
 		'YOUR_TEAM_NUMBER': 'Your team number',
 		'TEAM_NUMBER': 'Team number',
 		'EVENT_CODE': 'Event code',
@@ -123,6 +124,7 @@ const languages: ILanguageTranslation = {
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
+		'GAME_YEAR': 'Año del juego',
 		'YOUR_TEAM_NUMBER': 'Tu numero de equipo',
 		'TEAM_NUMBER': 'Numero de equipo',
 		'EVENT_CODE': 'Código del evento',
@@ -215,6 +217,7 @@ const languages: ILanguageTranslation = {
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
+		'GAME_YEAR': 'Année de jeu',
 		'YOUR_TEAM_NUMBER': 'Votre numéro d\'équipe',
 		'TEAM_NUMBER': 'Numéro d\'équipe',
 		'EVENT_CODE': 'Code de l\'événement',
@@ -307,6 +310,7 @@ const languages: ILanguageTranslation = {
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
+		'GAME_YEAR': 'Oyun yılı',
 		'YOUR_TEAM_NUMBER': 'Takım numaranız',
 		'TEAM_NUMBER': 'Takım numarası',
 		'EVENT_CODE': 'Etkinlik kodu',
@@ -399,6 +403,7 @@ const languages: ILanguageTranslation = {
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
+		'GAME_YEAR': 'Herní rok',
 		'YOUR_TEAM_NUMBER': 'Čislo dvéjo týmu',
 		'TEAM_NUMBER': 'Číslo týmu',
 		'EVENT_CODE': 'Kód události',

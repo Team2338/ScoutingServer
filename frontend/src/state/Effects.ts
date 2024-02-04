@@ -59,13 +59,13 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 
 	// Only login if all information is present
 	if (teamNumber && username && eventCode && secretCode) {
-		dispatch(loginSuccess(
-			Number(teamNumber),
-			gameYear ? Number(gameYear) : new Date().getFullYear(),
-			username,
-			eventCode,
-			secretCode
-		));
+		dispatch(loginSuccess({
+			gameYear: gameYear ? Number(gameYear) : new Date().getFullYear(),
+			teamNumber: Number(teamNumber),
+			username: username,
+			eventCode: eventCode,
+			secretCode: secretCode
+		}));
 	}
 
 	const language: Language = getPreferredLanguage();
@@ -125,20 +125,20 @@ export const showInspectionColumn = (column: string) => async (dispatch: AppDisp
 	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
 };
 
-export const login = (
-	teamNumber: number,
-	gameYear: number,
-	username: string,
-	eventCode: string,
-	secretCode: string
-) => async (dispatch: AppDispatch) => {
-	localStorage.setItem('teamNumber', teamNumber.toString());
-	localStorage.setItem('gameYear', gameYear.toString());
-	localStorage.setItem('username', username);
-	localStorage.setItem('eventCode', eventCode);
-	localStorage.setItem('secretCode', secretCode);
+export const login = (data: {
+	teamNumber: number;
+	gameYear: number;
+	username: string;
+	eventCode: string;
+	secretCode: string;
+}) => async (dispatch: AppDispatch) => {
+	localStorage.setItem('gameYear', data.gameYear.toString());
+	localStorage.setItem('teamNumber', data.teamNumber.toString());
+	localStorage.setItem('username', data.username);
+	localStorage.setItem('eventCode', data.eventCode);
+	localStorage.setItem('secretCode', data.secretCode);
 
-	dispatch(loginSuccess(teamNumber, gameYear, username, eventCode, secretCode));
+	dispatch(loginSuccess(data));
 };
 
 export const logout = () => async (dispatch) => {

@@ -26,4 +26,17 @@
 			margin-top: 24px !important;
 		}
 	}
+
+	&-title-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		column-gap: 20px;
+		padding-bottom: 8px;
+
+		#game-year-input {
+			min-width: 5em;
+		}
+	}
 }

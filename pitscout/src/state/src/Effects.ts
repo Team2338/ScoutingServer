@@ -92,7 +92,7 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 	try {
 		await ApiService.uploadImage(
 			user,
-			2023,
+			new Date().getFullYear(),
 			robotNumber,
 			token,
 			file
@@ -131,7 +131,7 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 
 	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
 		getState().login.user,
-		2023,
+		new Date().getFullYear(),
 		robotNumber,
 		questions
 	);

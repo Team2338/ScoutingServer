@@ -7,7 +7,7 @@ import { store } from './state';
 import { myRegister } from './serviceWorkerRegistration';
 
 // Inject the App component into the index.html
-const container = document.getElementById('root');
+const container = document.getElementById('root')!;
 const root = createRoot(container);
 root.render(
 	<Provider store={ store }>

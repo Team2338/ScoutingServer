@@ -52,13 +52,20 @@ type GetState = () => AppState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
+	const gameYear: string = localStorage.getItem('gameYear');
 	const username: string = localStorage.getItem('username');
 	const eventCode: string = localStorage.getItem('eventCode');
 	const secretCode: string = localStorage.getItem('secretCode');
 
 	// Only login if all information is present
 	if (teamNumber && username && eventCode && secretCode) {
-		dispatch(loginSuccess(Number(teamNumber), username, eventCode, secretCode));
+		dispatch(loginSuccess({
+			gameYear: gameYear ? Number(gameYear) : new Date().getFullYear(),
+			teamNumber: Number(teamNumber),
+			username: username,
+			eventCode: eventCode,
+			secretCode: secretCode
+		}));
 	}
 
 	const language: Language = getPreferredLanguage();
@@ -118,18 +125,20 @@ export const showInspectionColumn = (column: string) => async (dispatch: AppDisp
 	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
 };
 
-export const login = (
-	teamNumber: number,
-	username: string,
-	eventCode: string,
-	secretCode: string
-) => async (dispatch: AppDispatch) => {
-	localStorage.setItem('teamNumber', teamNumber.toString());
-	localStorage.setItem('username', username);
-	localStorage.setItem('eventCode', eventCode);
-	localStorage.setItem('secretCode', secretCode);
+export const login = (data: {
+	teamNumber: number;
+	gameYear: number;
+	username: string;
+	eventCode: string;
+	secretCode: string;
+}) => async (dispatch: AppDispatch) => {
+	localStorage.setItem('gameYear', data.gameYear.toString());
+	localStorage.setItem('teamNumber', data.teamNumber.toString());
+	localStorage.setItem('username', data.username);
+	localStorage.setItem('eventCode', data.eventCode);
+	localStorage.setItem('secretCode', data.secretCode);
 
-	dispatch(loginSuccess(teamNumber, username, eventCode, secretCode));
+	dispatch(loginSuccess(data));
 };
 
 export const logout = () => async (dispatch) => {
@@ -172,7 +181,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	try {
 		const response = await gearscoutService.getMatches(
 			getState().login.teamNumber,
-			new Date().getFullYear(), // TODO: make this adjustable by the user
+			getState().login.gameYear,
 			getState().login.eventCode,
 			getState().login.secretCode
 		);
@@ -203,7 +212,7 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(
 			getState().login.teamNumber,
-			new Date().getFullYear(),
+			getState().login.gameYear,
 			getState().login.eventCode,
 			getState().login.secretCode
 		);
@@ -292,7 +301,7 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 	try {
 		const response = await gearscoutService.getImageInfo({
 			teamNumber: getState().login.teamNumber,
-			gameYear: new Date().getFullYear(),
+			gameYear: getState().login.gameYear,
 			eventCode: getState().login.eventCode,
 			robotNumber: robotNumber,
 			secretCode: getState().login.secretCode
@@ -350,7 +359,7 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 	try {
 		const response = await gearscoutService.getImageInfoForEvent({
 			teamNumber: getState().login.teamNumber,
-			gameYear: 2023,
+			gameYear: getState().login.gameYear,
 			eventCode: getState().login.eventCode,
 			secretCode: getState().login.secretCode
 		});
@@ -370,7 +379,7 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 	try {
 		const response = await gearscoutService.getInspections({
 			teamNumber: getState().login.teamNumber,
-			gameYear: 2023,
+			gameYear: getState().login.gameYear,
 			eventCode: getState().login.eventCode,
 			secretCode: getState().login.secretCode
 		});
@@ -392,7 +401,7 @@ export const getComments = () => async (dispatch: AppDispatch, getState: GetStat
 	try {
 		const response = await gearscoutService.getCommentsForEvent({
 			teamNumber: getState().login.teamNumber,
-			gameYear: 2023,
+			gameYear: getState().login.gameYear,
 			eventCode: getState().login.eventCode,
 			secretCode: getState().login.secretCode
 		});

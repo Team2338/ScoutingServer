@@ -7,6 +7,7 @@ import { translate } from '../../service/TranslateService';
 import { login } from '../../state';
 
 const inputs = (state: AppState) => ({
+	initialGameYear: state.login.gameYear ?? '',
 	initialTeamNumber: state.login.teamNumber ?? '',
 	initialEventCode: state.login.eventCode ?? '',
 	initialSecretCode: state.login.secretCode ?? '',
@@ -14,7 +15,19 @@ const inputs = (state: AppState) => ({
 });
 
 const outputs = (dispatch) => ({
-	login: (teamNumber, username, eventCode, secretCode) => dispatch(login(teamNumber, username, eventCode, secretCode))
+	login: (
+		gameYear,
+		teamNumber,
+		username,
+		eventCode,
+		secretCode
+	) => dispatch(login({
+		gameYear,
+		teamNumber,
+		username,
+		eventCode,
+		secretCode
+	}))
 });
 
 class ConnectedLoginPage extends React.Component<any, any> {
@@ -23,6 +36,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		super(props);
 
 		this.state = {
+			gameYear: props.initialGameYear,
 			teamNumber: props.initialTeamNumber,
 			username: props.initialUsername,
 			eventCode: props.initialEventCode,
@@ -40,6 +54,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		event.preventDefault();
 
 		this.props.login(
+			Number(this.state.gameYear),
 			Number(this.state.teamNumber),
 			this.state.username,
 			this.state.eventCode,
@@ -48,7 +63,13 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	};
 
 	isValid = (): boolean => {
-		return Boolean(this.state.teamNumber && this.state.username && this.state.eventCode && this.state.secretCode);
+		return Boolean(
+			this.state.gameYear
+			&& this.state.teamNumber
+			&& this.state.username
+			&& this.state.eventCode
+			&& this.state.secretCode
+		);
 	};
 
 	render() {
@@ -56,7 +77,25 @@ class ConnectedLoginPage extends React.Component<any, any> {
 			<main className="login-page">
 				<div className="content-wrapper">
 					<form className="login-page-form" onSubmit={ this.handleSubmit }>
-						<Typography variant="h4">{ this.props.translate('SIGN_IN') }</Typography>
+						<div className="login-page-title-row">
+							<Typography variant="h4">{ this.props.translate('SIGN_IN') }</Typography>
+							<TextField
+								id="game-year-input"
+								label={ this.props.translate('GAME_YEAR') }
+								name="gameYear"
+								type="number"
+								margin="dense"
+								size="small"
+								variant="outlined"
+								value={ this.state.gameYear }
+								onChange={ this.handleChange }
+								inputProps={{
+									min: 1995,
+									max: 2099
+								}}
+								autoComplete="off"
+							/>
+						</div>
 						<TextField
 							id="team-number-input"
 							label={ this.props.translate('YOUR_TEAM_NUMBER') }

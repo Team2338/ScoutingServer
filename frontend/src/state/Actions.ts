@@ -59,19 +59,15 @@ export const selectLangSuccess = (language: Language): Action => ({
 	payload: language
 });
 
-export const loginSuccess = (
-	teamNumber: number,
-	username: string,
-	eventCode: string,
-	secretCode: string
-): Action => ({
+export const loginSuccess = (data: {
+	teamNumber: number;
+	gameYear: number;
+	username: string;
+	eventCode: string;
+	secretCode: string;
+}): Action => ({
 	type: Actions.LOGIN,
-	payload: {
-		teamNumber,
-		username,
-		eventCode,
-		secretCode
-	}
+	payload: data
 });
 
 export const logoutSuccess = (): Action => ({

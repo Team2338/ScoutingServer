@@ -1,27 +1,36 @@
 package team.gif.gearscout.images;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Type;
+import jakarta.persistence.SequenceGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "image_content")
 public class ImageContentEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "image_content_seq"
+	)
+	@SequenceGenerator(
+		name = "image_content_seq",
+		allocationSize = 1
+	)
 	private Long id;
 	
 	@Lob
-	@Type(type="org.hibernate.type.BinaryType")
+	@JdbcTypeCode(SqlTypes.VARBINARY)
 	@Column(name = "content", nullable = false)
 	private byte[] content;
 	

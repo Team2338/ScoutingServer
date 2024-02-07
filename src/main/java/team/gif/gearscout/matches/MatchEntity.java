@@ -2,16 +2,17 @@ package team.gif.gearscout.matches;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,15 @@ import java.util.List;
 public class MatchEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "matches_seq"
+	)
+	@SequenceGenerator(
+		name = "matches_seq",
+		allocationSize = 1
+	)
 	private Long id;
 
 	@Column(nullable = false)

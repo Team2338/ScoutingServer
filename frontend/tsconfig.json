@@ -16,11 +16,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
+    "types": ["vite/client"],
 
     // Linting
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
 
   },
   "include": ["src"]

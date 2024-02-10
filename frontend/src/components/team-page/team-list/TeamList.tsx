@@ -4,7 +4,7 @@ import { Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
 import SearchInput from '../../shared/search-input/SearchInput';
-import { selectSelectedTeam } from '../../../state/src/Selectors';
+import { useSelectedTeam } from '../../../state/src/Selectors';
 import { selectTeam, useAppDispatch } from '../../../state';
 
 interface IProps {
@@ -15,7 +15,7 @@ export default function TeamList({teams}: IProps) {
 
 	const translate = useTranslator();
 	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
-	const selectedTeam: Team = selectSelectedTeam();
+	const selectedTeam: Team = useSelectedTeam();
 
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));

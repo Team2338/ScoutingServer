@@ -6,7 +6,7 @@ type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 class GearscoutService {
 
 	private http: AxiosInstance = axios.create({
-		baseURL: import.meta.env.VITE_SERVER_URL
+		baseURL: import.meta.env.VITE_APP_SERVER_URL
 	});
 
 

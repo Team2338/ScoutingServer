@@ -174,5 +174,5 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	}
 }
 
-const LoginPage = connect(inputs, outputs)(ConnectedLoginPage);
-export default translate(LoginPage);
+const LoginPage = translate(connect(inputs, outputs)(ConnectedLoginPage));
+export default LoginPage;

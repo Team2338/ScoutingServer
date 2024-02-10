@@ -1,29 +1,37 @@
 package team.gif.gearscout.comments;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
 public class CreateCommentBulkRequest {
 
-	@Min(0)
+	@NotNull(message = "Field 'robotNumber' must not be null")
+	@Min(value = 0, message = "Field 'robotNumber' must be > 0")
 	private Integer robotNumber;
 
-	@Min(1995)
+	@NotNull(message = "Field 'gameYear' must not be null")
+	@Min(value = 1995, message = "Field 'gameYear' must be > 1995")
 	private Integer gameYear;
 
-	@Size(min = 1, max = 32)
+	@NotNull(message = "Field 'eventCode' must not be null")
+	@Size(min = 1, max = 32, message = "Field 'eventCode' must have length between 1 - 32")
 	private String eventCode;
 
-	@Min(0)
+	@NotNull(message = "Field 'matchNumber' must not be null")
+	@Min(value = 0, message = "Field 'matchNumber' must be > 0")
 	private Integer matchNumber;
 
-	@Size(min = 1, max = 32)
+	@NotNull(message = "Field 'creator' must not be null")
+	@Size(min = 1, max = 32, message = "Field 'creator' must have length between 1 - 32")
 	private String creator;
 
-	@NotNull
-	private List<SingleCommentContent> comments;
+	@NotNull(message = "Field 'comments' must not be null")
+	@NotEmpty(message = "Comments list must not be empty")
+	private List<@Valid SingleCommentContent> comments;
 
 
 	public CreateCommentBulkRequest() {}

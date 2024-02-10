@@ -1,13 +1,16 @@
 package team.gif.gearscout.comments;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class SingleCommentContent {
 
-	@Size(min = 1, max = 32)
+	@NotNull(message = "Field 'topic' must not be null")
+	@Size(min = 1, max = 32, message = "Field 'topic' must have length between 1 - 32")
 	private String topic;
 
-	@Size(min = 1, max = 1024)
+	@NotNull(message = "Field 'content' must not be null")
+	@Size(min = 1, max = 1024, message = "Field 'content' must have length between 1 - 1024")
 	private String content;
 
 	public String getTopic() {

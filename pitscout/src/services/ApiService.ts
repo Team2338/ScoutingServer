@@ -77,7 +77,7 @@ class ApiService {
 		};
 
 		return this.service.get(url, config);
-	}
+	};
 
 }
 

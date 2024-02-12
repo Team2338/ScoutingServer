@@ -32,7 +32,7 @@ class FormModelService {
 			loadStatus: null,
 			questions: questions
 		};
-	}
+	};
 
 
 	convertResponseQuestionsToForms = (questions: IDetailNoteQuestionResponse[]): {
@@ -40,9 +40,9 @@ class FormModelService {
 		robots: number[]
 	} => {
 		const forms: BasicMap<IForm> = {};
-		const robotNumbers = [];
+		const robotNumbers: number[] = [];
 		for (const question of questions) {
-			if (!forms.hasOwnProperty(question.robotNumber)) {
+			if (!Object.hasOwn(forms, question.robotNumber)) {
 				forms[question.robotNumber] = {
 					loadStatus: LoadStatus.success,
 					error: null,

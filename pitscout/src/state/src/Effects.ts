@@ -187,4 +187,4 @@ export const loadForms = () => async (dispatch: AppDispatch, getState: GetState)
 
 		dispatch(getAllFormsFailed(msg));
 	}
-}
+};

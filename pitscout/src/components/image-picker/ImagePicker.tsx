@@ -27,7 +27,7 @@ export default function ImagePicker(props: IProps) {
 					className="image-picker-vanilla"
 					type="file"
 					accept="image/jpeg, image/jpg, image/png"
-					onChange={ event => { props.setFile(event.target.files[0])} }
+					onChange={ event => { props.setFile(event.target.files[0]); }}
 					aria-invalid={ props.isError }
 				/>
 				<div className="image-picker-prompt">{ props.label }</div>

@@ -116,7 +116,7 @@ const reducer = createReducer(initialState, builder => {
 				error: null,
 				robotNumber: action.payload,
 				questions: {}
-			}
+			};
 		})
 		.addCase(selectForm, (state: IPitState, action) => {
 			if (!state.forms.robots.includes(action.payload)) {

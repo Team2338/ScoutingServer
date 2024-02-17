@@ -1,7 +1,6 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
-	BasicMap,
 	FormErrors,
 	IForm,
 	IPitState,
@@ -30,7 +29,7 @@ export const uploadFormStart = createAction<IForm>('form/upload-form-start');
 export const uploadFormSuccess = createAction<number>('form/upload-form-success');
 export const uploadFormFailed = createAction<{ robotNumber: number, error: FormErrors }>('form/upload-form-failed');
 export const getAllFormsStart = createAction('form/get-all-start');
-export const getAllFormsSuccess = createAction<{ forms: BasicMap<IForm>, robots: number[] }>('form/get-all-success');
+export const getAllFormsSuccess = createAction<{ forms: Record<number, IForm>, robots: number[] }>('form/get-all-success');
 export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 // export const clearFormError = createAction('form/clear-error');
 

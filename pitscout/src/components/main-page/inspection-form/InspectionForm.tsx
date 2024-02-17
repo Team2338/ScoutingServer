@@ -1,13 +1,25 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './InspectionForm.scss';
-import { FormQuestions, IForm, LoadStatus, Statelet, UserRoles } from '../../../models';
+import {
+	CLIMBING_CAPABILITIES, COLLECTOR_TYPES,
+	DRIVE_MOTOR_TYPES,
+	DRIVETRAIN_TYPES,
+	FormQuestions,
+	IForm,
+	INTAKE_LOCATIONS,
+	LoadStatus,
+	SCORE_LOCATIONS,
+	SHOOTING_LOCATIONS,
+	Statelet,
+	UserRoles
+} from '../../../models';
 import {
 	Button,
 	Checkbox,
 	CircularProgress,
 	FormControl,
 	FormControlLabel,
-	FormGroup,
+	FormGroup, InputAdornment,
 	InputLabel,
 	MenuItem,
 	Select,
@@ -17,33 +29,56 @@ import { AppDispatch, uploadForm, useAppDispatch, useAppSelector } from '../../.
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 
-const CONE_SCORE_POSITIONS: string[] = ['Cone High', 'Cone Middle', 'Cone Low'];
-const CUBE_SCORE_POSITION: string[] = ['Cube High', 'Cube Middle', 'Cube Low'];
 
 interface IProps {
 	robotNumber: number;
 }
 
+/*
+ * 2024 fields:
+ * Drivetrain type
+ * Motor type (on drivetrain)
+ * Robot weight
+ * Vision capabilities
+ *
+ * Under stage (yes/no)
+ * Autos
+ * Scoring places (amp, speaker, trap)
+ * Intake location (ground or HP)
+ * Shooting location (Subwoofer, podium, wing line)
+ * Climbing capabilities (solo, harmonize, triple climb)
+ *
+ * TODO: Add remaining inputs
+ * TODO: Just replace all the enums with strings again
+ */
+
 export default function InspectionForm(props: IProps) {
 
 	const dispatch: AppDispatch = useAppDispatch();
-	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState(false);
-	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
-	// const [collectorType, setCollectorType]: Statelet<string> = useState('');
-	// const [elevatorType, setElevatorType]: Statelet<string> = useState('');
-	const [scoreLocations, setScoreLocations]: Statelet<string[]> = useState([]);
-	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
-	const [driverNotes, setDriverNotes]: Statelet<string> = useState('');
-	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 	const role: UserRoles = useAppSelector(state => state.login.token.role);
 
+	/* Form questions */
+	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState(false);
+	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
+	const [driveMotorType, setDriveMotorType]: Statelet<string> = useState('');
+	const [weight, setWeight]: Statelet<string> = useState('');
+	const [collectorType, setCollectorType]: Statelet<string> = useState('');
+	const [underStage, setUnderStage]: Statelet<string> = useState('');
+	const [autoPaths, setAutoPaths]: Statelet<string> = useState('');
+	const [visionCapabilities, setVisionCapabilities]: Statelet<string> = useState('');
+	const [scoreLocations, setScoreLocations]: Statelet<string[]> = useState([]);
+	const [intakeLocations, setIntakeLocations]: Statelet<string[]> = useState([]);
+	const [shootingLocations, setShootingLocations]: Statelet<string[]> = useState([]);
+	const [climbCapabilities, setClimbCapabilities]: Statelet<string[]> = useState([]);
+	const [robotNotes, setRobotNotes]: Statelet<string> = useState('');
+	/* End form questions */
+
 	useEffect(() => {
 		setImageModalOpen(false);
-		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
-		setScoreLocations(savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []);
+		setDrivetrain((savedForm.questions[FormQuestions.drivetrain] ?? ''));
+		setScoreLocations((savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []));
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
-		setDriverNotes(savedForm.questions[FormQuestions.driverNotes] ?? '');
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
 
@@ -52,7 +87,6 @@ export default function InspectionForm(props: IProps) {
 			[FormQuestions.drivetrain]: drivetrain,
 			[FormQuestions.scoreLocations]: scoreLocations.join(', '),
 			[FormQuestions.autoPaths]: autoPaths,
-			[FormQuestions.driverNotes]: driverNotes,
 			[FormQuestions.robotNotes]: robotNotes
 		}));
 	};
@@ -69,15 +103,81 @@ export default function InspectionForm(props: IProps) {
 		}
 	};
 
-	const convertLocationToCheckbox = (position: string) => (
+	const scoreLocationCheckboxElements = SCORE_LOCATIONS.map((location: string) => (
 		<FormControlLabel
-			key={ position }
+			key={ location }
 			control={ <Checkbox/> }
-			label={ position }
-			checked={ scoreLocations.includes(position) }
-			onChange={ (event) => handleScoreLocationChange(event, position) }
+			label={ location }
+			checked={ scoreLocations.includes(location) }
+			onChange={ (event) => handleScoreLocationChange(event, location) }
 		/>
-	);
+	));
+
+	const handleIntakeLocationChange = (event, location: string): void => {
+		if (event.target.checked && !intakeLocations.includes(location)) {
+			setIntakeLocations([...intakeLocations, location]);
+			return;
+		}
+
+		if (!event.target.checked && intakeLocations.includes(location)) {
+			const updatedLocations: string[] = intakeLocations.filter((loc: string) => loc !== location);
+			setIntakeLocations(updatedLocations);
+		}
+	};
+
+	const intakeLocationCheckboxElements = INTAKE_LOCATIONS.map((location: string) => (
+		<FormControlLabel
+			key={ location }
+			control={ <Checkbox/> }
+			label={ location }
+			checked={ intakeLocations.includes(location) }
+			onChange={ (event) => handleIntakeLocationChange(event, location) }
+		/>
+	));
+
+	const handleShootingLocationChange = (event, location: string): void => {
+		if (event.target.checked && !shootingLocations.includes(location)) {
+			setShootingLocations([...shootingLocations, location]);
+			return;
+		}
+
+		if (!event.target.checked && shootingLocations.includes(location)) {
+			const updatedLocations: string[] = shootingLocations.filter((loc: string) => loc !== location);
+			setShootingLocations(updatedLocations);
+		}
+	};
+
+	const shootingLocationCheckboxElements = SHOOTING_LOCATIONS.map((location: string) => (
+		<FormControlLabel
+			key={ location }
+			control={ <Checkbox/> }
+			label={ location }
+			checked={ shootingLocations.includes(location) }
+			onChange={ (event) => handleShootingLocationChange(event, location) }
+		/>
+	));
+
+	const handleClimbCapabilityChange = (event, capability: string): void => {
+		if (event.target.checked && !climbCapabilities.includes(capability)) {
+			setClimbCapabilities([...climbCapabilities, capability]);
+			return;
+		}
+
+		if (!event.target.checked && climbCapabilities.includes(capability)) {
+			const updatedCapabilities: string[] = climbCapabilities.filter((cap: string) => cap !== capability);
+			setClimbCapabilities(updatedCapabilities);
+		}
+	};
+
+	const climbCapabilityCheckboxElements = CLIMBING_CAPABILITIES.map((capability: string) => (
+		<FormControlLabel
+			key={ capability }
+			control={ <Checkbox/> }
+			label={ capability }
+			checked={ climbCapabilities.includes(capability) }
+			onChange={ (event) => handleClimbCapabilityChange(event, capability) }
+		/>
+	));
 
 	const addImageButton = role === UserRoles.admin && (
 		<Button
@@ -93,6 +193,27 @@ export default function InspectionForm(props: IProps) {
 		</Button>
 	);
 
+	const drivetrainOptionElements = DRIVETRAIN_TYPES.map((drivetrainType: string) => (
+		<MenuItem key={ drivetrainType } value={ drivetrainType }>{ drivetrainType }</MenuItem>
+	));
+
+	const driveMotorOptionElements = DRIVE_MOTOR_TYPES.map((motor: string) => (
+		<MenuItem key={ motor } value={ motor }>{ motor }</MenuItem>
+	));
+
+	const collectorTypeOptionElements = COLLECTOR_TYPES.map((collector: string) => (
+		<MenuItem key={ collector } value={ collector }>{ collector }</MenuItem>
+	));
+
+	const handleUnderStageChange = (canGoUnderStage: boolean): void => {
+		if (canGoUnderStage) {
+			setUnderStage('Yes');
+			return;
+		}
+
+		setUnderStage('No');
+	};
+
 	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
 
 	return (
@@ -102,7 +223,7 @@ export default function InspectionForm(props: IProps) {
 					<h1 className="title">{ props.robotNumber }</h1>
 					{ addImageButton }
 				</div>
-				<FormControl margin="dense">
+				<FormControl margin="normal">
 					<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>
 					<Select
 						id="drivetrain-selector"
@@ -112,14 +233,60 @@ export default function InspectionForm(props: IProps) {
 						placeholder="Drivetrain"
 						onChange={ (event) => setDrivetrain(event.target.value) }
 					>
-						<MenuItem value="Swerve">Swerve</MenuItem>
-						<MenuItem value="Tank">Tank</MenuItem>
-						<MenuItem value="Mecanum">Mecanum</MenuItem>
-						<MenuItem value="Butterfly">Butterfly</MenuItem>
-						<MenuItem value="Holonomic/Kiwi">Holonomic/Kiwi</MenuItem>
-						<MenuItem value="Other">Other</MenuItem>
+						{ drivetrainOptionElements }
 					</Select>
 				</FormControl>
+				<FormControl margin="normal">
+					<InputLabel id="drive-motor-selector__label">Drive motor type</InputLabel>
+					<Select
+						id="drive-motor-selector"
+						labelId="drive-motor-selector__label"
+						value={ driveMotorType }
+						label="Drive motor type"
+						placeholder="Drive motor type"
+						onChange={ (event) => setDriveMotorType(event.target.value) }
+					>
+						{ driveMotorOptionElements }
+					</Select>
+				</FormControl>
+				<TextField
+					id="robot-weight-input"
+					label="Robot weight"
+					name="robotWeight"
+					type="number"
+					margin="normal"
+					variant="outlined"
+					value={ weight }
+					onChange={ event => setWeight(event.target.value) }
+					InputProps={{
+						startAdornment: <InputAdornment position="start">#</InputAdornment>
+					}}
+					inputProps={{
+						min: 0,
+						max: 9999
+					}}
+					autoComplete="off"
+				/>
+				<FormControl margin="normal">
+					<InputLabel id="collector-selector__label">Collector type</InputLabel>
+					<Select
+						id="collector-selector"
+						labelId="collector-selector__label"
+						value={ collectorType }
+						label="Collector type"
+						placeholder="Collector type"
+						onChange={ (event) => setCollectorType(event.target.value) }
+					>
+						{ collectorTypeOptionElements }
+					</Select>
+				</FormControl>
+				<FormControlLabel
+					id="under-stage-checkbox"
+					control={ <Checkbox /> }
+					label="Can go under stage"
+					checked={ underStage === 'Yes' }
+					onChange={ (event: React.ChangeEvent<HTMLInputElement>) => handleUnderStageChange(event.target.checked) }
+				/>
 				<TextField
 					id="auto-paths"
 					name="AutoPaths"
@@ -133,31 +300,48 @@ export default function InspectionForm(props: IProps) {
 					}}
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
-				<div className="score-locations-wrapper">
-					<FormGroup>
-						<div className="score-locations">
-							<div className="score-locations__section">
-								{ CONE_SCORE_POSITIONS.map(convertLocationToCheckbox) }
-							</div>
-							<div className="score-locations__section">
-								{ CUBE_SCORE_POSITION.map(convertLocationToCheckbox) }
-							</div>
-						</div>
-					</FormGroup>
-				</div>
 				<TextField
-					id="driver-notes"
-					name="DriverNotes"
-					margin="normal"
+					id="vision-capabilities"
+					name="VisionCapabilities"
 					multiline={ true }
+					margin="normal"
 					autoComplete="off"
-					label="Notes on drivers"
-					value={ driverNotes }
+					label="Vision capabilities"
+					value={ visionCapabilities }
 					inputProps={{
 						maxLength: 1024
 					}}
-					onChange={ (event) => setDriverNotes(event.target.value) }
+					onChange={ (event) => setVisionCapabilities(event.target.value) }
 				/>
+				<div className="checkbox-group score-locations-wrapper">
+					<FormGroup>
+						<div className="checkbox-row">
+							{ scoreLocationCheckboxElements }
+						</div>
+					</FormGroup>
+				</div>
+				<div className="checkbox-group intake-locations-wrapper">
+					<FormGroup>
+						<div className="checkbox-row">
+							{ intakeLocationCheckboxElements }
+						</div>
+					</FormGroup>
+				</div>
+				<div className="checkbox-group shooting-locations-wrapper">
+					<FormGroup>
+						<div className="checkbox-row">
+							{ shootingLocationCheckboxElements }
+						</div>
+					</FormGroup>
+				</div>
+				<div
+					className="checkbox-group climb-capabilities-wrapper">
+					<FormGroup>
+						<div className="checkbox-row">
+							{ climbCapabilityCheckboxElements }
+						</div>
+					</FormGroup>
+				</div>
 				<TextField
 					id="robot-notes"
 					name="RobotNotes"

@@ -19,7 +19,7 @@ import {
 	CircularProgress,
 	FormControl,
 	FormControlLabel,
-	FormGroup, InputAdornment,
+	FormGroup, Icon, InputAdornment,
 	InputLabel,
 	MenuItem,
 	Select,
@@ -28,6 +28,7 @@ import {
 import { AppDispatch, uploadForm, useAppDispatch, useAppSelector } from '../../../state';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
+import { DrivetrainIcon, MotorIcon } from '../../../icons';
 
 
 interface IProps {
@@ -47,9 +48,6 @@ interface IProps {
  * Intake location (ground or HP)
  * Shooting location (Subwoofer, podium, wing line)
  * Climbing capabilities (solo, harmonize, triple climb)
- *
- * TODO: Add remaining inputs
- * TODO: Just replace all the enums with strings again
  */
 
 export default function InspectionForm(props: IProps) {
@@ -76,17 +74,33 @@ export default function InspectionForm(props: IProps) {
 
 	useEffect(() => {
 		setImageModalOpen(false);
-		setDrivetrain((savedForm.questions[FormQuestions.drivetrain] ?? ''));
-		setScoreLocations((savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []));
+		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
+		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
+		setWeight(savedForm.questions[FormQuestions.weight] ?? '');
+		setCollectorType(savedForm.questions[FormQuestions.collectorType] ?? '');
+		setUnderStage(savedForm.questions[FormQuestions.underStage] ?? '');
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
+		setVisionCapabilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
+		setScoreLocations((savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []));
+		setIntakeLocations((savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []));
+		setShootingLocations((savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []));
+		setClimbCapabilities((savedForm.questions[FormQuestions.climbCapabilities]?.split(', ') ?? []));
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
 
 	const submit = (): void => {
 		dispatch(uploadForm(props.robotNumber, {
 			[FormQuestions.drivetrain]: drivetrain,
-			[FormQuestions.scoreLocations]: scoreLocations.join(', '),
+			[FormQuestions.driveMotorType]: driveMotorType,
+			[FormQuestions.weight]: weight,
+			[FormQuestions.collectorType]: collectorType,
+			[FormQuestions.underStage]: underStage,
 			[FormQuestions.autoPaths]: autoPaths,
+			[FormQuestions.visionCapabilities]: visionCapabilities,
+			[FormQuestions.scoreLocations]: scoreLocations.join(', '),
+			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
+			[FormQuestions.shootingLocations]: shootingLocations.join(', '),
+			[FormQuestions.climbCapabilities]: climbCapabilities.join(', '),
 			[FormQuestions.robotNotes]: robotNotes
 		}));
 	};
@@ -232,6 +246,7 @@ export default function InspectionForm(props: IProps) {
 						label="Drivetrain"
 						placeholder="Drivetrain"
 						onChange={ (event) => setDrivetrain(event.target.value) }
+						startAdornment={ <DrivetrainIcon className="selector-adornment" /> }
 					>
 						{ drivetrainOptionElements }
 					</Select>
@@ -245,6 +260,7 @@ export default function InspectionForm(props: IProps) {
 						label="Drive motor type"
 						placeholder="Drive motor type"
 						onChange={ (event) => setDriveMotorType(event.target.value) }
+						startAdornment={ <MotorIcon className="selector-adornment"/> }
 					>
 						{ driveMotorOptionElements }
 					</Select>
@@ -259,7 +275,8 @@ export default function InspectionForm(props: IProps) {
 					value={ weight }
 					onChange={ event => setWeight(event.target.value) }
 					InputProps={{
-						startAdornment: <InputAdornment position="start">#</InputAdornment>
+						startAdornment: <InputAdornment position="start"><Icon>scale</Icon></InputAdornment>,
+						endAdornment: <InputAdornment position="end">lbs</InputAdornment>
 					}}
 					inputProps={{
 						min: 0,
@@ -276,6 +293,7 @@ export default function InspectionForm(props: IProps) {
 						label="Collector type"
 						placeholder="Collector type"
 						onChange={ (event) => setCollectorType(event.target.value) }
+						startAdornment={ <Icon className="selector-adornment">input</Icon> }
 					>
 						{ collectorTypeOptionElements }
 					</Select>
@@ -295,6 +313,9 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Describe auto paths"
 					value={ autoPaths }
+					InputProps={{
+						startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
+					}}
 					inputProps={{
 						maxLength: 1024
 					}}
@@ -308,6 +329,9 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Vision capabilities"
 					value={ visionCapabilities }
+					InputProps={{
+						startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
+					}}
 					inputProps={{
 						maxLength: 1024
 					}}
@@ -350,6 +374,9 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Notes on robot"
 					value={ robotNotes }
+					InputProps={{
+						startAdornment: <InputAdornment position="start"><Icon>note_alt</Icon></InputAdornment>
+					}}
 					inputProps={{
 						maxLength: 1024
 					}}

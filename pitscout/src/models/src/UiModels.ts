@@ -2,12 +2,12 @@ import { LoadStatus } from './StateModels';
 
 export enum FormQuestions {
 	drivetrain = 'DRIVETRAIN',
-	weight = 'WEIGHT',
 	driveMotorType = 'DRIVE_MOTOR_TYPE',
-	visionCapabilities = 'VISION_CAPABILITIES',
+	weight = 'WEIGHT',
 	collectorType = 'COLLECTOR_TYPE',
 	underStage = 'UNDER_STAGE',
 	autoPaths = 'AUTO_PATHS',
+	visionCapabilities = 'VISION_CAPABILITIES',
 	scoreLocations = 'SCORE_LOCATIONS',
 	intakeLocations = 'INTAKE_LOCATIONS',
 	shootingLocations = 'SHOOTING_LOCATIONS',

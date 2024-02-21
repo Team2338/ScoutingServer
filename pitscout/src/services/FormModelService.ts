@@ -1,5 +1,4 @@
 import {
-	BasicMap,
 	FormQuestions,
 	ICreateDetailNoteRequest,
 	IDetailNoteQuestion,
@@ -32,17 +31,17 @@ class FormModelService {
 			loadStatus: null,
 			questions: questions
 		};
-	}
+	};
 
 
 	convertResponseQuestionsToForms = (questions: IDetailNoteQuestionResponse[]): {
-		forms: BasicMap<IForm>,
+		forms: Record<string, IForm>,
 		robots: number[]
 	} => {
-		const forms: BasicMap<IForm> = {};
-		const robotNumbers = [];
+		const forms: Record<number, IForm> = {};
+		const robotNumbers: number[] = [];
 		for (const question of questions) {
-			if (!forms.hasOwnProperty(question.robotNumber)) {
+			if (!Object.hasOwn(forms, question.robotNumber)) {
 				forms[question.robotNumber] = {
 					loadStatus: LoadStatus.success,
 					error: null,

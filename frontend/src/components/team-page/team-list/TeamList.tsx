@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Divider, List, ListItemButton, Typography } from '@mui/material';
-import { Statelet, Team } from '../../../models';
+import { ImageState, LoadStatus, Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
 import SearchInput from '../../shared/search-input/SearchInput';
 import { useSelectedTeam } from '../../../state/src/Selectors';
-import { selectTeam, useAppDispatch } from '../../../state';
+import { selectTeam, useAppDispatch, useAppSelector } from '../../../state';
 
 interface IProps {
 	teams: Team[];
@@ -16,6 +16,18 @@ export default function TeamList({teams}: IProps) {
 	const translate = useTranslator();
 	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
 	const selectedTeam: Team = useSelectedTeam();
+	const imageInfo: ImageState = useAppSelector(state => state.images);
+	const getImage = (teamNumber: number) => {
+		if (!Object.hasOwn(imageInfo, teamNumber)) {
+			return <div className="loading-picture"></div>;
+		}
+
+		if (imageInfo[teamNumber].info?.present) {
+			return <img alt="" role="presentation" src={ imageInfo[teamNumber].url }/>;
+		}
+
+		return <div className="loading-picture"></div>;
+	};
 
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));
@@ -34,6 +46,7 @@ export default function TeamList({teams}: IProps) {
 					}}
 				>
 					<div className="team-list-item">
+						{ getImage(team.id) }
 						<div>{ team.id }</div>
 					</div>
 				</ListItemButton>

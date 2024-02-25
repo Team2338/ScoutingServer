@@ -90,7 +90,7 @@ export interface ImageInfo {
 	gameYear: number;
 	robotNumber: number;
 	creator: string;
-	imageId: number;
+	imageId: string;
 	timeCreated: string;
 }
 

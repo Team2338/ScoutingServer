@@ -296,17 +296,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					}
 				}
 			};
-		case Actions.KEEP_CACHED_IMAGE:
-			return {
-				...state,
-				images: {
-					...state.images,
-					[action.payload]: {
-						...state.images[action.payload],
-						loadStatus: LoadStatus.success
-					}
-				}
-			};
 		case Actions.GET_EVENT_IMAGE_INFO_START:
 			return state;
 		case Actions.GET_EVENT_IMAGE_INFO_FAIL:

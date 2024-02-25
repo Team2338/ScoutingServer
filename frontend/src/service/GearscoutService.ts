@@ -96,15 +96,11 @@ class GearscoutService {
 	};
 
 	getImageContent = (data: {
-		imageId: number;
-		secretCode: string;
+		imageId: string;
 	}): GearscoutResponse<ArrayBuffer> => {
 		const url = `/v1/images/${data.imageId}`;
 		const config: AxiosRequestConfig = {
 			responseType: 'arraybuffer',
-			headers: {
-				secretCode: data.secretCode
-			}
 		};
 
 		return this.http.get(url, config);

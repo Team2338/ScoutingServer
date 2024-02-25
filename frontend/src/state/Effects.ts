@@ -38,7 +38,6 @@ import {
 	getMatchesStart,
 	getMatchesSuccess,
 	hideInspectionColumnStart,
-	keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -314,41 +313,9 @@ export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDis
 		return;
 	}
 
-	// Don't fetch image content if none exist
-	if (!info.present) {
-		dispatch(getImageSuccess(robotNumber, info, null));
-		return;
-	}
-
-	// Use cached image if ID hasn't changed
-	if (info.imageId === getState().images[robotNumber]?.info?.imageId && !!getState().images[robotNumber].url) {
-		console.log(`Reusing cached image for ${ robotNumber }`);
-		dispatch(keepCachedImage(robotNumber));
-		return;
-	}
-
-	const previousUrl: string = getState().images[robotNumber]?.url;
-	if (previousUrl) {
-		window.URL.revokeObjectURL(previousUrl);
-	}
-
-	let content;
-	let contentType: string;
-	try {
-		console.log(`Getting image content for ${ robotNumber }`);
-		const response = await gearscoutService.getImageContent({
-			imageId: info.imageId,
-			secretCode: getState().login.secretCode
-		});
-		content = response.data;
-		contentType = response.headers['content-type'];
-	} catch (error) {
-		console.error(`Error getting image content for ${ robotNumber }`);
-		dispatch(getImageFail(robotNumber));
-	}
-
-	const blob = new Blob([content], {type: contentType});
-	const url: string = window.URL.createObjectURL(blob);
+	const url: string = info.present
+		? `${import.meta.env.VITE_APP_SERVER_URL}/v1/images/${info.imageId}`
+		: null;
 	dispatch(getImageSuccess(robotNumber, info, url));
 };
 

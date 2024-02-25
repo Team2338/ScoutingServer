@@ -18,12 +18,17 @@ export default function TeamList({teams}: IProps) {
 	const selectedTeam: Team = useSelectedTeam();
 	const imageInfo: ImageState = useAppSelector(state => state.images);
 	const getImage = (teamNumber: number) => {
-		if (!Object.hasOwn(imageInfo, teamNumber)) {
-			return <div className="loading-picture"></div>;
-		}
-
-		if (imageInfo[teamNumber].info?.present) {
-			return <img alt="" role="presentation" src={ imageInfo[teamNumber].url }/>;
+		if (imageInfo[teamNumber]?.info?.present) {
+			return (
+				<div className="team-image-icon-wrapper">
+					<img
+						className="team-image-icon"
+						alt=""
+						role="presentation"
+						src={ imageInfo[teamNumber].url }
+					/>
+				</div>
+			);
 		}
 
 		return <div className="loading-picture"></div>;

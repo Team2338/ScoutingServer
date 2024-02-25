@@ -4,20 +4,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ImageContentRepository extends CrudRepository<ImageContentEntity, Long> {
+
+	@Query(value = """
+	DELETE FROM ImageContentEntity image
+	WHERE image.id = :imageId
+	""")
+	void deleteImageContentById(UUID imageId);
 	
 	// LIMIT keyword doesn't exist in HQL
 	@Query(value = """
 	SELECT image
 	FROM ImageContentEntity image
 	WHERE image.id = :imageId
-		AND image.secretCode = :secretCode
-	ORDER BY image.id ASC
 	""")
 	Optional<ImageContentEntity> findImageContentForRobot(
-		Long imageId,
-		String secretCode
+		UUID imageId
 	);
 	
 }

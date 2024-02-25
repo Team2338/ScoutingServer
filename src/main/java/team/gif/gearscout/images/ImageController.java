@@ -25,6 +25,7 @@ import team.gif.gearscout.auth.AuthService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1/images", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -131,12 +132,11 @@ public class ImageController {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<byte[]> getImage(
-		@PathVariable Long id,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+		@PathVariable UUID id,
 		@RequestHeader(value = "If-None-Match", defaultValue = "") String oldChecksum
 	) {
 		ImageContentEntity image = imageService
-			.getImageContent(id, secretCode)
+			.getImageContent(id)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
 		String checksum = "\"%s\"".formatted(imageService.getChecksum(image));

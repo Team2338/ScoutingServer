@@ -13,29 +13,21 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import org.hibernate.type.SqlTypes;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "image_content")
 public class ImageContentEntity {
 	
 	@Id
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	@GeneratedValue(
-		strategy = GenerationType.SEQUENCE,
-		generator = "image_content_seq"
-	)
-	@SequenceGenerator(
-		name = "image_content_seq",
-		allocationSize = 1
-	)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 	
 	@Lob
 	@JdbcTypeCode(SqlTypes.VARBINARY)
 	@Column(name = "content", nullable = false)
 	private byte[] content;
-	
-	@Column(name = "secretCode", nullable = false)
-	private String secretCode;
 	
 	@Column(name = "content_type", nullable = false)
 	private String contentType;
@@ -44,11 +36,10 @@ public class ImageContentEntity {
 	
 	public ImageContentEntity(byte[] content, String secretCode, String contentType) {
 		this.content = content;
-		this.secretCode = secretCode;
 		this.contentType = contentType;
 	}
 	
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 	
@@ -56,24 +47,16 @@ public class ImageContentEntity {
 		return content;
 	}
 	
-	public String getSecretCode() {
-		return secretCode;
-	}
-	
 	public String getContentType() {
 		return contentType;
 	}
 	
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 	
 	public void setContent(byte[] content) {
 		this.content = content;
-	}
-	
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 	
 	public void setContentType(String contentType) {

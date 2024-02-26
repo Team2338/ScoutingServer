@@ -54,7 +54,7 @@ export default function AddImageDialog(props: IProps) {
 		}
 
 		dispatch(clearUploadError());
-	}
+	};
 
 	return (
 		<Fragment>

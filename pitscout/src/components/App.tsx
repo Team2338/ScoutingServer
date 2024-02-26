@@ -6,22 +6,22 @@ import MainPage from './main-page/MainPage';
 import LoginPage from './login-page/LoginPage';
 
 function App() {
-  const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
-  const dispatch = useAppDispatch();
+	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
+	const dispatch = useAppDispatch();
 
-  useEffect(
-    () => {
-      dispatch(initApp());
-    },
-    [dispatch]
-  );
+	useEffect(
+		() => {
+			dispatch(initApp());
+		},
+		[dispatch]
+	);
 
-  return (
-    <div className="App">
-      <Header />
-      { isLoggedIn ? <MainPage/> : <LoginPage/> }
-    </div>
-  );
+	return (
+		<div className="App">
+			<Header />
+			{ isLoggedIn ? <MainPage /> : <LoginPage /> }
+		</div>
+	);
 }
 
 export default App;

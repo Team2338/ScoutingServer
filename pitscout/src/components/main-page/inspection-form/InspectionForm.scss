@@ -23,14 +23,23 @@
 		}
 	}
 
-	.score-locations-wrapper {
+	.selector-adornment {
+		color: rgba(0, 0, 0, 0.54);
+		margin-right: 8px;
+	}
+
+	#under-stage-checkbox {
+		padding-left: 14px;
+	}
+
+	.checkbox-group {
 		position: relative;
 		display: flex;
 		margin-top: 16px;
 		margin-bottom: 8px;
 		border: 1px solid rgba(0, 0, 0, 0.23);
 		border-radius: 4px;
-		padding: 8px 16px;
+		padding: 8px 14px;
 
     &::before {
 			content: 'Score locations';
@@ -47,15 +56,26 @@
 			background-color: white;
     }
 
-		.score-locations {
+		&.score-locations-wrapper::before {
+			content: 'Score locations';
+		}
+
+		&.intake-locations-wrapper::before {
+			content: 'Intake locations';
+		}
+
+		&.shooting-locations-wrapper::before {
+			content: 'Shooting locations';
+		}
+
+		&.climb-capabilities-wrapper::before {
+			content: 'Climb capabilities'
+		}
+
+		.checkbox-row {
 			display: flex;
 			flex-direction: row;
 			column-gap: 4px;
-
-			&__section {
-				display: flex;
-				flex-direction: column;
-			}
 		}
 	}
 

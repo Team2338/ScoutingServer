@@ -1,0 +1,53 @@
+env:
+  browser: true
+  es2022: true
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:react/recommended
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: true # Instructions when converting to monorepo: https://typescript-eslint.io/linting/typed-linting/monorepos
+  ecmaVersion: latest
+  sourceType: module
+plugins:
+#  - '@typescript-eslint'
+  - react
+root: true # Specifies that this is the root-level config; don't keep navigating to parent dir
+settings:
+  react:
+    version: detect
+rules:
+  indent:
+    - error
+    - tab
+    - SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  no-case-declarations: warn
+  '@typescript-eslint/array-type':
+    - error
+    - default: 'array'
+  '@typescript-eslint/consistent-generic-constructors':
+    - warn
+    - 'type-annotation' # Prefer putting generics on left side
+  '@typescript-eslint/consistent-indexed-object-style':
+    - warn
+    - 'record'
+  '@typescript-eslint/consistent-type-assertions':
+    - error
+    - assertionStyle: 'as'
+      objectLiteralTypeAssertions: 'allow'
+  '@typescript-eslint/no-inferrable-types': off
+  '@typescript-eslint/no-explicit-any': off
+  '@typescript-eslint/no-unused-vars': # TODO: Maybe set max limit?
+    - warn
+  no-array-constructor: off # Disable base rule - let TS plugin handle it
+  '@typescript-eslint/no-array-constructor': error

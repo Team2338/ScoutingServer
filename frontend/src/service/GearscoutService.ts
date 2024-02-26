@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CommentResponse, InspectionQuestionResponse, ImageInfo, MatchResponse } from '../models';
+import { CommentResponse, InspectionQuestionResponse, MatchResponse, ImageInfoResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -62,13 +62,13 @@ class GearscoutService {
 		return this.http.get(url, config);
 	};
 
-	getImageInfo = (data: {
+	getImageInfoForRobot = (data: {
 		teamNumber: number;
 		gameYear: number;
 		eventCode: string;
 		robotNumber: number;
 		secretCode: string;
-	}): GearscoutResponse<ImageInfo> => {
+	}): GearscoutResponse<ImageInfoResponse> => {
 		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}/robot/${data.robotNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
@@ -84,24 +84,9 @@ class GearscoutService {
 		gameYear: number;
 		eventCode: string;
 		secretCode: string;
-	}): GearscoutResponse<ImageInfo[]> => {
+	}): GearscoutResponse<ImageInfoResponse[]> => {
 		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
-			headers: {
-				secretCode: data.secretCode
-			}
-		};
-
-		return this.http.get(url, config);
-	};
-
-	getImageContent = (data: {
-		imageId: number;
-		secretCode: string;
-	}): GearscoutResponse<ArrayBuffer> => {
-		const url = `/v1/images/${data.imageId}`;
-		const config: AxiosRequestConfig = {
-			responseType: 'arraybuffer',
 			headers: {
 				secretCode: data.secretCode
 			}

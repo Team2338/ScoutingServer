@@ -132,20 +132,21 @@ const getTeamsWithDataOrImagesOrComments = (
 	images: ImageState,
 	comments: CommentsForEvent
 ): Team[] => {
-	const teamNumbersWithImages: number[] = Object.getOwnPropertyNames(images).map(num => Number(num));
+	const teamNumbersWithImages: number[] = Object.getOwnPropertyNames(images.images).map(num => Number(num));
 	const teamNumbersWithComments: number[] = Object.getOwnPropertyNames(comments).map(num => Number(num));
-	const uniqueTeamNumbersWithNotesOrImagesOrComments: Set<number> = new Set([
+	// TODO: add teams with inspections
+	const uniqueTeamNumbersWithImagesOrComments: Set<number> = new Set([
 		...teamNumbersWithImages,
 		...teamNumbersWithComments
 	]);
 
-	// This gives us the list of team numbers with notes but not match data
+	// This gives us the list of team numbers with images or comments but not match data
 	for (const team of teamsWithData) {
-		uniqueTeamNumbersWithNotesOrImagesOrComments.delete(team.id);
+		uniqueTeamNumbersWithImagesOrComments.delete(team.id);
 	}
 
 	const completeListOfTeams: Team[] = teamsWithData.slice();
-	uniqueTeamNumbersWithNotesOrImagesOrComments.forEach((teamNumber: number) => {
+	uniqueTeamNumbersWithImagesOrComments.forEach((teamNumber: number) => {
 		completeListOfTeams.push({
 			id: teamNumber,
 			stats: null

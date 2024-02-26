@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "image_info")
 public class ImageInfoEntity {
@@ -47,7 +49,7 @@ public class ImageInfoEntity {
 	private String creator;
 	
 	@Column(name = "imageId", nullable = false)
-	private Long imageId;
+	private UUID imageId;
 	
 	@Column(name = "time_created", nullable = false)
 	private String timeCreated;
@@ -62,7 +64,7 @@ public class ImageInfoEntity {
 		String secretCode,
 		Integer robotNumber,
 		String creator,
-		Long imageId,
+		UUID imageId,
 		String timeCreated
 	) {
 		this.teamNumber = teamNumber;
@@ -107,7 +109,7 @@ public class ImageInfoEntity {
 		return creator;
 	}
 	
-	public Long getImageId() {
+	public UUID getImageId() {
 		return imageId;
 	}
 	
@@ -147,7 +149,7 @@ public class ImageInfoEntity {
 		this.creator = creator;
 	}
 	
-	public void setImageId(Long imageId) {
+	public void setImageId(UUID imageId) {
 		this.imageId = imageId;
 	}
 	

@@ -7,9 +7,10 @@ import {
 	LanguageInfo,
 	Match,
 	MatchResponse,
-	Team
+	Team, GlobalObjectiveStats, ImageInfoResponse
 } from '../models';
 import commentService from '../service/CommentService';
+import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
@@ -28,9 +29,6 @@ import {
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
-	getImageFail,
-	getImageStart,
-	getImageSuccess,
 	getInspectionsFail,
 	getInspectionsStart,
 	getInspectionsSuccess,
@@ -38,7 +36,6 @@ import {
 	getMatchesStart,
 	getMatchesSuccess,
 	hideInspectionColumnStart,
-	keepCachedImage,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -194,7 +191,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 		dispatch(calculateTeamStatsSuccess(teams));
 
 		console.log('Getting global statistics sync');
-		const globalStats = statModelService.calculateGlobalStats(teams);
+		const globalStats: GlobalObjectiveStats[] = statModelService.calculateGlobalStats(teams);
 		dispatch(calculateGlobalStatsSuccess(globalStats));
 
 	} catch (error) {
@@ -292,66 +289,6 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 // 	dispatch(calculateGlobalStatsSuccess(globalStats));
 // };
 
-
-export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log(`Getting image info for ${ robotNumber }`);
-	dispatch(getImageStart(robotNumber));
-
-	let info: ImageInfo;
-	try {
-		const response = await gearscoutService.getImageInfo({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			robotNumber: robotNumber,
-			secretCode: getState().login.secretCode
-		});
-		info = response.data;
-
-	} catch (error) {
-		console.error(`Error getting image info for ${ robotNumber }`);
-		dispatch(getImageFail(robotNumber));
-		return;
-	}
-
-	// Don't fetch image content if none exist
-	if (!info.present) {
-		dispatch(getImageSuccess(robotNumber, info, null));
-		return;
-	}
-
-	// Use cached image if ID hasn't changed
-	if (info.imageId === getState().images[robotNumber]?.info?.imageId && !!getState().images[robotNumber].url) {
-		console.log(`Reusing cached image for ${ robotNumber }`);
-		dispatch(keepCachedImage(robotNumber));
-		return;
-	}
-
-	const previousUrl: string = getState().images[robotNumber]?.url;
-	if (previousUrl) {
-		window.URL.revokeObjectURL(previousUrl);
-	}
-
-	let content;
-	let contentType: string;
-	try {
-		console.log(`Getting image content for ${ robotNumber }`);
-		const response = await gearscoutService.getImageContent({
-			imageId: info.imageId,
-			secretCode: getState().login.secretCode
-		});
-		content = response.data;
-		contentType = response.headers['content-type'];
-	} catch (error) {
-		console.error(`Error getting image content for ${ robotNumber }`);
-		dispatch(getImageFail(robotNumber));
-	}
-
-	const blob = new Blob([content], {type: contentType});
-	const url: string = window.URL.createObjectURL(blob);
-	dispatch(getImageSuccess(robotNumber, info, url));
-};
-
 export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting image info for event');
 	dispatch(getEventImageInfoStart());
@@ -364,7 +301,8 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 			secretCode: getState().login.secretCode
 		});
 
-		const info: ImageInfo[] = response.data;
+		const infoResponses: ImageInfoResponse[] = response.data;
+		const info: ImageInfo[] = imageModelService.createImageInfo(infoResponses);
 		dispatch(getEventImageInfoSuccess(info));
 	} catch (error) {
 		console.log('Error getting image info for event');

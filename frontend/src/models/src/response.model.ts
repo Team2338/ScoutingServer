@@ -83,14 +83,14 @@ export interface Plan {
 	};
 }
 
-export interface ImageInfo {
+export interface ImageInfoResponse {
 	id: number;
 	present: boolean;
 	teamNumber: number;
 	gameYear: number;
 	robotNumber: number;
 	creator: string;
-	imageId: number;
+	imageId: string;
 	timeCreated: string;
 }
 

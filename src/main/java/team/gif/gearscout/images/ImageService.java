@@ -13,6 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -79,7 +80,7 @@ public class ImageService {
 			secretCode
 		).ifPresent(imageInfo -> {
 			imageInfoRepository.delete(imageInfo);
-			imageContentRepository.deleteById(imageInfo.getImageId());
+			imageContentRepository.deleteImageContentById(imageInfo.getImageId());
 		});
 		
 		ImageContentEntity imageContentEntity = imageContentRepository.save(
@@ -124,12 +125,9 @@ public class ImageService {
 	}
 	
 	
-	public Optional<ImageContentEntity> getImageContent(
-		Long imageId,
-		String secretCode
-	) {
+	public Optional<ImageContentEntity> getImageContent(UUID imageId) {
 		return imageContentRepository
-			.findImageContentForRobot(imageId, secretCode);
+			.findImageContentForRobot(imageId);
 	}
 	
 	

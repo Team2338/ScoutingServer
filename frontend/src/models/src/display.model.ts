@@ -40,3 +40,10 @@ export interface CommentsForRobot {
 export interface CommentsForEvent {
 	[robotNumber: number]: CommentsForRobot;
 }
+
+export interface ImageInfo {
+	robotNumber: number;
+	url: string;
+	creator: string;
+	timeCreated: string;
+}

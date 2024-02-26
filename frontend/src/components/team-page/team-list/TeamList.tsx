@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Divider, List, ListItemButton, Typography } from '@mui/material';
-import { Statelet, Team } from '../../../models';
+import { ImageState, LoadStatus, Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
 import SearchInput from '../../shared/search-input/SearchInput';
 import { useSelectedTeam } from '../../../state/src/Selectors';
-import { selectTeam, useAppDispatch } from '../../../state';
+import { selectTeam, useAppDispatch, useAppSelector } from '../../../state';
 
 interface IProps {
 	teams: Team[];
@@ -16,6 +16,32 @@ export default function TeamList({teams}: IProps) {
 	const translate = useTranslator();
 	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
 	const selectedTeam: Team = useSelectedTeam();
+	const imageInfo: ImageState = useAppSelector(state => state.images);
+	const getImage = (robotNumber: number) => {
+		if (imageInfo.loadStatus === LoadStatus.loading) {
+			return <div className="loading-picture"></div>;
+		}
+
+		if (imageInfo.loadStatus === LoadStatus.none || imageInfo.loadStatus === LoadStatus.failed) {
+			return null;
+		}
+
+		if (imageInfo.images[robotNumber]?.url) {
+			return (
+				<div className="team-image-icon-wrapper">
+					<img
+						className="team-image-icon"
+						alt=""
+						role="presentation"
+						src={ imageInfo.images[robotNumber].url }
+					/>
+				</div>
+			);
+
+		}
+
+		return null;
+	};
 
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));
@@ -34,6 +60,7 @@ export default function TeamList({teams}: IProps) {
 					}}
 				>
 					<div className="team-list-item">
+						{ getImage(team.id) }
 						<div>{ team.id }</div>
 					</div>
 				</ListItemButton>

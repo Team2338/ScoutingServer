@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
-import { getImageForRobot, useAppDispatch } from '../../../state';
 import { GridScore } from '../../shared/GridScore';
 import ViewImage from '../view-image/ViewImage';
 import './TeamDetail.scss';
@@ -14,16 +13,6 @@ interface IProps {
 export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
-	const dispatch = useAppDispatch();
-
-	useEffect(
-		() => {
-			if (props.team) {
-				dispatch(getImageForRobot(props.team.id));
-			}
-		},
-		[dispatch, props.team]
-	);
 
 	if (!props.team) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;

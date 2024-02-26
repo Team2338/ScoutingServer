@@ -83,7 +83,7 @@ export interface Plan {
 	};
 }
 
-export interface ImageInfo {
+export interface ImageInfoResponse {
 	id: number;
 	present: boolean;
 	teamNumber: number;

@@ -2,7 +2,6 @@ import React from 'react';
 import { Language } from './languages.model';
 import {
 	GlobalObjectiveStats,
-	ImageInfo,
 	Match,
 	MatchResponse,
 	ObjectiveDescriptor,
@@ -67,11 +66,14 @@ export interface LoginState {
 }
 
 export interface ImageState {
-	[teamNumber: number]: {
-		loadStatus: LoadStatus;
-		info: ImageInfo;
-		url: string;
-	};
+	loadStatus: LoadStatus;
+	images: {
+		[teamNumber: number]: {
+			creator: string;
+			url: string;
+			timeCreated: string;
+		}
+	}
 }
 
 export interface InspectionState {

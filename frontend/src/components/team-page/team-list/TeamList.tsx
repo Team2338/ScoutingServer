@@ -17,21 +17,30 @@ export default function TeamList({teams}: IProps) {
 	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
 	const selectedTeam: Team = useSelectedTeam();
 	const imageInfo: ImageState = useAppSelector(state => state.images);
-	const getImage = (teamNumber: number) => {
-		if (imageInfo[teamNumber]?.info?.present) {
+	const getImage = (robotNumber: number) => {
+		if (imageInfo.loadStatus === LoadStatus.loading) {
+			return <div className="loading-picture"></div>;
+		}
+
+		if (imageInfo.loadStatus === LoadStatus.none || imageInfo.loadStatus === LoadStatus.failed) {
+			return null;
+		}
+
+		if (imageInfo.images[robotNumber]?.url) {
 			return (
 				<div className="team-image-icon-wrapper">
 					<img
 						className="team-image-icon"
 						alt=""
 						role="presentation"
-						src={ imageInfo[teamNumber].url }
+						src={ imageInfo.images[robotNumber].url }
 					/>
 				</div>
 			);
+
 		}
 
-		return <div className="loading-picture"></div>;
+		return null;
 	};
 
 	const dispatch = useAppDispatch();

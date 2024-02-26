@@ -7,9 +7,10 @@ import {
 	LanguageInfo,
 	Match,
 	MatchResponse,
-	Team
+	Team, GlobalObjectiveStats, ImageInfoResponse
 } from '../models';
 import commentService from '../service/CommentService';
+import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
 import gearscoutService from '../service/GearscoutService';
 import matchModelService from '../service/MatchModelService';
@@ -28,9 +29,6 @@ import {
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
-	getImageFail,
-	getImageStart,
-	getImageSuccess,
 	getInspectionsFail,
 	getInspectionsStart,
 	getInspectionsSuccess,
@@ -193,7 +191,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 		dispatch(calculateTeamStatsSuccess(teams));
 
 		console.log('Getting global statistics sync');
-		const globalStats = statModelService.calculateGlobalStats(teams);
+		const globalStats: GlobalObjectiveStats[] = statModelService.calculateGlobalStats(teams);
 		dispatch(calculateGlobalStatsSuccess(globalStats));
 
 	} catch (error) {
@@ -291,34 +289,6 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 // 	dispatch(calculateGlobalStatsSuccess(globalStats));
 // };
 
-
-export const getImageForRobot = (robotNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log(`Getting image info for ${ robotNumber }`);
-	dispatch(getImageStart(robotNumber));
-
-	let info: ImageInfo;
-	try {
-		const response = await gearscoutService.getImageInfo({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			robotNumber: robotNumber,
-			secretCode: getState().login.secretCode
-		});
-		info = response.data;
-
-	} catch (error) {
-		console.error(`Error getting image info for ${ robotNumber }`);
-		dispatch(getImageFail(robotNumber));
-		return;
-	}
-
-	const url: string = info.present
-		? `${import.meta.env.VITE_APP_SERVER_URL}/v1/images/${info.imageId}`
-		: null;
-	dispatch(getImageSuccess(robotNumber, info, url));
-};
-
 export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting image info for event');
 	dispatch(getEventImageInfoStart());
@@ -331,7 +301,8 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 			secretCode: getState().login.secretCode
 		});
 
-		const info: ImageInfo[] = response.data;
+		const infoResponses: ImageInfoResponse[] = response.data;
+		const info: ImageInfo[] = imageModelService.createImageInfo(infoResponses);
 		dispatch(getEventImageInfoSuccess(info));
 	} catch (error) {
 		console.log('Error getting image info for event');

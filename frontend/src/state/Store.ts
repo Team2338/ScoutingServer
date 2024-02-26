@@ -41,7 +41,10 @@ const INITIAL_STATE: AppState = {
 		thirdTeam: null,
 		plan: null
 	},
-	images: {},
+	images: {
+		loadStatus: LoadStatus.none,
+		images: {}
+	},
 	inspections: {
 		loadStatus: LoadStatus.none,
 		inspections: [],
@@ -261,45 +264,22 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				planning: INITIAL_STATE.planning
 			};
-		case Actions.GET_IMAGE_START:
-			return {
-				...state,
-				images: {
-					...state.images,
-					[action.payload]: {
-						loadStatus: getNextStatusOnLoad(state.images[action.payload]?.loadStatus ?? LoadStatus.none),
-						url: state.images[action.payload]?.url, // Sets to null if this team previously was not saved
-						info: state.images[action.payload]?.info // Sets to null if this team previously was not saved
-					}
-				}
-			};
-		case Actions.GET_IMAGE_FAIL:
-			return {
-				...state,
-				images: {
-					...state.images,
-					[action.payload]: {
-						...state.images[action.payload],
-						loadStatus: getNextStatusOnFail(state.images[action.payload].loadStatus),
-					}
-				}
-			};
-		case Actions.GET_IMAGE_SUCCESS:
-			return {
-				...state,
-				images: {
-					...state.images,
-					[action.payload.robotNumber]: {
-						loadStatus: LoadStatus.success,
-						info: action.payload.info,
-						url: action.payload.url
-					}
-				}
-			};
 		case Actions.GET_EVENT_IMAGE_INFO_START:
-			return state;
+			return {
+				...state,
+				images: {
+					...state.images,
+					loadStatus: getNextStatusOnLoad(state.images.loadStatus)
+				}
+			};
 		case Actions.GET_EVENT_IMAGE_INFO_FAIL:
-			return state;
+			return {
+				...state,
+				images: {
+					...state.images,
+					loadStatus: getNextStatusOnFail(state.images.loadStatus)
+				}
+			};
 		case Actions.GET_EVENT_IMAGE_INFO_SUCCESS:
 			return {
 				...state,
@@ -448,15 +428,14 @@ function getNextStatusOnFail(previousStatus: LoadStatus): LoadStatus {
 }
 
 function createImageStateFromInfo(info: ImageInfo[]): ImageState {
-	const next: ImageState = {};
+	const next: ImageState = {
+		loadStatus: LoadStatus.success,
+		images: {}
+	};
 
-	info.forEach((image: ImageInfo) => {
-		next[image.robotNumber] = {
-			info: image,
-			url: null,
-			loadStatus: LoadStatus.none
-		};
-	});
+	for (const image of info) {
+		next.images[image.robotNumber] = image;
+	}
 
 	return next;
 }

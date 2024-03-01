@@ -1,0 +1,17 @@
+
+.inspection-form-dialog__header {
+	display: grid;
+	padding: 12px;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+
+	#inspection-form-dialog__back-button {
+		margin-right: auto;
+	}
+
+	#inspection-form-dialog__title {
+		font-size: 20px;
+		line-height: 24px;
+		font-weight: 600;
+	}
+}

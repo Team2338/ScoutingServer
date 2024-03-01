@@ -122,7 +122,7 @@ const reducer = createReducer(initialState, builder => {
 				console.error('Tried to select form, but one does not exist for that robot');
 			}
 
-			state.forms.selected = state.forms.data[action.payload].robotNumber;
+			state.forms.selected = action.payload;
 		})
 		.addCase(uploadFormStart, (state: IPitState, action) => {
 			state.forms.data[action.payload.robotNumber] = action.payload;

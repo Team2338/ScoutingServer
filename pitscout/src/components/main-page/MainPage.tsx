@@ -7,11 +7,13 @@ import {
 	Button,
 	Slide,
 	SlideProps,
-	Snackbar
+	Snackbar,
+	useMediaQuery
 } from '@mui/material';
 import { Statelet } from '../../models';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
 import RobotList from './robot-list/RobotList';
+import MainPageMobile from './MainPageMobile';
 
 function SlideTransition(props: SlideProps) {
 	return <Slide {...props} direction="down"/>;
@@ -20,6 +22,7 @@ function SlideTransition(props: SlideProps) {
 export default function MainPage() {
 
 	const dispatch = useAppDispatch();
+	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const snackbar = useAppSelector(state => state.snackbar);
 	const [isModalOpen, setModalOpen]: Statelet<boolean> = useState<boolean>(false);
@@ -32,6 +35,10 @@ export default function MainPage() {
 	useEffect(() => {
 		dispatch(loadForms());
 	}, [dispatch]);
+
+	if (isMobile) {
+		return <MainPageMobile />;
+	}
 
 	return (
 		<div className="main-page">

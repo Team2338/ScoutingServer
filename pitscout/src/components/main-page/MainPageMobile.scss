@@ -4,7 +4,7 @@
 	padding: 12px;
 	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
-	box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
 	#inspection-form-dialog__back-button {
 		margin-right: auto;
@@ -21,4 +21,14 @@
 		margin-left: auto;
 		background-color: aliceblue;
 	}
+}
+
+#inspection-form-dialog__body {
+	padding: 8px 12px 20px 12px;
+}
+
+.inspection-form-dialog__footer {
+	display: flex;
+	padding: 12px;
+	box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
 }

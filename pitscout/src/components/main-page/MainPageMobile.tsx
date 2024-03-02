@@ -77,15 +77,11 @@ export default function MainPageMobile() {
 						</IconButton>
 					}
 				</div>
-				<DialogContent
-					dividers={ true }
-					sx={{
-						paddingLeft: '8px',
-						paddingRight: '8px',
-						paddingTop: '8px'
-					}}
-				>
-					{ selectedRobot && <InspectionForm robotNumber={ selectedRobot } /> }
+				<DialogContent id="inspection-form-dialog__body">
+					{
+						selectedRobot &&
+						<InspectionForm robotNumber={ selectedRobot } shouldFloatSubmit={ true } />
+					}
 				</DialogContent>
 			</Dialog>
 			<AddImageDialog

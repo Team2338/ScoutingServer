@@ -33,6 +33,7 @@ import { DrivetrainIcon, MotorIcon } from '../../../icons';
 
 interface IProps {
 	robotNumber: number;
+	shouldFloatSubmit?: boolean;
 }
 
 /*
@@ -215,7 +216,7 @@ export default function InspectionForm(props: IProps) {
 
 	return (
 		<Fragment>
-			<form className="detail-note-form">
+			<form className="inspection-form">
 				<FormControl margin="normal">
 					<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>
 					<Select

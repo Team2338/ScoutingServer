@@ -61,9 +61,10 @@ export const INTAKE_LOCATIONS: string[] = [
 
 export const SHOOTING_LOCATIONS: string[] = [
 	'Subwoofer',
+	'Under stage',
 	'Podium',
-	'Wing line',
-	'Other'
+	'Wing far',
+	'Source area',
 ];
 
 export const CLIMBING_CAPABILITIES: string[] = [

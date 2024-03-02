@@ -1,12 +1,13 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
-import { Statelet } from '../../models';
-import { useEffect, useState } from 'react';
+import { Statelet, UserRoles } from '../../models';
 import { Button, Dialog, DialogContent, Icon, IconButton, Slide } from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
 import InspectionForm from './inspection-form/InspectionForm';
 import './MainPageMobile.scss';
+import AddImageDialog from './add-image-dialog/AddImageDialog';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="up" ref={ ref } { ...props }>{ props.children }</Slide>;
@@ -15,8 +16,10 @@ const Transition = forwardRef(function Transition(props: any, ref) {
 export default function MainPageMobile() {
 
 	const dispatch = useAppDispatch();
+	const role: UserRoles = useAppSelector(state => state.login.token.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const [isAddDialogOpen, setAddDialogOpen]: Statelet<boolean> = useState<boolean>(false);
+	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const _selectRobot = (robotNum: number) => dispatch(selectForm(robotNum));
 
 	useEffect(() => {
@@ -63,6 +66,16 @@ export default function MainPageMobile() {
 					<span id="inspection-form-dialog__title">
 						Team { selectedRobot }
 					</span>
+					{
+						role === UserRoles.admin &&
+						<IconButton
+							id="inspection-form-dialog__add-image-button"
+							color="primary"
+							onClick={ () => setImageModalOpen(true) }
+						>
+							<AddPhotoAlternateIcon />
+						</IconButton>
+					}
 				</div>
 				<DialogContent
 					dividers={ true }
@@ -75,6 +88,11 @@ export default function MainPageMobile() {
 					{ selectedRobot && <InspectionForm robotNumber={ selectedRobot } /> }
 				</DialogContent>
 			</Dialog>
+			<AddImageDialog
+				robotNumber={ selectedRobot }
+				isOpen={ isImageModalOpen }
+				handleClose={ () => setImageModalOpen(false) }
+			/>
 		</main>
 	);
 

@@ -1,5 +1,6 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material';
 import React from 'react';
+import './Header.scss';
+import { AppBar, Button, Toolbar, Typography } from '@mui/material';
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
 
 export default function Header() {
@@ -27,15 +28,18 @@ export default function Header() {
 	return (
 		<AppBar id="app-bar" position="sticky" color="primary">
 			<Toolbar>
-				<Typography
-					variant="h5"
-					color="inherit"
-					lang="en"
-					translate="no"
-					noWrap
-				>
-					PitScout
-				</Typography>
+				<div className="name-and-version">
+					<Typography
+						variant="h5"
+						color="inherit"
+						lang="en"
+						translate="no"
+						noWrap
+					>
+						PitScout
+					</Typography>
+					<span>{ process.env.REACT_APP_VERSION }</span>
+				</div>
 				{ isLoggedIn ? logoutButton : null }
 			</Toolbar>
 		</AppBar>

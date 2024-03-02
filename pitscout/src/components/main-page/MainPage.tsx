@@ -7,11 +7,15 @@ import {
 	Button,
 	Slide,
 	SlideProps,
-	Snackbar
+	Snackbar,
+	useMediaQuery
 } from '@mui/material';
-import { Statelet } from '../../models';
+import { Statelet, UserRoles } from '../../models';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
 import RobotList from './robot-list/RobotList';
+import MainPageMobile from './MainPageMobile';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import AddImageDialog from './add-image-dialog/AddImageDialog';
 
 function SlideTransition(props: SlideProps) {
 	return <Slide {...props} direction="down"/>;
@@ -20,21 +24,50 @@ function SlideTransition(props: SlideProps) {
 export default function MainPage() {
 
 	const dispatch = useAppDispatch();
+	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
+	const role: UserRoles = useAppSelector(state => state.login.token.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const snackbar = useAppSelector(state => state.snackbar);
-	const [isModalOpen, setModalOpen]: Statelet<boolean> = useState<boolean>(false);
+	const [isNewRobotModalOpen, setNewRobotModalOpen]: Statelet<boolean> = useState<boolean>(false);
+	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const _closeSnackbar = () => dispatch(closeSnackbar());
-
-	const detailSection = (selectedRobot !== null)
-		? <InspectionForm robotNumber={ selectedRobot }/>
-		: <div>Pick or add a robot number!</div>;
 
 	useEffect(() => {
 		dispatch(loadForms());
 	}, [dispatch]);
 
+	if (isMobile) {
+		return <MainPageMobile />;
+	}
+
+	const addImageButton = role === UserRoles.admin && (
+		<Button
+			id="add-image-button"
+			aria-label="Add image"
+			color="primary"
+			variant="contained"
+			startIcon={ <AddPhotoAlternateIcon/> }
+			disableElevation={ true }
+			onClick={ () => setImageModalOpen(true) }
+		>
+			Add image
+		</Button>
+	);
+
+	const detailSection = (selectedRobot !== null)
+		? (
+			<div className="detail-section">
+				<div className="title-area">
+					<h1 className="title">{ selectedRobot }</h1>
+					{ addImageButton }
+				</div>
+				<InspectionForm robotNumber={ selectedRobot } />
+			</div>
+		)
+		: <div>Pick or add a robot number!</div>;
+
 	return (
-		<div className="main-page">
+		<main className="main-page">
 			<Snackbar
 				autoHideDuration={ 6000 }
 				open={ !!snackbar.isOpen }
@@ -60,23 +93,26 @@ export default function MainPage() {
 				<Button
 					id="robot-list-add"
 					variant="text"
-					onClick={ () => setModalOpen(true) }
+					onClick={ () => setNewRobotModalOpen(true) }
 				>
 					(+) Add robot
 				</Button>
 				<RobotList/>
 			</div>
-			<div className="detail-section">
-				{ detailSection }
-			</div>
+			{ detailSection }
 			<AddRobotDialog
-				open={ isModalOpen }
-				handleClose={ () => setModalOpen(false) }
+				open={ isNewRobotModalOpen }
+				handleClose={ () => setNewRobotModalOpen(false) }
 				handleSubmit={ (robotNumber: number) => {
 					dispatch(selectForm(robotNumber));
-					setModalOpen(false);
+					setNewRobotModalOpen(false);
 				}}
 			/>
-		</div>
+			<AddImageDialog
+				robotNumber={ selectedRobot }
+				isOpen={ isImageModalOpen }
+				handleClose={ () => setImageModalOpen(false) }
+			/>
+		</main>
 	);
 }

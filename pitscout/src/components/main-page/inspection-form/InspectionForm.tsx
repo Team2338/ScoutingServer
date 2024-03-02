@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './InspectionForm.scss';
 import {
-	CLIMBING_CAPABILITIES, COLLECTOR_TYPES,
+	CLIMBING_CAPABILITIES,
+	COLLECTOR_TYPES,
 	DRIVE_MOTOR_TYPES,
 	DRIVETRAIN_TYPES,
 	FormQuestions,
@@ -11,7 +12,6 @@ import {
 	SCORE_LOCATIONS,
 	SHOOTING_LOCATIONS,
 	Statelet,
-	UserRoles
 } from '../../../models';
 import {
 	Button,
@@ -19,20 +19,21 @@ import {
 	CircularProgress,
 	FormControl,
 	FormControlLabel,
-	FormGroup, Icon, InputAdornment,
+	FormGroup,
+	Icon,
+	InputAdornment,
 	InputLabel,
 	MenuItem,
 	Select,
 	TextField
 } from '@mui/material';
 import { AppDispatch, uploadForm, useAppDispatch, useAppSelector } from '../../../state';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import AddImageDialog from './add-image-dialog/AddImageDialog';
 import { DrivetrainIcon, MotorIcon } from '../../../icons';
 
 
 interface IProps {
 	robotNumber: number;
+	shouldFloatSubmit?: boolean;
 }
 
 /*
@@ -54,10 +55,8 @@ export default function InspectionForm(props: IProps) {
 
 	const dispatch: AppDispatch = useAppDispatch();
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
-	const role: UserRoles = useAppSelector(state => state.login.token.role);
 
 	/* Form questions */
-	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState(false);
 	const [drivetrain, setDrivetrain]: Statelet<string> = useState('');
 	const [driveMotorType, setDriveMotorType]: Statelet<string> = useState('');
 	const [weight, setWeight]: Statelet<string> = useState('');
@@ -73,7 +72,6 @@ export default function InspectionForm(props: IProps) {
 	/* End form questions */
 
 	useEffect(() => {
-		setImageModalOpen(false);
 		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
 		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
 		setWeight(savedForm.questions[FormQuestions.weight] ?? '');
@@ -193,20 +191,6 @@ export default function InspectionForm(props: IProps) {
 		/>
 	));
 
-	const addImageButton = role === UserRoles.admin && (
-		<Button
-			id="add-image-button"
-			aria-label="Add image"
-			color="primary"
-			variant="contained"
-			startIcon={ <AddPhotoAlternateIcon/> }
-			disableElevation={ true }
-			onClick={ () => setImageModalOpen(true) }
-		>
-			Add image
-		</Button>
-	);
-
 	const drivetrainOptionElements = DRIVETRAIN_TYPES.map((drivetrainType: string) => (
 		<MenuItem key={ drivetrainType } value={ drivetrainType }>{ drivetrainType }</MenuItem>
 	));
@@ -232,11 +216,7 @@ export default function InspectionForm(props: IProps) {
 
 	return (
 		<Fragment>
-			<form className="detail-note-form">
-				<div className="title-area">
-					<h1 className="title">{ props.robotNumber }</h1>
-					{ addImageButton }
-				</div>
+			<form className="inspection-form">
 				<FormControl margin="normal">
 					<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>
 					<Select
@@ -400,11 +380,6 @@ export default function InspectionForm(props: IProps) {
 					}
 				</Button>
 			</form>
-			<AddImageDialog
-				robotNumber={ props.robotNumber }
-				isOpen={ isImageModalOpen }
-				handleClose={ () => setImageModalOpen(false) }
-			/>
 		</Fragment>
 	);
 }

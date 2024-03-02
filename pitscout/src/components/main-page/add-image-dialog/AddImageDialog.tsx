@@ -17,9 +17,9 @@ import {
 	uploadImage,
 	useAppDispatch,
 	useAppSelector
-} from '../../../../state';
-import { FILE_SIZE_LIMIT_BYTES, LoadStatus, Statelet, UploadErrors } from '../../../../models';
-import ImagePicker from '../../../image-picker/ImagePicker';
+} from '../../../state';
+import { FILE_SIZE_LIMIT_BYTES, LoadStatus, Statelet, UploadErrors } from '../../../models';
+import ImagePicker from '../../image-picker/ImagePicker';
 
 interface IProps {
 	robotNumber: number;

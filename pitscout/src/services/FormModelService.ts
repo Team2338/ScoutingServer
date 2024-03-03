@@ -16,11 +16,13 @@ class FormModelService {
 			robotNumber: robotNumber,
 			gameYear: gameYear,
 			eventCode: user.eventCode,
-			questions: Object.keys(questions).map((q: FormQuestions): IDetailNoteQuestion => ({
-				question: q,
-				answer: questions[q],
-				creator: user.username
-			}))
+			questions: Object.keys(questions)
+				.filter((q: FormQuestions) => questions[q]?.length > 0) // TODO: eventually we'll want to allow null
+				.map((q: FormQuestions): IDetailNoteQuestion => ({
+					question: q,
+					answer: questions[q],
+					creator: user.username
+				}))
 		};
 	};
 

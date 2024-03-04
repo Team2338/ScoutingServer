@@ -26,6 +26,11 @@ export type IFormQuestions = {
 	[key in FormQuestions]?: string;
 };
 
+export const YES_AND_NO: string[] = [
+	'Yes',
+	'No'
+];
+
 export const DRIVETRAIN_TYPES: string[] = [
 	'Swerve',
 	'Tank',

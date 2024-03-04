@@ -11,7 +11,7 @@ import {
 	LoadStatus,
 	SCORE_LOCATIONS,
 	SHOOTING_LOCATIONS,
-	Statelet,
+	Statelet, YES_AND_NO
 } from '../../../models';
 import {
 	Button,
@@ -203,14 +203,9 @@ export default function InspectionForm(props: IProps) {
 		<MenuItem key={ collector } value={ collector }>{ collector }</MenuItem>
 	));
 
-	const handleUnderStageChange = (canGoUnderStage: boolean): void => {
-		if (canGoUnderStage) {
-			setUnderStage('Yes');
-			return;
-		}
-
-		setUnderStage('No');
-	};
+	const yesAndNoOptionElements = YES_AND_NO.map((answer: string) => (
+		<MenuItem key={ answer } value={ answer }>{ answer }</MenuItem>
+	));
 
 	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
 
@@ -278,13 +273,19 @@ export default function InspectionForm(props: IProps) {
 						{ collectorTypeOptionElements }
 					</Select>
 				</FormControl>
-				<FormControlLabel
-					id="under-stage-checkbox"
-					control={ <Checkbox /> }
-					label="Can go under stage"
-					checked={ underStage === 'Yes' }
-					onChange={ (event: React.ChangeEvent<HTMLInputElement>) => handleUnderStageChange(event.target.checked) }
-				/>
+				<FormControl margin="normal">
+					<InputLabel id="under-stage-selector__label">Can go under stage</InputLabel>
+					<Select
+						id="under-stage-selector"
+						labelId="under-stage-selector__label"
+						value={ underStage }
+						label="Can go under stage"
+						placeholder="Can go under stage"
+						onChange={ (event) => setUnderStage(event.target.value) }
+					>
+						{ yesAndNoOptionElements }
+					</Select>
+				</FormControl>
 				<TextField
 					id="auto-paths"
 					name="AutoPaths"

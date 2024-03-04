@@ -120,7 +120,15 @@ const languages: ILanguageTranslation = {
 		'COMMENTS': 'Comments',
 		'ALL': 'All',
 		'TOPIC': 'Topic',
-		'NO_COMMENTS_FOR_TOPIC': 'There are no comments on this topic'
+		'NO_COMMENTS_FOR_TOPIC': 'There are no comments on this topic',
+		'CLIMB_CAPABILITIES': 'Climb capabilities',
+		'COLLECTOR_TYPE': 'Collector type',
+		'DRIVE_MOTOR_TYPE': 'Drive motor type',
+		'INTAKE_LOCATIONS': 'Intake locations',
+		'SHOOTING_LOCATIONS': 'Shooting locations',
+		'UNDER_STAGE': 'Can go under stage',
+		'VISION_CAPABILITIES': 'Vision capabilities',
+		'WEIGHT': 'Weight',
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -213,7 +221,15 @@ const languages: ILanguageTranslation = {
 		'COMMENTS': 'Comentarios',
 		'ALL': 'Todas',
 		'TOPIC': 'Tema',
-		'NO_COMMENTS_FOR_TOPIC': 'No hay comentarios en este tema'
+		'NO_COMMENTS_FOR_TOPIC': 'No hay comentarios en este tema',
+		'CLIMB_CAPABILITIES': 'Capacidades de ascenso',
+		'COLLECTOR_TYPE': 'Tipo de coleccionista',
+		'DRIVE_MOTOR_TYPE': 'Tipo de motor de accionamiento',
+		'INTAKE_LOCATIONS': 'Lugares de recogida',
+		'SHOOTING_LOCATIONS': 'Lugares de disparo',
+		'UNDER_STAGE': 'Puede pasar bajo el escenario',
+		'VISION_CAPABILITIES': 'Capacidades de visión',
+		'WEIGHT': 'Peso',
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -306,7 +322,15 @@ const languages: ILanguageTranslation = {
 		'COMMENTS': 'Commentaires',
 		'ALL': 'Tous',
 		'TOPIC': 'Sujet',
-		'NO_COMMENTS_FOR_TOPIC': 'Il n\'y a pas de commentaires sur ce sujet'
+		'NO_COMMENTS_FOR_TOPIC': 'Il n\'y a pas de commentaires sur ce sujet',
+		'CLIMB_CAPABILITIES': 'Capacités d\'escalade',
+		'COLLECTOR_TYPE': 'Type de collecteur',
+		'DRIVE_MOTOR_TYPE': 'Type de moteur d\'entraînement',
+		'INTAKE_LOCATIONS': 'Lieux de ramassage',
+		'SHOOTING_LOCATIONS': 'Lieux de tir',
+		'UNDER_STAGE': 'Peut passer sous scène',
+		'VISION_CAPABILITIES': 'Capacités visuelles',
+		'WEIGHT': 'Poids',
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt Olmak',
@@ -399,7 +423,15 @@ const languages: ILanguageTranslation = {
 		'COMMENTS': 'Yorumlar',
 		'ALL': 'Tüm',
 		'TOPIC': 'Konu',
-		'NO_COMMENTS_FOR_TOPIC': 'Bu konu hakkında yorum yok'
+		'NO_COMMENTS_FOR_TOPIC': 'Bu konu hakkında yorum yok',
+		'CLIMB_CAPABILITIES': 'Tırmanma yetenekleri',
+		'COLLECTOR_TYPE': 'Toplayıcı tipi',
+		'DRIVE_MOTOR_TYPE': 'Aktarma organı motor tipi',
+		'INTAKE_LOCATIONS': 'Toplama yerleri',
+		'SHOOTING_LOCATIONS': 'Ateşleme yerleri',
+		'UNDER_STAGE': 'Sahne altına girebilir',
+		'VISION_CAPABILITIES': 'Görüş yetenekleri',
+		'WEIGHT': 'Ağırlık',
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -486,12 +518,20 @@ const languages: ILanguageTranslation = {
 		'INSPECTIONS': 'Prohlídky',
 		// 'ROBOT_OF_TEAM': 'Robot del equipo {TEAM_NUMBER}',
 		// 'DRIVER_NOTES': 'Notas sobre los conductores',
-		// 'ROBOT_NOTES': 'Notas sobre el robot',
-		// 'SCORE_LOCATIONS': 'Lugares para marcando',
+		'ROBOT_NOTES': 'Robot poznámky',
+		'SCORE_LOCATIONS': 'Místa bodování',
 		'AUTO_PATHS': 'Autonomní cesty',
 		'COMMENTS': 'Komentáře',
 		'ALL': 'Všechno',
 		'TOPIC': 'Téma',
-		'NO_COMMENTS_FOR_TOPIC': 'K tomuto tématu nejsou žádné komentáře' // TODO: verify
+		'NO_COMMENTS_FOR_TOPIC': 'K tomuto tématu nejsou žádné komentáře', // TODO: verify
+		'CLIMB_CAPABILITIES': 'Schopnosti stoupání', // TODO verify
+		'COLLECTOR_TYPE': 'Typ kolektoru', // TODO verify -> Typ sběrače?
+		'DRIVE_MOTOR_TYPE': 'Typ motoru pohonu', // TODO verify
+		'INTAKE_LOCATIONS': 'Sběrná místa', // TODO verify
+		'SHOOTING_LOCATIONS': 'Místa střelby', // TODO verify
+		'UNDER_STAGE': 'Může jít pod jeviště',
+		'VISION_CAPABILITIES': 'Schopnosti vidění',
+		'WEIGHT': 'Hmotnost',
 	}
 };

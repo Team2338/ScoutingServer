@@ -10,12 +10,13 @@ import {
 	Snackbar,
 	useMediaQuery
 } from '@mui/material';
-import { Statelet, UserRoles } from '../../models';
+import { LoadStatus, Statelet, UserRoles } from '../../models';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
 import RobotList from './robot-list/RobotList';
 import MainPageMobile from './MainPageMobile';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
+import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
 
 function SlideTransition(props: SlideProps) {
 	return <Slide {...props} direction="down"/>;
@@ -28,9 +29,12 @@ export default function MainPage() {
 	const role: UserRoles = useAppSelector(state => state.login.token.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const snackbar = useAppSelector(state => state.snackbar);
+	const loadStatus: LoadStatus = useAppSelector(state => state.forms.loadStatus);
 	const [isNewRobotModalOpen, setNewRobotModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const _closeSnackbar = () => dispatch(closeSnackbar());
+
+	const showSkeletonLoader: boolean = (loadStatus === LoadStatus.none) || (loadStatus === LoadStatus.loading);
 
 	useEffect(() => {
 		dispatch(loadForms());
@@ -97,7 +101,7 @@ export default function MainPage() {
 				>
 					(+) Add robot
 				</Button>
-				<RobotList/>
+				{ showSkeletonLoader ? <RobotListSkeleton /> : <RobotList /> }
 			</div>
 			{ detailSection }
 			<AddRobotDialog

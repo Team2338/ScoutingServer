@@ -62,7 +62,7 @@ export default function MainPage() {
 		? (
 			<div className="detail-section">
 				<div className="title-area">
-					<h1 className="title">{ selectedRobot }</h1>
+					<h1 className="title">Team { selectedRobot }</h1>
 					{ addImageButton }
 				</div>
 				<InspectionForm robotNumber={ selectedRobot } />

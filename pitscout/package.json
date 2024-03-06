@@ -1,6 +1,6 @@
 {
   "name": "pitscout",
-  "version": "2024.2.2",
+  "version": "2024.3",
   "private": true,
   "type": "module",
   "dependencies": {

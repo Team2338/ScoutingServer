@@ -2,7 +2,9 @@
 #robot-list {
 	display: flex;
 	flex-direction: column;
+	align-items: flex-end;
 	row-gap: 4px;
+	width: fit-content;
 
 	#robot-list-item {
 		border-radius: 12px;

@@ -1,0 +1,20 @@
+.inspection-section {
+	display: flex;
+	flex-direction: column;
+
+	&__robot-image-wrapper {
+		display: flex;
+		flex-direction: column;
+		row-gap: 4px;
+	}
+
+	&__robot-image {
+		max-width: 240px;
+		border-radius: 16px;
+
+		&-link {
+			display: flex;
+			width: fit-content;
+		}
+	}
+}

@@ -5,6 +5,7 @@ import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 import ViewImage from '../view-image/ViewImage';
 import './TeamDetail.scss';
+import InspectionSection from '../inspection-section/InspectionSection';
 
 interface IProps {
 	team: Team;
@@ -39,7 +40,8 @@ export default function TeamDetail(props: IProps) {
 				{ translate('TEAM') } { props.team.id }
 				<ViewImage robotNumber={ props.team.id } />
 			</div>
-			<div className="gamemode-list">{ gamemodeElements }</div>
+			<InspectionSection robotNumber={ props.team.id }/>
+			<section className="gamemode-list">{ gamemodeElements }</section>
 		</div>
 	);
 }

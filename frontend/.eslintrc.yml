@@ -40,9 +40,7 @@ rules:
   '@typescript-eslint/consistent-generic-constructors':
     - warn
     - 'type-annotation' # Prefer putting generics on left side
-  '@typescript-eslint/consistent-indexed-object-style':
-    - warn
-    - 'record'
+  '@typescript-eslint/consistent-indexed-object-style': off
   '@typescript-eslint/consistent-type-assertions':
     - error
     - assertionStyle: 'as'

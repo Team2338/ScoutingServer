@@ -5,21 +5,14 @@
 }
 
 .team-list-item {
+	$max-img-size: 40px;
 	display: flex;
 	align-items: center;
 	column-gap: 12px;
 	font-size: 18px;
 	line-height: 24px;
 
-	.loading-picture {
-		height: 40px;
-		width: 40px;
-		background-color: grey;
-		border-radius: 10px;
-	}
-
 	.team-image-icon-wrapper {
-		$max-img-size: 40px;
 		display: flex;
 		justify-content: center;
 		height: $max-img-size;

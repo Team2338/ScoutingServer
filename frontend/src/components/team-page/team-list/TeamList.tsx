@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Divider, List, ListItemButton, Typography } from '@mui/material';
+import { Divider, List, ListItemButton, Skeleton, Typography } from '@mui/material';
 import { ImageState, LoadStatus, Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
@@ -19,7 +19,7 @@ export default function TeamList({teams}: IProps) {
 	const imageInfo: ImageState = useAppSelector(state => state.images);
 	const getImage = (robotNumber: number) => {
 		if (imageInfo.loadStatus === LoadStatus.loading) {
-			return <div className="loading-picture"></div>;
+			return <Skeleton variant="rectangular" width={40} height={40} />;
 		}
 
 		if (imageInfo.loadStatus === LoadStatus.none || imageInfo.loadStatus === LoadStatus.failed) {

@@ -10,6 +10,7 @@ interface IProps {
 
 export default function InspectionSection(props: IProps) {
 	const imageInfo: ImageState = useAppSelector(state => state.images);
+	const inspectionStatus: LoadStatus = useAppSelector(state => state.inspections.loadStatus);
 
 	const image = useMemo(() => {
 		if (imageInfo.loadStatus === LoadStatus.none) {
@@ -48,6 +49,23 @@ export default function InspectionSection(props: IProps) {
 		// TODO: return special element when no image exists for this robot
 		return null;
 	}, [imageInfo.images, imageInfo.loadStatus, props.robotNumber]);
+
+	const inspection = useMemo(() => {
+		if (inspectionStatus === LoadStatus.none) {
+			return null;
+		}
+
+		if (inspectionStatus === LoadStatus.loading) {
+			return <Skeleton width="4em" />;
+		}
+
+		if (inspectionStatus === LoadStatus.failed) {
+			return null;
+		}
+
+
+
+	}, [inspectionStatus]);
 
 	return (
 		<section className="inspection-section">

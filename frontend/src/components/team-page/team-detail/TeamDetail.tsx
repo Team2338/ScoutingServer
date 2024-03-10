@@ -6,6 +6,7 @@ import { GridScore } from '../../shared/GridScore';
 import ViewImage from '../view-image/ViewImage';
 import './TeamDetail.scss';
 import InspectionSection from '../inspection-section/InspectionSection';
+import { useAppSelector } from '../../../state';
 
 interface IProps {
 	team: Team;
@@ -14,6 +15,8 @@ interface IProps {
 export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
+	const userTeamNumber = useAppSelector(state => state.login.teamNumber);
+	const isInspectionsEnabled = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 
 	if (!props.team) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
@@ -40,7 +43,7 @@ export default function TeamDetail(props: IProps) {
 				{ translate('TEAM') } { props.team.id }
 				<ViewImage robotNumber={ props.team.id } />
 			</div>
-			<InspectionSection robotNumber={ props.team.id }/>
+			{ isInspectionsEnabled && <InspectionSection robotNumber={ props.team.id } /> }
 			<section className="gamemode-list">{ gamemodeElements }</section>
 		</div>
 	);

@@ -34,18 +34,18 @@ export default function InspectionSection(props: IProps) {
 		if (url) {
 			return (
 				<div className="inspection-section__robot-image-wrapper">
-					<img
-						className="inspection-section__robot-image"
-						alt=""
-						role="presentation"
-						src={ url }
-					/>
 					<a
 						className="inspection-section__robot-image-link"
 						target="_blank"
 						rel="noreferrer"
 						href={ url }
-					>Original size
+					>
+						<img
+							className="inspection-section__robot-image"
+							alt=""
+							role="presentation"
+							src={ url }
+						/>
 					</a>
 				</div>
 			);

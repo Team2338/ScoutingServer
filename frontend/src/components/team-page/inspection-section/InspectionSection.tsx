@@ -81,6 +81,8 @@ export default function InspectionSection(props: IProps) {
 					<div className="inspection-section__question-answer">{ question.answer }</div>
 				</div>
 			));
+		} else {
+			return <div>{ translate('NO_INSPECTION_PERFORMED_ON_ROBOT') }</div>;
 		}
 
 	}, [inspectionState.loadStatus, inspectionState.inspections, props.robotNumber, translate]);
@@ -99,7 +101,7 @@ export default function InspectionSection(props: IProps) {
 				onClose={ props.closeDrawer }
 			>
 				<div id="team-inspection-drawer__content">
-					<h2 id="team-inspection-drawer__header">Inspection</h2>
+					<h2 id="team-inspection-drawer__header">{ translate('INSPECTION') }</h2>
 					<div id="team-inspection-drawer__body">
 						{ inspectionElement }
 					</div>

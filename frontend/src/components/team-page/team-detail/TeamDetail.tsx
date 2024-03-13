@@ -47,7 +47,7 @@ export default function TeamDetail(props: IProps) {
 					startIcon={ <Icon>assignment_turned_in</Icon> }
 					onClick={ () => setInspectionDrawerOpen(true) }
 				>
-					Inspection &gt;
+					{ translate('INSPECTION') }&nbsp;&gt;
 				</Button>
 			</div>
 			{

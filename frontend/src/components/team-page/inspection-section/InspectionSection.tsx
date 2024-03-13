@@ -89,11 +89,7 @@ export default function InspectionSection(props: IProps) {
 
 	return (
 		<section className="inspection-section">
-			{/*<h2>Inspection</h2>*/ }
-			<div className="inspection-section__content">
-				{ imageElement }
-				{/*{ inspectionElement }*/ }
-			</div>
+			{ imageElement }
 			<Drawer
 				id="team-inspection-drawer"
 				anchor="right"

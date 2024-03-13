@@ -1,18 +1,22 @@
 import './InspectionSection.scss';
 import React, { useMemo } from 'react';
-import { ImageState, LoadStatus } from '../../../models';
+import { ImageState, Inspection, InspectionQuestion, InspectionState, LoadStatus } from '../../../models';
 import { useAppSelector } from '../../../state';
-import { Skeleton } from '@mui/material';
+import { Drawer, Skeleton } from '@mui/material';
+import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
 	robotNumber: number;
+	isDrawerOpen: boolean;
+	closeDrawer: () => void;
 }
 
 export default function InspectionSection(props: IProps) {
+	const translate = useTranslator();
 	const imageInfo: ImageState = useAppSelector(state => state.images);
-	const inspectionStatus: LoadStatus = useAppSelector(state => state.inspections.loadStatus);
+	const inspectionState: InspectionState = useAppSelector(state => state.inspections);
 
-	const image = useMemo(() => {
+	const imageElement = useMemo(() => {
 		if (imageInfo.loadStatus === LoadStatus.none) {
 			return null;
 		}
@@ -40,7 +44,8 @@ export default function InspectionSection(props: IProps) {
 						className="inspection-section__robot-image-link"
 						target="_blank"
 						rel="noreferrer"
-						href={ url}>Original size
+						href={ url }
+					>Original size
 					</a>
 				</div>
 			);
@@ -48,9 +53,11 @@ export default function InspectionSection(props: IProps) {
 
 		// TODO: return special element when no image exists for this robot
 		return null;
-	}, [imageInfo.images, imageInfo.loadStatus, props.robotNumber]);
+	}, [imageInfo.loadStatus, imageInfo.images, props.robotNumber]);
 
-	const inspection = useMemo(() => {
+	const inspectionElement = useMemo(() => {
+		const inspectionStatus = inspectionState.loadStatus;
+
 		if (inspectionStatus === LoadStatus.none) {
 			return null;
 		}
@@ -63,16 +70,41 @@ export default function InspectionSection(props: IProps) {
 			return null;
 		}
 
+		const inspection: Inspection = inspectionState.inspections
+			.find((insp: Inspection) => insp.robotNumber === props.robotNumber);
 
+		// TODO: return special element when no inspection exists for this robot
+		if (inspection) {
+			return inspection.questions.map((question: InspectionQuestion) => (
+				<div key={ question.id } className="inspection-section__question">
+					<h3 className="inspection-section__question-title">{ translate(question.question) }</h3>
+					<div className="inspection-section__question-answer">{ question.answer }</div>
+				</div>
+			));
+		}
 
-	}, [inspectionStatus]);
+	}, [inspectionState.loadStatus, inspectionState.inspections, props.robotNumber, translate]);
 
 	return (
 		<section className="inspection-section">
-			<h2>Inspection</h2>
+			{/*<h2>Inspection</h2>*/ }
 			<div className="inspection-section__content">
-				{ image }
+				{ imageElement }
+				{/*{ inspectionElement }*/ }
 			</div>
+			<Drawer
+				id="team-inspection-drawer"
+				anchor="right"
+				open={ props.isDrawerOpen }
+				onClose={ props.closeDrawer }
+			>
+				<div id="team-inspection-drawer__content">
+					<h2 id="team-inspection-drawer__header">Inspection</h2>
+					<div id="team-inspection-drawer__body">
+						{ inspectionElement }
+					</div>
+				</div>
+			</Drawer>
 		</section>
 	);
 }

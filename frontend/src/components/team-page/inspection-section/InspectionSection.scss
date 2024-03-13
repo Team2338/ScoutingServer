@@ -6,6 +6,8 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 4px;
+		grid-row-start: 1;
+		grid-row-end: span 5;
 	}
 
 	&__robot-image {
@@ -17,4 +19,45 @@
 			width: fit-content;
 		}
 	}
+
+	&__content {
+		display: grid;
+		grid-template-columns: auto 1fr 1fr;
+		flex-wrap: wrap;
+		column-gap: 20px;
+		row-gap: 16px;
+
+		.inspection-section__question {
+			display: flex;
+			flex-direction: column;
+			row-gap: 2px;
+		}
+	}
+
 }
+
+#team-inspection-drawer {
+	$drawer-side-padding: 12px;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		max-width: max(400px, 33vw);
+	}
+
+	&__header {
+		display: flex;
+		height: var(--header-height);
+		align-items: center;
+		border-bottom: 1px solid var(--border-color);
+		padding: 0 $drawer-side-padding;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		padding: 16px $drawer-side-padding;
+		row-gap: 16px;
+	}
+}
+

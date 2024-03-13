@@ -4,7 +4,7 @@ import { CommentsForEvent, ImageState, LoadStatus, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import {
 	getAllImageInfoForEvent,
-	getComments,
+	getComments, getInspections,
 	selectTeam,
 	useAppDispatch,
 	useAppSelector,
@@ -35,6 +35,7 @@ export default function TeamPage() {
 		() => {
 			dispatch(getComments());
 			dispatch(getAllImageInfoForEvent());
+			dispatch(getInspections());
 		},
 		[dispatch]
 	);

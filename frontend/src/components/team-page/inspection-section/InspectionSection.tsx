@@ -2,7 +2,7 @@ import './InspectionSection.scss';
 import React, { useMemo } from 'react';
 import { ImageState, Inspection, InspectionQuestion, InspectionState, LoadStatus } from '../../../models';
 import { useAppSelector } from '../../../state';
-import { Drawer, Skeleton } from '@mui/material';
+import { CircularProgress, Drawer, Skeleton } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
@@ -22,7 +22,7 @@ export default function InspectionSection(props: IProps) {
 		}
 
 		if (imageInfo.loadStatus === LoadStatus.loading) {
-			return <Skeleton variant="rectangular" width={ 160 } height={ 160 } />;
+			return <Skeleton variant="rectangular" width={ 240 } height={ 240 } />;
 		}
 
 		if (imageInfo.loadStatus === LoadStatus.failed) {
@@ -63,11 +63,11 @@ export default function InspectionSection(props: IProps) {
 		}
 
 		if (inspectionStatus === LoadStatus.loading) {
-			return <Skeleton width="4em" />;
+			return <CircularProgress style={{ marginLeft: 'auto', marginRight: 'auto', padding: '24px' }} />;
 		}
 
 		if (inspectionStatus === LoadStatus.failed) {
-			return null;
+			return <div>Failed to load inspections!</div>;
 		}
 
 		const inspection: Inspection = inspectionState.inspections

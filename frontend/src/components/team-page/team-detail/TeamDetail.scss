@@ -5,6 +5,9 @@
 	height: fit-content;
 
 	.team-number {
+		display: flex;
+		column-gap: 16px;
+		padding-bottom: 12px;
 		font-weight: 600;
 		font-size: 32px;
 		line-height: 36px;

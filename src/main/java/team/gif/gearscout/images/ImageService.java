@@ -117,11 +117,8 @@ public class ImageService {
 				eventCode,
 				secretCode
 			);
-		
-		ImageInfoEntity info = optionalInfo.orElse(new ImageInfoEntity());
-		info.setIsPresent(optionalInfo.isPresent());
-		
-		return info;
+
+		return optionalInfo.orElse(new ImageInfoEntity());
 	}
 	
 	

@@ -1,10 +1,11 @@
 import { Dialog, DialogContent, IconButton, Slide, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useMemo } from 'react';
-import { CommentsForEvent, ImageState, LoadStatus, Team } from '../../models';
+import { CommentsForEvent, ImageState, Inspection, LoadStatus, Team } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import {
 	getAllImageInfoForEvent,
-	getComments, getInspections,
+	getComments,
+	getInspections,
 	selectTeam,
 	useAppDispatch,
 	useAppSelector,
@@ -43,17 +44,19 @@ export default function TeamPage() {
 	// Selectors
 	const images: ImageState = useAppSelector(state => state.images);
 	const comments: CommentsForEvent = useAppSelector(state => state.comments.comments);
+	const inspections: Inspection[] = useAppSelector(state => state.inspections.inspections);
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
 	const selectedTeam: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === state.teams.selectedTeam));
 
 	const allTeams: Team[] = useMemo(
-		() => getTeamsWithDataOrImagesOrComments(
+		() => getTeamsWithDataOrImagesOrCommentsOrInspections(
 			teams,
 			images,
-			comments
+			comments,
+			inspections
 		),
-		[teams, images, comments]
+		[teams, images, comments, inspections]
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
@@ -89,7 +92,7 @@ export default function TeamPage() {
 							aria-label={ translate('CLOSE') }
 							onClick={ () => _deselectTeam() }
 						>
-							<ArrowBack/>
+							<ArrowBack />
 						</IconButton>
 						<span id="team-detail-dialog__title">
 							{ translate('TEAM') } { selectedTeam?.id ?? '' }
@@ -97,7 +100,7 @@ export default function TeamPage() {
 					</div>
 					<DialogContent
 						dividers={ true }
-						sx={{
+						sx={ {
 							paddingLeft: '8px',
 							paddingRight: '8px',
 							paddingTop: '12px',
@@ -105,10 +108,10 @@ export default function TeamPage() {
 							rowGap: '32px',
 							display: 'flex',
 							flexDirection: 'column'
-						}}
+						} }
 					>
 						<TeamDetail team={ selectedTeam } />
-						{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id }/> }
+						{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id } /> }
 					</DialogContent>
 				</Dialog>
 			</main>
@@ -122,32 +125,35 @@ export default function TeamPage() {
 			</div>
 			<div className="team-detail-wrapper">
 				<TeamDetail team={ selectedTeam } />
-				{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id }/> }
+				{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id } /> }
 			</div>
 		</main>
 	);
 }
 
-const getTeamsWithDataOrImagesOrComments = (
+const getTeamsWithDataOrImagesOrCommentsOrInspections = (
 	teamsWithData: Team[],
 	images: ImageState,
-	comments: CommentsForEvent
+	comments: CommentsForEvent,
+	inspections: Inspection[]
 ): Team[] => {
 	const teamNumbersWithImages: number[] = Object.getOwnPropertyNames(images.images).map(num => Number(num));
 	const teamNumbersWithComments: number[] = Object.getOwnPropertyNames(comments).map(num => Number(num));
+	const teamNumbersWithInspections: number[] = inspections.map((inspection: Inspection) => inspection.robotNumber);
 	// TODO: add teams with inspections
-	const uniqueTeamNumbersWithImagesOrComments: Set<number> = new Set([
+	const uniqueTeamNumbersWithImagesOrCommentsOrInspections: Set<number> = new Set([
 		...teamNumbersWithImages,
-		...teamNumbersWithComments
+		...teamNumbersWithComments,
+		...teamNumbersWithInspections
 	]);
 
 	// This gives us the list of team numbers with images or comments but not match data
 	for (const team of teamsWithData) {
-		uniqueTeamNumbersWithImagesOrComments.delete(team.id);
+		uniqueTeamNumbersWithImagesOrCommentsOrInspections.delete(team.id);
 	}
 
 	const completeListOfTeams: Team[] = teamsWithData.slice();
-	uniqueTeamNumbersWithImagesOrComments.forEach((teamNumber: number) => {
+	uniqueTeamNumbersWithImagesOrCommentsOrInspections.forEach((teamNumber: number) => {
 		completeListOfTeams.push({
 			id: teamNumber,
 			stats: null

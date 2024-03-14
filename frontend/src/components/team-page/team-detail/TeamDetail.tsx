@@ -1,10 +1,12 @@
-import React from 'react';
-import { Team, TeamObjectiveStats } from '../../../models';
+import React, { useState } from 'react';
+import { Statelet, Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
-import ViewImage from '../view-image/ViewImage';
 import './TeamDetail.scss';
+import InspectionSection from '../inspection-section/InspectionSection';
+import { useAppSelector } from '../../../state';
+import { Button, Icon } from '@mui/material';
 
 interface IProps {
 	team: Team;
@@ -13,6 +15,9 @@ interface IProps {
 export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
+	const userTeamNumber = useAppSelector(state => state.login.teamNumber);
+	const isInspectionsEnabled = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
+	const [isInspectionDrawerOpen, setInspectionDrawerOpen]: Statelet<boolean> = useState(false);
 
 	if (!props.team) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
@@ -36,10 +41,28 @@ export default function TeamDetail(props: IProps) {
 	return (
 		<div className="team-detail">
 			<div className="team-number">
-				{ translate('TEAM') } { props.team.id }
-				<ViewImage robotNumber={ props.team.id } />
+				<span>{ translate('TEAM') } { props.team.id }</span>
+				{
+					isInspectionsEnabled
+					&& <Button
+						color="primary"
+						startIcon={ <Icon>assignment_turned_in</Icon> }
+						onClick={ () => setInspectionDrawerOpen(true) }
+					>
+						{ translate('INSPECTION') }&nbsp;&gt;
+					</Button>
+				}
+
 			</div>
-			<div className="gamemode-list">{ gamemodeElements }</div>
+			{
+				isInspectionsEnabled
+				&& <InspectionSection
+					robotNumber={ props.team.id }
+					isDrawerOpen={ isInspectionDrawerOpen }
+					closeDrawer={ () => setInspectionDrawerOpen(false) }
+				/>
+			}
+			<section className="gamemode-list">{ gamemodeElements }</section>
 		</div>
 	);
 }

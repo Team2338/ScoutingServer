@@ -1,6 +1,6 @@
 {
   "name": "gearscout-analytics",
-  "version": "2024.3.1",
+  "version": "2024.4",
   "private": true,
   "type": "module",
   "dependencies": {

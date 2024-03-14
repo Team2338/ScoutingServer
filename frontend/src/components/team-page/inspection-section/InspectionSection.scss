@@ -1,0 +1,50 @@
+.inspection-section {
+	display: flex;
+	flex-direction: column;
+
+	&__robot-image-wrapper {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__robot-image {
+		max-width: 240px;
+		border-radius: 16px;
+
+		&-link {
+			display: flex;
+			width: fit-content;
+		}
+	}
+}
+
+#team-inspection-drawer {
+	$drawer-side-padding: 12px;
+	z-index: 1301;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		max-width: min(max(400px, 33vw), 75vw);
+		height: 100vh;
+	}
+
+	&__header {
+		display: flex;
+		min-height: var(--header-height);
+		height: var(--header-height);
+		align-items: center;
+		border-bottom: 1px solid var(--border-color);
+		padding: 0 $drawer-side-padding;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		padding: 16px $drawer-side-padding;
+		row-gap: 16px;
+		overflow-y: scroll;
+		height: 100%;
+	}
+}
+

@@ -7,7 +7,10 @@
 .team-list-item {
 	$max-img-size: 40px;
 	display: flex;
+	flex-direction: row-reverse;
 	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 	column-gap: 12px;
 	font-size: 18px;
 	line-height: 24px;
@@ -22,5 +25,17 @@
 			max-height: $max-img-size;
 			border-radius: 8px;
 		}
+
+	}
+
+	.team-image-icon-missing {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid var(--border-color);
+		border-radius: 4px;
+		height: $max-img-size;
+		width: $max-img-size;
+		color: var(--border-color);
 	}
 }

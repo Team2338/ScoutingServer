@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Divider, List, ListItemButton, Skeleton, Typography } from '@mui/material';
+import { Divider, Icon, List, ListItemButton, Skeleton, Typography } from '@mui/material';
 import { ImageState, LoadStatus, Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
@@ -37,11 +37,13 @@ export default function TeamList({teams}: IProps) {
 					/>
 				</div>
 			);
-
 		}
 
-		return null;
+		return <div className="team-image-icon-missing"><Icon>question_mark</Icon></div>;
 	};
+
+	const userTeamNumber: number = useAppSelector(state => state.login.teamNumber);
+	const isInspectionsEnabled: boolean = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));
@@ -60,7 +62,7 @@ export default function TeamList({teams}: IProps) {
 					}}
 				>
 					<div className="team-list-item">
-						{ getImage(team.id) }
+						{ isInspectionsEnabled && getImage(team.id) }
 						<div>{ team.id }</div>
 					</div>
 				</ListItemButton>

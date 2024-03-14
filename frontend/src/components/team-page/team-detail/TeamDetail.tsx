@@ -42,13 +42,17 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				<span>{ translate('TEAM') } { props.team.id }</span>
-				<Button
-					color="primary"
-					startIcon={ <Icon>assignment_turned_in</Icon> }
-					onClick={ () => setInspectionDrawerOpen(true) }
-				>
-					{ translate('INSPECTION') }&nbsp;&gt;
-				</Button>
+				{
+					isInspectionsEnabled
+					&& <Button
+						color="primary"
+						startIcon={ <Icon>assignment_turned_in</Icon> }
+						onClick={ () => setInspectionDrawerOpen(true) }
+					>
+						{ translate('INSPECTION') }&nbsp;&gt;
+					</Button>
+				}
+
 			</div>
 			{
 				isInspectionsEnabled

@@ -85,7 +85,6 @@ export interface Plan {
 
 export interface ImageInfoResponse {
 	id: number;
-	present: boolean;
 	teamNumber: number;
 	gameYear: number;
 	robotNumber: number;

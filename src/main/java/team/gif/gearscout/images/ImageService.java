@@ -84,7 +84,7 @@ public class ImageService {
 		});
 		
 		ImageContentEntity imageContentEntity = imageContentRepository.save(
-			new ImageContentEntity(content, secretCode, contentType)
+			new ImageContentEntity(content, contentType)
 		);
 		
 		ImageInfoEntity createdImage = new ImageInfoEntity(

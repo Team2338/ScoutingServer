@@ -34,7 +34,7 @@ public class ImageContentEntity {
 	
 	public ImageContentEntity() {}
 	
-	public ImageContentEntity(byte[] content, String secretCode, String contentType) {
+	public ImageContentEntity(byte[] content, String contentType) {
 		this.content = content;
 		this.contentType = contentType;
 	}

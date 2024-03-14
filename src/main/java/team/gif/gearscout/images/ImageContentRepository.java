@@ -1,5 +1,6 @@
 package team.gif.gearscout.images;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 public interface ImageContentRepository extends CrudRepository<ImageContentEntity, Long> {
 
+	@Modifying
 	@Query(value = """
 	DELETE FROM ImageContentEntity image
 	WHERE image.id = :imageId

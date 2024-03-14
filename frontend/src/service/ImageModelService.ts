@@ -4,7 +4,7 @@ class ImageModelService {
 
 	createImageInfo = (metadata: ImageInfoResponse[]): ImageInfo[] => {
 		return metadata.map((info: ImageInfoResponse): ImageInfo => {
-			const url = info.present
+			const url: string = info.imageId
 				? `${import.meta.env.VITE_APP_SERVER_URL}/v1/images/${info.imageId}`
 				: null;
 

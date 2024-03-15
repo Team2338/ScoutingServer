@@ -37,7 +37,7 @@ class TeamModelService {
 	};
 
 	private groupMatchesByTeamNumber = (matches: MatchResponse[]): Map<number, MatchResponse[]> => {
-		const groupedMatches = new Map<number, MatchResponse[]>();
+		const groupedMatches: Map<number, MatchResponse[]> = new Map();
 		for (const match of matches) {
 			if (!groupedMatches.has(match.robotNumber)) {
 				groupedMatches.set(match.robotNumber, []);
@@ -67,7 +67,7 @@ class TeamModelService {
 	 * @param matches The list of matches, which may contain duplicates.
 	 */
 	private mergeDuplicateMatches = (matches: MatchResponse[]): MatchResponse[] => {
-		const mappedMatches = new Map<number, MatchResponse[]>();
+		const mappedMatches: Map<number, MatchResponse[]> = new Map();
 		for (const match of matches) {
 			if (!mappedMatches.has(match.matchNumber)) {
 				mappedMatches.set(match.matchNumber, []);
@@ -103,7 +103,7 @@ class TeamModelService {
 	 * @param matches The list of matches to merge.
 	 */
 	private mergeMatches = (matches: MatchResponse[]): MatchResponse => {
-		const objectives = new Map<string, AggregateObjective>();
+		const objectives: Map<string, AggregateObjective> = new Map();
 
 		// Get sum of all objectives
 		for (const match of matches) {
@@ -152,7 +152,7 @@ class TeamModelService {
 	};
 
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
-		const scores = new Map<string, ObjectiveSums>();
+		const scores: Map<string, ObjectiveSums> = new Map();
 
 		// Collect a list of counts for each objective
 		for (const match of matches) {

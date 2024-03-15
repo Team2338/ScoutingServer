@@ -47,7 +47,7 @@ export default function TeamPage() {
 	const inspections: Inspection[] = useAppSelector(state => state.inspections.inspections);
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
-	const selectedTeam: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === state.teams.selectedTeam));
+	const selectedRobotNumber: number = useAppSelector(state => state.teams.selectedTeam);
 
 	const allTeams: Team[] = useMemo(
 		() => getTeamsWithDataOrImagesOrCommentsOrInspections(
@@ -80,7 +80,7 @@ export default function TeamPage() {
 				<TeamList teams={ allTeams } />
 				<Dialog
 					fullScreen={ true }
-					open={ !!selectedTeam }
+					open={ !!selectedRobotNumber }
 					onClose={ () => _deselectTeam() }
 					aria-labelledby="team-detail-dialog__title"
 					TransitionComponent={ Transition }
@@ -95,7 +95,7 @@ export default function TeamPage() {
 							<ArrowBack />
 						</IconButton>
 						<span id="team-detail-dialog__title">
-							{ translate('TEAM') } { selectedTeam?.id ?? '' }
+							{ translate('TEAM') } { selectedRobotNumber ?? '' }
 						</span>
 					</div>
 					<DialogContent
@@ -110,8 +110,8 @@ export default function TeamPage() {
 							flexDirection: 'column'
 						} }
 					>
-						<TeamDetail team={ selectedTeam } />
-						{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id } /> }
+						<TeamDetail robotNumber={ selectedRobotNumber } />
+						{ selectedRobotNumber && <CommentSection teamNumber={ selectedRobotNumber } /> }
 					</DialogContent>
 				</Dialog>
 			</main>
@@ -124,8 +124,8 @@ export default function TeamPage() {
 				<TeamList teams={ allTeams } />
 			</div>
 			<div className="team-detail-wrapper">
-				<TeamDetail team={ selectedTeam } />
-				{ selectedTeam && <CommentSection teamNumber={ selectedTeam.id } /> }
+				<TeamDetail robotNumber={ selectedRobotNumber } />
+				{ selectedRobotNumber && <CommentSection teamNumber={ selectedRobotNumber } /> }
 			</div>
 		</main>
 	);
@@ -140,7 +140,6 @@ const getTeamsWithDataOrImagesOrCommentsOrInspections = (
 	const teamNumbersWithImages: number[] = Object.getOwnPropertyNames(images.images).map(num => Number(num));
 	const teamNumbersWithComments: number[] = Object.getOwnPropertyNames(comments).map(num => Number(num));
 	const teamNumbersWithInspections: number[] = inspections.map((inspection: Inspection) => inspection.robotNumber);
-	// TODO: add teams with inspections
 	const uniqueTeamNumbersWithImagesOrCommentsOrInspections: Set<number> = new Set([
 		...teamNumbersWithImages,
 		...teamNumbersWithComments,

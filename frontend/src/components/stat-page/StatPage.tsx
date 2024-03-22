@@ -7,6 +7,7 @@ import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
+import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
 
 
 function StatPage() {
@@ -49,6 +50,7 @@ function StatPage() {
 		content = (
 			<div className="stat-content">
 				<StatGraph name={ graphName } data={ teamStats } metric="mean" />
+				<StatGraphStacked robots={ teamData } selectedObjectives={[selectedStat]} metric="mean" />
 				<div className="stat-table-wrapper">
 					<StatTable data={ teamStats } />
 				</div>

@@ -32,7 +32,8 @@ const INITIAL_STATE: AppState = {
 	stats: {
 		loadStatus: LoadStatus.none,
 		data: [],
-		selectedStat: null
+		selectedStat: null,
+		selectedStats: []
 	},
 	planning: {
 		loadStatus: LoadStatus.none,

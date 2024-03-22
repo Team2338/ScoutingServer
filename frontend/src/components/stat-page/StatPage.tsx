@@ -47,10 +47,20 @@ function StatPage() {
 		const translatedObjectiveName: string = translate(selectedStat.objective);
 		const graphName: string = `[${ translatedGamemodeName }] ${ translatedObjectiveName }`;
 
+		const selectedObjectives: ObjectiveDescriptor[] = [
+			{
+				gamemode: 'TELEOP',
+				objective: 'HIGH_GOAL_2024'
+			},
+			{
+				gamemode: 'TELEOP',
+				objective: 'LOW_GOAL_2024'
+			}
+		];
 		content = (
 			<div className="stat-content">
 				<StatGraph name={ graphName } data={ teamStats } metric="mean" />
-				<StatGraphStacked robots={ teamData } selectedObjectives={[selectedStat]} metric="mean" />
+				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedObjectives } metric="mean" />
 				<div className="stat-table-wrapper">
 					<StatTable data={ teamStats } />
 				</div>

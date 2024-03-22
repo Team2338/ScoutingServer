@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import './StatGraphStacked.scss';
 import { ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
@@ -33,31 +33,24 @@ const compareByObjectiveSum = (
 	return getSumOfObjectives(b, selectedObjectives, metric) - getSumOfObjectives(a, selectedObjectives, metric);
 };
 
+const colors: string[] = [
+	'#254999',
+	'#dd8850'
+];
+
 export default function StatGraphStacked({ robots, selectedObjectives, metric }: IProps) {
 
 	const translate = useTranslator();
 
 	console.log('Selections', selectedObjectives);
-	// TODO: need to sort by max score
 	const sortedRobots: Team[] = robots.slice()
 		.sort((a: Team, b: Team) => compareByObjectiveSum(a, b, selectedObjectives, metric));
 	const maxScore: number = getSumOfObjectives(sortedRobots[0], selectedObjectives, metric);
 	console.log(maxScore);
 
-	const teamBars = [];
-	const teamLabels = [];
-	for (const robot of sortedRobots) {
-		const label = createTeamLabel(robot);
-		teamLabels.push(label);
-
-		const stackedBars = createStackedBars(robot, selectedObjectives, metric, maxScore, translate);
-		const teamBar = (
-			<div key={ robot.id } className="team-bars">
-				{ stackedBars }
-			</div>
-		);
-		teamBars.push(teamBar);
-	}
+	const teamLabels = sortedRobots.map(createTeamLabel);
+	const teamBars = sortedRobots
+		.map((robot: Team) => createStackedBars(robot, selectedObjectives, metric, maxScore, translate));
 
 	return (
 		<div className="stat-graph-stacked">
@@ -79,34 +72,51 @@ const createTeamLabel = (robot: Team) => {
 const createStackedBars = (
 	robot: Team,
 	selectedObjectives: ObjectiveDescriptor[],
-	metric: 'mean' | 'median' | 'mode',
+	metric: MetricType,
 	maxScore: number,
 	translate: (key: string) => string
 ) => {
-	const bars = [];
+	const bars: ReactElement[] = [];
+	const tooltipLines: ReactElement[] = [];
+	const scoreSum: number = getSumOfObjectives(robot, selectedObjectives, metric);
+
 	for (const descriptor of selectedObjectives) {
 		const objective: TeamObjectiveStats = robot.stats.get(descriptor.gamemode)?.get(descriptor.objective);
 		const score: number = objective ? objective[metric] : 0;
 		const barStyle = {
-			height: 100 * score / maxScore + '%'
+			height: 100 * score / maxScore + '%',
+			backgroundColor: colors[bars.length % colors.length]
 		};
 
 		const roundedScore: number = roundToDecimal(score);
-		const tooltipText = (
+		tooltipLines.push(
 			<div>
-				<div>{ translate('TEAM') }:&nbsp;{ robot.id }</div>
-				<div>[{ translate(descriptor.gamemode) }]&nbsp;{ translate(descriptor.objective) }:&nbsp;{ roundedScore }</div>
+				[{ translate(descriptor.gamemode) }]&nbsp;{ translate(descriptor.objective) }:&nbsp;{ roundedScore }
 			</div>
 		);
 
-		const bar = (
-			<Tooltip key={ descriptor.gamemode + '|' + descriptor.objective } title={ tooltipText } arrow={ true }>
-				<div className="bar" style={ barStyle } />
-			</Tooltip>
-		);
-
-		bars.push(bar);
+		bars.push(<div className="bar" style={ barStyle } />);
 	}
 
-	return bars;
+	tooltipLines.reverse(); // Reverse so they're displayed in the same order as the bar graph segments
+	const tooltipContent = (
+		<div>
+			<div>{ translate('TEAM') }:&nbsp;{ robot.id }</div>
+			<div>{ translate('TOTAL') }:&nbsp;{ roundToDecimal(scoreSum) }</div>
+			<div>--------</div>
+			{ tooltipLines }
+		</div>
+	);
+
+	return (
+		<Tooltip
+			key={ robot.id }
+			title={ tooltipContent }
+			arrow={ true }
+		>
+			<div key={ robot.id } className="team-bars">
+				{ bars }
+			</div>
+		</Tooltip>
+	);
 };

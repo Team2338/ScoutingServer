@@ -1,7 +1,7 @@
 import React from 'react';
 import { GlobalObjectiveStats, LoadStatus, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { selectStat, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
+import { useAppSelector, useDataInitializer } from '../../state';
 import StatGraph from './stat-graph/StatGraph';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
@@ -13,14 +13,13 @@ import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
 function StatPage() {
 	useDataInitializer();
 	const translate = useTranslator();
-	const dispatch = useAppDispatch();
-	const _selectStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
 
 	// Selectors
 	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
+	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
 		return <main className="stat-page">{ translate('LOADING') }</main>;
@@ -47,20 +46,10 @@ function StatPage() {
 		const translatedObjectiveName: string = translate(selectedStat.objective);
 		const graphName: string = `[${ translatedGamemodeName }] ${ translatedObjectiveName }`;
 
-		const selectedObjectives: ObjectiveDescriptor[] = [
-			{
-				gamemode: 'TELEOP',
-				objective: 'HIGH_GOAL_2024'
-			},
-			{
-				gamemode: 'TELEOP',
-				objective: 'LOW_GOAL_2024'
-			}
-		];
 		content = (
 			<div className="stat-content">
 				<StatGraph name={ graphName } data={ teamStats } metric="mean" />
-				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedObjectives } metric="mean" />
+				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
 				<div className="stat-table-wrapper">
 					<StatTable data={ teamStats } />
 				</div>
@@ -73,8 +62,7 @@ function StatPage() {
 			<div className="stat-list-wrapper">
 				<StatList
 					stats={ stats }
-					selectedStat={ selectedStat }
-					selectStat={ _selectStat }
+					selectedStats={ selectedStats }
 				/>
 			</div>
 			{ content }

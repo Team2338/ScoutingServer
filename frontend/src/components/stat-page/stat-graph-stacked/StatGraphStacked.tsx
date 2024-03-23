@@ -46,7 +46,6 @@ export default function StatGraphStacked({ robots, selectedObjectives, metric }:
 	const sortedRobots: Team[] = robots.slice()
 		.sort((a: Team, b: Team) => compareByObjectiveSum(a, b, selectedObjectives, metric));
 	const maxScore: number = getSumOfObjectives(sortedRobots[0], selectedObjectives, metric);
-	console.log(maxScore);
 
 	const teamLabels = sortedRobots.map(createTeamLabel);
 	const teamBars = sortedRobots

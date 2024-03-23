@@ -217,7 +217,26 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					selectedStat: {
 						gamemode: action.payload.gamemode,
 						objective: action.payload.objective
-					}
+					},
+					selectedStats: [action.payload]
+				}
+			};
+		case Actions.ADD_SELECTED_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					selectedStats: state.stats.selectedStats.concat(action.payload)
+				}
+			};
+		case Actions.REMOVE_SELECTED_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					selectedStats: state.stats.selectedStats.filter((descriptor) => (
+						descriptor.gamemode !== action.payload.gamemode && descriptor.objective !== action.payload.objective
+					))
 				}
 			};
 		case Actions.SELECT_FIRST_TEAM_FOR_PLANNING:

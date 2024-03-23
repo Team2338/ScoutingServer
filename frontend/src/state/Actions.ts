@@ -31,6 +31,8 @@ export enum Actions {
 	CALCULATE_GLOBAL_STATS_START = '[STATS] Started calculating global stats',
 	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats',
 	SELECT_STAT = '[STATS] Select stat',
+	ADD_SELECTED_STAT = '[STATS] Add selected stat',
+	REMOVE_SELECTED_STAT = '[STATS] Remove selected stat',
 	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
 	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
@@ -134,6 +136,22 @@ export const calculateGlobalStatsSuccess = (stats: GlobalObjectiveStats[]): Acti
 
 export const selectStat = (gamemode: string, objective: string): Action => ({
 	type: Actions.SELECT_STAT,
+	payload: {
+		gamemode: gamemode,
+		objective: objective
+	}
+});
+
+export const addSelectedStat = (gamemode: string, objective: string): Action => ({
+	type: Actions.ADD_SELECTED_STAT,
+	payload: {
+		gamemode: gamemode,
+		objective: objective
+	}
+});
+
+export const removeSelectedStat = (gamemode: string, objective: string): Action => ({
+	type: Actions.REMOVE_SELECTED_STAT,
 	payload: {
 		gamemode: gamemode,
 		objective: objective

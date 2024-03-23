@@ -35,7 +35,9 @@ const compareByObjectiveSum = (
 
 const colors: string[] = [
 	'#254999',
-	'#dd8850'
+	'#dd8850',
+	'#884099',
+	'#44ac88'
 ];
 
 export default function StatGraphStacked({ robots, selectedObjectives, metric }: IProps) {
@@ -53,7 +55,6 @@ export default function StatGraphStacked({ robots, selectedObjectives, metric }:
 
 	return (
 		<div className="stat-graph-stacked">
-			<h2>StatGraphStacked Component</h2>
 			<div className="content">{ teamBars }</div>
 			<div className="team-number-wrapper">{ teamLabels}</div>
 		</div>

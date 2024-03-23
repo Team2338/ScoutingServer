@@ -1,5 +1,6 @@
 
 .stat-page {
+	$side-padding: 32px;
 	display: flex;
 	flex-direction: row;
 
@@ -20,9 +21,17 @@
 		width: calc(100% - var(--stat-sidenav-width));
 		overflow-y: auto;
 
+		.stat-content-title {
+			padding: 16px $side-padding 0 $side-padding;
+			font-weight: 500;
+			font-size: 1.25rem;
+			line-height: 1.6;
+			letter-spacing: 0.0075em;
+		}
+
 		.stat-table-wrapper {
 			display: flex;
-			margin: 16px 32px 32px 32px;
+			margin: 16px $side-padding 32px $side-padding;
 			border: 1px solid var(--border-color);
 			border-radius: 4px;
 		}

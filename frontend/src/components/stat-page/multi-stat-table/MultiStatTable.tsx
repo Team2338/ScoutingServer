@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslator } from '../../../service/TranslateService';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../../models';
@@ -28,9 +28,25 @@ export default function MultiStatTable(props: IProps) {
 
 	const translate = useTranslator();
 
+	const robotToTotalMap: Map<number, number> = useMemo(() => {
+		const map: Map<number, number> = new Map();
+
+		for (const robot of props.robots) {
+			map.set(robot.id, getSumOfObjectives(robot, props.selectedObjectives, props.metric));
+		}
+
+		return map;
+	}, [props.robots, props.selectedObjectives, props.metric]);
+
+	const sortedRobots: Team[] = useMemo(() => {
+		return props.robots.slice().sort((a: Team, b: Team) =>
+			robotToTotalMap.get(b.id) - robotToTotalMap.get(a.id)
+		);
+	}, [props.robots, robotToTotalMap]);
+
 	const rows = [];
-	for (const robot of props.robots) {
-		const total: number = getSumOfObjectives(robot, props.selectedObjectives, props.metric);
+	for (const robot of sortedRobots) {
+		const total: number = robotToTotalMap.get(robot.id);
 		const columns = props.selectedObjectives.map((descriptor: ObjectiveDescriptor) => {
 			const key = descriptor.gamemode + '\0' + descriptor.objective;
 			const value: number = robot.stats

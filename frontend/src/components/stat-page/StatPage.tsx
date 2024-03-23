@@ -7,6 +7,7 @@ import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
 import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
+import MultiStatTable from './multi-stat-table/MultiStatTable';
 
 
 function StatPage() {
@@ -53,7 +54,11 @@ function StatPage() {
 				<h2 className="stat-content-title">{ contentTitleText }</h2>
 				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
 				<div className="stat-table-wrapper">
-					<StatTable data={ teamStats } />
+					{
+						selectedStats.length > 1
+							? <MultiStatTable robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
+							: <StatTable data={ teamStats }/>
+					}
 				</div>
 			</div>
 		);

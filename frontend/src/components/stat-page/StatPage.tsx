@@ -17,7 +17,6 @@ function StatPage() {
 	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
-	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
 	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
@@ -36,8 +35,8 @@ function StatPage() {
 	if (selectedStats.length > 0) {
 		const teamStats: TeamObjectiveStats[] = teamData
 			.map((team: Team) => team.stats
-				.get(selectedStat.gamemode)
-				?.get(selectedStat.objective)
+				?.get(selectedStats[0].gamemode)
+				?.get(selectedStats[0].objective)
 			)
 			.filter((objective: TeamObjectiveStats) => !!objective);
 

@@ -235,7 +235,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				stats: {
 					...state.stats,
 					selectedStats: state.stats.selectedStats.filter((descriptor) => (
-						descriptor.gamemode !== action.payload.gamemode && descriptor.objective !== action.payload.objective
+						!(descriptor.gamemode === action.payload.gamemode && descriptor.objective === action.payload.objective)
 					))
 				}
 			};

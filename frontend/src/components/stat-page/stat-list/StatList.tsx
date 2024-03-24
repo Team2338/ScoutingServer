@@ -1,9 +1,9 @@
 import React from 'react';
-import { List, Typography } from '@mui/material';
+import { Button, List } from '@mui/material';
 import { GlobalObjectiveStats, ObjectiveDescriptor } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import StatListSection from './StatListSection';
-import { addSelectedStat, removeSelectedStat, selectStat, useAppDispatch } from '../../../state';
+import { addSelectedStat, clearSelectedStats, removeSelectedStat, selectStat, useAppDispatch } from '../../../state';
 
 interface IProps {
 	stats: GlobalObjectiveStats[];
@@ -17,6 +17,7 @@ export default function StatList({ stats, selectedStats }: IProps) {
 	const _setSelectedStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
 	const _addSelectedStat = (gamemode: string, objective: string) => dispatch(addSelectedStat(gamemode, objective));
 	const _removeSelectedStat = (gamemode: string, objective: string) => dispatch(removeSelectedStat(gamemode, objective));
+	const _clearSelectedStats = () => dispatch(clearSelectedStats());
 
 	const statsGroupedByGamemode: Map<string, GlobalObjectiveStats[]> = new Map();
 	for (const stat of stats) {
@@ -44,14 +45,19 @@ export default function StatList({ stats, selectedStats }: IProps) {
 
 	return (
 		<React.Fragment>
-			<Typography
-				variant="h6"
-				sx={{
-					margin: '16px 16px 0 16px'
-				}}
-			>
-				{ translate('STATS') }
-			</Typography>
+			<div className="stat-list-header">
+				<h1 className="page-title">{ translate('STATS') }</h1>
+				{
+					selectedStats.length > 0 &&
+					<Button
+						id="clear-button"
+						variant="text"
+						onClick={ _clearSelectedStats }
+					>
+						{ translate('CLEAR') }
+					</Button>
+				}
+			</div>
 			<List
 				sx={{
 					paddingTop: 0

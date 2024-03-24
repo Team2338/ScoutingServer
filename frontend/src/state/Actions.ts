@@ -31,8 +31,9 @@ export enum Actions {
 	CALCULATE_GLOBAL_STATS_START = '[STATS] Started calculating global stats',
 	CALCULATE_GLOBAL_STATS_SUCCESS = '[STATS] Successfully calculated global stats',
 	SELECT_STAT = '[STATS] Select stat',
-	ADD_SELECTED_STAT = '[STATS] Add selected stat',
-	REMOVE_SELECTED_STAT = '[STATS] Remove selected stat',
+	ADD_SELECTED_STAT = '[STATS] Add selection',
+	REMOVE_SELECTED_STAT = '[STATS] Remove selection',
+	CLEAR_SELECTED_STATS = '[STATS] Clear selection',
 	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
 	SELECT_THIRD_TEAM_FOR_PLANNING = '[PLAN] Select third team',
@@ -156,6 +157,10 @@ export const removeSelectedStat = (gamemode: string, objective: string): Action 
 		gamemode: gamemode,
 		objective: objective
 	}
+});
+
+export const clearSelectedStats = (): Action => ({
+	type: Actions.CLEAR_SELECTED_STATS
 });
 
 export const selectFirstTeamForPlanning = (team: Team): Action => ({

@@ -33,7 +33,7 @@ class CommentService {
 	};
 
 	getUniqueTopics = (responses: CommentResponse[]): string[] => {
-		const topics = new Set<string>();
+		const topics: Set<string> = new Set();
 		for (const response of responses) {
 			topics.add(response.topic);
 		}

@@ -8,13 +8,6 @@ export interface GridScoreConfig {
 	};
 }
 
-export const STAT_GRAPH_COLORS: string[] = [
-	'#254999',
-	'#dd8850',
-	'#884099',
-	'#44ac88'
-];
-
 export interface Inspection {
 	robotNumber: number;
 	gameYear: number;

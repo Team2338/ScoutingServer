@@ -39,7 +39,7 @@ export const getMedian = (scores: number[]): number => {
 export const getMode = (scores: number[]): number => {
 
 	// Create list of frequencies
-	const frequencies = new Map<number, number>();
+	const frequencies: Map<number, number> = new Map();
 	for (const score of scores) {
 		if (!frequencies.has(score)) {
 			frequencies.set(score, 0);

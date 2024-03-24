@@ -83,13 +83,14 @@ const createStackedBars = (
 		};
 
 		const roundedScore: number = roundToDecimal(score);
+		const elementKey: string = descriptor.gamemode + '\0' + descriptor.objective;
 		tooltipLines.push(
-			<div>
+			<div key={ elementKey }>
 				[{ translate(descriptor.gamemode) }]&nbsp;{ translate(descriptor.objective) }:&nbsp;{ roundedScore }
 			</div>
 		);
 
-		bars.push(<div className="bar" style={ barStyle } />);
+		bars.push(<div key={ elementKey } className="bar" style={ barStyle } />);
 	}
 
 	tooltipLines.reverse(); // Reverse so they're displayed in the same order as the bar graph segments

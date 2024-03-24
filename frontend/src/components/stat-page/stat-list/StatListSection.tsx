@@ -1,6 +1,7 @@
-import React from 'react';
+import './StatList.scss';
+import React, { useMemo } from 'react';
 import { Checkbox, Divider, ListItemButton, ListSubheader } from '@mui/material';
-import { GlobalObjectiveStats, ObjectiveDescriptor } from '../../../models';
+import { GlobalObjectiveStats, ObjectiveDescriptor, STAT_GRAPH_COLORS } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 
@@ -15,6 +16,15 @@ interface IProps {
 
 export default function StatListSection({ gamemode, stats, selectedStats, selectStat, addSelectedStat, removeSelectedStat }: IProps) {
 	const translate = useTranslator();
+
+	const descriptorToColorMap: Map<string, string> = useMemo(() => {
+		const map: Map<string, string> = new Map();
+		selectedStats.forEach((descriptor, index: number) => {
+			const key: string = descriptor.gamemode + '\0' + descriptor.objective;
+			map.set(key, STAT_GRAPH_COLORS[index % STAT_GRAPH_COLORS.length]);
+		});
+		return map;
+	}, [selectedStats]);
 
 	const items = stats.map((stat: GlobalObjectiveStats) => {
 		const isSelected: boolean = !!selectedStats.find((descriptor: ObjectiveDescriptor) => (
@@ -43,7 +53,26 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 						<div>{ translate('MEAN') }: { stat.stats.mean.toFixed(2) }</div>
 						<div>{ translate('MEDIAN') }: { roundToDecimal(2) }</div>
 					</div>
-					<Checkbox checked={ isSelected } onChange={ handleCheckboxClick } onClick={ (event) => event.stopPropagation() }/>
+					{
+						descriptorToColorMap.has(stat.gamemode + '\0' + stat.name) &&
+						<div
+							className="stat-list-color-legend"
+							style={{
+								backgroundColor: descriptorToColorMap.get(stat.gamemode + '\0' + stat.name)
+							}}
+						/>
+					}
+
+					<Checkbox
+						className="stat-list-checkbox"
+						checked={ isSelected }
+						onChange={ handleCheckboxClick }
+						onClick={ (event) => event.stopPropagation() }
+						style={{
+							opacity: selectedStats.length > 0 ? 1 : 0,
+							transition: 'opacity 150ms ease-in-out'
+						}}
+					/>
 				</ListItemButton>
 				<Divider variant="fullWidth" component="li"/>
 			</React.Fragment>

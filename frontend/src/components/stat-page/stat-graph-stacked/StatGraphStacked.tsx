@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import './StatGraphStacked.scss';
-import { ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../../models';
+import { ObjectiveDescriptor, STAT_GRAPH_COLORS, Team, TeamObjectiveStats } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { Tooltip } from '@mui/material';
 import { roundToDecimal } from '../../../service/DisplayUtility';
@@ -33,12 +33,6 @@ const compareByObjectiveSum = (
 	return getSumOfObjectives(b, selectedObjectives, metric) - getSumOfObjectives(a, selectedObjectives, metric);
 };
 
-const colors: string[] = [
-	'#254999',
-	'#dd8850',
-	'#884099',
-	'#44ac88'
-];
 
 export default function StatGraphStacked({ robots, selectedObjectives, metric }: IProps) {
 
@@ -85,7 +79,7 @@ const createStackedBars = (
 		const score: number = objective ? objective[metric] : 0;
 		const barStyle = {
 			height: 100 * score / maxScore + '%',
-			backgroundColor: colors[bars.length % colors.length]
+			backgroundColor: STAT_GRAPH_COLORS[bars.length % STAT_GRAPH_COLORS.length]
 		};
 
 		const roundedScore: number = roundToDecimal(score);

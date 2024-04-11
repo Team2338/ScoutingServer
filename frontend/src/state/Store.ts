@@ -32,7 +32,7 @@ const INITIAL_STATE: AppState = {
 	stats: {
 		loadStatus: LoadStatus.none,
 		data: [],
-		selectedStat: null
+		selectedStats: []
 	},
 	planning: {
 		loadStatus: LoadStatus.none,
@@ -162,7 +162,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				stats: {
 					...state.stats,
 					loadStatus: LoadStatus.none, // Mark as dirty, since we modified it
-					selectedStat: null // Guaranteed to have modified the data we were previously viewing, so hide it
+					selectedStats: [] // Guaranteed to have modified the data we were previously viewing, so hide it
 				},
 				planning: INITIAL_STATE.planning
 			};
@@ -213,10 +213,33 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				stats: {
 					...state.stats,
-					selectedStat: {
-						gamemode: action.payload.gamemode,
-						objective: action.payload.objective
-					}
+					selectedStats: [action.payload]
+				}
+			};
+		case Actions.ADD_SELECTED_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					selectedStats: state.stats.selectedStats.concat(action.payload)
+				}
+			};
+		case Actions.REMOVE_SELECTED_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					selectedStats: state.stats.selectedStats.filter((descriptor) => (
+						!(descriptor.gamemode === action.payload.gamemode && descriptor.objective === action.payload.objective)
+					))
+				}
+			};
+		case Actions.CLEAR_SELECTED_STATS:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					selectedStats: []
 				}
 			};
 		case Actions.SELECT_FIRST_TEAM_FOR_PLANNING:

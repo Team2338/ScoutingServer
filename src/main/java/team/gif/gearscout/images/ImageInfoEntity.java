@@ -28,8 +28,6 @@ public class ImageInfoEntity {
 	)
 	private Long id;
 	
-	private Boolean isPresent = false;
-	
 	@Column(name = "team_number", nullable = false)
 	private Integer teamNumber;
 	
@@ -81,10 +79,6 @@ public class ImageInfoEntity {
 		return id;
 	}
 	
-	public boolean isPresent() {
-		return isPresent;
-	}
-	
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
@@ -119,10 +113,6 @@ public class ImageInfoEntity {
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public void setIsPresent(boolean isPresent) {
-		this.isPresent = isPresent;
 	}
 	
 	public void setTeamNumber(Integer teamNumber) {

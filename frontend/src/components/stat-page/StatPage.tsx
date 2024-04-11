@@ -1,25 +1,24 @@
 import React from 'react';
 import { GlobalObjectiveStats, LoadStatus, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { selectStat, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
-import StatGraph from './stat-graph/StatGraph';
+import { useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
+import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
+import MultiStatTable from './multi-stat-table/MultiStatTable';
 
 
 function StatPage() {
 	useDataInitializer();
 	const translate = useTranslator();
-	const dispatch = useAppDispatch();
-	const _selectStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
 
 	// Selectors
 	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
-	const selectedStat: ObjectiveDescriptor = useAppSelector(state => state.stats.selectedStat);
+	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
 		return <main className="stat-page">{ translate('LOADING') }</main>;
@@ -34,23 +33,32 @@ function StatPage() {
 	}
 
 	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
-	if (selectedStat) {
+	if (selectedStats.length > 0) {
 		const teamStats: TeamObjectiveStats[] = teamData
 			.map((team: Team) => team.stats
-				.get(selectedStat.gamemode)
-				?.get(selectedStat.objective)
+				?.get(selectedStats[0].gamemode)
+				?.get(selectedStats[0].objective)
 			)
 			.filter((objective: TeamObjectiveStats) => !!objective);
 
-		const translatedGamemodeName: string = translate(selectedStat.gamemode);
-		const translatedObjectiveName: string = translate(selectedStat.objective);
-		const graphName: string = `[${ translatedGamemodeName }] ${ translatedObjectiveName }`;
+		let contentTitleText: string = translate('COMBINED_STATISTICS');
+		if (selectedStats.length === 1) {
+			const descriptor: ObjectiveDescriptor = selectedStats[0];
+			const translatedGamemodeName: string = translate(descriptor.gamemode);
+			const translatedObjectiveName: string = translate(descriptor.objective);
+			contentTitleText = `[${ translatedGamemodeName }] ${ translatedObjectiveName }`;
+		}
 
 		content = (
 			<div className="stat-content">
-				<StatGraph name={ graphName } data={ teamStats } metric="mean" />
+				<h2 className="stat-content-title">{ contentTitleText }</h2>
+				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
 				<div className="stat-table-wrapper">
-					<StatTable data={ teamStats } />
+					{
+						selectedStats.length > 1
+							? <MultiStatTable robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
+							: <StatTable data={ teamStats }/>
+					}
 				</div>
 			</div>
 		);
@@ -61,8 +69,7 @@ function StatPage() {
 			<div className="stat-list-wrapper">
 				<StatList
 					stats={ stats }
-					selectedStat={ selectedStat }
-					selectStat={ _selectStat }
+					selectedStats={ selectedStats }
 				/>
 			</div>
 			{ content }

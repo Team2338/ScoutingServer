@@ -9,23 +9,24 @@ import { useAppSelector } from '../../../state';
 import { Button, Icon } from '@mui/material';
 
 interface IProps {
-	team: Team;
+	robotNumber: number;
 }
 
 export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
+	const team: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === props.robotNumber));
 	const userTeamNumber = useAppSelector(state => state.login.teamNumber);
 	const isInspectionsEnabled = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 	const [isInspectionDrawerOpen, setInspectionDrawerOpen]: Statelet<boolean> = useState(false);
 
-	if (!props.team) {
+	if (!props.robotNumber) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
 	}
 
 	let gamemodeElements: any = [];
-	if (props.team.stats) {
-		props.team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
+	if (team?.stats) {
+		team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
 			gamemodeElements.push(
 				<Gamemode
 					key={ gamemode }
@@ -41,7 +42,7 @@ export default function TeamDetail(props: IProps) {
 	return (
 		<div className="team-detail">
 			<div className="team-number">
-				<span>{ translate('TEAM') } { props.team.id }</span>
+				<span>{ translate('TEAM') } { props.robotNumber }</span>
 				{
 					isInspectionsEnabled
 					&& <Button
@@ -57,7 +58,7 @@ export default function TeamDetail(props: IProps) {
 			{
 				isInspectionsEnabled
 				&& <InspectionSection
-					robotNumber={ props.team.id }
+					robotNumber={ props.robotNumber }
 					isDrawerOpen={ isInspectionDrawerOpen }
 					closeDrawer={ () => setInspectionDrawerOpen(false) }
 				/>

@@ -24,7 +24,7 @@ class StatModelService {
 	 * @param teams a list of teams on which to calculate statistics.
 	 */
 	private getTeamStatsGroupedByObjective = (teams: Team[]): Map<string, TeamStat[]> => {
-		const groupedTeamStats = new Map<string, TeamStat[]>();
+		const groupedTeamStats: Map<string, TeamStat[]> = new Map();
 
 		for (const team of teams) {
 			team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemodeName: string) => {

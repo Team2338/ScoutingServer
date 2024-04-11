@@ -24,7 +24,7 @@ public class UserEntity {
 		generator = "users_seq"
 	)
 	@SequenceGenerator(
-		name = "comments_seq",
+		name = "users_seq",
 		allocationSize = 5
 	)
 	private Long userId;

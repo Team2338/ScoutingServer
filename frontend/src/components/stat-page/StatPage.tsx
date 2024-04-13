@@ -1,11 +1,19 @@
-import React from 'react';
-import { GlobalObjectiveStats, LoadStatus, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models';
+import React, { Fragment, useState } from 'react';
+import {
+	GlobalObjectiveStats,
+	LoadStatus,
+	ObjectiveDescriptor,
+	Statelet,
+	Team,
+	TeamObjectiveStats
+} from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
+import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
 import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
 import MultiStatTable from './multi-stat-table/MultiStatTable';
 
@@ -13,6 +21,8 @@ import MultiStatTable from './multi-stat-table/MultiStatTable';
 function StatPage() {
 	useDataInitializer();
 	const translate = useTranslator();
+
+	const [selectedRobotNumber, setSelectedRobotNumber]: Statelet<number> = useState(null);
 
 	// Selectors
 	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
@@ -52,7 +62,12 @@ function StatPage() {
 		content = (
 			<div className="stat-content">
 				<h2 className="stat-content-title">{ contentTitleText }</h2>
-				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
+				<StatGraphStacked
+					robots={ teamData }
+					selectedObjectives={ selectedStats }
+					metric="mean"
+					selectRobot={ setSelectedRobotNumber }
+				/>
 				<div className="stat-table-wrapper">
 					{
 						selectedStats.length > 1
@@ -65,15 +80,22 @@ function StatPage() {
 	}
 
 	return (
-		<main className="page stat-page">
-			<div className="stat-list-wrapper">
-				<StatList
-					stats={ stats }
-					selectedStats={ selectedStats }
-				/>
-			</div>
-			{ content }
-		</main>
+		<Fragment>
+			<main className="page stat-page">
+				<div className="stat-list-wrapper">
+					<StatList
+						stats={ stats }
+						selectedStats={ selectedStats }
+					/>
+				</div>
+				{ content }
+			</main>
+			<TeamDetailModal
+				isOpen={ selectedRobotNumber !== null }
+				robotNumber={ selectedRobotNumber }
+				handleClose={ () => setSelectedRobotNumber(null) }
+			/>
+		</Fragment>
 	);
 }
 

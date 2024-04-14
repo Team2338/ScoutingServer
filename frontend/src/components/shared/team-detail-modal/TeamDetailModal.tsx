@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Dialog, DialogContent, Grow, IconButton, Slide } from '@mui/material';
+import { Dialog, DialogContent, IconButton, Slide } from '@mui/material';
 import TeamDetail from '../../team-page/team-detail/TeamDetail';
 import { useTranslator } from '../../../service/TranslateService';
 import { ArrowBack } from '@mui/icons-material';
@@ -10,21 +10,18 @@ interface IProps {
 	handleClose: () => void;
 	robotNumber: number;
 	fullscreen?: boolean;
-	transition?: 'slide' | 'grow';
+	transition?: 'slide' | 'fade';
+	afterClose?: () => void;
 }
 
 const SlideTransition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;
 });
 
-const GrowTransition = forwardRef(function Transition(props: any, ref) {
-	return <Grow unmountOnExit ref={ ref } { ...props }>{ props.children }</Grow>;
-});
-
 export default function TeamDetailModal(props: IProps) {
 	const translate = useTranslator();
 
-	const transitionComponent = props.transition === 'slide' ? SlideTransition : GrowTransition;
+	const transitionComponent = props.transition === 'slide' ? SlideTransition : undefined;
 
 	return (
 		<Dialog
@@ -33,6 +30,7 @@ export default function TeamDetailModal(props: IProps) {
 			onClose={ props.handleClose }
 			aria-labelledby="team-detail-dialog__title"
 			TransitionComponent={ transitionComponent }
+			onTransitionExited={ props.afterClose }
 		>
 			<div className="team-detail-dialog__header">
 				<IconButton

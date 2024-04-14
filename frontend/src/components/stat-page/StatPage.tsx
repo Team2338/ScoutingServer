@@ -23,12 +23,22 @@ function StatPage() {
 	const translate = useTranslator();
 
 	const [selectedRobotNumber, setSelectedRobotNumber]: Statelet<number> = useState(null);
+	const [isTeamDetailOpen, setTeamDetailOpen]: Statelet<boolean> = useState(false);
 
 	// Selectors
 	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
+
+	const selectRobot = (robotNumber: number) => {
+		setSelectedRobotNumber(robotNumber);
+		setTeamDetailOpen(true);
+	};
+
+	const afterClose = () => {
+		setSelectedRobotNumber(null);
+	};
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
 		return <main className="stat-page">{ translate('LOADING') }</main>;
@@ -66,7 +76,7 @@ function StatPage() {
 					robots={ teamData }
 					selectedObjectives={ selectedStats }
 					metric="mean"
-					selectRobot={ setSelectedRobotNumber }
+					selectRobot={ selectRobot }
 				/>
 				<div className="stat-table-wrapper">
 					{
@@ -91,10 +101,11 @@ function StatPage() {
 				{ content }
 			</main>
 			<TeamDetailModal
-				isOpen={ selectedRobotNumber !== null }
+				isOpen={ isTeamDetailOpen }
 				robotNumber={ selectedRobotNumber }
-				handleClose={ () => setSelectedRobotNumber(null) }
-				transition="grow"
+				handleClose={ () => setTeamDetailOpen(false) }
+				transition="fade"
+				afterClose={ afterClose }
 			/>
 		</Fragment>
 	);

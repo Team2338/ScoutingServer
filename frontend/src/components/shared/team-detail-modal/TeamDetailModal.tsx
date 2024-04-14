@@ -1,28 +1,38 @@
 import React, { forwardRef } from 'react';
-import { Dialog, DialogContent, IconButton, Slide } from '@mui/material';
+import { Dialog, DialogContent, Grow, IconButton, Slide } from '@mui/material';
 import TeamDetail from '../../team-page/team-detail/TeamDetail';
 import { useTranslator } from '../../../service/TranslateService';
 import { ArrowBack } from '@mui/icons-material';
+import CommentSection from '../../team-page/comment-section/CommentSection';
 
 interface IProps {
 	isOpen: boolean;
 	handleClose: () => void;
 	robotNumber: number;
+	fullscreen?: boolean;
+	transition?: 'slide' | 'grow';
 }
 
-const Transition = forwardRef(function Transition(props: any, ref) {
+const SlideTransition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;
+});
+
+const GrowTransition = forwardRef(function Transition(props: any, ref) {
+	return <Grow unmountOnExit ref={ ref } { ...props }>{ props.children }</Grow>;
 });
 
 export default function TeamDetailModal(props: IProps) {
 	const translate = useTranslator();
 
+	const transitionComponent = props.transition === 'slide' ? SlideTransition : GrowTransition;
+
 	return (
 		<Dialog
+			fullScreen={ props.fullscreen }
 			open={ props.isOpen }
 			onClose={ props.handleClose }
 			aria-labelledby="team-detail-dialog__title"
-			TransitionComponent={ Transition }
+			TransitionComponent={ transitionComponent }
 		>
 			<div className="team-detail-dialog__header">
 				<IconButton
@@ -50,6 +60,7 @@ export default function TeamDetailModal(props: IProps) {
 				}}
 			>
 				<TeamDetail robotNumber={ props.robotNumber } />
+				{ props.robotNumber && <CommentSection teamNumber={ props.robotNumber } /> }
 			</DialogContent>
 		</Dialog>
 	);

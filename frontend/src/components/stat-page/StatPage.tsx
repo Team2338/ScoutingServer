@@ -94,6 +94,7 @@ function StatPage() {
 				isOpen={ selectedRobotNumber !== null }
 				robotNumber={ selectedRobotNumber }
 				handleClose={ () => setSelectedRobotNumber(null) }
+				transition="grow"
 			/>
 		</Fragment>
 	);

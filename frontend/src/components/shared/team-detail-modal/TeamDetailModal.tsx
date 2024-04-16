@@ -1,3 +1,4 @@
+import './TeamDetailModal.scss';
 import React, { forwardRef } from 'react';
 import { Dialog, DialogContent, IconButton, Slide } from '@mui/material';
 import TeamDetail from '../../team-page/team-detail/TeamDetail';
@@ -9,7 +10,7 @@ interface IProps {
 	isOpen: boolean;
 	handleClose: () => void;
 	robotNumber: number;
-	fullscreen?: boolean;
+	fullscreen?: boolean; // Stand-in for `isMobile` as well
 	transition?: 'slide' | 'fade';
 	afterClose?: () => void;
 }
@@ -48,8 +49,8 @@ export default function TeamDetailModal(props: IProps) {
 			<DialogContent
 				dividers={ true }
 				sx={{
-					paddingLeft: '8px',
-					paddingRight: '8px',
+					paddingLeft: '12px',
+					paddingRight: '12px',
 					paddingTop: '12px',
 					paddingBottom: '32px',
 					rowGap: '32px',

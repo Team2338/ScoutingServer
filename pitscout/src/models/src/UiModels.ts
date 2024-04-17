@@ -42,6 +42,7 @@ export const DRIVETRAIN_TYPES: string[] = [
 
 export const DRIVE_MOTOR_TYPES: string[] = [
 	'Falcon',
+	'Kraken',
 	'Neo',
 	'CIM'
 ];

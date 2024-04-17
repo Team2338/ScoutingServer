@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
 	GlobalObjectiveStats,
 	LoadStatus,
@@ -8,7 +8,7 @@ import {
 	TeamObjectiveStats
 } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { useAppSelector, useDataInitializer } from '../../state';
+import { getComments, getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
@@ -20,7 +20,17 @@ import MultiStatTable from './multi-stat-table/MultiStatTable';
 
 function StatPage() {
 	useDataInitializer();
+
 	const translate = useTranslator();
+	const dispatch = useAppDispatch();
+
+	useEffect(
+		() => {
+			dispatch(getComments());
+			dispatch(getInspections());
+		},
+		[dispatch]
+	);
 
 	const [selectedRobotNumber, setSelectedRobotNumber]: Statelet<number> = useState(null);
 	const [isTeamDetailOpen, setTeamDetailOpen]: Statelet<boolean> = useState(false);

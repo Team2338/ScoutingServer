@@ -1,7 +1,6 @@
-import { Dialog, DialogContent, IconButton, Slide, useMediaQuery } from '@mui/material';
-import React, { forwardRef, useEffect, useMemo } from 'react';
+import { useMediaQuery } from '@mui/material';
+import React, { useEffect, useMemo } from 'react';
 import { CommentsForEvent, ImageState, Inspection, LoadStatus, Team } from '../../models';
-import { useTranslator } from '../../service/TranslateService';
 import {
 	getAllImageInfoForEvent,
 	getComments,
@@ -14,18 +13,14 @@ import {
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
-import { ArrowBack } from '@mui/icons-material';
 import CommentSection from './comment-section/CommentSection';
 import DataFailure from '../shared/data-failure/DataFailure';
 import TeamListSkeleton from './team-list-skeleton/TeamListSkeleton';
+import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
 
-const Transition = forwardRef(function Transition(props: any, ref) {
-	return <Slide direction="left" ref={ ref } { ...props } >{ props.children }</Slide>;
-});
 
 export default function TeamPage() {
 	const isMobile = useMediaQuery('(max-width: 600px)');
-	const translate = useTranslator();
 	useDataInitializer();
 
 	// Dispatch and actions
@@ -78,42 +73,13 @@ export default function TeamPage() {
 		return (
 			<main className="page team-page-mobile">
 				<TeamList teams={ allTeams } />
-				<Dialog
-					fullScreen={ true }
-					open={ !!selectedRobotNumber }
-					onClose={ () => _deselectTeam() }
-					aria-labelledby="team-detail-dialog__title"
-					TransitionComponent={ Transition }
-				>
-					<div className="team-detail-dialog__header">
-						<IconButton
-							id="team-detail-dialog__back-button"
-							color="inherit"
-							aria-label={ translate('CLOSE') }
-							onClick={ () => _deselectTeam() }
-						>
-							<ArrowBack />
-						</IconButton>
-						<span id="team-detail-dialog__title">
-							{ translate('TEAM') } { selectedRobotNumber ?? '' }
-						</span>
-					</div>
-					<DialogContent
-						dividers={ true }
-						sx={ {
-							paddingLeft: '8px',
-							paddingRight: '8px',
-							paddingTop: '12px',
-							paddingBottom: '32px',
-							rowGap: '32px',
-							display: 'flex',
-							flexDirection: 'column'
-						} }
-					>
-						<TeamDetail robotNumber={ selectedRobotNumber } />
-						{ selectedRobotNumber && <CommentSection teamNumber={ selectedRobotNumber } /> }
-					</DialogContent>
-				</Dialog>
+				<TeamDetailModal
+					isOpen={ !!selectedRobotNumber }
+					handleClose={ () => _deselectTeam() }
+					robotNumber={ selectedRobotNumber }
+					fullscreen={ true }
+					transition="slide"
+				/>
 			</main>
 		);
 	}

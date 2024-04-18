@@ -16,8 +16,6 @@ export interface Action {
 
 export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
-	LOGIN = '[AUTH] Login',
-	LOGOUT = '[AUTH] Logout',
 	GET_CSV_START = '[CSV] Start getting CSV',
 	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
@@ -56,21 +54,6 @@ export enum Actions {
 export const selectLangSuccess = (language: Language): Action => ({
 	type: Actions.SELECT_LANG_SUCCESS,
 	payload: language
-});
-
-export const loginSuccess = (data: {
-	teamNumber: number;
-	gameYear: number;
-	username: string;
-	eventCode: string;
-	secretCode: string;
-}): Action => ({
-	type: Actions.LOGIN,
-	payload: data
-});
-
-export const logoutSuccess = (): Action => ({
-	type: Actions.LOGOUT
 });
 
 export const getCsvStart = (): Action => ({

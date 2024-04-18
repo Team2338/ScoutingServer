@@ -5,7 +5,6 @@ import { AppState } from '../models';
 import { initApp } from '../state';
 import './App.scss';
 import Header from './header/Header';
-import LoginPage from './login-page/LoginPage';
 import ManagePage from './manage-page/ManagePage';
 import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
@@ -13,10 +12,7 @@ import TeamPage from './team-page/TeamPage';
 import InspectionPage from './inspection-page/InspectionPage';
 
 
-const select = (state: AppState) => ({
-	isLoggedIn: state.login.isLoggedIn,
-});
-
+const select = (state: AppState) => ({});
 const outputs = (dispatch) => ({
 	initApp: () => dispatch(initApp())
 });
@@ -29,15 +25,6 @@ class ConnectedApp extends React.Component<any, null> {
 	}
 
 	render() {
-		if (!this.props.isLoggedIn) {
-			return (
-				<React.Fragment>
-					<Header />
-					<LoginPage />
-				</React.Fragment>
-			);
-		}
-
 		const managePage = <ManagePage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;

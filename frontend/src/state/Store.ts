@@ -7,12 +7,11 @@ import { Action, Actions } from './Actions';
 const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
 	login: {
-		isLoggedIn: false,
-		teamNumber: null,
+		teamNumber: 9999,
 		gameYear: new Date().getFullYear(),
-		username: null,
-		eventCode: null,
-		secretCode: null,
+		username: 'Public',
+		eventCode: 'test',
+		secretCode: 'test',
 	},
 	csv: {
 		loadStatus: LoadStatus.none,
@@ -64,24 +63,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				language: action.payload
-			};
-		case Actions.LOGIN:
-			return {
-				...state,
-				login: {
-					...state.login,
-					isLoggedIn: true,
-					teamNumber: action.payload.teamNumber,
-					gameYear: action.payload.gameYear,
-					username: action.payload.username,
-					eventCode: action.payload.eventCode,
-					secretCode: action.payload.secretCode
-				}
-			};
-		case Actions.LOGOUT:
-			return {
-				...INITIAL_STATE,
-				language: state.language
 			};
 		case Actions.GET_CSV_START:
 			return {

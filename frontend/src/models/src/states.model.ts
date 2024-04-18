@@ -57,7 +57,6 @@ export interface AppState {
 }
 
 export interface LoginState {
-	isLoggedIn: boolean;
 	teamNumber: number;
 	gameYear: number;
 	username: string;

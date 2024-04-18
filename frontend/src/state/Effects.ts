@@ -36,8 +36,6 @@ import {
 	getMatchesStart,
 	getMatchesSuccess,
 	hideInspectionColumnStart,
-	loginSuccess,
-	logoutSuccess,
 	replaceMatch,
 	selectLangSuccess,
 	setHiddenInspectionColumnsStart,
@@ -48,23 +46,6 @@ import { AppDispatch } from './Store';
 type GetState = () => AppState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
-	const teamNumber: string = localStorage.getItem('teamNumber');
-	const gameYear: string = localStorage.getItem('gameYear');
-	const username: string = localStorage.getItem('username');
-	const eventCode: string = localStorage.getItem('eventCode');
-	const secretCode: string = localStorage.getItem('secretCode');
-
-	// Only login if all information is present
-	if (teamNumber && username && eventCode && secretCode) {
-		dispatch(loginSuccess({
-			gameYear: gameYear ? Number(gameYear) : new Date().getFullYear(),
-			teamNumber: Number(teamNumber),
-			username: username,
-			eventCode: eventCode,
-			secretCode: secretCode
-		}));
-	}
-
 	const language: Language = getPreferredLanguage();
 	if (language) {
 		dispatch(selectLangSuccess(language));
@@ -122,27 +103,6 @@ export const showInspectionColumn = (column: string) => async (dispatch: AppDisp
 	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
 };
 
-export const login = (data: {
-	teamNumber: number;
-	gameYear: number;
-	username: string;
-	eventCode: string;
-	secretCode: string;
-}) => async (dispatch: AppDispatch) => {
-	localStorage.setItem('gameYear', data.gameYear.toString());
-	localStorage.setItem('teamNumber', data.teamNumber.toString());
-	localStorage.setItem('username', data.username);
-	localStorage.setItem('eventCode', data.eventCode);
-	localStorage.setItem('secretCode', data.secretCode);
-
-	dispatch(loginSuccess(data));
-};
-
-export const logout = () => async (dispatch) => {
-	localStorage.clear();
-
-	dispatch(logoutSuccess());
-};
 
 // export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
 // 	console.log('Getting all data');

@@ -1,4 +1,3 @@
-import { Icon, IconButton, Tooltip } from '@mui/material';
 import React from 'react';
 import { Match, Objective, superchargeGridScoreConfig } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
@@ -32,15 +31,6 @@ export default function MatchDetail(props: IProps) {
 		);
 	});
 
-	const handleHiddenClick = () => {
-		if (props.match.isHidden) {
-			props.unhide(props.match);
-			return;
-		}
-
-		props.hide(props.match);
-	};
-
 	const hiddenLabel = props.match.isHidden ? <span className="hidden">{ translate('HIDDEN') }</span> : null;
 
 	return (
@@ -63,13 +53,13 @@ export default function MatchDetail(props: IProps) {
 					{ gamemodeElements }
 				</div>
 			</div>
-			<div className="action-area">
-				<Tooltip title={ translate(props.match.isHidden ? 'INCLUDE_IN_STATS' : 'EXCLUDE_FROM_STATS') }>
-					<IconButton size="small" onClick={ handleHiddenClick }>
-						<Icon fontSize="small" color="inherit">delete</Icon>
-					</IconButton>
-				</Tooltip>
-			</div>
+			{/*<div className="action-area">*/}
+			{/*	<Tooltip title={ translate(props.match.isHidden ? 'INCLUDE_IN_STATS' : 'EXCLUDE_FROM_STATS') }>*/}
+			{/*		<IconButton size="small" onClick={ handleHiddenClick }>*/}
+			{/*			<Icon fontSize="small" color="inherit">delete</Icon>*/}
+			{/*		</IconButton>*/}
+			{/*	</Tooltip>*/}
+			{/*</div>*/}
 		</div>
 	);
 }

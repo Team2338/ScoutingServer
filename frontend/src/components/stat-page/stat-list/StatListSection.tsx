@@ -51,7 +51,7 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 					<div className="stat-list-item">
 						<div>{ translate(stat.name) }</div>
 						<div>{ translate('MEAN') }: { stat.stats.mean.toFixed(2) }</div>
-						<div>{ translate('MEDIAN') }: { roundToDecimal(2) }</div>
+						<div>{ translate('MEDIAN') }: { roundToDecimal(stat.stats.median) }</div>
 					</div>
 					{
 						descriptorToColorMap.has(stat.gamemode + '\0' + stat.name) &&

@@ -1,9 +1,8 @@
 import { useMediaQuery } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
-import { CommentsForEvent, ImageState, Inspection, LoadStatus, Team } from '../../models';
+import { ImageState, Inspection, LoadStatus, Team } from '../../models';
 import {
 	getAllImageInfoForEvent,
-	getComments,
 	getInspections,
 	selectTeam,
 	useAppDispatch,
@@ -13,7 +12,6 @@ import {
 import TeamDetail from './team-detail/TeamDetail';
 import TeamList from './team-list/TeamList';
 import './TeamPage.scss';
-import CommentSection from './comment-section/CommentSection';
 import DataFailure from '../shared/data-failure/DataFailure';
 import TeamListSkeleton from './team-list-skeleton/TeamListSkeleton';
 import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
@@ -29,7 +27,6 @@ export default function TeamPage() {
 
 	useEffect(
 		() => {
-			dispatch(getComments());
 			dispatch(getAllImageInfoForEvent());
 			dispatch(getInspections());
 		},
@@ -38,7 +35,6 @@ export default function TeamPage() {
 
 	// Selectors
 	const images: ImageState = useAppSelector(state => state.images);
-	const comments: CommentsForEvent = useAppSelector(state => state.comments.comments);
 	const inspections: Inspection[] = useAppSelector(state => state.inspections.inspections);
 	const teamsLoadStatus: LoadStatus = useAppSelector(state => state.teams.loadStatus);
 	const teams: Team[] = useAppSelector(state => state.teams.data);
@@ -48,10 +44,9 @@ export default function TeamPage() {
 		() => getTeamsWithDataOrImagesOrCommentsOrInspections(
 			teams,
 			images,
-			comments,
 			inspections
 		),
-		[teams, images, comments, inspections]
+		[teams, images, inspections]
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
@@ -91,7 +86,6 @@ export default function TeamPage() {
 			</div>
 			<div className="team-detail-wrapper">
 				<TeamDetail robotNumber={ selectedRobotNumber } />
-				{ selectedRobotNumber && <CommentSection teamNumber={ selectedRobotNumber } /> }
 			</div>
 		</main>
 	);
@@ -100,15 +94,12 @@ export default function TeamPage() {
 const getTeamsWithDataOrImagesOrCommentsOrInspections = (
 	teamsWithData: Team[],
 	images: ImageState,
-	comments: CommentsForEvent,
 	inspections: Inspection[]
 ): Team[] => {
 	const teamNumbersWithImages: number[] = Object.getOwnPropertyNames(images.images).map(num => Number(num));
-	const teamNumbersWithComments: number[] = Object.getOwnPropertyNames(comments).map(num => Number(num));
 	const teamNumbersWithInspections: number[] = inspections.map((inspection: Inspection) => inspection.robotNumber);
 	const uniqueTeamNumbersWithImagesOrCommentsOrInspections: Set<number> = new Set([
 		...teamNumbersWithImages,
-		...teamNumbersWithComments,
 		...teamNumbersWithInspections
 	]);
 

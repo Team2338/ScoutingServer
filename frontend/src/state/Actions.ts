@@ -1,5 +1,4 @@
 import {
-	CommentsForEvent,
 	Inspection,
 	GlobalObjectiveStats,
 	ImageInfo,
@@ -16,8 +15,6 @@ export interface Action {
 
 export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
-	GET_CSV_START = '[CSV] Start getting CSV',
-	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	GET_MATCHES_FAIL = '[MATCH] Failed to get matches',
@@ -46,23 +43,11 @@ export enum Actions {
 	HIDE_INSPECTION_COLUMN = '[INSPECTION] Hide column',
 	SHOW_INSPECTION_COLUMN = '[INSPECTION] Show column',
 	SET_HIDDEN_INSPECTION_COLUMNS_START = '[INSPECTION] Set hidden columns',
-	GET_ALL_COMMENTS_START = '[COMMENTS] Start getting all comments',
-	GET_ALL_COMMENTS_SUCCESS = '[COMMENTS] Successfully got all comments',
-	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
 	type: Actions.SELECT_LANG_SUCCESS,
 	payload: language
-});
-
-export const getCsvStart = (): Action => ({
-	type: Actions.GET_CSV_START,
-});
-
-export const getCsvSuccess = (url: string): Action => ({
-	type: Actions.GET_CSV_SUCCESS,
-	payload: url
 });
 
 export const getMatchesStart = (): Action => ({
@@ -216,20 +201,4 @@ export const showInspectionColumnStart = (column: string): Action => ({
 export const setHiddenInspectionColumnsStart = (columns: string[]): Action => ({
 	type: Actions.SET_HIDDEN_INSPECTION_COLUMNS_START,
 	payload: columns
-});
-
-export const getCommentsStart = (): Action => ({
-	type: Actions.GET_ALL_COMMENTS_START
-});
-
-export const getCommentsSuccess = (comments: CommentsForEvent, topics: string[]): Action => ({
-	type: Actions.GET_ALL_COMMENTS_SUCCESS,
-	payload: {
-		comments: comments,
-		topics: topics
-	}
-});
-
-export const getCommentsFail = (): Action => ({
-	type: Actions.GET_ALL_COMMENTS_FAIL
 });

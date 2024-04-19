@@ -8,7 +8,7 @@ import {
 	TeamObjectiveStats
 } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { getComments, getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
+import { getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
@@ -26,7 +26,6 @@ function StatPage() {
 
 	useEffect(
 		() => {
-			dispatch(getComments());
 			dispatch(getInspections());
 		},
 		[dispatch]

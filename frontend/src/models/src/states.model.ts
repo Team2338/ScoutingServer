@@ -8,7 +8,7 @@ import {
 	Plan,
 	Team
 } from './response.model';
-import { CommentsForEvent, Inspection } from './display.model';
+import { Inspection } from './display.model';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -24,10 +24,6 @@ export enum LoadStatus {
 export interface AppState {
 	language: Language;
 	login: LoginState;
-	csv: {
-		loadStatus: LoadStatus;
-		url: string;
-	};
 	matches: {
 		loadStatus: LoadStatus;
 		raw: MatchResponse[];
@@ -53,7 +49,6 @@ export interface AppState {
 	};
 	images: ImageState;
 	inspections: InspectionState;
-	comments: CommentState;
 }
 
 export interface LoginState {
@@ -80,10 +75,4 @@ export interface InspectionState {
 	inspections: Inspection[];
 	questionNames: string[];
 	hiddenQuestionNames: string[];
-}
-
-export interface CommentState {
-	loadStatus: LoadStatus;
-	comments: CommentsForEvent;
-	topics: string[];
 }

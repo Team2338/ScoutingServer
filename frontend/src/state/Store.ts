@@ -13,10 +13,6 @@ const INITIAL_STATE: AppState = {
 		eventCode: 'test',
 		secretCode: 'test',
 	},
-	csv: {
-		loadStatus: LoadStatus.none,
-		url: null
-	},
 	matches: {
 		loadStatus: LoadStatus.none,
 		raw: [],
@@ -50,11 +46,6 @@ const INITIAL_STATE: AppState = {
 		questionNames: [],
 		hiddenQuestionNames: []
 	},
-	comments: {
-		loadStatus: LoadStatus.none,
-		comments: {},
-		topics: []
-	}
 };
 
 const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {
@@ -63,22 +54,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 			return {
 				...state,
 				language: action.payload
-			};
-		case Actions.GET_CSV_START:
-			return {
-				...state,
-				csv: {
-					loadStatus: LoadStatus.loading,
-					url: null
-				}
-			};
-		case Actions.GET_CSV_SUCCESS:
-			return {
-				...state,
-				csv: {
-					loadStatus: LoadStatus.success,
-					url: action.payload
-				}
 			};
 		case Actions.GET_MATCHES_START:
 			return {
@@ -337,32 +312,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				inspections: {
 					...state.inspections,
 					hiddenQuestionNames: action.payload
-				}
-			};
-		case Actions.GET_ALL_COMMENTS_START:
-			return {
-				...state,
-				comments: {
-					...state.comments,
-					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
-				}
-			};
-		case Actions.GET_ALL_COMMENTS_SUCCESS:
-			return {
-				...state,
-				comments: {
-					...state.comments,
-					loadStatus: LoadStatus.success,
-					comments: action.payload.comments,
-					topics: action.payload.topics
-				}
-			};
-		case Actions.GET_ALL_COMMENTS_FAIL:
-			return {
-				...state,
-				comments: {
-					...state.comments,
-					loadStatus: getNextStatusOnLoad(state.comments.loadStatus)
 				}
 			};
 		default:

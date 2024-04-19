@@ -4,7 +4,6 @@ import { Dialog, DialogContent, IconButton, Slide } from '@mui/material';
 import TeamDetail from '../../team-page/team-detail/TeamDetail';
 import { useTranslator } from '../../../service/TranslateService';
 import { ArrowBack } from '@mui/icons-material';
-import CommentSection from '../../team-page/comment-section/CommentSection';
 
 interface IProps {
 	isOpen: boolean;
@@ -59,7 +58,6 @@ export default function TeamDetailModal(props: IProps) {
 				}}
 			>
 				<TeamDetail robotNumber={ props.robotNumber } />
-				{ props.robotNumber && <CommentSection teamNumber={ props.robotNumber } /> }
 			</DialogContent>
 		</Dialog>
 	);

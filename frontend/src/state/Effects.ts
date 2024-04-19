@@ -1,15 +1,15 @@
 import {
 	AppState,
-	CommentsForEvent,
 	Inspection,
 	ImageInfo,
 	Language,
 	LanguageInfo,
 	Match,
 	MatchResponse,
-	Team, GlobalObjectiveStats, ImageInfoResponse
+	Team,
+	GlobalObjectiveStats,
+	ImageInfoResponse
 } from '../models';
-import commentService from '../service/CommentService';
 import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
 import gearscoutService from '../service/GearscoutService';
@@ -21,11 +21,6 @@ import {
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
-	getCommentsFail,
-	getCommentsStart,
-	getCommentsSuccess,
-	getCsvStart,
-	getCsvSuccess,
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
@@ -103,37 +98,11 @@ export const showInspectionColumn = (column: string) => async (dispatch: AppDisp
 	localStorage.setItem('hiddenInspectionColumns', hiddenColumns.join('|:'));
 };
 
-
-// export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
-// 	console.log('Getting all data');
-// 	dispatch(getCsvData());
-// 	await getMatches(dispatch, getState);
-// 	await getTeams()(dispatch, getState);
-// 	await getGlobalStats()(dispatch, getState);
-// 	console.log('Got all data');
-// }
-//
-// const getMatches = async (dispatch, getState: GetState) => {
-// 	console.log('Getting matches');
-// 	dispatch(getMatchesStart());
-//
-// 	try {
-// 		const response = await gearscoutService.getMatches(getState().login.teamNumber, getState().login.eventCode, getState().login.secretCode);
-// 		const matchResponses: MatchResponse[] = response.data;
-// 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(matchResponses);
-//
-// 		dispatch(getMatchesSuccess(matches, matchResponses));
-// 	} catch (error) {
-// 		console.error('Error getting matches', error);
-// 	}
-// };
-
 export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting matches sync');
 	dispatch(getMatchesStart());
 	dispatch(calculateTeamStatsStart());
 	dispatch(calculateGlobalStatsStart());
-	// dispatch(getCsvData());
 
 	try {
 		const response = await gearscoutService.getMatches(
@@ -157,34 +126,6 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	} catch (error) {
 		console.error('Error getting matches', error);
 		dispatch(getMatchesFail());
-	}
-};
-
-export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log('Getting CSV');
-
-	dispatch(getCsvStart());
-	const lastUrl = getState().csv.url;
-
-	try {
-		const response = await gearscoutService.getMatchesAsCsv(
-			getState().login.teamNumber,
-			getState().login.gameYear,
-			getState().login.eventCode,
-			getState().login.secretCode
-		);
-		const csvContent = response.data;
-		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
-
-		// Revoke last URL
-		if (lastUrl) {
-			window.URL.revokeObjectURL(lastUrl);
-		}
-
-		const nextUrl = window.URL.createObjectURL(csvBlob);
-		dispatch(getCsvSuccess(nextUrl));
-	} catch (error) {
-		console.error('Error getting CSV', error);
 	}
 };
 
@@ -229,26 +170,6 @@ const calculateData = (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(calculateGlobalStatsSuccess(globalStats));
 };
 
-// export const getTeams = () => async (dispatch, getState: GetState) => {
-// 	console.log('Computing team statistics');
-// 	dispatch(calculateTeamStatsStart());
-//
-// 	const matches = getState().matches.raw.filter((match: MatchResponse) => !match.isHidden); // Filter out hidden matches
-// 	const teams: Team[] = teamModelService.createTeams(matches);
-// 	teams.sort((a: Team, b: Team) => a.id - b.id); // Sort by team number, ascending
-//
-// 	dispatch(calculateTeamStatsSuccess(teams));
-// };
-
-// export const getGlobalStats = () => async (dispatch, getState: GetState) => {
-// 	console.log('Computing global statistics');
-// 	dispatch(calculateGlobalStatsStart());
-//
-// 	const teams = getState().teams.data;
-// 	const globalStats = statModelService.calculateGlobalStats(teams);
-// 	dispatch(calculateGlobalStatsSuccess(globalStats));
-// };
-
 export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting image info for event');
 	dispatch(getEventImageInfoStart());
@@ -289,26 +210,5 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 	} catch (error) {
 		console.log('Error getting inspections', error);
 		dispatch(getInspectionsFail());
-	}
-};
-
-export const getComments = () => async (dispatch: AppDispatch, getState: GetState) => {
-	console.log('Getting comments for event');
-	dispatch(getCommentsStart());
-
-	try {
-		const response = await gearscoutService.getCommentsForEvent({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
-		});
-
-		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);
-		const topics: string[] = commentService.getUniqueTopics(response.data);
-		dispatch(getCommentsSuccess(comments, topics));
-	} catch (error) {
-		console.log('Error getting comments', error);
-		dispatch(getCommentsFail());
 	}
 };

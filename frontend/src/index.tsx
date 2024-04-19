@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import { store } from './state';
-import { myRegister, unregister } from './serviceWorkerRegistration';
 
 // Inject the App component into the index.html
 const container = document.getElementById('root');
@@ -16,6 +15,3 @@ root.render(
 		</BrowserRouter>
 	</Provider>
 );
-
-// myRegister();
-unregister();

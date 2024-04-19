@@ -10,8 +10,8 @@ const INITIAL_STATE: AppState = {
 		teamNumber: 9999,
 		gameYear: new Date().getFullYear(),
 		username: 'Public',
-		eventCode: 'test',
-		secretCode: 'test',
+		eventCode: 'Milstein',
+		secretCode: 'Thursday',
 	},
 	matches: {
 		loadStatus: LoadStatus.none,

@@ -27,17 +27,17 @@ export const myRegister = async () => {
 	if ('serviceWorker' in navigator) {
 		try {
 			const registration: ServiceWorkerRegistration = await navigator.serviceWorker
-				.register(`${import.meta.env.BASE_URL}/service-worker.js`, {
-					scope: '/'
+				.register(`${import.meta.env.BASE_URL}service-worker.js`, {
+					type: 'module'
 				});
 
-			if (registration.installing) {
-				console.log('Service worker installing');
-			} else if (registration.waiting) {
-				console.log('Service worker installed');
-			} else if (registration.active) {
-				console.log('Service worker active');
-			}
+			// if (registration.installing) {
+			// 	console.log('Service worker installing');
+			// } else if (registration.waiting) {
+			// 	console.log('Service worker installed');
+			// } else if (registration.active) {
+			// 	console.log('Service worker active');
+			// }
 		} catch (error) {
 			console.error(`Service worker registration failed with ${error}`);
 		}

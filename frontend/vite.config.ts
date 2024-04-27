@@ -22,7 +22,20 @@ export default defineConfig({
 		})
 	],
 	build: {
-		outDir: 'build'
+		outDir: 'build',
+		rollupOptions: {
+			input: {
+				app: './index.html',
+				'service-worker': './src/service-worker.ts',
+			},
+			output: {
+				entryFileNames: assetInfo => {
+					return assetInfo.name === 'service-worker'
+						? '[name].js'
+						: 'assets/js/[name]-[hash].js'
+				},
+			}
+		}
 	},
 	server: { // Settings for dev server
 		open: true, // Open the browser automatically

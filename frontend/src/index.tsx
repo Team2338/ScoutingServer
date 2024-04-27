@@ -17,5 +17,5 @@ root.render(
 	</Provider>
 );
 
-// myRegister();
-unregister();
+myRegister();
+// unregister();

@@ -23,6 +23,8 @@ import team.gif.gearscout.auth.LoginResponse;
 import team.gif.gearscout.auth.AuthService;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -64,14 +66,26 @@ public class ImageController {
 		} catch (JsonProcessingException e) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
-		
-		if (!Objects.equals(credentials.role(), "admin")) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
+		boolean isAdmin = Objects.equals(credentials.role(), "admin");
+		boolean isSuperAdmin = Objects.equals(credentials.role(), "superadmin");
+		if (!isAdmin && !isSuperAdmin) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only admins can add images");
+		}
+
+		LocalDateTime now = LocalDateTime.now();
+		DayOfWeek dayOfWeek = now.getDayOfWeek();
+		boolean isCompetitionDay = dayOfWeek == DayOfWeek.WEDNESDAY
+			|| dayOfWeek == DayOfWeek.THURSDAY
+			|| dayOfWeek == DayOfWeek.FRIDAY
+			|| dayOfWeek == DayOfWeek.SATURDAY;
+		if (isAdmin && !isCompetitionDay) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You may only add images on competition days (based on US Central Time)");
 		}
 		
 		// In the future, we will allow a user to belong to multiple teams (if not only for testing)
-		if (!Objects.equals(teamNumber, credentials.teamNumber())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		if (!isSuperAdmin && !Objects.equals(teamNumber, credentials.teamNumber())) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Specified team number does not match user's team number");
 		}
 		
 		imageService.validateImage(image);

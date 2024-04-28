@@ -59,6 +59,17 @@ public class MatchService {
 		
 		return match;
 	}
+
+	public MatchEntity setMatchHiddenStatus(Long matchId, boolean isHidden) {
+		MatchEntity match = matchRepository
+			.findById(matchId)
+			.orElseThrow(() -> new MatchNotFoundException(matchId));
+
+		match.setIsHidden(isHidden);
+		match = matchRepository.save(match);
+
+		return match;
+	}
 	
 	public List<Integer> getDistinctTeamNumbers() {
 		return matchRepository.findDistinctTeamNumbers();

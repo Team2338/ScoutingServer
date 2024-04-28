@@ -28,6 +28,11 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	public UserEntity findUserById(Long id) {
+		return userRepository.findById(id)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+	}
+
 	public UserEntity findUserByEmail(String email) throws ResponseStatusException {
 		return userRepository.findByEmail(email)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));

@@ -55,11 +55,13 @@ public class TokenService {
 		return encodedHeader + "." + encodedPayload + "." + signature;
 	}
 
-	public void validateToken(String token) throws ResponseStatusException {
+	public Long validateToken(String token) throws ResponseStatusException {
 		validateTokenStructure(token);
 		validateTokenIntegrity(token);
 		TokenModel tokenModel = parseToken(token);
 		validateTokenExistence(tokenModel);
+
+		return tokenModel.getUserId();
 	}
 
 
@@ -133,7 +135,7 @@ public class TokenService {
 	private void validateTokenExistence(TokenModel token) {
 		Optional<TokenEntity> possibleTokenEntity = tokenRepository.findById(token.getTokenId());
 		if (possibleTokenEntity.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found");
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token not found");
 		}
 	}
 

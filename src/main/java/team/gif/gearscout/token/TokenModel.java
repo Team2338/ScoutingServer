@@ -55,7 +55,7 @@ public class TokenModel {
 			"GearScout",
 			tokenId,
 			timestamp,
-			userId + "",
+			userId,
 			role
 		);
 	}
@@ -63,6 +63,10 @@ public class TokenModel {
 
 	public UUID getTokenId() {
 		return payload.jti;
+	}
+
+	public Long getUserId() {
+		return payload.sub;
 	}
 
 	public String getHeader() {
@@ -109,7 +113,7 @@ public class TokenModel {
 		String iss,
 		UUID jti,
 		String iat,
-		String sub,
+		Long sub,
 		String rol
 	) {}
 }

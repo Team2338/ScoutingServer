@@ -65,7 +65,7 @@ public class MatchControllerV2 extends MatchController {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, true);
+		MatchEntity result = matchService.setMatchHiddenStatus(matchId, true);
 		return ResponseEntity.ok(result);
 	}
 
@@ -93,7 +93,7 @@ public class MatchControllerV2 extends MatchController {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, false);
+		MatchEntity result = matchService.setMatchHiddenStatus(matchId, false);
 		return ResponseEntity.ok(result);
 	}
 

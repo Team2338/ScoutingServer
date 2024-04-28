@@ -1,0 +1,122 @@
+import './CreateUser.scss';
+import React, { useState } from 'react';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import { useTranslator } from '../../../service/TranslateService';
+import { Statelet } from '../../../models';
+import { AppDispatch, createUser, useAppDispatch } from '../../../state';
+
+interface IProps {
+
+}
+
+export default function CreateUser(props: IProps) {
+
+	const translate = useTranslator();
+	const dispatch: AppDispatch = useAppDispatch();
+	const [email, setEmail]: Statelet<string> = useState('');
+	const [password, setPassword]: Statelet<string> = useState('');
+	const [teamNumber, setTeamNumber]: Statelet<string> = useState('');
+	const [username, setUsername]: Statelet<string> = useState('');
+
+	const isValid: boolean = Boolean(
+		email
+		&& password.length > 8
+		&& teamNumber
+		&& Number.isInteger(teamNumber)
+		&& username
+	);
+
+	const handleSubmit = (event): void => {
+		event.preventDefault();
+
+		if (!isValid) return;
+
+		dispatch(createUser({
+			email: email,
+			password: password,
+			teamNumber: Number(teamNumber),
+			username: username
+		}));
+	};
+
+	return (
+		<form
+			className="create-user-form"
+			aria-labelledby="title"
+			onSubmit={ handleSubmit }
+		>
+			<h1 className="title" id="title">Create User</h1>
+			<TextField
+				id="email"
+				label={ translate('EMAIL') }
+				name="email"
+				type="email"
+				margin="dense"
+				variant="outlined"
+				value={ email }
+				onChange={ (event) => setEmail(event.target.value) }
+				InputProps={{
+					startAdornment: <InputAdornment position="start">@</InputAdornment>
+				}}
+				autoComplete="off"
+				autoFocus={ true }
+			/>
+			<TextField
+				id="password"
+				label={ translate('PASSWORD') }
+				name="password"
+				type="password"
+				margin="dense"
+				variant="outlined"
+				value={ password }
+				onChange={ (event) => setPassword(event.target.value) }
+				inputProps={{
+					maxLength: 32,
+					minLength: 8
+				}}
+				autoComplete="off"
+			/>
+			<TextField
+				id="team-number"
+				label={ translate('TEAM_NUMBER') }
+				name="teamNumber"
+				type="number"
+				margin="dense"
+				variant="outlined"
+				value={ teamNumber }
+				onChange={ (event) => setTeamNumber(event.target.value) }
+				InputProps={{
+					startAdornment: <InputAdornment position="start">#</InputAdornment>
+				}}
+				inputProps={{
+					min: 0,
+					max: 9999
+				}}
+				autoComplete="off"
+			/>
+			<TextField
+				id="username"
+				label={ translate('USERNAME') }
+				name="username"
+				type="username"
+				margin="dense"
+				variant="outlined"
+				value={ username }
+				onChange={ (event) => setUsername(event.target.value) }
+				inputProps={{
+					maxLength: 32
+				}}
+			/>
+			<Button
+				className="create-user-form-submit"
+				variant="contained"
+				color="primary"
+				type="submit"
+				onClick={ handleSubmit }
+				disabled={ !isValid }
+			>
+				{ translate('CREATE_USER') }
+			</Button>
+		</form>
+	);
+}

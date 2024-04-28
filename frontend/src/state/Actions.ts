@@ -6,7 +6,7 @@ import {
 	Language,
 	Match,
 	MatchResponse,
-	Team
+	Team, ITokenModel
 } from '../models';
 
 export interface Action {
@@ -18,6 +18,9 @@ export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
 	LOGIN = '[AUTH] Login',
 	LOGOUT = '[AUTH] Logout',
+	CREATE_USER_START = '[AUTH] Start creating user',
+	CREATE_USER_SUCCESS = '[AUTH] Successfully created user',
+	CREATE_USER_FAIL = '[AUTH] Failed to create user',
 	GET_CSV_START = '[CSV] Start getting CSV',
 	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
@@ -71,6 +74,23 @@ export const loginSuccess = (data: {
 
 export const logoutSuccess = (): Action => ({
 	type: Actions.LOGOUT
+});
+
+export const createUserStart = (): Action => ({
+	type: Actions.CREATE_USER_START
+});
+
+export const createUserSuccess = (tokenString: string, token: ITokenModel): Action => ({
+	type: Actions.CREATE_USER_SUCCESS,
+	payload: {
+		tokenString: tokenString,
+		token: token
+	}
+});
+
+export const createUserFail = (message: string): Action => ({
+	type: Actions.CREATE_USER_FAIL,
+	payload: message
 });
 
 export const getCsvStart = (): Action => ({

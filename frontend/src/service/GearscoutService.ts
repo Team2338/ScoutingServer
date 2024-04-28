@@ -1,5 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CommentResponse, InspectionQuestionResponse, MatchResponse, ImageInfoResponse } from '../models';
+import {
+	CommentResponse,
+	InspectionQuestionResponse,
+	MatchResponse,
+	ImageInfoResponse,
+	ICreateUserRequest
+} from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -10,15 +16,12 @@ class GearscoutService {
 	});
 
 
-	createUser = (data: {
-		email: string,
-		password: string,
-		teamNumber: number,
-		username: string
-	}): GearscoutResponse<any> => {
+	/**
+	 * @param data Information about the new user
+	 * @returns A serialized auth token
+	 */
+	createUser = (data: ICreateUserRequest): GearscoutResponse<string> => {
 		const url: string = '/v2/user';
-
-
 		return this.http.post(url, data);
 	};
 

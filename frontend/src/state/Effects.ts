@@ -7,8 +7,12 @@ import {
 	LanguageInfo,
 	Match,
 	MatchResponse,
-	Team, GlobalObjectiveStats, ImageInfoResponse
+	Team,
+	GlobalObjectiveStats,
+	ImageInfoResponse,
+	ITokenModel
 } from '../models';
+import authService from '../service/AuthService';
 import commentService from '../service/CommentService';
 import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
@@ -20,7 +24,7 @@ import {
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
-	calculateTeamStatsSuccess,
+	calculateTeamStatsSuccess, createUserFail, createUserStart, createUserSuccess,
 	getCommentsFail,
 	getCommentsStart,
 	getCommentsSuccess,
@@ -44,6 +48,7 @@ import {
 	showInspectionColumnStart
 } from './Actions';
 import { AppDispatch } from './Store';
+import GearscoutService from '../service/GearscoutService';
 
 type GetState = () => AppState;
 
@@ -150,8 +155,19 @@ export const createUser = (data: {
 	teamNumber: number;
 	username: string;
 }) => async(dispatch: AppDispatch) => {
+	console.log('Creating user');
+	dispatch(createUserStart());
 
-}
+	try {
+		const response = await GearscoutService.createUser(data);
+		const tokenString: string = response.data;
+		const token: ITokenModel = authService.createTokenModel(tokenString);
+		dispatch(createUserSuccess(tokenString, token));
+	} catch (error) {
+		console.log('Error creating user', error);
+		dispatch(createUserFail('Error creating user'));
+	}
+};
 
 
 // export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {

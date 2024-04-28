@@ -138,11 +138,21 @@ export const login = (data: {
 	dispatch(loginSuccess(data));
 };
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch: AppDispatch) => {
 	localStorage.clear();
 
 	dispatch(logoutSuccess());
 };
+
+export const createUser = (data: {
+	email: string,
+	password: string,
+	teamNumber: number;
+	username: string;
+}) => async(dispatch: AppDispatch) => {
+
+}
+
 
 // export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
 // 	console.log('Getting all data');

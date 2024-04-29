@@ -9,6 +9,7 @@ import {
 	Team
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
+import { ITokenModel, UserRole } from './auth.model';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -21,9 +22,18 @@ export enum LoadStatus {
 	success = 'success',
 }
 
+export enum LoginStatus {
+	none = 'none',
+	guest = 'guest',
+	loggedIn = 'loggedIn',
+	loggingIn = 'loggingIn',
+	logInFailed = 'logInFailed',
+}
+
 export interface AppState {
 	language: Language;
 	login: LoginState;
+	loginV2: LoginV2State;
 	csv: {
 		loadStatus: LoadStatus;
 		url: string;
@@ -63,6 +73,20 @@ export interface LoginState {
 	username: string;
 	eventCode: string;
 	secretCode: string;
+}
+
+export interface LoginV2State {
+	loginStatus: LoginStatus;
+	role: UserRole;
+	token: ITokenModel;
+	tokenString: string;
+	guest: {
+		teamNumber: number;
+		gameYear: number;
+		username: string;
+		eventCode: string;
+		secretCode: string;
+	};
 }
 
 export interface ImageState {

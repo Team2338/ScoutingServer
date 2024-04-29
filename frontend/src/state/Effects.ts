@@ -166,6 +166,7 @@ export const createUser = (data: {
 	} catch (error) {
 		console.log('Error creating user', error);
 		dispatch(createUserFail('Error creating user'));
+		throw new Error('Error creating user');
 	}
 };
 

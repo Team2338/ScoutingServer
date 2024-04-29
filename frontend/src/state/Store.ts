@@ -1,5 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import {
+	AppState,
+	ImageInfo,
+	ImageState,
+	Language,
+	LoadStatus,
+	LoginStatus,
+	Match,
+	MatchResponse,
+	UserRole
+} from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
@@ -13,6 +23,13 @@ const INITIAL_STATE: AppState = {
 		username: null,
 		eventCode: null,
 		secretCode: null,
+	},
+	loginV2: {
+		loginStatus: LoginStatus.none,
+		role: null,
+		tokenString: null,
+		token: null,
+		guest: null
 	},
 	csv: {
 		loadStatus: LoadStatus.none,
@@ -76,12 +93,51 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					username: action.payload.username,
 					eventCode: action.payload.eventCode,
 					secretCode: action.payload.secretCode
+				},
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.guest,
+					role: UserRole.guest,
+					guest: {
+						teamNumber: action.payload.teamNumber,
+						gameYear: action.payload.gameYear,
+						username: action.payload.username,
+						eventCode: action.payload.eventCode,
+						secretCode: action.payload.secretCode
+					}
 				}
 			};
 		case Actions.LOGOUT:
 			return {
 				...INITIAL_STATE,
 				language: state.language
+			};
+		case Actions.CREATE_USER_START:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggingIn
+				}
+			};
+		case Actions.CREATE_USER_SUCCESS:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggedIn,
+					role: action.payload.token.role,
+					tokenString: action.payload.tokenString,
+					token: action.payload.token
+				}
+			};
+		case Actions.CREATE_USER_FAIL:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.logInFailed,
+				}
 			};
 		case Actions.GET_CSV_START:
 			return {

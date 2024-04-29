@@ -37,7 +37,7 @@ public class TokenService {
 	}
 
 
-	public String generateAndSaveToken(Long userId, String role) {
+	public String generateAndSaveToken(Long userId, String role, Integer teamNumber) {
 		OffsetDateTime currentTime = Instant.now()
 			.atOffset(ZoneOffset.UTC)
 			.truncatedTo(ChronoUnit.SECONDS);
@@ -45,7 +45,7 @@ public class TokenService {
 
 		tokenEntity = tokenRepository.save(tokenEntity);
 
-		TokenModel token = new TokenModel("HS256", tokenEntity.getTokenId(), userId, role);
+		TokenModel token = new TokenModel("HS256", tokenEntity.getTokenId(), userId, role, teamNumber);
 
 		Base64.Encoder tokenEncoder = Base64.getUrlEncoder();
 		String encodedHeader = tokenEncoder.encodeToString(token.getHeader().getBytes(StandardCharsets.UTF_8));

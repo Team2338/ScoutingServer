@@ -45,7 +45,7 @@ public class TokenModel {
 		this.payload = payload;
 	}
 
-	public TokenModel(String algorithm, UUID tokenId, Long userId, String role) {
+	public TokenModel(String algorithm, UUID tokenId, Long userId, String role, Integer teamNumber) {
 		header = new Header("JWT", algorithm);
 
 
@@ -56,7 +56,8 @@ public class TokenModel {
 			tokenId,
 			timestamp,
 			userId,
-			role
+			role,
+			teamNumber
 		);
 	}
 
@@ -108,12 +109,14 @@ public class TokenModel {
 	 * @param iat (Issued At) Date at which the token was generated
 	 * @param sub (Subject) User ID
 	 * @param rol Role of the user
+	 * @param tno Team number of the user
 	 */
 	private record Payload(
 		String iss,
 		UUID jti,
 		String iat,
 		Long sub,
-		String rol
+		String rol,
+		Integer tno
 	) {}
 }

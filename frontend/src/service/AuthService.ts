@@ -30,6 +30,7 @@ class AuthService {
 		return {
 			tokenId: response.payload.jti,
 			userId: response.payload.sub,
+			teamNumber: response.payload.tno,
 			role: response.payload.rol as UserRole,
 			tokenCreationDate: response.payload.iat
 		};

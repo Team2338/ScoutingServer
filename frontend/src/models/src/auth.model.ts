@@ -33,11 +33,13 @@ export interface ITokenPayloadResponse {
 	iat: string; // (Issued At) Date at which the token was generated
 	sub: number; // (Subject) User ID
 	rol: string; // Role of the user
+	tno: number; // Team number of the user
 }
 
 export interface ITokenModel {
 	tokenId: string;
 	userId: number;
+	teamNumber: number;
 	role: UserRole;
 	tokenCreationDate: string; // TODO: Convert to temporal data type
 }

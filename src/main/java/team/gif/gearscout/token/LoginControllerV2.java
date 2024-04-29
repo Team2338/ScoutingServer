@@ -47,7 +47,7 @@ public class LoginControllerV2 {
 		}
 
 		// Return token
-		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole());
+		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole(), user.getTeamNumber());
 		return ResponseEntity.status(HttpStatus.OK).body(token);
 	}
 

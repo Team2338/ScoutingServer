@@ -39,7 +39,7 @@ public class UserController {
 
 		UserEntity user = userService.createUser(request);
 		credentialService.saveCredentials(user.getUserId(), request.password());
-		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole());
+		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole(), user.getTeamNumber());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(token);
 	}

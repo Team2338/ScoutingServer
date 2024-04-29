@@ -20,9 +20,9 @@ export default function CreateUser(props: IProps) {
 
 	const isValid: boolean = Boolean(
 		email
-		&& password.length > 8
+		&& password.length >= 8
 		&& teamNumber
-		&& Number.isInteger(teamNumber)
+		// && Number.isInteger(teamNumber)
 		&& username
 	);
 
@@ -55,9 +55,6 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ email }
 				onChange={ (event) => setEmail(event.target.value) }
-				InputProps={{
-					startAdornment: <InputAdornment position="start">@</InputAdornment>
-				}}
 				autoComplete="off"
 				autoFocus={ true }
 			/>

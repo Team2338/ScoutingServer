@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../models';
 import { translate } from '../../service/TranslateService';
 import { login } from '../../state';
+import CreateUser from './create-user/CreateUser';
 
 const inputs = (state: AppState) => ({
 	initialGameYear: state.login.gameYear ?? '',
@@ -30,12 +31,19 @@ const outputs = (dispatch) => ({
 	}))
 });
 
+enum LoginPageVariant {
+	guestPage = 'guestPage',
+	loginPage = 'loginPage',
+	createUserPage = 'createUserPage',
+}
+
 class ConnectedLoginPage extends React.Component<any, any> {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			variant: LoginPageVariant.createUserPage,
 			gameYear: props.initialGameYear,
 			teamNumber: props.initialTeamNumber,
 			username: props.initialUsername,
@@ -73,6 +81,16 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	};
 
 	render() {
+		if (this.state.variant === LoginPageVariant.createUserPage) {
+			return (
+				<main className="login-page">
+					<div className="content-wrapper">
+						<CreateUser />
+					</div>
+				</main>
+			);
+		}
+
 		return (
 			<main className="login-page">
 				<div className="content-wrapper">

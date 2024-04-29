@@ -15,8 +15,8 @@ class AuthService {
 
 	private convertTokenStringToResponse = (tokenString: string): ITokenResponse => {
 		const parts: string[] = tokenString.split('.');
-		const headerString : string= parts[0];
-		const payloadString: string = parts[1];
+		const headerString : string= atob(parts[0]); // Decode from Base64
+		const payloadString: string = atob(parts[1]); // Decode from Base64
 		const header: ITokenHeaderResponse = JSON.parse(headerString);
 		const payload: ITokenPayloadResponse = JSON.parse(payloadString);
 

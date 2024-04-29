@@ -42,13 +42,12 @@ public class MatchControllerV2 extends MatchController {
 	}
 
 
-	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
+	@PutMapping(value = "/match/{matchId}/hide")
 	public ResponseEntity<MatchEntity> hideMatch(
-		@PathVariable Integer teamNumber,
 		@PathVariable Long matchId,
 		@RequestHeader(value = "Authorization") String token
 	) {
-		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
+		logger.debug("Received hideMatch request: {}", matchId);
 
 		if (token.startsWith("bearer")) {
 			token = token.replace("bearer ", "");
@@ -56,27 +55,22 @@ public class MatchControllerV2 extends MatchController {
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
-		List<String> allowedRoles = List.of("ADMIN", "SUPERADMIN");
-		if (!allowedRoles.contains(user.getRole())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
+		MatchEntity result = switch (user.getRole()) {
+			case "ADMIN" -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, true);
+			case "SUPERADMIN" -> matchService.setMatchHiddenStatus(matchId, true);
+			default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		};
 
-		if (user.getRole().equals("ADMIN") && !Objects.equals(teamNumber, user.getTeamNumber())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
-
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, true);
 		return ResponseEntity.ok(result);
 	}
 
 
-	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/unhide")
+	@PutMapping(value = "/match/{matchId}/unhide")
 	public ResponseEntity<MatchEntity> unhideMatch(
-		@PathVariable Integer teamNumber,
 		@PathVariable Long matchId,
 		@RequestHeader(value = "Authorization") String token
 	) {
-		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
+		logger.debug("Received unhideMatch request: {}", matchId);
 
 		if (token.startsWith("bearer")) {
 			token = token.replace("bearer ", "");
@@ -84,16 +78,12 @@ public class MatchControllerV2 extends MatchController {
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
-		List<String> allowedRoles = List.of("ADMIN", "SUPERADMIN");
-		if (!allowedRoles.contains(user.getRole())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
+		MatchEntity result = switch (user.getRole()) {
+			case "ADMIN" -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, false);
+			case "SUPERADMIN" -> matchService.setMatchHiddenStatus(matchId, false);
+			default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		};
 
-		if (user.getRole().equals("ADMIN") && !Objects.equals(teamNumber, user.getTeamNumber())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
-
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, false);
 		return ResponseEntity.ok(result);
 	}
 

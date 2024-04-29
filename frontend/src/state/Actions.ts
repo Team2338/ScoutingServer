@@ -6,7 +6,8 @@ import {
 	Language,
 	Match,
 	MatchResponse,
-	Team, ITokenModel
+	Team,
+	ITokenModel
 } from '../models';
 
 export interface Action {

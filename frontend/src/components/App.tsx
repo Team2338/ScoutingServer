@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { AppState } from '../models';
+import { AppState, LoginStatus } from '../models';
 import { initApp } from '../state';
 import './App.scss';
 import Header from './header/Header';
@@ -14,7 +14,7 @@ import InspectionPage from './inspection-page/InspectionPage';
 
 
 const select = (state: AppState) => ({
-	isLoggedIn: state.login.isLoggedIn,
+	isLoggedIn: state.loginV2.loginStatus === LoginStatus.loggedIn || state.loginV2.loginStatus === LoginStatus.guest,
 });
 
 const outputs = (dispatch) => ({

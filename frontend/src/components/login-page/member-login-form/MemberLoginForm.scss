@@ -1,0 +1,19 @@
+
+.member-login-form {
+	display: flex;
+	flex-direction: column;
+	min-width: 20rem;
+	padding: 16px;
+
+	.title {
+		margin: 0;
+		padding-bottom: 12px;
+		font-weight: 600;
+		font-size: 32px;
+		line-height: 40px;
+	}
+
+	&-submit {
+		margin-top: 24px !important;
+	}
+}

@@ -112,6 +112,33 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...INITIAL_STATE,
 				language: state.language
 			};
+		case Actions.LOGIN_AS_MEMBER_START:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggingIn
+				}
+			};
+		case Actions.LOGIN_AS_MEMBER_SUCCESS:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggedIn,
+					role: action.payload.token.role,
+					tokenString: action.payload.tokenString,
+					token: action.payload.token,
+				}
+			};
+		case Actions.LOGIN_AS_MEMBER_FAIL:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.logInFailed
+				}
+			};
 		case Actions.CREATE_USER_START:
 			return {
 				...state,

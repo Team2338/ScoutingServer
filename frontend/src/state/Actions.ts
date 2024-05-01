@@ -19,6 +19,9 @@ export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
 	LOGIN = '[AUTH] Login',
 	LOGOUT = '[AUTH] Logout',
+	LOGIN_AS_MEMBER_START = '[AUTH] Start login as member',
+	LOGIN_AS_MEMBER_SUCCESS = '[AUTH] Successfully logged in as member',
+	LOGIN_AS_MEMBER_FAIL = '[AUTH] Failed login as member',
 	CREATE_USER_START = '[AUTH] Start creating user',
 	CREATE_USER_SUCCESS = '[AUTH] Successfully created user',
 	CREATE_USER_FAIL = '[AUTH] Failed to create user',
@@ -75,6 +78,23 @@ export const loginSuccess = (data: {
 
 export const logoutSuccess = (): Action => ({
 	type: Actions.LOGOUT
+});
+
+export const loginAsMemberStart = (): Action => ({
+	type: Actions.LOGIN_AS_MEMBER_START
+});
+
+export const loginAsMemberSuccess = (tokenString: string, token: ITokenModel): Action => ({
+	type: Actions.LOGIN_AS_MEMBER_SUCCESS,
+	payload: {
+		tokenString: tokenString,
+		token: token
+	}
+});
+
+export const loginAsMemberFail = (message: string): Action => ({
+	type: Actions.LOGIN_AS_MEMBER_FAIL,
+	payload: message
 });
 
 export const createUserStart = (): Action => ({

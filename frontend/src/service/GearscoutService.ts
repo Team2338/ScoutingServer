@@ -16,6 +16,14 @@ class GearscoutService {
 	});
 
 
+	login = (email: string, password: string): GearscoutResponse<string> => {
+		const url: string = '/v2/auth/login';
+		return this.http.post(url, {
+			email: email,
+			password: password
+		});
+	};
+
 	/**
 	 * @param data Information about the new user
 	 * @returns A serialized auth token

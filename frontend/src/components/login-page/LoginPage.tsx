@@ -6,6 +6,7 @@ import { AppState } from '../../models';
 import { translate } from '../../service/TranslateService';
 import { login } from '../../state';
 import CreateUser from './create-user/CreateUser';
+import MemberLoginForm from './member-login-form/MemberLoginForm';
 
 const inputs = (state: AppState) => ({
 	initialGameYear: state.login.gameYear ?? '',
@@ -43,7 +44,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		super(props);
 
 		this.state = {
-			variant: LoginPageVariant.createUserPage,
+			variant: LoginPageVariant.loginPage,
 			gameYear: props.initialGameYear,
 			teamNumber: props.initialTeamNumber,
 			username: props.initialUsername,
@@ -86,6 +87,16 @@ class ConnectedLoginPage extends React.Component<any, any> {
 				<main className="login-page">
 					<div className="content-wrapper">
 						<CreateUser />
+					</div>
+				</main>
+			);
+		}
+
+		if (this.state.variant === LoginPageVariant.loginPage) {
+			return (
+				<main className="login-page">
+					<div className="content-wrapper">
+						<MemberLoginForm />
 					</div>
 				</main>
 			);

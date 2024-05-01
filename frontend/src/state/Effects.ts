@@ -39,7 +39,7 @@ import {
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
-	hideInspectionColumnStart,
+	hideInspectionColumnStart, loginAsMemberFail, loginAsMemberStart, loginAsMemberSuccess,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -147,6 +147,25 @@ export const logout = () => async (dispatch: AppDispatch) => {
 	localStorage.clear();
 
 	dispatch(logoutSuccess());
+};
+
+export const loginAsMember = (
+	email: string,
+	password: string
+) => async (dispatch: AppDispatch) => {
+	console.log('Logging in as member');
+	dispatch(loginAsMemberStart());
+
+	try {
+		const response = await GearscoutService.login(email, password);
+		const tokenString: string = response.data;
+		const token: ITokenModel = authService.createTokenModel(tokenString);
+		dispatch(loginAsMemberSuccess(tokenString, token));
+	} catch (error) {
+		console.log('Error logging in as member', error);
+		dispatch(loginAsMemberFail('Invalid email/password combination'));
+		throw new Error(error.message, error);
+	}
 };
 
 export const createUser = (data: {

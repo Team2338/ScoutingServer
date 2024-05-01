@@ -45,7 +45,7 @@ export default function CreateUser(props: IProps) {
 			aria-labelledby="title"
 			onSubmit={ handleSubmit }
 		>
-			<h1 className="title" id="title">Create User</h1>
+			<h1 className="title" id="title">{ translate('CREATE_USER') }</h1>
 			<TextField
 				id="email"
 				label={ translate('EMAIL') }

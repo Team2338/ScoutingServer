@@ -32,6 +32,23 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 		@Param("eventCode") String eventCode
 	);
 
+	/*
+	SELECT game_year, event_code, secret_code, count(event_code) AS match_count
+	FROM matches
+	WHERE matches.team_number = :teamNumber
+	GROUP BY game_year, event_code, secret_code
+	ORDER BY game_year DESC
+	 */
+
+	@Query(value = """
+	SELECT match.gameYear, match.eventCode, match.secretCode, COUNT(match.id) AS matchCount
+	FROM MatchEntity match
+	WHERE match.teamNumber = :teamNumber
+	GROUP BY match.gameYear, match.eventCode, match.secretCode
+	ORDER BY match.gameYear DESC
+	""")
+	List<EventInfo> getEventListForTeam(Integer teamNumber);
+
 	// TODO: Doesn't account for events with same code but different year
 	@Query(value = """
 	SELECT DISTINCT match.eventCode

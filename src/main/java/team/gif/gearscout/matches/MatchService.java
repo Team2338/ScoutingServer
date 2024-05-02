@@ -82,6 +82,10 @@ public class MatchService {
 		return match;
 	}
 
+	public List<EventInfo> getEventList(Integer teamNumber) {
+		return matchRepository.getEventListForTeam(teamNumber);
+	}
+
 	public List<Integer> getDistinctTeamNumbers() {
 		return matchRepository.findDistinctTeamNumbers();
 	}

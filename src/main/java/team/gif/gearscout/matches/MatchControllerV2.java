@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,7 +18,6 @@ import team.gif.gearscout.token.UserEntity;
 import team.gif.gearscout.token.UserService;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/v2", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +39,27 @@ public class MatchControllerV2 extends MatchController {
 		this.matchService = matchService;
 		this.tokenService = tokenService;
 		this.userService = userService;
+	}
+
+
+	@GetMapping(value = "/events")
+	public ResponseEntity<List<EventInfo>> getEvents(
+		@RequestHeader(value = "Authorization") String token
+	) {
+		logger.debug("Received getEvents request");
+
+		if (token.startsWith("bearer")) {
+			token = token.replace("bearer ", "");
+		}
+		Long userId = tokenService.validateToken(token);
+		UserEntity user = userService.findUserById(userId);
+
+		if (!user.getRole().equals("ADMIN") && !user.getRole().equals("SUPERADMIN")) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		List<EventInfo> events = matchService.getEventList(user.getTeamNumber());
+		return ResponseEntity.ok(events);
 	}
 
 

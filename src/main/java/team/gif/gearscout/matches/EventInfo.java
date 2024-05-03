@@ -4,5 +4,5 @@ public record EventInfo(
 	Integer gameYear,
 	String eventCode,
 	String secretCode,
-	Integer matchCount
+	Long matchCount
 ) {}

@@ -32,16 +32,8 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 		@Param("eventCode") String eventCode
 	);
 
-	/*
-	SELECT game_year, event_code, secret_code, count(event_code) AS match_count
-	FROM matches
-	WHERE matches.team_number = :teamNumber
-	GROUP BY game_year, event_code, secret_code
-	ORDER BY game_year DESC
-	 */
-
 	@Query(value = """
-	SELECT match.gameYear, match.eventCode, match.secretCode, COUNT(match.id) AS matchCount
+	SELECT new team.gif.gearscout.matches.EventInfo(match.gameYear, match.secretCode, match.eventCode, COUNT(match.id))
 	FROM MatchEntity match
 	WHERE match.teamNumber = :teamNumber
 	GROUP BY match.gameYear, match.eventCode, match.secretCode

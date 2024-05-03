@@ -4,7 +4,7 @@ import {
 	InspectionQuestionResponse,
 	MatchResponse,
 	ImageInfoResponse,
-	ICreateUserRequest
+	ICreateUserRequest, EventInfo
 } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
@@ -31,6 +31,17 @@ class GearscoutService {
 	createUser = (data: ICreateUserRequest): GearscoutResponse<string> => {
 		const url: string = '/v2/user';
 		return this.http.post(url, data);
+	};
+
+	getEvents = (tokenString: string): GearscoutResponse<EventInfo[]> => {
+		const url: string = '/v2/events';
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${tokenString}`
+			}
+		};
+
+		return this.http.get(url, config);
 	};
 
 	getMatches = (teamNumber: number, gameYear: number, eventCode: string, secretCode: string): GearscoutResponse<MatchResponse[]> => {

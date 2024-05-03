@@ -10,7 +10,7 @@ import {
 	Team,
 	GlobalObjectiveStats,
 	ImageInfoResponse,
-	ITokenModel
+	ITokenModel, EventInfo
 } from '../models';
 import authService from '../service/AuthService';
 import commentService from '../service/CommentService';
@@ -32,7 +32,7 @@ import {
 	getCsvSuccess,
 	getEventImageInfoFail,
 	getEventImageInfoStart,
-	getEventImageInfoSuccess,
+	getEventImageInfoSuccess, getEventsFail, getEventsStart, getEventsSuccess,
 	getInspectionsFail,
 	getInspectionsStart,
 	getInspectionsSuccess,
@@ -213,6 +213,21 @@ export const createUser = (data: {
 // 		console.error('Error getting matches', error);
 // 	}
 // };
+
+export const getEvents = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting events');
+	dispatch(getEventsStart());
+
+	try {
+		const tokenString: string = getState().loginV2.tokenString;
+		const response = await gearscoutService.getEvents(tokenString);
+		const events: EventInfo[] = response.data;
+		dispatch(getEventsSuccess(events));
+	} catch (error) {
+		console.log('Error getting events', error);
+		dispatch(getEventsFail('Error getting events'));
+	}
+};
 
 export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting matches sync');

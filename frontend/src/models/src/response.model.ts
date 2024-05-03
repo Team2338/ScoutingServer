@@ -119,3 +119,10 @@ export interface CommentResponse {
 	creator: string;
 	timeCreated: string;
 }
+
+export interface EventInfo {
+	gameYear: number;
+	eventCode: string;
+	secretCode: string;
+	matchCount: number;
+}

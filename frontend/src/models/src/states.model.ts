@@ -1,6 +1,7 @@
 import React from 'react';
 import { Language } from './languages.model';
 import {
+	EventInfo,
 	GlobalObjectiveStats,
 	Match,
 	MatchResponse,
@@ -38,6 +39,7 @@ export interface AppState {
 		loadStatus: LoadStatus;
 		url: string;
 	};
+	events: EventState,
 	matches: {
 		loadStatus: LoadStatus;
 		raw: MatchResponse[];
@@ -87,6 +89,11 @@ export interface LoginV2State {
 		eventCode: string;
 		secretCode: string;
 	};
+}
+
+export interface EventState {
+	loadStatus: LoadStatus;
+	events: EventInfo[];
 }
 
 export interface ImageState {

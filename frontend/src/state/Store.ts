@@ -35,6 +35,10 @@ const INITIAL_STATE: AppState = {
 		loadStatus: LoadStatus.none,
 		url: null
 	},
+	events: {
+		loadStatus: LoadStatus.none,
+		events: []
+	},
 	matches: {
 		loadStatus: LoadStatus.none,
 		raw: [],
@@ -180,6 +184,31 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				csv: {
 					loadStatus: LoadStatus.success,
 					url: action.payload
+				}
+			};
+		case Actions.GET_EVENTS_START:
+			return {
+				...state,
+				events: {
+					...state.events,
+					loadStatus: getNextStatusOnLoad(state.events.loadStatus)
+				}
+			};
+		case Actions.GET_EVENTS_SUCCESS:
+			return {
+				...state,
+				events: {
+					...state.events,
+					loadStatus: LoadStatus.success,
+					events: action.payload
+				}
+			};
+		case Actions.GET_EVENTS_FAIL:
+			return {
+				...state,
+				events: {
+					...state.events,
+					loadStatus: getNextStatusOnFail(state.events.loadStatus)
 				}
 			};
 		case Actions.GET_MATCHES_START:

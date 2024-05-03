@@ -7,7 +7,7 @@ import {
 	Match,
 	MatchResponse,
 	Team,
-	ITokenModel
+	ITokenModel, EventInfo
 } from '../models';
 
 export interface Action {
@@ -27,6 +27,9 @@ export enum Actions {
 	CREATE_USER_FAIL = '[AUTH] Failed to create user',
 	GET_CSV_START = '[CSV] Start getting CSV',
 	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
+	GET_EVENTS_START = '[EVENT] Start getting events',
+	GET_EVENTS_SUCCESS = '[EVENT] Successfully got events',
+	GET_EVENTS_FAIL = '[EVENT] Failed to get events',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	GET_MATCHES_FAIL = '[MATCH] Failed to get matches',
@@ -121,6 +124,20 @@ export const getCsvStart = (): Action => ({
 export const getCsvSuccess = (url: string): Action => ({
 	type: Actions.GET_CSV_SUCCESS,
 	payload: url
+});
+
+export const getEventsStart = (): Action => ({
+	type: Actions.GET_EVENTS_START
+});
+
+export const getEventsSuccess = (events: EventInfo[]): Action => ({
+	type: Actions.GET_EVENTS_SUCCESS,
+	payload: events
+});
+
+export const getEventsFail = (message: string): Action => ({
+	type: Actions.GET_EVENTS_FAIL,
+	payload: message
 });
 
 export const getMatchesStart = (): Action => ({

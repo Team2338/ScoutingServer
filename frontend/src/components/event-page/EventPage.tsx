@@ -1,31 +1,35 @@
 import React from 'react';
 import './EventPage.scss';
 import { useTranslator } from '../../service/TranslateService';
+import { EventInfo } from '../../models';
 
 export default function EventPage() {
 
 	// TODO: get list of events
 	const translate = useTranslator();
-	const events = [
+	const events: EventInfo[] = [
 		{
+			gameYear: 2024,
 			eventCode: 'Midwest',
 			secretCode: 'secret',
-			year: 2024
+			matchCount: 400
 		},
 		{
+			gameYear: 2024,
 			eventCode: 'CIR',
 			secretCode: 'secret',
-			year: 2024
+			matchCount: 350
 		},
 		{
+			gameYear: 2024,
 			eventCode: 'Champs',
 			secretCode: 'secret',
-			year: 2024
+			matchCount: 1400
 		}
 	];
 
 	const eventListItems = events.map((event) => (
-		<li key={event.eventCode}>
+		<li key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode }>
 			{ event.eventCode }
 		</li>
 	));
@@ -33,9 +37,9 @@ export default function EventPage() {
 	return (
 		<main className="page event-page">
 			<h1>{ translate('SELECT_AN_EVENT') }</h1>
-			<ul className="event-list">
+			<ol className="event-list">
 				{ eventListItems }
-			</ul>
+			</ol>
 		</main>
 	);
 }

@@ -129,7 +129,9 @@ public class TokenService {
 
 	private TokenModel parseToken(String token) throws ResponseStatusException {
 		String[] tokenParts = token.split("\\.");
-		return TokenModel.parse(tokenParts[0], tokenParts[1]);
+		byte[] header = Base64.getUrlDecoder().decode(tokenParts[0]);
+		byte[] payload = Base64.getUrlDecoder().decode(tokenParts[1]);
+		return TokenModel.parse(new String(header), new String(payload));
 	}
 
 	private void validateTokenExistence(TokenModel token) {

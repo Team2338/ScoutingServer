@@ -18,6 +18,8 @@ import team.gif.gearscout.token.UserEntity;
 import team.gif.gearscout.token.UserService;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "/api/v2", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,9 +50,11 @@ public class MatchControllerV2 extends MatchController {
 	) {
 		logger.debug("Received getEvents request");
 
-		if (token.startsWith("bearer")) {
-			token = token.replace("bearer ", "");
-		}
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
@@ -70,9 +74,11 @@ public class MatchControllerV2 extends MatchController {
 	) {
 		logger.debug("Received hideMatch request: {}", matchId);
 
-		if (token.startsWith("bearer")) {
-			token = token.replace("bearer ", "");
-		}
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
@@ -93,9 +99,11 @@ public class MatchControllerV2 extends MatchController {
 	) {
 		logger.debug("Received unhideMatch request: {}", matchId);
 
-		if (token.startsWith("bearer")) {
-			token = token.replace("bearer ", "");
-		}
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 

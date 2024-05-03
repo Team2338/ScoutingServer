@@ -11,10 +11,12 @@ import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
 import InspectionPage from './inspection-page/InspectionPage';
+import EventPage from './event-page/EventPage';
 
 
 const select = (state: AppState) => ({
 	isLoggedIn: state.loginV2.loginStatus === LoginStatus.loggedIn || state.loginV2.loginStatus === LoginStatus.guest,
+	hasSelectedEvent: !!state.login.eventCode
 });
 
 const outputs = (dispatch) => ({
@@ -34,6 +36,15 @@ class ConnectedApp extends React.Component<any, null> {
 				<React.Fragment>
 					<Header />
 					<LoginPage />
+				</React.Fragment>
+			);
+		}
+
+		if (!this.props.hasSelectedEvent) {
+			return (
+				<React.Fragment>
+					<Header />
+					<EventPage />
 				</React.Fragment>
 			);
 		}

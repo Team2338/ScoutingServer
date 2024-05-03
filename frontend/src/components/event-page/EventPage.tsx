@@ -29,8 +29,9 @@ export default function EventPage() {
 	];
 
 	const eventListItems = events.map((event) => (
-		<li key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode }>
-			{ event.eventCode }
+		<li key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode } className="event-list-item">
+			<div>{ event.eventCode } <span>({ event.matchCount })</span></div>
+			<div>********</div>
 		</li>
 	));
 

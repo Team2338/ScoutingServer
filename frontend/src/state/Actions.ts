@@ -30,6 +30,7 @@ export enum Actions {
 	GET_EVENTS_START = '[EVENT] Start getting events',
 	GET_EVENTS_SUCCESS = '[EVENT] Successfully got events',
 	GET_EVENTS_FAIL = '[EVENT] Failed to get events',
+	SELECT_EVENT = '[EVENT] Select event',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	GET_MATCHES_FAIL = '[MATCH] Failed to get matches',
@@ -138,6 +139,11 @@ export const getEventsSuccess = (events: EventInfo[]): Action => ({
 export const getEventsFail = (message: string): Action => ({
 	type: Actions.GET_EVENTS_FAIL,
 	payload: message
+});
+
+export const selectEvent = (event: EventInfo): Action => ({
+	type: Actions.SELECT_EVENT,
+	payload: event
 });
 
 export const getMatchesStart = (): Action => ({

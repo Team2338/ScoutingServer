@@ -121,6 +121,7 @@ export interface CommentResponse {
 }
 
 export interface EventInfo {
+	teamNumber: number;
 	gameYear: number;
 	eventCode: string;
 	secretCode: string;

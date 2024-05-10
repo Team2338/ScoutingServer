@@ -29,7 +29,8 @@ const INITIAL_STATE: AppState = {
 		role: null,
 		tokenString: null,
 		token: null,
-		guest: null
+		guest: null,
+		selectedEvent: null
 	},
 	csv: {
 		loadStatus: LoadStatus.none,
@@ -209,6 +210,14 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				events: {
 					...state.events,
 					loadStatus: getNextStatusOnFail(state.events.loadStatus)
+				}
+			};
+		case Actions.SELECT_EVENT:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					selectedEvent: action.payload
 				}
 			};
 		case Actions.GET_MATCHES_START:

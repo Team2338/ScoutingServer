@@ -89,6 +89,7 @@ export interface LoginV2State {
 		eventCode: string;
 		secretCode: string;
 	};
+	selectedEvent: EventInfo;
 }
 
 export interface EventState {

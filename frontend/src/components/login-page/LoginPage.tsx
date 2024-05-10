@@ -9,11 +9,11 @@ import CreateUser from './create-user/CreateUser';
 import MemberLoginForm from './member-login-form/MemberLoginForm';
 
 const inputs = (state: AppState) => ({
-	initialGameYear: state.login.gameYear ?? '',
-	initialTeamNumber: state.login.teamNumber ?? '',
-	initialEventCode: state.login.eventCode ?? '',
-	initialSecretCode: state.login.secretCode ?? '',
-	initialUsername: state.login.username ?? ''
+	initialGameYear: state.loginV2.selectedEvent?.gameYear ?? '',
+	initialTeamNumber: state.loginV2.selectedEvent?.teamNumber ?? '',
+	initialEventCode: state.loginV2.selectedEvent?.eventCode ?? '',
+	initialSecretCode: state.loginV2.selectedEvent?.secretCode ?? '',
+	initialUsername: state.loginV2.guest?.username ?? ''
 });
 
 const outputs = (dispatch) => ({

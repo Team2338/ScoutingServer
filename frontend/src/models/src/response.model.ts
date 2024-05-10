@@ -125,5 +125,5 @@ export interface EventInfo {
 	gameYear: number;
 	eventCode: string;
 	secretCode: string;
-	matchCount: number;
+	matchCount?: number;
 }

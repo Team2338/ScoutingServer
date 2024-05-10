@@ -33,7 +33,6 @@ export enum LoginStatus {
 
 export interface AppState {
 	language: Language;
-	login: LoginState;
 	loginV2: LoginV2State;
 	csv: {
 		loadStatus: LoadStatus;
@@ -66,15 +65,6 @@ export interface AppState {
 	images: ImageState;
 	inspections: InspectionState;
 	comments: CommentState;
-}
-
-export interface LoginState {
-	isLoggedIn: boolean;
-	teamNumber: number;
-	gameYear: number;
-	username: string;
-	eventCode: string;
-	secretCode: string;
 }
 
 export interface LoginV2State {

@@ -16,14 +16,6 @@ import { Action, Actions } from './Actions';
 
 const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
-	login: {
-		isLoggedIn: false,
-		teamNumber: null,
-		gameYear: new Date().getFullYear(),
-		username: null,
-		eventCode: null,
-		secretCode: null,
-	},
 	loginV2: {
 		loginStatus: LoginStatus.none,
 		role: null,
@@ -90,15 +82,6 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 		case Actions.LOGIN:
 			return {
 				...state,
-				login: {
-					...state.login,
-					isLoggedIn: true,
-					teamNumber: action.payload.teamNumber,
-					gameYear: action.payload.gameYear,
-					username: action.payload.username,
-					eventCode: action.payload.eventCode,
-					secretCode: action.payload.secretCode
-				},
 				loginV2: {
 					...state.loginV2,
 					loginStatus: LoginStatus.guest,
@@ -109,6 +92,13 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 						username: action.payload.username,
 						eventCode: action.payload.eventCode,
 						secretCode: action.payload.secretCode
+					},
+					selectedEvent: {
+						teamNumber: action.payload.teamNumber,
+						gameYear: action.payload.gameYear,
+						eventCode: action.payload.eventCode,
+						secretCode: action.payload.secretCode,
+						matchCount: null
 					}
 				}
 			};

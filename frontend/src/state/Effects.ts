@@ -24,7 +24,10 @@ import {
 	calculateGlobalStatsStart,
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
-	calculateTeamStatsSuccess, createUserFail, createUserStart, createUserSuccess,
+	calculateTeamStatsSuccess,
+	createUserFail,
+	createUserStart,
+	createUserSuccess,
 	getCommentsFail,
 	getCommentsStart,
 	getCommentsSuccess,
@@ -32,14 +35,20 @@ import {
 	getCsvSuccess,
 	getEventImageInfoFail,
 	getEventImageInfoStart,
-	getEventImageInfoSuccess, getEventsFail, getEventsStart, getEventsSuccess,
+	getEventImageInfoSuccess,
+	getEventsFail,
+	getEventsStart,
+	getEventsSuccess,
 	getInspectionsFail,
 	getInspectionsStart,
 	getInspectionsSuccess,
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
-	hideInspectionColumnStart, loginAsMemberFail, loginAsMemberStart, loginAsMemberSuccess,
+	hideInspectionColumnStart,
+	loginAsMemberFail,
+	loginAsMemberStart,
+	loginAsMemberSuccess,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
@@ -238,10 +247,10 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 
 	try {
 		const response = await gearscoutService.getMatches(
-			getState().login.teamNumber,
-			getState().login.gameYear,
-			getState().login.eventCode,
-			getState().login.secretCode
+			getState().loginV2.selectedEvent.teamNumber,
+			getState().loginV2.selectedEvent.gameYear,
+			getState().loginV2.selectedEvent.eventCode,
+			getState().loginV2.selectedEvent.secretCode
 		);
 		const rawMatches: MatchResponse[] = response.data;
 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(rawMatches);
@@ -269,10 +278,10 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(
-			getState().login.teamNumber,
-			getState().login.gameYear,
-			getState().login.eventCode,
-			getState().login.secretCode
+			getState().loginV2.selectedEvent.teamNumber,
+			getState().loginV2.selectedEvent.gameYear,
+			getState().loginV2.selectedEvent.eventCode,
+			getState().loginV2.selectedEvent.secretCode
 		);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
@@ -292,7 +301,11 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Hiding match');
 	try {
-		const response = await gearscoutService.hideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
+		const response = await gearscoutService.hideMatch(
+			getState().loginV2.selectedEvent.teamNumber,
+			match.id,
+			getState().loginV2.selectedEvent.secretCode
+		);
 		const rawMatch: MatchResponse = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
@@ -306,7 +319,11 @@ export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getStat
 export const unhideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Unhiding match');
 	try {
-		const response = await gearscoutService.unhideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
+		const response = await gearscoutService.unhideMatch(
+			getState().loginV2.selectedEvent.teamNumber,
+			match.id,
+			getState().loginV2.selectedEvent.secretCode
+		);
 		const rawMatch = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
@@ -356,10 +373,10 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 
 	try {
 		const response = await gearscoutService.getImageInfoForEvent({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
+			teamNumber: getState().loginV2.selectedEvent.teamNumber,
+			gameYear: getState().loginV2.selectedEvent.gameYear,
+			eventCode: getState().loginV2.selectedEvent.eventCode,
+			secretCode: getState().loginV2.selectedEvent.secretCode
 		});
 
 		const infoResponses: ImageInfoResponse[] = response.data;
@@ -377,10 +394,10 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 
 	try {
 		const response = await gearscoutService.getInspections({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
+			teamNumber: getState().loginV2.selectedEvent.teamNumber,
+			gameYear: getState().loginV2.selectedEvent.gameYear,
+			eventCode: getState().loginV2.selectedEvent.eventCode,
+			secretCode: getState().loginV2.selectedEvent.secretCode
 		});
 
 		const inspections: Inspection[] = inspectionModelService.convertResponsesToModels(response.data);
@@ -399,10 +416,10 @@ export const getComments = () => async (dispatch: AppDispatch, getState: GetStat
 
 	try {
 		const response = await gearscoutService.getCommentsForEvent({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
+			teamNumber: getState().loginV2.selectedEvent.teamNumber,
+			gameYear: getState().loginV2.selectedEvent.gameYear,
+			eventCode: getState().loginV2.selectedEvent.eventCode,
+			secretCode: getState().loginV2.selectedEvent.secretCode
 		});
 
 		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);

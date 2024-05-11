@@ -10,7 +10,7 @@ import {
 	Team,
 	GlobalObjectiveStats,
 	ImageInfoResponse,
-	ITokenModel, EventInfo
+	ITokenModel, EventInfo, LoginResponse, UserInfo
 } from '../models';
 import authService from '../service/AuthService';
 import commentService from '../service/CommentService';
@@ -167,9 +167,10 @@ export const loginAsMember = (
 
 	try {
 		const response = await GearscoutService.login(email, password);
-		const tokenString: string = response.data;
+		const user: UserInfo = response.data.user;
+		const tokenString: string = response.data.token;
 		const token: ITokenModel = authService.createTokenModel(tokenString);
-		dispatch(loginAsMemberSuccess(tokenString, token));
+		dispatch(loginAsMemberSuccess(user, tokenString, token));
 	} catch (error) {
 		console.log('Error logging in as member', error);
 		dispatch(loginAsMemberFail('Invalid email/password combination'));

@@ -54,14 +54,5 @@ export const useIsLoggedInSelector = (): boolean => {
 };
 
 export const useUsernameSelector = (): string => {
-	return useAppSelector(state => {
-		switch (state.loginV2.loginStatus) {
-			case LoginStatus.guest:
-				return state.loginV2.guest.username;
-			case LoginStatus.loggedIn:
-				return 'TODO: username for admins'; // TODO: show username
-			default:
-				return null;
-		}
-	});
+	return useAppSelector(state => state.loginV2.user?.username);
 };

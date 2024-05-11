@@ -35,7 +35,7 @@ public class LoginControllerV2 {
 
 
 	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> login(@RequestBody @Valid LoginRequestV2 request) {
+	public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequestV2 request) {
 		logger.debug("Received login v2 request");
 
 		// Authenticate
@@ -46,9 +46,9 @@ public class LoginControllerV2 {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 
-		// Return token
 		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole(), user.getTeamNumber());
-		return ResponseEntity.status(HttpStatus.OK).body(token);
+		LoginResponse response = new LoginResponse(token, user);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 }

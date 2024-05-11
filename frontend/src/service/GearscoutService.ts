@@ -4,7 +4,7 @@ import {
 	InspectionQuestionResponse,
 	MatchResponse,
 	ImageInfoResponse,
-	ICreateUserRequest, EventInfo
+	ICreateUserRequest, EventInfo, LoginResponse
 } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
@@ -16,7 +16,7 @@ class GearscoutService {
 	});
 
 
-	login = (email: string, password: string): GearscoutResponse<string> => {
+	login = (email: string, password: string): GearscoutResponse<LoginResponse> => {
 		const url: string = '/v2/auth/login';
 		return this.http.post(url, {
 			email: email,

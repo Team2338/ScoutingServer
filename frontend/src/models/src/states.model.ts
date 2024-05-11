@@ -7,7 +7,7 @@ import {
 	MatchResponse,
 	ObjectiveDescriptor,
 	Plan,
-	Team
+	Team, UserInfo
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
 import { ITokenModel, UserRole } from './auth.model';
@@ -72,13 +72,7 @@ export interface LoginV2State {
 	role: UserRole;
 	token: ITokenModel;
 	tokenString: string;
-	guest: {
-		teamNumber: number;
-		gameYear: number;
-		username: string;
-		eventCode: string;
-		secretCode: string;
-	};
+	user: UserInfo;
 	selectedEvent: EventInfo;
 }
 

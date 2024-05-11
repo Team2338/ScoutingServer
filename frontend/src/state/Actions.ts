@@ -7,7 +7,7 @@ import {
 	Match,
 	MatchResponse,
 	Team,
-	ITokenModel, EventInfo
+	ITokenModel, EventInfo, UserInfo
 } from '../models';
 
 export interface Action {
@@ -88,9 +88,10 @@ export const loginAsMemberStart = (): Action => ({
 	type: Actions.LOGIN_AS_MEMBER_START
 });
 
-export const loginAsMemberSuccess = (tokenString: string, token: ITokenModel): Action => ({
+export const loginAsMemberSuccess = (user: UserInfo, tokenString: string, token: ITokenModel): Action => ({
 	type: Actions.LOGIN_AS_MEMBER_SUCCESS,
 	payload: {
+		user: user,
 		tokenString: tokenString,
 		token: token
 	}

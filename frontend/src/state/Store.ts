@@ -21,7 +21,7 @@ const INITIAL_STATE: AppState = {
 		role: null,
 		tokenString: null,
 		token: null,
-		guest: null,
+		user: null,
 		selectedEvent: null
 	},
 	csv: {
@@ -86,12 +86,12 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					...state.loginV2,
 					loginStatus: LoginStatus.guest,
 					role: UserRole.guest,
-					guest: {
+					user: {
+						id: null,
+						email: null,
 						teamNumber: action.payload.teamNumber,
-						gameYear: action.payload.gameYear,
 						username: action.payload.username,
-						eventCode: action.payload.eventCode,
-						secretCode: action.payload.secretCode
+						role: UserRole.guest,
 					},
 					selectedEvent: {
 						teamNumber: action.payload.teamNumber,
@@ -122,6 +122,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					...state.loginV2,
 					loginStatus: LoginStatus.loggedIn,
 					role: action.payload.token.role,
+					user: action.payload.user,
 					tokenString: action.payload.tokenString,
 					token: action.payload.token,
 				}

@@ -1,40 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './EventPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { EventInfo } from '../../models';
-import { AppDispatch, selectEvent, useAppDispatch } from '../../state';
+import { EventInfo, LoadStatus } from '../../models';
+import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
+import DataFailure from '../shared/data-failure/DataFailure';
 
 export default function EventPage() {
 
-	// TODO: get list of events
 	const translate = useTranslator();
 	const dispatch: AppDispatch = useAppDispatch();
-
+	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
+	const events: EventInfo[] = useAppSelector(state => state.events.events);
 	const _selectEvent = (event: EventInfo) => dispatch(selectEvent(event));
 
-	const events: EventInfo[] = [
-		{
-			teamNumber: 2338,
-			gameYear: 2024,
-			eventCode: 'Midwest',
-			secretCode: 'secret',
-			matchCount: 400
+	useEffect(
+		() => {
+			dispatch(getEvents())
+				.catch((reason) => {
+					// TODO: proper error handling; maybe fall back to manual event entry
+					alert('Failed to get the list of events!\n');
+					console.error('Failed to get the list of events', reason);
+				});
 		},
-		{
-			teamNumber: 2338,
-			gameYear: 2024,
-			eventCode: 'CIR',
-			secretCode: 'secret',
-			matchCount: 350
-		},
-		{
-			teamNumber: 2338,
-			gameYear: 2024,
-			eventCode: 'Champs',
-			secretCode: 'secret',
-			matchCount: 1400
-		}
-	];
+		[dispatch]
+	);
+
+	if (eventLoadStatus === LoadStatus.none || eventLoadStatus === LoadStatus.loading) {
+		return (
+			<main className="page event-page">
+				{ translate('LOADING') }
+			</main>
+		);
+	}
+
+	if (eventLoadStatus === LoadStatus.failed) {
+		// TODO: Should default to manual event entry
+		return (
+			<main className="page event-page">
+				<DataFailure messageKey="FAILED_TO_LOAD_EVENTS" />
+			</main>
+		);
+	}
 
 	const eventListItems = events.map((event) => (
 		<li

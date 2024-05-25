@@ -30,8 +30,10 @@
 	&-title-row {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
+		row-gap: 8px;
 		column-gap: 20px;
 		padding-bottom: 8px;
 

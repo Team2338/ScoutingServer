@@ -107,7 +107,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 				<div className="content-wrapper">
 					<form className="login-page-form" onSubmit={ this.handleSubmit }>
 						<div className="login-page-title-row">
-							<Typography variant="h4">{ this.props.translate('SIGN_IN') }</Typography>
+							<Typography variant="h4">{ this.props.translate('GUEST') }</Typography>
 							<TextField
 								id="game-year-input"
 								label={ this.props.translate('GAME_YEAR') }

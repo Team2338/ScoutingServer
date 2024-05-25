@@ -23,7 +23,7 @@
 		padding: 16px;
 
 		&-submit {
-			margin-top: 24px !important;
+			margin-top: 16px !important;
 		}
 	}
 
@@ -37,6 +37,29 @@
 
 		#game-year-input {
 			min-width: 5em;
+		}
+	}
+
+	.link-section {
+		display: flex;
+		flex-direction: column;
+		padding-top: 32px;
+	}
+
+	#link-section__title {
+		font-weight: unset;
+		font-size: unset;
+		line-height: unset;
+		padding-bottom: 4px;
+	}
+
+	&__variant-link {
+		color: #1976D2;
+		width: fit-content;
+		padding-top: 8px;
+
+		&:hover {
+			cursor: pointer;
 		}
 	}
 }

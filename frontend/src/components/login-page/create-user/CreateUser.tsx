@@ -2,11 +2,11 @@ import './CreateUser.scss';
 import React, { useState } from 'react';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
-import { Statelet } from '../../../models';
+import { LoginPageVariant, Statelet } from '../../../models';
 import { AppDispatch, createUser, useAppDispatch } from '../../../state';
 
 interface IProps {
-
+	handlePageRedirect: (variant: LoginPageVariant) => void;
 }
 
 export default function CreateUser(props: IProps) {
@@ -67,10 +67,10 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={{
+				inputProps={ {
 					maxLength: 32,
 					minLength: 8
-				}}
+				} }
 				autoComplete="off"
 			/>
 			<TextField
@@ -82,13 +82,13 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ teamNumber }
 				onChange={ (event) => setTeamNumber(event.target.value) }
-				InputProps={{
+				InputProps={ {
 					startAdornment: <InputAdornment position="start">#</InputAdornment>
-				}}
-				inputProps={{
+				} }
+				inputProps={ {
 					min: 0,
 					max: 9999
-				}}
+				} }
 				autoComplete="off"
 			/>
 			<TextField
@@ -100,9 +100,9 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ username }
 				onChange={ (event) => setUsername(event.target.value) }
-				inputProps={{
+				inputProps={ {
 					maxLength: 32
-				}}
+				} }
 			/>
 			<Button
 				className="create-user-form-submit"
@@ -114,6 +114,20 @@ export default function CreateUser(props: IProps) {
 			>
 				{ translate('CREATE_USER') }
 			</Button>
+			<section className="link-section">
+				<span
+					className="login-page__variant-link"
+					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
+				>
+					{ translate('GUEST_SIGN_IN') } &gt;
+				</span>
+				<span
+					className="login-page__variant-link"
+					onClick={ () => props.handlePageRedirect(LoginPageVariant.loginPage) }
+				>
+					{ translate('MEMBER_SIGN_IN') } &gt;
+				</span>
+			</section>
 		</form>
 	);
 }

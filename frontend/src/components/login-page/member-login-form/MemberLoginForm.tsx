@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import './MemberLoginForm.scss';
+import '../LoginPage.scss';
 import { AppDispatch, loginAsMember, useAppDispatch } from '../../../state';
-import { Statelet } from '../../../models';
+import { LoginPageVariant, Statelet } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { Button, TextField } from '@mui/material';
 
-export default function MemberLoginForm() {
+interface IProps {
+	handlePageRedirect: (variant: LoginPageVariant) => void;
+}
+
+export default function MemberLoginForm(props: IProps) {
 	const translate = useTranslator();
 	const dispatch: AppDispatch = useAppDispatch();
 	const [email, setEmail]: Statelet<string> = useState('');
@@ -27,7 +32,7 @@ export default function MemberLoginForm() {
 			aria-labelledby="title"
 			onSubmit={ handleSubmit }
 		>
-			<h1 className="title" id="title">{ translate('Sign in') }</h1>
+			<h1 className="title" id="title">{ translate('SIGN_IN') }</h1>
 			<TextField
 				id="email"
 				label={ translate('EMAIL') }
@@ -49,9 +54,9 @@ export default function MemberLoginForm() {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={{
+				inputProps={ {
 					maxLength: 32
-				}}
+				} }
 			/>
 			<Button
 				className="member-login-form-submit"
@@ -61,8 +66,22 @@ export default function MemberLoginForm() {
 				onClick={ handleSubmit }
 				disabled={ !isValid }
 			>
-				{ translate('LOGIN') }
+				{ translate('SIGN_IN') }
 			</Button>
+			<section className="link-section">
+				<span
+					className="login-page__variant-link"
+					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
+				>
+					{ translate('GUEST_LOGIN') } &gt;
+				</span>
+				<span
+					className="login-page__variant-link"
+					onClick={ () => props.handlePageRedirect(LoginPageVariant.createUserPage) }
+				>
+					{ translate('CREATE_ACCOUNT') } &gt;
+				</span>
+			</section>
 		</form>
 	);
 }

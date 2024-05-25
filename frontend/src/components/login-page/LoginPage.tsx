@@ -2,18 +2,18 @@ import './LoginPage.scss';
 import React from 'react';
 import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import { connect } from 'react-redux';
-import { AppState } from '../../models';
+import { AppState, LoginPageVariant } from '../../models';
 import { translate } from '../../service/TranslateService';
 import { login } from '../../state';
 import CreateUser from './create-user/CreateUser';
 import MemberLoginForm from './member-login-form/MemberLoginForm';
 
 const inputs = (state: AppState) => ({
-	initialGameYear: state.loginV2.selectedEvent?.gameYear ?? '',
+	initialGameYear: state.loginV2.selectedEvent?.gameYear ?? (new Date()).getFullYear(),
 	initialTeamNumber: state.loginV2.selectedEvent?.teamNumber ?? '',
 	initialEventCode: state.loginV2.selectedEvent?.eventCode ?? '',
 	initialSecretCode: state.loginV2.selectedEvent?.secretCode ?? '',
-	initialUsername: state.loginV2.guest?.username ?? ''
+	initialUsername: state.loginV2.user?.username ?? ''
 });
 
 const outputs = (dispatch) => ({
@@ -32,19 +32,13 @@ const outputs = (dispatch) => ({
 	}))
 });
 
-enum LoginPageVariant {
-	guestPage = 'guestPage',
-	loginPage = 'loginPage',
-	createUserPage = 'createUserPage',
-}
-
 class ConnectedLoginPage extends React.Component<any, any> {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			variant: LoginPageVariant.loginPage,
+			variant: LoginPageVariant.guestPage,
 			gameYear: props.initialGameYear,
 			teamNumber: props.initialTeamNumber,
 			username: props.initialUsername,
@@ -71,6 +65,12 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		);
 	};
 
+	handlePageRedirect = (variant: LoginPageVariant) => {
+		this.setState({
+			variant: variant
+		});
+	};
+
 	isValid = (): boolean => {
 		return Boolean(
 			this.state.gameYear
@@ -86,7 +86,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 			return (
 				<main className="login-page">
 					<div className="content-wrapper">
-						<CreateUser />
+						<CreateUser handlePageRedirect={ this.handlePageRedirect } />
 					</div>
 				</main>
 			);
@@ -96,7 +96,7 @@ class ConnectedLoginPage extends React.Component<any, any> {
 			return (
 				<main className="login-page">
 					<div className="content-wrapper">
-						<MemberLoginForm />
+						<MemberLoginForm handlePageRedirect={ this.handlePageRedirect } />
 					</div>
 				</main>
 			);
@@ -196,6 +196,22 @@ class ConnectedLoginPage extends React.Component<any, any> {
 						>
 							{ this.props.translate('SIGN_IN') }
 						</Button>
+						<section className="link-section">
+							<span
+								className="login-page__variant-link"
+								color="secondary"
+								onClick={ () => this.handlePageRedirect(LoginPageVariant.loginPage) }
+							>
+								{ this.props.translate('MEMBER_LOGIN') } &gt;
+							</span>
+							<span
+								className="login-page__variant-link"
+								color="secondary"
+								onClick={ () => this.handlePageRedirect(LoginPageVariant.createUserPage) }
+							>
+								{ this.props.translate('CREATE_ACCOUNT') } &gt;
+							</span>
+						</section>
 					</form>
 				</div>
 			</main>

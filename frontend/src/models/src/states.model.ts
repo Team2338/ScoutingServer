@@ -23,6 +23,12 @@ export enum LoadStatus {
 	success = 'success',
 }
 
+export enum LoginPageVariant { // TODO: Use URL instead
+	guestPage = 'guestPage',
+	loginPage = 'loginPage',
+	createUserPage = 'createUserPage',
+}
+
 export enum LoginStatus {
 	none = 'none',
 	guest = 'guest',

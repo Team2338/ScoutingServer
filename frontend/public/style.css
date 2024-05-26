@@ -3,10 +3,12 @@
 	font-family: Roboto, Helvetica, Arial, sans-serif;
 
 	--header-height: 64px;
+	--side-padding: 16px;
 	--content-margin: 24px;
 	--border-color: rgba(0, 0, 0, 0.24);
 	--text-color: #000000;
 	--header-text-color: #ffffff;
+	--button-transition: background-color 100ms ease-in-out;
 
 	--stat-sidenav-width: 260px;
 }
@@ -15,6 +17,7 @@
 @media only screen and (max-width: 600px) {
 	:root {
 		--header-height: 56px;
+		--side-padding: 8px;
 		--content-margin: 16px;
 	}
 }

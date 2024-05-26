@@ -55,10 +55,12 @@ export default function EventPage() {
 
 	return (
 		<main className="page event-page">
-			<h1>{ translate('SELECT_AN_EVENT') }</h1>
-			<ol className="event-list">
-				{ eventListItems }
-			</ol>
+			<div className="event-list-wrapper">
+				<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
+				<ol className="event-list">
+					{ eventListItems }
+				</ol>
+			</div>
 		</main>
 	);
 }

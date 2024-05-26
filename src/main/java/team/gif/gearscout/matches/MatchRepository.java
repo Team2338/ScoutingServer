@@ -42,7 +42,7 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 	)
 	FROM MatchEntity match
 	WHERE match.teamNumber = :teamNumber
-	GROUP BY match.gameYear, match.eventCode, match.secretCode
+	GROUP BY match.teamNumber, match.gameYear, match.eventCode, match.secretCode
 	ORDER BY match.gameYear DESC
 	""")
 	List<EventInfo> getEventListForTeam(Integer teamNumber);

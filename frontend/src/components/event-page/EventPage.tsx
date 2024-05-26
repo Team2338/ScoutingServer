@@ -36,7 +36,7 @@ export default function EventPage() {
 	if (eventLoadStatus === LoadStatus.failed) {
 		// TODO: Should default to manual event entry
 		return (
-			<main className="page event-page">
+			<main className="page event-page event-page-failed">
 				<DataFailure messageKey="FAILED_TO_LOAD_EVENTS" />
 			</main>
 		);

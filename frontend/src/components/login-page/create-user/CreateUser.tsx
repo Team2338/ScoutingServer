@@ -119,13 +119,13 @@ export default function CreateUser(props: IProps) {
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
 				>
-					{ translate('GUEST_SIGN_IN') } &gt;
+					{ translate('GUEST_LOGIN') } &gt;
 				</span>
 				<span
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.loginPage) }
 				>
-					{ translate('MEMBER_SIGN_IN') } &gt;
+					{ translate('MEMBER_LOGIN') } &gt;
 				</span>
 			</section>
 		</form>

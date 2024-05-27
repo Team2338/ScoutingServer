@@ -140,7 +140,8 @@ const languages: ILanguageTranslation = {
 		'CREATE_ACCOUNT': 'Create account',
 		'GUEST': 'Guest',
 		'EMAIL': 'Email',
-		'PASSWORD': 'Password'
+		'PASSWORD': 'Password',
+		'EVENTS': 'Events',
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -253,7 +254,8 @@ const languages: ILanguageTranslation = {
 		'CREATE_ACCOUNT': 'Crear una cuenta',
 		'GUEST': 'Invitado',
 		'EMAIL': 'Correo electrónico',
-		'PASSWORD': 'Contraseña'
+		'PASSWORD': 'Contraseña',
+		'EVENTS': 'Eventos',
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -366,7 +368,8 @@ const languages: ILanguageTranslation = {
 		'CREATE_ACCOUNT': 'Créer un compte',
 		'GUEST': 'Invité',
 		'EMAIL': 'E-mail',
-		'PASSWORD': 'Mot de passe'
+		'PASSWORD': 'Mot de passe',
+		'EVENTS': 'Événements',
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -479,7 +482,8 @@ const languages: ILanguageTranslation = {
 		'CREATE_ACCOUNT': 'Bir hesap oluşturun',
 		'GUEST': 'Misafir',
 		'EMAIL': 'E-posta',
-		'PASSWORD': 'Şifre'
+		'PASSWORD': 'Şifre',
+		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -591,6 +595,7 @@ const languages: ILanguageTranslation = {
 		'CREATE_ACCOUNT': 'Vytvořit účet', // TODO verify
 		'GUEST': 'Host', // TODO verify
 		'EMAIL': 'E-mailem', // TODO verify
-		'PASSWORD': 'Heslo' // TODO verify
+		'PASSWORD': 'Heslo', // TODO verify
+		'EVENTS': 'Události', // TODO verify
 	}
 };

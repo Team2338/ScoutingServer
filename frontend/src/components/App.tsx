@@ -16,6 +16,7 @@ import EventPage from './event-page/EventPage';
 
 const select = (state: AppState) => ({
 	isLoggedIn: state.loginV2.loginStatus === LoginStatus.loggedIn || state.loginV2.loginStatus === LoginStatus.guest,
+	loginStatus: state.loginV2.loginStatus,
 	hasSelectedEvent: state.loginV2.selectedEvent
 });
 
@@ -49,6 +50,9 @@ class ConnectedApp extends React.Component<any, null> {
 			);
 		}
 
+		const isNotGuest: boolean = this.props.loginStatus === LoginStatus.loggedIn;
+
+		const eventPage = <EventPage />;
 		const managePage = <ManagePage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
@@ -60,6 +64,7 @@ class ConnectedApp extends React.Component<any, null> {
 				<Header />
 				<Routes>
 					<Route path="/" element={ managePage } />
+					{ isNotGuest && <Route path="/events" element={ eventPage } /> }
 					<Route path="/matches" element={ managePage } />
 					<Route path="/teams" element={ teamPage } />
 					<Route path="/stats" element={ statPage } />

@@ -119,7 +119,25 @@ export default function Header() {
 		</Menu>
 	);
 
+	if (!selectedEvent) {
+		return (
+			<AppBar id="appBar" position="sticky" color="primary">
+				<Toolbar>
+					{ title }
+					<LanguageSelector />
+					{ accountButton }
+					{ accountMenu }
+				</Toolbar>
+			</AppBar>
+		);
+	}
+
 	const routes: IRoute[] = [
+		{
+			path: '/events',
+			name: 'EVENTS',
+			icon: 'event'
+		},
 		{
 			path: '/matches',
 			name: 'MATCHES',

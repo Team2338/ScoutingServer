@@ -1,6 +1,8 @@
 
 export enum UserRole {
 	guest = 'GUEST',
+	unverifiedMember = 'UNVERIFIED_MEMBER',
+	verifiedMember = 'VERIFIED_MEMBER',
 	admin = 'ADMIN',
 	superAdmin = 'SUPERADMIN',
 }

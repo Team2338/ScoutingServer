@@ -5,14 +5,19 @@ import { EventInfo, LoadStatus } from '../../models';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
 import EventSelector from '../shared/event-selector/EventSelector';
+import { useNavigate } from 'react-router-dom';
 
 export default function EventPage() {
 
 	const translate = useTranslator();
+	const navigate = useNavigate();
 	const dispatch: AppDispatch = useAppDispatch();
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: EventInfo[] = useAppSelector(state => state.events.events);
-	const _selectEvent = (event: EventInfo) => dispatch(selectEvent(event));
+	const _selectEvent = (event: EventInfo) => {
+		dispatch(selectEvent(event));
+		navigate('/matches');
+	};
 
 	useEffect(
 		() => {
@@ -42,6 +47,8 @@ export default function EventPage() {
 			</main>
 		);
 	}
+
+	console.log(eventLoadStatus);
 
 	return (
 		<main className="page event-page">

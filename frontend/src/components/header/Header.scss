@@ -14,6 +14,18 @@
 	.menu-button {
 		margin-right: 16px;
 	}
+
+}
+
+#account-menu {
+	.profile-card-link {
+		text-decoration: unset;
+		color: unset;
+
+		&:hover > * {
+			background-color: #1976d233;
+		}
+	}
 }
 
 .nav-drawer {

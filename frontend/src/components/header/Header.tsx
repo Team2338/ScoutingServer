@@ -1,6 +1,7 @@
 import {
 	AppBar,
 	Button,
+	Dialog,
 	Drawer,
 	Icon,
 	IconButton,
@@ -17,7 +18,7 @@ import {
 } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { EventInfo, Language, LanguageDescriptor, LanguageInfo, LoadStatus } from '../../models';
+import { EventInfo, Language, LanguageDescriptor, LanguageInfo, LoadStatus, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
@@ -41,7 +42,7 @@ export default function Header() {
 	const isLoggedIn: boolean = useIsLoggedInSelector();
 	const selectedEvent: EventInfo = useAppSelector(state => state.loginV2.selectedEvent);
 
-	const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
+	const [isDrawerOpen, setDrawerOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [accountAnchor, setAccountAnchor] = useState(null);
 
 	const toggleDrawer = (isOpen: boolean) => () => setDrawerOpen(isOpen);
@@ -106,7 +107,18 @@ export default function Header() {
 			onClose={ handleAccountMenuClose }
 			keepMounted
 		>
-			{ selectedEvent && <ProfileCard sx={{ margin: '8px 12px' }} /> }
+			{
+				selectedEvent &&
+				<NavLink className="profile-card-link" to="/events">
+					<ProfileCard
+						sx={{ margin: '8px 12px' }}
+						onClick={ () => {
+							// TODO: route to events page
+							handleAccountMenuClose();
+						}}
+					/>
+				</NavLink>
+			}
 			<MenuItem onClick={ handleLogout }>
 				<ListItemIcon>
 					{/*<Icon>exit_to_app</Icon>*/}

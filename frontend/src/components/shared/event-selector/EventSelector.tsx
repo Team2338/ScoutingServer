@@ -1,6 +1,6 @@
 import './EventSelector.scss';
 import React from 'react';
-import { EventInfo, LoadStatus } from '../../../models';
+import { EventInfo } from '../../../models';
 
 interface IProps {
 	events: EventInfo[];

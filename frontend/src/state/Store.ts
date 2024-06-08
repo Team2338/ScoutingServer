@@ -204,8 +204,13 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				}
 			};
 		case Actions.SELECT_EVENT:
+			if (action.payload === state.loginV2.selectedEvent) { // TODO: compare IDs once available
+				return state;
+			}
+
 			return {
-				...state,
+				...INITIAL_STATE,
+				language: state.language,
 				loginV2: {
 					...state.loginV2,
 					selectedEvent: action.payload

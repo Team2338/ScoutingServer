@@ -4,6 +4,7 @@ import { useTranslator } from '../../service/TranslateService';
 import { EventInfo, LoadStatus } from '../../models';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
+import EventSelector from '../shared/event-selector/EventSelector';
 
 export default function EventPage() {
 
@@ -42,24 +43,11 @@ export default function EventPage() {
 		);
 	}
 
-	const eventListItems = events.map((event) => (
-		<li
-			key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode }
-			className="event-list-item"
-			onClick={ () => _selectEvent(event) }
-		>
-			<div>{ event.eventCode } <span>({ event.matchCount })</span></div>
-			<div>********</div>
-		</li>
-	));
-
 	return (
 		<main className="page event-page">
 			<div className="event-list-wrapper">
 				<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
-				<ol className="event-list">
-					{ eventListItems }
-				</ol>
+				<EventSelector events={ events } selectEvent={ _selectEvent } />
 			</div>
 		</main>
 	);

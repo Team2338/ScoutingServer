@@ -26,30 +26,6 @@
 		letter-spacing: 0.00735em;
 	}
 
-	.event-list {
-		display: flex;
-		flex-direction: column;
-		row-gap: 8px;
-		list-style: none;
-		padding: unset;
-		margin: 0;
-
-		&-item {
-			display: flex;
-			flex-direction: column;
-			border-radius: 16px;
-			padding-left: 16px;
-			padding-top: 4px;
-			background-color: #1976D211;
-			transition: var(--button-transition);
-			cursor: pointer;
-
-			&:hover {
-				background-color: #1976D233;
-			}
-		}
-	}
-
 	&-failed {
 		padding-top: min(100px, 12vb);
 	}

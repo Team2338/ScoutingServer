@@ -1,0 +1,24 @@
+
+.event-selector {
+	display: flex;
+	flex-direction: column;
+	row-gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	&-option {
+		display: flex;
+		flex-direction: column;
+		border-radius: 16px;
+		padding-left: 16px;
+		padding-top: 4px;
+		background-color: #1976D211;
+		transition: var(--button-transition);
+		cursor: pointer;
+
+		&:hover {
+			background-color: #1976D233;
+		}
+	}
+}

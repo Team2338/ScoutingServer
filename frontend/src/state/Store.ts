@@ -203,7 +203,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					loadStatus: getNextStatusOnFail(state.events.loadStatus)
 				}
 			};
-		case Actions.SELECT_EVENT:
+		case Actions.SELECT_EVENT_SUCCESS:
 			if (action.payload === state.loginV2.selectedEvent) { // TODO: compare IDs once available
 				return state;
 			}

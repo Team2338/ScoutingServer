@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import './EventPage.scss';
-import { useTranslator } from '../../service/TranslateService';
+import { useNavigate } from 'react-router-dom';
 import { EventInfo, LoadStatus } from '../../models';
+import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
 import EventSelector from '../shared/event-selector/EventSelector';
-import { useNavigate } from 'react-router-dom';
 
 export default function EventPage() {
 
@@ -14,8 +14,8 @@ export default function EventPage() {
 	const dispatch: AppDispatch = useAppDispatch();
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: EventInfo[] = useAppSelector(state => state.events.events);
-	const _selectEvent = (event: EventInfo) => {
-		dispatch(selectEvent(event));
+	const _selectEvent = async (event: EventInfo) => {
+		await dispatch(selectEvent(event));
 		navigate('/matches');
 	};
 
@@ -47,8 +47,6 @@ export default function EventPage() {
 			</main>
 		);
 	}
-
-	console.log(eventLoadStatus);
 
 	return (
 		<main className="page event-page">

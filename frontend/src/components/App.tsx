@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppState, LoginStatus } from '../models';
 import { initApp } from '../state';
 import './App.scss';
@@ -21,7 +21,7 @@ const select = (state: AppState) => ({
 });
 
 const outputs = (dispatch) => ({
-	initApp: () => dispatch(initApp())
+	initApp: async () => dispatch(initApp())
 });
 
 
@@ -70,6 +70,9 @@ class ConnectedApp extends React.Component<any, null> {
 					<Route path="/stats" element={ statPage } />
 					<Route path="/plan" element={ planningPage } />
 					<Route path="/inspections" element={ inspectionPage } />
+
+					{ /* Default: redirect to home page */ }
+					<Route path="*" element={ <Navigate to="/" /> } />
 				</Routes>
 			</React.Fragment>
 		);

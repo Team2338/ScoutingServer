@@ -10,7 +10,9 @@ import {
 	Team,
 	GlobalObjectiveStats,
 	ImageInfoResponse,
-	ITokenModel, EventInfo, LoginResponse, UserInfo
+	ITokenModel,
+	EventInfo,
+	UserInfo
 } from '../models';
 import authService from '../service/AuthService';
 import commentService from '../service/CommentService';
@@ -52,6 +54,7 @@ import {
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
+	selectEventSuccess,
 	selectLangSuccess,
 	setHiddenInspectionColumnsStart,
 	showInspectionColumnStart
@@ -62,6 +65,43 @@ import GearscoutService from '../service/GearscoutService';
 type GetState = () => AppState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
+	const isMember: boolean = attemptMemberLoginFromStorage(dispatch);
+
+	if (!isMember) {
+		attemptGuestLoginFromStorage(dispatch);
+	}
+
+	const language: Language = getPreferredLanguage();
+	if (language) {
+		dispatch(selectLangSuccess(language));
+	}
+
+	const hiddenInspectionColumns: string = localStorage.getItem('hiddenInspectionColumns');
+	if (hiddenInspectionColumns) {
+		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
+		dispatch(setHiddenInspectionColumnsStart(splitColumns));
+	}
+};
+
+const attemptMemberLoginFromStorage = (dispatch: AppDispatch): boolean => {
+	const member: string = localStorage.getItem('member');
+	const tokenString: string = localStorage.getItem('tokenString');
+	const selectedEvent: string = localStorage.getItem('selectedEvent');
+
+	if (member && tokenString) {
+		// TODO: check if token is still valid
+		// TODO: dispatch loginAsMemberStart if token validation requires an HTTP request
+		const token: ITokenModel = authService.createTokenModel(tokenString);
+		dispatch(loginAsMemberSuccess(JSON.parse(member), tokenString, token));
+		dispatch(selectEvent(JSON.parse(selectedEvent)));
+
+		return true;
+	}
+
+	return false;
+};
+
+const attemptGuestLoginFromStorage = (dispatch: AppDispatch): void => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
 	const gameYear: string = localStorage.getItem('gameYear');
 	const username: string = localStorage.getItem('username');
@@ -77,17 +117,6 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 			eventCode: eventCode,
 			secretCode: secretCode
 		}));
-	}
-
-	const language: Language = getPreferredLanguage();
-	if (language) {
-		dispatch(selectLangSuccess(language));
-	}
-
-	const hiddenInspectionColumns: string = localStorage.getItem('hiddenInspectionColumns');
-	if (hiddenInspectionColumns) {
-		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
-		dispatch(setHiddenInspectionColumnsStart(splitColumns));
 	}
 };
 
@@ -170,6 +199,10 @@ export const loginAsMember = (
 		const user: UserInfo = response.data.user;
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = authService.createTokenModel(tokenString);
+
+		localStorage.setItem('member', JSON.stringify(user));
+		localStorage.setItem('tokenString', tokenString);
+
 		dispatch(loginAsMemberSuccess(user, tokenString, token));
 	} catch (error) {
 		console.log('Error logging in as member', error);
@@ -183,7 +216,7 @@ export const createUser = (data: {
 	password: string,
 	teamNumber: number;
 	username: string;
-}) => async(dispatch: AppDispatch) => {
+}) => async (dispatch: AppDispatch) => {
 	console.log('Creating user');
 	dispatch(createUserStart());
 
@@ -237,6 +270,11 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 		console.log('Error getting events', error);
 		dispatch(getEventsFail('Error getting events'));
 	}
+};
+
+export const selectEvent = (event: EventInfo) => async (dispatch: AppDispatch) => {
+	localStorage.setItem('selectedEvent', JSON.stringify(event));
+	dispatch(selectEventSuccess(event));
 };
 
 export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {

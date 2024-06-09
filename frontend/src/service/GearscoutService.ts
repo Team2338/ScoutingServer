@@ -28,7 +28,7 @@ class GearscoutService {
 	 * @param data Information about the new user
 	 * @returns A serialized auth token
 	 */
-	createUser = (data: ICreateUserRequest): GearscoutResponse<string> => {
+	createUser = (data: ICreateUserRequest): GearscoutResponse<LoginResponse> => {
 		const url: string = '/v2/user';
 		return this.http.post(url, data);
 	};

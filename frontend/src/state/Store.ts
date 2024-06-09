@@ -150,6 +150,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 					...state.loginV2,
 					loginStatus: LoginStatus.loggedIn,
 					role: action.payload.token.role,
+					user: action.payload.user,
 					tokenString: action.payload.tokenString,
 					token: action.payload.token
 				}

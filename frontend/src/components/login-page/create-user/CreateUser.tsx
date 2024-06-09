@@ -36,7 +36,8 @@ export default function CreateUser(props: IProps) {
 			password: password,
 			teamNumber: Number(teamNumber),
 			username: username
-		}));
+		}))
+			.catch((error: Error) => alert(error.message));
 	};
 
 	return (

@@ -222,9 +222,14 @@ export const createUser = (data: {
 
 	try {
 		const response = await GearscoutService.createUser(data);
-		const tokenString: string = response.data;
+		const user: UserInfo = response.data.user;
+		const tokenString: string = response.data.token;
 		const token: ITokenModel = authService.createTokenModel(tokenString);
-		dispatch(createUserSuccess(tokenString, token));
+
+		localStorage.setItem('member', JSON.stringify(user));
+		localStorage.setItem('tokenString', tokenString);
+
+		dispatch(createUserSuccess(user, tokenString, token));
 	} catch (error) {
 		console.log('Error creating user', error);
 		dispatch(createUserFail('Error creating user'));

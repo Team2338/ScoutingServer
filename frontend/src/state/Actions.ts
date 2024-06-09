@@ -106,9 +106,10 @@ export const createUserStart = (): Action => ({
 	type: Actions.CREATE_USER_START
 });
 
-export const createUserSuccess = (tokenString: string, token: ITokenModel): Action => ({
+export const createUserSuccess = (user: UserInfo, tokenString: string, token: ITokenModel): Action => ({
 	type: Actions.CREATE_USER_SUCCESS,
 	payload: {
+		user: user,
 		tokenString: tokenString,
 		token: token
 	}

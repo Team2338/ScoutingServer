@@ -1,12 +1,12 @@
+import { Button, Icon } from '@mui/material';
 import React, { useState } from 'react';
-import { Statelet, Team, TeamObjectiveStats } from '../../../models';
+import { SGamemodeName, SObjectiveName, Statelet, Team, TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
+import { useAppSelector } from '../../../state';
 import { GridScore } from '../../shared/GridScore';
 import './TeamDetail.scss';
 import InspectionSection from '../inspection-section/InspectionSection';
-import { useAppSelector } from '../../../state';
-import { Button, Icon } from '@mui/material';
 
 interface IProps {
 	robotNumber: number;
@@ -24,17 +24,13 @@ export default function TeamDetail(props: IProps) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
 	}
 
-	let gamemodeElements: any = [];
+	let gamemodeElements: any;
 	if (team?.stats) {
-		team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
-			gamemodeElements.push(
-				<Gamemode
-					key={ gamemode }
-					name={ gamemode }
-					objectives={ objectives }
-				/>
-			);
-		});
+		gamemodeElements = Object.entries(team.stats).map(
+			([gamemode, objectives]: [SGamemodeName, Record<SObjectiveName, TeamObjectiveStats>]) => {
+				return <Gamemode key={ gamemode } name={ gamemode } objectives={ objectives } />;
+			}
+		);
 	} else {
 		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>;
 	}
@@ -68,14 +64,14 @@ export default function TeamDetail(props: IProps) {
 	);
 }
 
-function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveStats> }) {
+function Gamemode(props: { name: string, objectives: Record<string, TeamObjectiveStats> }) {
 
 	const translate = useTranslator();
 
-	const objectiveElements = [];
-	props.objectives.forEach((stats: TeamObjectiveStats, name: string) => {
-		objectiveElements.push(<ObjectiveStats key={ name } name={ name } stats={ stats }/>);
-	});
+	const objectiveElements = Object.entries(props.objectives)
+		.map(([name, stats]: [string, TeamObjectiveStats]) => {
+			return <ObjectiveStats key={ name } name={ name } stats={ stats } />;
+		});
 
 	return (
 		<div className="gamemode">
@@ -90,7 +86,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 
 	const translate = useTranslator();
-	const scores = props.stats.scores.map(roundToDecimal);
+	const scores: number[] = props.stats.scores.map(roundToDecimal);
 
 	let sumListElement = null;
 	if (props.stats.sumList) {
@@ -98,7 +94,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 			<React.Fragment>
 				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
 				<div className="mean-list-wrapper">
-					<GridScore list={ props.stats.sumList }/>
+					<GridScore list={ props.stats.sumList } />
 				</div>
 			</React.Fragment>
 		);

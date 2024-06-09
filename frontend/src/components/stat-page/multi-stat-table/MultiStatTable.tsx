@@ -12,7 +12,7 @@ const getSumOfObjectives = (
 	metric: MetricType
 ): number => {
 	return selectedObjectives
-		.map((objective: ObjectiveDescriptor) => robot.stats.get(objective.gamemode)?.get(objective.objective))
+		.map((objective: ObjectiveDescriptor) => robot.stats[objective.gamemode]?.[objective.objective])
 		.filter((stats: TeamObjectiveStats) => !!stats)
 		.map((stats: TeamObjectiveStats) => stats[metric])
 		.reduce((previous: number, current: number) => previous + current, 0);
@@ -49,9 +49,8 @@ export default function MultiStatTable(props: IProps) {
 		const total: number = robotToTotalMap.get(robot.id);
 		const columns = props.selectedObjectives.map((descriptor: ObjectiveDescriptor) => {
 			const key = descriptor.gamemode + '\0' + descriptor.objective;
-			const value: number = robot.stats
-				.get(descriptor.gamemode)
-				?.get(descriptor.objective)
+			const value: number = robot.stats[descriptor.gamemode]
+				?.[descriptor.objective]
 				?.[props.metric]
 				?? 0;
 			return (

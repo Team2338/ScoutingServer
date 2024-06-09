@@ -19,7 +19,7 @@ const getSumOfObjectives = (
 	metric: MetricType
 ): number => {
 	return selectedObjectives
-		.map((objective: ObjectiveDescriptor) => robot.stats.get(objective.gamemode)?.get(objective.objective))
+		.map((objective: ObjectiveDescriptor) => robot.stats[objective.gamemode]?.[objective.objective])
 		.filter((stats: TeamObjectiveStats) => !!stats)
 		.map((stats: TeamObjectiveStats) => stats[metric])
 		.reduce((previous: number, current: number) => previous + current, 0);
@@ -76,7 +76,7 @@ const createStackedBars = (
 	const scoreSum: number = getSumOfObjectives(robot, selectedObjectives, metric);
 
 	for (const descriptor of selectedObjectives) {
-		const objective: TeamObjectiveStats = robot.stats.get(descriptor.gamemode)?.get(descriptor.objective);
+		const objective: TeamObjectiveStats = robot.stats[descriptor.gamemode]?.[descriptor.objective];
 		const score: number = objective ? objective[metric] : 0;
 		const barStyle = {
 			height: 100 * score / maxScore + '%',

@@ -1,4 +1,4 @@
-import { GlobalObjectiveStats, Team, TeamObjectiveStats } from '../models';
+import { GlobalObjectiveStats, SGamemodeName, SObjectiveName, Team, TeamObjectiveStats } from '../models';
 import { getMean, getMedian } from './Stats';
 
 type TeamStat = {
@@ -27,9 +27,9 @@ class StatModelService {
 		const groupedTeamStats: Map<string, TeamStat[]> = new Map();
 
 		for (const team of teams) {
-			team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemodeName: string) => {
-				objectives.forEach((teamStats: TeamObjectiveStats, objectiveName: string) => {
-					const key = gamemodeName + objectiveName;
+			Object.entries(team.stats).forEach(([gamemodeName, objectives]: [SGamemodeName, Record<SObjectiveName, TeamObjectiveStats>]) => {
+				Object.entries(objectives).forEach(([objectiveName, teamStats]: [SObjectiveName, TeamObjectiveStats]) => {
+					const key: string = gamemodeName + objectiveName;
 					if (!groupedTeamStats.has(key)) {
 						groupedTeamStats.set(key, []);
 					}

@@ -1,4 +1,4 @@
-import { Plan, Team, TeamObjectiveStats } from '../models';
+import { Plan, SGamemodeName, SObjectiveName, Team, TeamObjectiveStats } from '../models';
 
 class PlanningService {
 
@@ -13,7 +13,8 @@ class PlanningService {
 		filteredTeams.forEach((team: Team, index: number) => {
 			console.log('Team: ', team.id);
 			plan.teams.push(team);
-			team.stats.forEach((objective: Map<string, TeamObjectiveStats>, gamemode: string) => {
+
+			Object.entries(team.stats).forEach(([gamemode, objectives]: [SGamemodeName, Record<SObjectiveName, TeamObjectiveStats>]) => {
 				// Add the gamemodes for this team
 				if (!Object.hasOwn(plan.gamemodes, gamemode)) { // Insert empty gamemode if not yet present
 					plan.gamemodes[gamemode] = {
@@ -24,7 +25,7 @@ class PlanningService {
 				}
 
 				// Add the objectives for this team->gamemode
-				objective.forEach((stats: TeamObjectiveStats, objectiveName: string) => {
+				Object.entries(objectives).forEach(([objectiveName, stats]: [SObjectiveName, TeamObjectiveStats]) => {
 					if (!Object.hasOwn(plan.gamemodes[gamemode].objectives, objectiveName)) { // Insert empty objective if not yet present
 						plan.gamemodes[gamemode].objectives[objectiveName] = {
 							name: objectiveName,

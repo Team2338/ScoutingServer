@@ -36,7 +36,9 @@ export interface Match {
 	gamemodes: Map<string, Objective[]>;
 }
 
-export type ObjectiveStats = Map<string, Map<string, TeamObjectiveStats>>; // gamemode -> objective -> stats
+export type SGamemodeName = string;
+export type SObjectiveName = string;
+export type ObjectiveStats = Record<SGamemodeName, Record<SObjectiveName, TeamObjectiveStats>>;
 
 export interface Team {
 	id: number;

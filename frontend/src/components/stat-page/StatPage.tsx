@@ -66,8 +66,8 @@ function StatPage() {
 	if (selectedStats.length > 0) {
 		const teamStats: TeamObjectiveStats[] = teamData
 			.map((team: Team) => team.stats
-				?.get(selectedStats[0].gamemode)
-				?.get(selectedStats[0].objective)
+				?.[selectedStats[0].gamemode]
+				?.[selectedStats[0].objective]
 			)
 			.filter((objective: TeamObjectiveStats) => !!objective);
 

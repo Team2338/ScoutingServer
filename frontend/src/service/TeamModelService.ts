@@ -1,4 +1,9 @@
-import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models';
+import {
+	MatchResponse,
+	Objective,
+	ObjectiveStats,
+	Team,
+} from '../models';
 import { getMean, getMeanList, getMedian, getMode, getSumList } from './Stats';
 
 interface AggregateObjective extends Objective {
@@ -177,24 +182,23 @@ class TeamModelService {
 		}
 
 		// Create collection of stats for each objective
-		const stats: ObjectiveStats = new Map<string, Map<string, TeamObjectiveStats>>(); // gamemode -> objective -> stats
+		const stats: ObjectiveStats = {};
 		scores.forEach((objective: ObjectiveSums) => {
-			if (!stats.has(objective.gamemode)) {
-				stats.set(objective.gamemode, new Map());
+			if (!Object.hasOwn(stats, objective.gamemode)) {
+				stats[objective.gamemode] = {};
 			}
 
-			stats.get(objective.gamemode)
-				.set(objective.objective, {
-					teamNumber: teamNumber,
-					scores: objective.scores,
-					lists: objective.lists.length > 0 ? objective.lists : null,
-					sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,
-					meanList: objective.lists.length > 0 ? getMeanList(objective.lists) : null,
-					mean: getMean(objective.scores),
-					median: getMedian(objective.scores),
-					mode: getMode(objective.scores),
-					variance: 0
-				});
+			stats[objective.gamemode][objective.objective] = {
+				teamNumber: teamNumber,
+				scores: objective.scores,
+				lists: objective.lists.length > 0 ? objective.lists : null,
+				sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,
+				meanList: objective.lists.length > 0 ? getMeanList(objective.lists) : null,
+				mean: getMean(objective.scores),
+				median: getMedian(objective.scores),
+				mode: getMode(objective.scores),
+				variance: 0
+			};
 		});
 
 		return stats;

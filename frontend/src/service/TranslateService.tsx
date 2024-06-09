@@ -134,6 +134,7 @@ const languages: ILanguageTranslation = {
 		'VISION_CAPABILITIES': 'Vision capabilities',
 		'WEIGHT': 'Weight',
 		'SELECT_AN_EVENT': 'Select an event',
+		'LOAD_EVENT': 'Load event',
 		'FAILED_TO_LOAD_EVENTS': 'Failed to load events',
 		'GUEST_LOGIN': 'Guest sign in',
 		'MEMBER_LOGIN': 'Member sign in',
@@ -248,6 +249,7 @@ const languages: ILanguageTranslation = {
 		'VISION_CAPABILITIES': 'Capacidades de visión',
 		'WEIGHT': 'Peso',
 		'SELECT_AN_EVENT': 'Seleccione un evento',
+		'LOAD_EVENT': 'Cargue el evento',
 		'FAILED_TO_LOAD_EVENTS': 'No se pudieron cargar los eventos',
 		'GUEST_LOGIN': 'Iniciar sesión como invitado',
 		'MEMBER_LOGIN': 'Iniciar sesión como miembro',
@@ -362,6 +364,7 @@ const languages: ILanguageTranslation = {
 		'VISION_CAPABILITIES': 'Capacités visuelles',
 		'WEIGHT': 'Poids',
 		'SELECT_AN_EVENT': 'Sélectionnez un événement',
+		'LOAD_EVENT': 'Charge l\'événement',
 		'FAILED_TO_LOAD_EVENTS': 'Échec du chargement des événements',
 		'GUEST_LOGIN': 'Connexion invité',
 		'MEMBER_LOGIN': 'Connexion membre',
@@ -476,6 +479,7 @@ const languages: ILanguageTranslation = {
 		'VISION_CAPABILITIES': 'Görüş yetenekleri',
 		'WEIGHT': 'Ağırlık',
 		'SELECT_AN_EVENT': 'Bir etkinlik seçin',
+		'LOAD_EVENT': 'Etkinliği yükle',
 		'FAILED_TO_LOAD_EVENTS': 'Etkinlikler yüklenemedi',
 		'GUEST_LOGIN': 'Misafir girişi',
 		'MEMBER_LOGIN': 'Üye girişi',
@@ -589,6 +593,7 @@ const languages: ILanguageTranslation = {
 		'VISION_CAPABILITIES': 'Schopnosti vidění',
 		'WEIGHT': 'Hmotnost',
 		'SELECT_AN_EVENT': 'Vyberte událost', // TODO verify
+		'LOAD_EVENT': 'Načíst událost', // TODO verify
 		'FAILED_TO_LOAD_EVENTS': 'Události se nepodařilo načíst', // TODO verify
 		'GUEST_LOGIN': 'Přihlaste se jako host', // TODO verify
 		'MEMBER_LOGIN': 'Přihlašte se členem', // TODO verify

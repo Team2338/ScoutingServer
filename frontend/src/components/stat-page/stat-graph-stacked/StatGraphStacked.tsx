@@ -10,6 +10,7 @@ interface IProps {
 	robots: Team[];
 	selectedObjectives: ObjectiveDescriptor[];
 	metric: MetricType;
+	selectRobot: (robotNumber: number) => void;
 }
 
 const getSumOfObjectives = (
@@ -34,18 +35,17 @@ const compareByObjectiveSum = (
 };
 
 
-export default function StatGraphStacked({ robots, selectedObjectives, metric }: IProps) {
+export default function StatGraphStacked({ robots, selectedObjectives, metric, selectRobot }: IProps) {
 
 	const translate = useTranslator();
 
-	console.log('Selections', selectedObjectives);
 	const sortedRobots: Team[] = robots.slice()
 		.sort((a: Team, b: Team) => compareByObjectiveSum(a, b, selectedObjectives, metric));
 	const maxScore: number = getSumOfObjectives(sortedRobots[0], selectedObjectives, metric);
 
 	const teamLabels = sortedRobots.map(createTeamLabel);
 	const teamBars = sortedRobots
-		.map((robot: Team) => createStackedBars(robot, selectedObjectives, metric, maxScore, translate));
+		.map((robot: Team) => createStackedBars(robot, selectedObjectives, metric, maxScore, translate, selectRobot));
 
 	return (
 		<div className="stat-graph-stacked">
@@ -68,7 +68,8 @@ const createStackedBars = (
 	selectedObjectives: ObjectiveDescriptor[],
 	metric: MetricType,
 	maxScore: number,
-	translate: (key: string) => string
+	translate: (key: string) => string,
+	selectRobot: (robotNumber: number) => void
 ) => {
 	const bars: ReactElement[] = [];
 	const tooltipLines: ReactElement[] = [];
@@ -109,7 +110,7 @@ const createStackedBars = (
 			title={ tooltipContent }
 			arrow={ true }
 		>
-			<div key={ robot.id } className="team-bars">
+			<div key={ robot.id } className="team-bars" onClick={ () => selectRobot(robot.id) }>
 				{ bars }
 			</div>
 		</Tooltip>

@@ -1,24 +1,54 @@
-import React from 'react';
-import { GlobalObjectiveStats, LoadStatus, ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../models';
+import React, { Fragment, useEffect, useState } from 'react';
+import {
+	GlobalObjectiveStats,
+	LoadStatus,
+	ObjectiveDescriptor,
+	Statelet,
+	Team,
+	TeamObjectiveStats
+} from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { useAppSelector, useDataInitializer } from '../../state';
+import { getComments, getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
+import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
 import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
 import MultiStatTable from './multi-stat-table/MultiStatTable';
 
 
 function StatPage() {
 	useDataInitializer();
+
 	const translate = useTranslator();
+	const dispatch = useAppDispatch();
+
+	useEffect(
+		() => {
+			dispatch(getComments());
+			dispatch(getInspections());
+		},
+		[dispatch]
+	);
+
+	const [selectedRobotNumber, setSelectedRobotNumber]: Statelet<number> = useState(null);
+	const [isTeamDetailOpen, setTeamDetailOpen]: Statelet<boolean> = useState(false);
 
 	// Selectors
 	const statsLoadStatus: LoadStatus = useAppSelector(state => state.stats.loadStatus);
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
+
+	const selectRobot = (robotNumber: number) => {
+		setSelectedRobotNumber(robotNumber);
+		setTeamDetailOpen(true);
+	};
+
+	const afterClose = () => {
+		setSelectedRobotNumber(null);
+	};
 
 	if (statsLoadStatus === LoadStatus.none || statsLoadStatus === LoadStatus.loading) {
 		return <main className="stat-page">{ translate('LOADING') }</main>;
@@ -52,7 +82,12 @@ function StatPage() {
 		content = (
 			<div className="stat-content">
 				<h2 className="stat-content-title">{ contentTitleText }</h2>
-				<StatGraphStacked robots={ teamData } selectedObjectives={ selectedStats } metric="mean" />
+				<StatGraphStacked
+					robots={ teamData }
+					selectedObjectives={ selectedStats }
+					metric="mean"
+					selectRobot={ selectRobot }
+				/>
 				<div className="stat-table-wrapper">
 					{
 						selectedStats.length > 1
@@ -65,15 +100,24 @@ function StatPage() {
 	}
 
 	return (
-		<main className="page stat-page">
-			<div className="stat-list-wrapper">
-				<StatList
-					stats={ stats }
-					selectedStats={ selectedStats }
-				/>
-			</div>
-			{ content }
-		</main>
+		<Fragment>
+			<main className="page stat-page">
+				<div className="stat-list-wrapper">
+					<StatList
+						stats={ stats }
+						selectedStats={ selectedStats }
+					/>
+				</div>
+				{ content }
+			</main>
+			<TeamDetailModal
+				isOpen={ isTeamDetailOpen }
+				robotNumber={ selectedRobotNumber }
+				handleClose={ () => setTeamDetailOpen(false) }
+				transition="fade"
+				afterClose={ afterClose }
+			/>
+		</Fragment>
 	);
 }
 

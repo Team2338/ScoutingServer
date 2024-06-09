@@ -1,7 +1,6 @@
 import './EventSelectorForm.scss';
 import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { EventInfo, Statelet } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { useAppSelector } from '../../../state';

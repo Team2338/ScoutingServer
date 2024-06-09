@@ -1,7 +1,6 @@
 import {
 	AppBar,
 	Button,
-	Dialog,
 	Drawer,
 	Icon,
 	IconButton,
@@ -99,6 +98,7 @@ export default function Header() {
 		</Tooltip>
 	);
 
+	// TODO: Make profile link route to /matches for guests
 	const accountMenu = (
 		<Menu
 			id="account-menu"
@@ -109,14 +109,8 @@ export default function Header() {
 		>
 			{
 				selectedEvent &&
-				<NavLink className="profile-card-link" to="/events">
-					<ProfileCard
-						sx={{ margin: '8px 12px' }}
-						onClick={ () => {
-							// TODO: route to events page
-							handleAccountMenuClose();
-						}}
-					/>
+				<NavLink className="profile-card-link" to="/events" onClick={ handleAccountMenuClose }>
+					<ProfileCard sx={{ margin: '8px 12px' }} />
 				</NavLink>
 			}
 			<MenuItem onClick={ handleLogout }>

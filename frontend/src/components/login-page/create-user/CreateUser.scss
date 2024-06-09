@@ -1,0 +1,19 @@
+.create-user-form {
+	display: flex;
+	flex-direction: column;
+	min-width: 20rem;
+	padding: 16px;
+
+	.title {
+		margin: 0;
+		padding-bottom: 12px;
+		font-weight: 400;
+		font-size: 34px;
+		line-height: 40px;
+		letter-spacing: 0.00735em;
+	}
+
+	&-submit {
+		margin-top: 24px !important;
+	}
+}

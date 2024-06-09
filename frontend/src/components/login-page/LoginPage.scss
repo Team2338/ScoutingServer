@@ -11,9 +11,9 @@
 		width: fit-content;
 		border-radius: 4px;
 		box-shadow:
-				0 2px 4px -1px rgb(0 0 0 / 20%),
-				0 4px 5px 0 rgb(0 0 0 / 14%),
-				0 1px 10px 0 rgb(0 0 0 / 12%);
+			0 2px 4px -1px rgb(0 0 0 / 20%),
+			0 4px 5px 0 rgb(0 0 0 / 14%),
+			0 1px 10px 0 rgb(0 0 0 / 12%);
 	}
 
 	&-form {
@@ -23,20 +23,45 @@
 		padding: 16px;
 
 		&-submit {
-			margin-top: 24px !important;
+			margin-top: 16px !important;
 		}
 	}
 
 	&-title-row {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
+		row-gap: 8px;
 		column-gap: 20px;
 		padding-bottom: 8px;
 
 		#game-year-input {
 			min-width: 5em;
+		}
+	}
+
+	.link-section {
+		display: flex;
+		flex-direction: column;
+		padding-top: 32px;
+	}
+
+	#link-section__title {
+		font-weight: unset;
+		font-size: unset;
+		line-height: unset;
+		padding-bottom: 4px;
+	}
+
+	&__variant-link {
+		color: #1976D2;
+		width: fit-content;
+		padding-top: 8px;
+
+		&:hover {
+			cursor: pointer;
 		}
 	}
 }

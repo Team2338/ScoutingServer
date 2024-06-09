@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState, LoadStatus } from '../models';
+import { AppState, LoadStatus, LoginStatus } from '../models';
 import { getAllData } from './Effects';
 import type { AppDispatch } from './Store';
 
@@ -45,4 +45,14 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 	);
 
 	return debouncedValue;
+};
+
+export const useIsLoggedInSelector = (): boolean => {
+	const loginStatus: LoginStatus = useAppSelector(state => state.loginV2.loginStatus);
+
+	return (loginStatus === LoginStatus.guest || loginStatus === LoginStatus.loggedIn);
+};
+
+export const useUsernameSelector = (): string => {
+	return useAppSelector(state => state.loginV2.user?.username);
 };

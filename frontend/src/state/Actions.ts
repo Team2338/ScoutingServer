@@ -6,7 +6,8 @@ import {
 	Language,
 	Match,
 	MatchResponse,
-	Team
+	Team,
+	ITokenModel, EventInfo, UserInfo
 } from '../models';
 
 export interface Action {
@@ -18,8 +19,18 @@ export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
 	LOGIN = '[AUTH] Login',
 	LOGOUT = '[AUTH] Logout',
+	LOGIN_AS_MEMBER_START = '[AUTH] Start login as member',
+	LOGIN_AS_MEMBER_SUCCESS = '[AUTH] Successfully logged in as member',
+	LOGIN_AS_MEMBER_FAIL = '[AUTH] Failed login as member',
+	CREATE_USER_START = '[AUTH] Start creating user',
+	CREATE_USER_SUCCESS = '[AUTH] Successfully created user',
+	CREATE_USER_FAIL = '[AUTH] Failed to create user',
 	GET_CSV_START = '[CSV] Start getting CSV',
 	GET_CSV_SUCCESS = '[CSV] Successfully got CSV',
+	GET_EVENTS_START = '[EVENT] Start getting events',
+	GET_EVENTS_SUCCESS = '[EVENT] Successfully got events',
+	GET_EVENTS_FAIL = '[EVENT] Failed to get events',
+	SELECT_EVENT_SUCCESS = '[EVENT] Successfully selected event',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
 	GET_MATCHES_FAIL = '[MATCH] Failed to get matches',
@@ -73,6 +84,42 @@ export const logoutSuccess = (): Action => ({
 	type: Actions.LOGOUT
 });
 
+export const loginAsMemberStart = (): Action => ({
+	type: Actions.LOGIN_AS_MEMBER_START
+});
+
+export const loginAsMemberSuccess = (user: UserInfo, tokenString: string, token: ITokenModel): Action => ({
+	type: Actions.LOGIN_AS_MEMBER_SUCCESS,
+	payload: {
+		user: user,
+		tokenString: tokenString,
+		token: token
+	}
+});
+
+export const loginAsMemberFail = (message: string): Action => ({
+	type: Actions.LOGIN_AS_MEMBER_FAIL,
+	payload: message
+});
+
+export const createUserStart = (): Action => ({
+	type: Actions.CREATE_USER_START
+});
+
+export const createUserSuccess = (user: UserInfo, tokenString: string, token: ITokenModel): Action => ({
+	type: Actions.CREATE_USER_SUCCESS,
+	payload: {
+		user: user,
+		tokenString: tokenString,
+		token: token
+	}
+});
+
+export const createUserFail = (message: string): Action => ({
+	type: Actions.CREATE_USER_FAIL,
+	payload: message
+});
+
 export const getCsvStart = (): Action => ({
 	type: Actions.GET_CSV_START,
 });
@@ -80,6 +127,25 @@ export const getCsvStart = (): Action => ({
 export const getCsvSuccess = (url: string): Action => ({
 	type: Actions.GET_CSV_SUCCESS,
 	payload: url
+});
+
+export const getEventsStart = (): Action => ({
+	type: Actions.GET_EVENTS_START
+});
+
+export const getEventsSuccess = (events: EventInfo[]): Action => ({
+	type: Actions.GET_EVENTS_SUCCESS,
+	payload: events
+});
+
+export const getEventsFail = (message: string): Action => ({
+	type: Actions.GET_EVENTS_FAIL,
+	payload: message
+});
+
+export const selectEventSuccess = (event: EventInfo): Action => ({
+	type: Actions.SELECT_EVENT_SUCCESS,
+	payload: event
 });
 
 export const getMatchesStart = (): Action => ({

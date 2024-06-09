@@ -30,7 +30,7 @@ export const useTranslator = (): Translator => {
 
 const languages: ILanguageTranslation = {
 	[Language.ENGLISH]: {
-		'SIGN_IN': 'Sign In',
+		'SIGN_IN': 'Sign in',
 		'GAME_YEAR': 'Game year',
 		'YOUR_TEAM_NUMBER': 'Your team number',
 		'TEAM_NUMBER': 'Team number',
@@ -134,6 +134,16 @@ const languages: ILanguageTranslation = {
 		'UNDER_STAGE': 'Can go under stage',
 		'VISION_CAPABILITIES': 'Vision capabilities',
 		'WEIGHT': 'Weight',
+		'SELECT_AN_EVENT': 'Select an event',
+		'LOAD_EVENT': 'Load event',
+		'FAILED_TO_LOAD_EVENTS': 'Failed to load events',
+		'GUEST_LOGIN': 'Guest sign in',
+		'MEMBER_LOGIN': 'Member sign in',
+		'CREATE_ACCOUNT': 'Create account',
+		'GUEST': 'Guest',
+		'EMAIL': 'Email',
+		'PASSWORD': 'Password',
+		'EVENTS': 'Events',
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -240,6 +250,16 @@ const languages: ILanguageTranslation = {
 		'UNDER_STAGE': 'Puede pasar bajo el escenario',
 		'VISION_CAPABILITIES': 'Capacidades de visión',
 		'WEIGHT': 'Peso',
+		'SELECT_AN_EVENT': 'Seleccione un evento',
+		'LOAD_EVENT': 'Cargue el evento',
+		'FAILED_TO_LOAD_EVENTS': 'No se pudieron cargar los eventos',
+		'GUEST_LOGIN': 'Iniciar sesión como invitado',
+		'MEMBER_LOGIN': 'Iniciar sesión como miembro',
+		'CREATE_ACCOUNT': 'Crear una cuenta',
+		'GUEST': 'Invitado',
+		'EMAIL': 'Correo electrónico',
+		'PASSWORD': 'Contraseña',
+		'EVENTS': 'Eventos',
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -346,9 +366,19 @@ const languages: ILanguageTranslation = {
 		'UNDER_STAGE': 'Peut passer sous scène',
 		'VISION_CAPABILITIES': 'Capacités visuelles',
 		'WEIGHT': 'Poids',
+		'SELECT_AN_EVENT': 'Sélectionnez un événement',
+		'LOAD_EVENT': 'Charge l\'événement',
+		'FAILED_TO_LOAD_EVENTS': 'Échec du chargement des événements',
+		'GUEST_LOGIN': 'Connexion invité',
+		'MEMBER_LOGIN': 'Connexion membre',
+		'CREATE_ACCOUNT': 'Créer un compte',
+		'GUEST': 'Invité',
+		'EMAIL': 'E-mail',
+		'PASSWORD': 'Mot de passe',
+		'EVENTS': 'Événements',
 	},
 	[Language.TURKISH]: {
-		'SIGN_IN': 'Kayıt Olmak',
+		'SIGN_IN': 'Kayıt olmak',
 		'GAME_YEAR': 'Oyun yılı',
 		'YOUR_TEAM_NUMBER': 'Takım numaranız',
 		'TEAM_NUMBER': 'Takım numarası',
@@ -452,6 +482,16 @@ const languages: ILanguageTranslation = {
 		'UNDER_STAGE': 'Sahne altına girebilir',
 		'VISION_CAPABILITIES': 'Görüş yetenekleri',
 		'WEIGHT': 'Ağırlık',
+		'SELECT_AN_EVENT': 'Bir etkinlik seçin',
+		'LOAD_EVENT': 'Etkinliği yükle',
+		'FAILED_TO_LOAD_EVENTS': 'Etkinlikler yüklenemedi',
+		'GUEST_LOGIN': 'Misafir girişi',
+		'MEMBER_LOGIN': 'Üye girişi',
+		'CREATE_ACCOUNT': 'Bir hesap oluşturun',
+		'GUEST': 'Misafir',
+		'EMAIL': 'E-posta',
+		'PASSWORD': 'Şifre',
+		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -557,5 +597,15 @@ const languages: ILanguageTranslation = {
 		'UNDER_STAGE': 'Může jít pod jeviště',
 		'VISION_CAPABILITIES': 'Schopnosti vidění',
 		'WEIGHT': 'Hmotnost',
+		'SELECT_AN_EVENT': 'Vyberte událost', // TODO verify
+		'LOAD_EVENT': 'Načíst událost', // TODO verify
+		'FAILED_TO_LOAD_EVENTS': 'Události se nepodařilo načíst', // TODO verify
+		'GUEST_LOGIN': 'Přihlaste se jako host', // TODO verify
+		'MEMBER_LOGIN': 'Přihlašte se členem', // TODO verify
+		'CREATE_ACCOUNT': 'Vytvořit účet', // TODO verify
+		'GUEST': 'Host', // TODO verify
+		'EMAIL': 'E-mailem', // TODO verify
+		'PASSWORD': 'Heslo', // TODO verify
+		'EVENTS': 'Události', // TODO verify
 	}
 };

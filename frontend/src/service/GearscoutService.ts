@@ -1,5 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CommentResponse, InspectionQuestionResponse, MatchResponse, ImageInfoResponse } from '../models';
+import {
+	CommentResponse,
+	InspectionQuestionResponse,
+	MatchResponse,
+	ImageInfoResponse,
+	ICreateUserRequest, EventInfo, LoginResponse
+} from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -10,9 +16,37 @@ class GearscoutService {
 	});
 
 
+	login = (email: string, password: string): GearscoutResponse<LoginResponse> => {
+		const url: string = '/v2/auth/login';
+		return this.http.post(url, {
+			email: email,
+			password: password
+		});
+	};
+
+	/**
+	 * @param data Information about the new user
+	 * @returns A serialized auth token
+	 */
+	createUser = (data: ICreateUserRequest): GearscoutResponse<LoginResponse> => {
+		const url: string = '/v2/user';
+		return this.http.post(url, data);
+	};
+
+	getEvents = (tokenString: string): GearscoutResponse<EventInfo[]> => {
+		const url: string = '/v2/events';
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${tokenString}`
+			}
+		};
+
+		return this.http.get(url, config);
+	};
+
 	getMatches = (teamNumber: number, gameYear: number, eventCode: string, secretCode: string): GearscoutResponse<MatchResponse[]> => {
-		const url = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}`;
-		const config = {
+		const url: string = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}`;
+		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: secretCode
 			}
@@ -22,8 +56,8 @@ class GearscoutService {
 	};
 
 	hideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
-		const url = `/v1/team/${teamNumber}/match/${matchId}/hide`;
-		const config = {
+		const url: string = `/v1/team/${teamNumber}/match/${matchId}/hide`;
+		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: secretCode
 			}
@@ -37,8 +71,8 @@ class GearscoutService {
 	};
 
 	unhideMatch = (teamNumber: number, matchId: number, secretCode: string): GearscoutResponse<MatchResponse> => {
-		const url = `/v1/team/${teamNumber}/match/${matchId}/unhide`;
-		const config = {
+		const url: string = `/v1/team/${teamNumber}/match/${matchId}/unhide`;
+		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: secretCode
 			}
@@ -52,8 +86,8 @@ class GearscoutService {
 	};
 
 	getMatchesAsCsv = (teamNumber: number, gameYear: number, eventCode: string, secretCode: string): GearscoutResponse<string> => {
-		const url = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}/download`;
-		const config = {
+		const url: string = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}/download`;
+		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: secretCode
 			}
@@ -69,7 +103,7 @@ class GearscoutService {
 		robotNumber: number;
 		secretCode: string;
 	}): GearscoutResponse<ImageInfoResponse> => {
-		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}/robot/${data.robotNumber}`;
+		const url: string = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}/robot/${data.robotNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: data.secretCode
@@ -85,7 +119,7 @@ class GearscoutService {
 		eventCode: string;
 		secretCode: string;
 	}): GearscoutResponse<ImageInfoResponse[]> => {
-		const url = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
+		const url: string = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: data.secretCode

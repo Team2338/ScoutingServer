@@ -55,9 +55,11 @@ export default function TeamPage() {
 	);
 
 	if (teamsLoadStatus === LoadStatus.none || teamsLoadStatus === LoadStatus.loading) {
-		return <main className="team-page">
-			<TeamListSkeleton isMobile={ isMobile } />
-		</main>;
+		return (
+			<main className="team-page">
+				<TeamListSkeleton isMobile={ isMobile } />
+			</main>
+		);
 	}
 
 	if (teamsLoadStatus === LoadStatus.failed) {

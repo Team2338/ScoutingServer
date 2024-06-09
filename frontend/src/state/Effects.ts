@@ -7,8 +7,14 @@ import {
 	LanguageInfo,
 	Match,
 	MatchResponse,
-	Team, GlobalObjectiveStats, ImageInfoResponse
+	Team,
+	GlobalObjectiveStats,
+	ImageInfoResponse,
+	ITokenModel,
+	EventInfo,
+	UserInfo
 } from '../models';
+import authService from '../service/AuthService';
 import commentService from '../service/CommentService';
 import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
@@ -21,6 +27,9 @@ import {
 	calculateGlobalStatsSuccess,
 	calculateTeamStatsStart,
 	calculateTeamStatsSuccess,
+	createUserFail,
+	createUserStart,
+	createUserSuccess,
 	getCommentsFail,
 	getCommentsStart,
 	getCommentsSuccess,
@@ -29,6 +38,9 @@ import {
 	getEventImageInfoFail,
 	getEventImageInfoStart,
 	getEventImageInfoSuccess,
+	getEventsFail,
+	getEventsStart,
+	getEventsSuccess,
 	getInspectionsFail,
 	getInspectionsStart,
 	getInspectionsSuccess,
@@ -36,18 +48,60 @@ import {
 	getMatchesStart,
 	getMatchesSuccess,
 	hideInspectionColumnStart,
+	loginAsMemberFail,
+	loginAsMemberStart,
+	loginAsMemberSuccess,
 	loginSuccess,
 	logoutSuccess,
 	replaceMatch,
+	selectEventSuccess,
 	selectLangSuccess,
 	setHiddenInspectionColumnsStart,
 	showInspectionColumnStart
 } from './Actions';
 import { AppDispatch } from './Store';
+import GearscoutService from '../service/GearscoutService';
 
 type GetState = () => AppState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
+	const isMember: boolean = attemptMemberLoginFromStorage(dispatch);
+
+	if (!isMember) {
+		attemptGuestLoginFromStorage(dispatch);
+	}
+
+	const language: Language = getPreferredLanguage();
+	if (language) {
+		dispatch(selectLangSuccess(language));
+	}
+
+	const hiddenInspectionColumns: string = localStorage.getItem('hiddenInspectionColumns');
+	if (hiddenInspectionColumns) {
+		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
+		dispatch(setHiddenInspectionColumnsStart(splitColumns));
+	}
+};
+
+const attemptMemberLoginFromStorage = (dispatch: AppDispatch): boolean => {
+	const member: string = localStorage.getItem('member');
+	const tokenString: string = localStorage.getItem('tokenString');
+	const selectedEvent: string = localStorage.getItem('selectedEvent');
+
+	if (member && tokenString) {
+		// TODO: check if token is still valid
+		// TODO: dispatch loginAsMemberStart if token validation requires an HTTP request
+		const token: ITokenModel = authService.createTokenModel(tokenString);
+		dispatch(loginAsMemberSuccess(JSON.parse(member), tokenString, token));
+		dispatch(selectEvent(JSON.parse(selectedEvent)));
+
+		return true;
+	}
+
+	return false;
+};
+
+const attemptGuestLoginFromStorage = (dispatch: AppDispatch): void => {
 	const teamNumber: string = localStorage.getItem('teamNumber');
 	const gameYear: string = localStorage.getItem('gameYear');
 	const username: string = localStorage.getItem('username');
@@ -63,17 +117,6 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 			eventCode: eventCode,
 			secretCode: secretCode
 		}));
-	}
-
-	const language: Language = getPreferredLanguage();
-	if (language) {
-		dispatch(selectLangSuccess(language));
-	}
-
-	const hiddenInspectionColumns: string = localStorage.getItem('hiddenInspectionColumns');
-	if (hiddenInspectionColumns) {
-		const splitColumns: string[] = hiddenInspectionColumns.split('|:');
-		dispatch(setHiddenInspectionColumnsStart(splitColumns));
 	}
 };
 
@@ -138,11 +181,62 @@ export const login = (data: {
 	dispatch(loginSuccess(data));
 };
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch: AppDispatch) => {
 	localStorage.clear();
 
 	dispatch(logoutSuccess());
 };
+
+export const loginAsMember = (
+	email: string,
+	password: string
+) => async (dispatch: AppDispatch) => {
+	console.log('Logging in as member');
+	dispatch(loginAsMemberStart());
+
+	try {
+		const response = await GearscoutService.login(email, password);
+		const user: UserInfo = response.data.user;
+		const tokenString: string = response.data.token;
+		const token: ITokenModel = authService.createTokenModel(tokenString);
+
+		localStorage.setItem('member', JSON.stringify(user));
+		localStorage.setItem('tokenString', tokenString);
+
+		dispatch(loginAsMemberSuccess(user, tokenString, token));
+	} catch (error) {
+		console.log('Error logging in as member', error);
+		dispatch(loginAsMemberFail('Invalid email/password combination'));
+		throw new Error(error.message, error);
+	}
+};
+
+export const createUser = (data: {
+	email: string,
+	password: string,
+	teamNumber: number;
+	username: string;
+}) => async (dispatch: AppDispatch) => {
+	console.log('Creating user');
+	dispatch(createUserStart());
+
+	try {
+		const response = await GearscoutService.createUser(data);
+		const user: UserInfo = response.data.user;
+		const tokenString: string = response.data.token;
+		const token: ITokenModel = authService.createTokenModel(tokenString);
+
+		localStorage.setItem('member', JSON.stringify(user));
+		localStorage.setItem('tokenString', tokenString);
+
+		dispatch(createUserSuccess(user, tokenString, token));
+	} catch (error) {
+		console.log('Error creating user', error);
+		dispatch(createUserFail('Error creating user'));
+		throw new Error('Error creating user');
+	}
+};
+
 
 // export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
 // 	console.log('Getting all data');
@@ -168,6 +262,26 @@ export const logout = () => async (dispatch) => {
 // 	}
 // };
 
+export const getEvents = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting events');
+	dispatch(getEventsStart());
+
+	try {
+		const tokenString: string = getState().loginV2.tokenString;
+		const response = await gearscoutService.getEvents(tokenString);
+		const events: EventInfo[] = response.data;
+		dispatch(getEventsSuccess(events));
+	} catch (error) {
+		console.log('Error getting events', error);
+		dispatch(getEventsFail('Error getting events'));
+	}
+};
+
+export const selectEvent = (event: EventInfo) => async (dispatch: AppDispatch) => {
+	localStorage.setItem('selectedEvent', JSON.stringify(event));
+	dispatch(selectEventSuccess(event));
+};
+
 export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Getting matches sync');
 	dispatch(getMatchesStart());
@@ -177,10 +291,10 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 
 	try {
 		const response = await gearscoutService.getMatches(
-			getState().login.teamNumber,
-			getState().login.gameYear,
-			getState().login.eventCode,
-			getState().login.secretCode
+			getState().loginV2.selectedEvent.teamNumber,
+			getState().loginV2.selectedEvent.gameYear,
+			getState().loginV2.selectedEvent.eventCode,
+			getState().loginV2.selectedEvent.secretCode
 		);
 		const rawMatches: MatchResponse[] = response.data;
 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(rawMatches);
@@ -208,10 +322,10 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(
-			getState().login.teamNumber,
-			getState().login.gameYear,
-			getState().login.eventCode,
-			getState().login.secretCode
+			getState().loginV2.selectedEvent.teamNumber,
+			getState().loginV2.selectedEvent.gameYear,
+			getState().loginV2.selectedEvent.eventCode,
+			getState().loginV2.selectedEvent.secretCode
 		);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
@@ -231,7 +345,11 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Hiding match');
 	try {
-		const response = await gearscoutService.hideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
+		const response = await gearscoutService.hideMatch(
+			getState().loginV2.selectedEvent.teamNumber,
+			match.id,
+			getState().loginV2.selectedEvent.secretCode
+		);
 		const rawMatch: MatchResponse = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
@@ -245,7 +363,11 @@ export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getStat
 export const unhideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Unhiding match');
 	try {
-		const response = await gearscoutService.unhideMatch(getState().login.teamNumber, match.id, getState().login.secretCode);
+		const response = await gearscoutService.unhideMatch(
+			getState().loginV2.selectedEvent.teamNumber,
+			match.id,
+			getState().loginV2.selectedEvent.secretCode
+		);
 		const rawMatch = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
 
@@ -295,10 +417,10 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 
 	try {
 		const response = await gearscoutService.getImageInfoForEvent({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
+			teamNumber: getState().loginV2.selectedEvent.teamNumber,
+			gameYear: getState().loginV2.selectedEvent.gameYear,
+			eventCode: getState().loginV2.selectedEvent.eventCode,
+			secretCode: getState().loginV2.selectedEvent.secretCode
 		});
 
 		const infoResponses: ImageInfoResponse[] = response.data;
@@ -316,10 +438,10 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 
 	try {
 		const response = await gearscoutService.getInspections({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
+			teamNumber: getState().loginV2.selectedEvent.teamNumber,
+			gameYear: getState().loginV2.selectedEvent.gameYear,
+			eventCode: getState().loginV2.selectedEvent.eventCode,
+			secretCode: getState().loginV2.selectedEvent.secretCode
 		});
 
 		const inspections: Inspection[] = inspectionModelService.convertResponsesToModels(response.data);
@@ -338,10 +460,10 @@ export const getComments = () => async (dispatch: AppDispatch, getState: GetStat
 
 	try {
 		const response = await gearscoutService.getCommentsForEvent({
-			teamNumber: getState().login.teamNumber,
-			gameYear: getState().login.gameYear,
-			eventCode: getState().login.eventCode,
-			secretCode: getState().login.secretCode
+			teamNumber: getState().loginV2.selectedEvent.teamNumber,
+			gameYear: getState().loginV2.selectedEvent.gameYear,
+			eventCode: getState().loginV2.selectedEvent.eventCode,
+			secretCode: getState().loginV2.selectedEvent.secretCode
 		});
 
 		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);

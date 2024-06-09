@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
-import { AppState } from '../models';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AppState, LoginStatus } from '../models';
 import { initApp } from '../state';
 import './App.scss';
 import Header from './header/Header';
@@ -11,14 +11,17 @@ import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
 import InspectionPage from './inspection-page/InspectionPage';
+import EventPage from './event-page/EventPage';
 
 
 const select = (state: AppState) => ({
-	isLoggedIn: state.login.isLoggedIn,
+	isLoggedIn: state.loginV2.loginStatus === LoginStatus.loggedIn || state.loginV2.loginStatus === LoginStatus.guest,
+	loginStatus: state.loginV2.loginStatus,
+	hasSelectedEvent: state.loginV2.selectedEvent
 });
 
 const outputs = (dispatch) => ({
-	initApp: () => dispatch(initApp())
+	initApp: async () => dispatch(initApp())
 });
 
 
@@ -38,6 +41,18 @@ class ConnectedApp extends React.Component<any, null> {
 			);
 		}
 
+		if (!this.props.hasSelectedEvent) {
+			return (
+				<React.Fragment>
+					<Header />
+					<EventPage />
+				</React.Fragment>
+			);
+		}
+
+		const isNotGuest: boolean = this.props.loginStatus === LoginStatus.loggedIn;
+
+		const eventPage = <EventPage />;
 		const managePage = <ManagePage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
@@ -49,11 +64,15 @@ class ConnectedApp extends React.Component<any, null> {
 				<Header />
 				<Routes>
 					<Route path="/" element={ managePage } />
+					{ isNotGuest && <Route path="/events" element={ eventPage } /> }
 					<Route path="/matches" element={ managePage } />
 					<Route path="/teams" element={ teamPage } />
 					<Route path="/stats" element={ statPage } />
 					<Route path="/plan" element={ planningPage } />
 					<Route path="/inspections" element={ inspectionPage } />
+
+					{ /* Default: redirect to home page */ }
+					<Route path="*" element={ <Navigate to="/" /> } />
 				</Routes>
 			</React.Fragment>
 		);

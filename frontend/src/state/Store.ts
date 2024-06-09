@@ -1,22 +1,36 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppState, ImageInfo, ImageState, Language, LoadStatus, Match, MatchResponse } from '../models';
+import {
+	AppState,
+	ImageInfo,
+	ImageState,
+	Language,
+	LoadStatus,
+	LoginStatus,
+	Match,
+	MatchResponse,
+	UserRole
+} from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 
 
 const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
-	login: {
-		isLoggedIn: false,
-		teamNumber: null,
-		gameYear: new Date().getFullYear(),
-		username: null,
-		eventCode: null,
-		secretCode: null,
+	loginV2: {
+		loginStatus: LoginStatus.none,
+		role: null,
+		tokenString: null,
+		token: null,
+		user: null,
+		selectedEvent: null
 	},
 	csv: {
 		loadStatus: LoadStatus.none,
 		url: null
+	},
+	events: {
+		loadStatus: LoadStatus.none,
+		events: []
 	},
 	matches: {
 		loadStatus: LoadStatus.none,
@@ -68,20 +82,86 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 		case Actions.LOGIN:
 			return {
 				...state,
-				login: {
-					...state.login,
-					isLoggedIn: true,
-					teamNumber: action.payload.teamNumber,
-					gameYear: action.payload.gameYear,
-					username: action.payload.username,
-					eventCode: action.payload.eventCode,
-					secretCode: action.payload.secretCode
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.guest,
+					role: UserRole.guest,
+					user: {
+						id: null,
+						email: null,
+						teamNumber: action.payload.teamNumber,
+						username: action.payload.username,
+						role: UserRole.guest,
+					},
+					selectedEvent: {
+						teamNumber: action.payload.teamNumber,
+						gameYear: action.payload.gameYear,
+						eventCode: action.payload.eventCode,
+						secretCode: action.payload.secretCode,
+						matchCount: null
+					}
 				}
 			};
 		case Actions.LOGOUT:
 			return {
 				...INITIAL_STATE,
 				language: state.language
+			};
+		case Actions.LOGIN_AS_MEMBER_START:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggingIn
+				}
+			};
+		case Actions.LOGIN_AS_MEMBER_SUCCESS:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggedIn,
+					role: action.payload.token.role,
+					user: action.payload.user,
+					tokenString: action.payload.tokenString,
+					token: action.payload.token,
+				}
+			};
+		case Actions.LOGIN_AS_MEMBER_FAIL:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.logInFailed
+				}
+			};
+		case Actions.CREATE_USER_START:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggingIn
+				}
+			};
+		case Actions.CREATE_USER_SUCCESS:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.loggedIn,
+					role: action.payload.token.role,
+					user: action.payload.user,
+					tokenString: action.payload.tokenString,
+					token: action.payload.token
+				}
+			};
+		case Actions.CREATE_USER_FAIL:
+			return {
+				...state,
+				loginV2: {
+					...state.loginV2,
+					loginStatus: LoginStatus.logInFailed,
+				}
 			};
 		case Actions.GET_CSV_START:
 			return {
@@ -97,6 +177,44 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				csv: {
 					loadStatus: LoadStatus.success,
 					url: action.payload
+				}
+			};
+		case Actions.GET_EVENTS_START:
+			return {
+				...state,
+				events: {
+					...state.events,
+					loadStatus: getNextStatusOnLoad(state.events.loadStatus)
+				}
+			};
+		case Actions.GET_EVENTS_SUCCESS:
+			return {
+				...state,
+				events: {
+					...state.events,
+					loadStatus: LoadStatus.success,
+					events: action.payload
+				}
+			};
+		case Actions.GET_EVENTS_FAIL:
+			return {
+				...state,
+				events: {
+					...state.events,
+					loadStatus: getNextStatusOnFail(state.events.loadStatus)
+				}
+			};
+		case Actions.SELECT_EVENT_SUCCESS:
+			if (action.payload === state.loginV2.selectedEvent) { // TODO: compare IDs once available
+				return state;
+			}
+
+			return {
+				...INITIAL_STATE,
+				language: state.language,
+				loginV2: {
+					...state.loginV2,
+					selectedEvent: action.payload
 				}
 			};
 		case Actions.GET_MATCHES_START:

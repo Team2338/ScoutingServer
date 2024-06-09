@@ -34,14 +34,15 @@ public class UserController {
 
 
 	@PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-	ResponseEntity<String> createUser(@RequestBody @Valid UserCreateRequest request) {
+	ResponseEntity<LoginResponse> createUser(@RequestBody @Valid UserCreateRequest request) {
 		logger.debug("Received createUser request");
 
 		UserEntity user = userService.createUser(request);
 		credentialService.saveCredentials(user.getUserId(), request.password());
-		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole());
+		String token = tokenService.generateAndSaveToken(user.getUserId(), user.getRole(), user.getTeamNumber());
+		LoginResponse response = new LoginResponse(token, user);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(token);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 }

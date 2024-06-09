@@ -1,14 +1,16 @@
 import React from 'react';
 import { Language } from './languages.model';
 import {
+	EventInfo,
 	GlobalObjectiveStats,
 	Match,
 	MatchResponse,
 	ObjectiveDescriptor,
 	Plan,
-	Team
+	Team, UserInfo
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
+import { ITokenModel, UserRole } from './auth.model';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -21,13 +23,28 @@ export enum LoadStatus {
 	success = 'success',
 }
 
+export enum LoginPageVariant { // TODO: Use URL instead
+	guestPage = 'guestPage',
+	loginPage = 'loginPage',
+	createUserPage = 'createUserPage',
+}
+
+export enum LoginStatus {
+	none = 'none',
+	guest = 'guest',
+	loggedIn = 'loggedIn',
+	loggingIn = 'loggingIn',
+	logInFailed = 'logInFailed',
+}
+
 export interface AppState {
 	language: Language;
-	login: LoginState;
+	loginV2: LoginV2State;
 	csv: {
 		loadStatus: LoadStatus;
 		url: string;
 	};
+	events: EventState,
 	matches: {
 		loadStatus: LoadStatus;
 		raw: MatchResponse[];
@@ -56,13 +73,18 @@ export interface AppState {
 	comments: CommentState;
 }
 
-export interface LoginState {
-	isLoggedIn: boolean;
-	teamNumber: number;
-	gameYear: number;
-	username: string;
-	eventCode: string;
-	secretCode: string;
+export interface LoginV2State {
+	loginStatus: LoginStatus;
+	role: UserRole;
+	token: ITokenModel;
+	tokenString: string;
+	user: UserInfo;
+	selectedEvent: EventInfo;
+}
+
+export interface EventState {
+	loadStatus: LoadStatus;
+	events: EventInfo[];
 }
 
 export interface ImageState {

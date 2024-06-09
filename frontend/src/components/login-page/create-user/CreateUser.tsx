@@ -2,11 +2,11 @@ import './CreateUser.scss';
 import React, { useState } from 'react';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
-import { Statelet } from '../../../models';
+import { LoginPageVariant, Statelet } from '../../../models';
 import { AppDispatch, createUser, useAppDispatch } from '../../../state';
 
 interface IProps {
-
+	handlePageRedirect: (variant: LoginPageVariant) => void;
 }
 
 export default function CreateUser(props: IProps) {
@@ -20,9 +20,9 @@ export default function CreateUser(props: IProps) {
 
 	const isValid: boolean = Boolean(
 		email
-		&& password.length > 8
+		&& password.length >= 8
 		&& teamNumber
-		&& Number.isInteger(teamNumber)
+		// && Number.isInteger(teamNumber)
 		&& username
 	);
 
@@ -36,7 +36,8 @@ export default function CreateUser(props: IProps) {
 			password: password,
 			teamNumber: Number(teamNumber),
 			username: username
-		}));
+		}))
+			.catch((error: Error) => alert(error.message));
 	};
 
 	return (
@@ -45,7 +46,7 @@ export default function CreateUser(props: IProps) {
 			aria-labelledby="title"
 			onSubmit={ handleSubmit }
 		>
-			<h1 className="title" id="title">Create User</h1>
+			<h1 className="title" id="title">{ translate('CREATE_ACCOUNT') }</h1>
 			<TextField
 				id="email"
 				label={ translate('EMAIL') }
@@ -55,9 +56,6 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ email }
 				onChange={ (event) => setEmail(event.target.value) }
-				InputProps={{
-					startAdornment: <InputAdornment position="start">@</InputAdornment>
-				}}
 				autoComplete="off"
 				autoFocus={ true }
 			/>
@@ -70,10 +68,10 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={{
+				inputProps={ {
 					maxLength: 32,
 					minLength: 8
-				}}
+				} }
 				autoComplete="off"
 			/>
 			<TextField
@@ -85,13 +83,13 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ teamNumber }
 				onChange={ (event) => setTeamNumber(event.target.value) }
-				InputProps={{
+				InputProps={ {
 					startAdornment: <InputAdornment position="start">#</InputAdornment>
-				}}
-				inputProps={{
+				} }
+				inputProps={ {
 					min: 0,
 					max: 9999
-				}}
+				} }
 				autoComplete="off"
 			/>
 			<TextField
@@ -103,9 +101,9 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ username }
 				onChange={ (event) => setUsername(event.target.value) }
-				inputProps={{
+				inputProps={ {
 					maxLength: 32
-				}}
+				} }
 			/>
 			<Button
 				className="create-user-form-submit"
@@ -115,8 +113,22 @@ export default function CreateUser(props: IProps) {
 				onClick={ handleSubmit }
 				disabled={ !isValid }
 			>
-				{ translate('CREATE_USER') }
+				{ translate('CREATE_ACCOUNT') }
 			</Button>
+			<section className="link-section">
+				<span
+					className="login-page__variant-link"
+					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
+				>
+					{ translate('GUEST_LOGIN') } &gt;
+				</span>
+				<span
+					className="login-page__variant-link"
+					onClick={ () => props.handlePageRedirect(LoginPageVariant.loginPage) }
+				>
+					{ translate('MEMBER_LOGIN') } &gt;
+				</span>
+			</section>
 		</form>
 	);
 }

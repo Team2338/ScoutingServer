@@ -21,6 +21,8 @@ import team.gif.gearscout.token.UserService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "/api/v2/images", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,9 +58,11 @@ public class ImageControllerV2 {
 	) throws IOException {
 		logger.debug("Received addImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
 
-		if (token.startsWith("bearer")) {
-			token = token.replace("bearer ", "");
-		}
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 

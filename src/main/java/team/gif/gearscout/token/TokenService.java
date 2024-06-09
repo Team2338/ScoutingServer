@@ -37,7 +37,7 @@ public class TokenService {
 	}
 
 
-	public String generateAndSaveToken(Long userId, String role) {
+	public String generateAndSaveToken(Long userId, String role, Integer teamNumber) {
 		OffsetDateTime currentTime = Instant.now()
 			.atOffset(ZoneOffset.UTC)
 			.truncatedTo(ChronoUnit.SECONDS);
@@ -45,7 +45,7 @@ public class TokenService {
 
 		tokenEntity = tokenRepository.save(tokenEntity);
 
-		TokenModel token = new TokenModel("HS256", tokenEntity.getTokenId(), userId, role);
+		TokenModel token = new TokenModel("HS256", tokenEntity.getTokenId(), userId, role, teamNumber);
 
 		Base64.Encoder tokenEncoder = Base64.getUrlEncoder();
 		String encodedHeader = tokenEncoder.encodeToString(token.getHeader().getBytes(StandardCharsets.UTF_8));
@@ -129,7 +129,9 @@ public class TokenService {
 
 	private TokenModel parseToken(String token) throws ResponseStatusException {
 		String[] tokenParts = token.split("\\.");
-		return TokenModel.parse(tokenParts[0], tokenParts[1]);
+		byte[] header = Base64.getUrlDecoder().decode(tokenParts[0]);
+		byte[] payload = Base64.getUrlDecoder().decode(tokenParts[1]);
+		return TokenModel.parse(new String(header), new String(payload));
 	}
 
 	private void validateTokenExistence(TokenModel token) {

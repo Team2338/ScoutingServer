@@ -17,9 +17,9 @@ import {
 } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Language, LanguageDescriptor, LanguageInfo, LoadStatus } from '../../models';
+import { EventInfo, Language, LanguageDescriptor, LanguageInfo, LoadStatus, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { logout, selectLanguage, useAppDispatch, useAppSelector } from '../../state';
+import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
 import ProfileCard from '../shared/profile-card/ProfileCard';
 import { ExitToApp } from '@mui/icons-material';
@@ -38,12 +38,10 @@ export default function Header() {
 	const isMobile: boolean = useMediaQuery('(max-width: 600px)');
 
 	const _logout = () => dispatch(logout());
-	const isLoggedIn: boolean = useAppSelector(state => state.login.isLoggedIn);
-	const teamNumber: number = useAppSelector(state => state.login.teamNumber);
-	const eventCode: string = useAppSelector(state => state.login.eventCode);
-	const csv = useAppSelector(state => state.csv);
+	const isLoggedIn: boolean = useIsLoggedInSelector();
+	const selectedEvent: EventInfo = useAppSelector(state => state.loginV2.selectedEvent);
 
-	const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
+	const [isDrawerOpen, setDrawerOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [accountAnchor, setAccountAnchor] = useState(null);
 
 	const toggleDrawer = (isOpen: boolean) => () => setDrawerOpen(isOpen);
@@ -73,7 +71,6 @@ export default function Header() {
 			GearScout
 		</Typography>
 	);
-	const filename: string = teamNumber + '_' + eventCode + '.csv';
 
 	if (!isLoggedIn) {
 		return (
@@ -85,28 +82,6 @@ export default function Header() {
 			</AppBar>
 		);
 	}
-
-	/*
-	 * How to download text file with React
-	 * https://dev.to/imjoshellis/simple-download-text-file-link-with-react-29j3
-	 */
-	const downloadButton = (
-		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') }>
-			<Button
-				className="download-button"
-				color="primary"
-				disableElevation={ true }
-				variant="contained"
-				aria-label={ translate('DOWNLOAD_DATA') }
-				startIcon={ <Icon>download</Icon> }
-				href={ csv.url }
-				download={ filename }
-				disabled={ !(csv.loadStatus === LoadStatus.success) } // TODO: cover all the scenarios
-			>
-				{ translate('DATA') }
-			</Button>
-		</Tooltip>
-	);
 
 	const accountButton = (
 		<Tooltip title={ translate('ACCOUNT') }>
@@ -123,6 +98,7 @@ export default function Header() {
 		</Tooltip>
 	);
 
+	// TODO: Make profile link route to /matches for guests
 	const accountMenu = (
 		<Menu
 			id="account-menu"
@@ -131,7 +107,12 @@ export default function Header() {
 			onClose={ handleAccountMenuClose }
 			keepMounted
 		>
-			<ProfileCard sx={{ margin: '8px 12px' }} />
+			{
+				selectedEvent &&
+				<NavLink className="profile-card-link" to="/events" onClick={ handleAccountMenuClose }>
+					<ProfileCard sx={{ margin: '8px 12px' }} />
+				</NavLink>
+			}
 			<MenuItem onClick={ handleLogout }>
 				<ListItemIcon>
 					{/*<Icon>exit_to_app</Icon>*/}
@@ -144,7 +125,25 @@ export default function Header() {
 		</Menu>
 	);
 
+	if (!selectedEvent) {
+		return (
+			<AppBar id="appBar" position="sticky" color="primary">
+				<Toolbar>
+					{ title }
+					<LanguageSelector />
+					{ accountButton }
+					{ accountMenu }
+				</Toolbar>
+			</AppBar>
+		);
+	}
+
 	const routes: IRoute[] = [
+		{
+			path: '/events',
+			name: 'EVENTS',
+			icon: 'event'
+		},
 		{
 			path: '/matches',
 			name: 'MATCHES',
@@ -225,13 +224,47 @@ export default function Header() {
 					</IconButton>
 					{ title }
 					<LanguageSelector />
-					{ isMobile ? null : downloadButton }
+					{ isMobile ? null : <DownloadButton /> }
 					{ accountButton }
 					{ accountMenu }
 				</Toolbar>
 			</AppBar>
 			{ drawer }
 		</React.Fragment>
+	);
+}
+
+
+function DownloadButton() {
+	const translate = useTranslator();
+	const selectedEvent: EventInfo = useAppSelector(state => state.loginV2.selectedEvent);
+	const csv = useAppSelector(state => state.csv);
+
+	if (!selectedEvent) {
+		return null;
+	}
+
+	const filename: string = selectedEvent.teamNumber
+		+ '_' + selectedEvent.gameYear
+		+ '_' + selectedEvent.eventCode
+		+ '.csv';
+
+	return (
+		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') }>
+			<Button
+				className="download-button"
+				color="primary"
+				disableElevation={ true }
+				variant="contained"
+				aria-label={ translate('DOWNLOAD_DATA') }
+				startIcon={ <Icon>download</Icon> }
+				href={ csv.url }
+				download={ filename }
+				disabled={ !(csv.loadStatus === LoadStatus.success) } // TODO: cover all the scenarios
+			>
+				{ translate('DATA') }
+			</Button>
+		</Tooltip>
 	);
 }
 

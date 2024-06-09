@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,7 +18,8 @@ import team.gif.gearscout.token.UserEntity;
 import team.gif.gearscout.token.UserService;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "/api/v2", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,58 +44,75 @@ public class MatchControllerV2 extends MatchController {
 	}
 
 
-	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
-	public ResponseEntity<MatchEntity> hideMatch(
-		@PathVariable Integer teamNumber,
-		@PathVariable Long matchId,
+	@GetMapping(value = "/events")
+	public ResponseEntity<List<EventInfo>> getEvents(
 		@RequestHeader(value = "Authorization") String token
 	) {
-		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
+		logger.debug("Received getEvents request");
 
-		if (token.startsWith("bearer")) {
-			token = token.replace("bearer ", "");
-		}
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
-		List<String> allowedRoles = List.of("ADMIN", "SUPERADMIN");
-		if (!allowedRoles.contains(user.getRole())) {
+		if (!user.getRole().equals("ADMIN") && !user.getRole().equals("SUPERADMIN")) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 
-		if (user.getRole().equals("ADMIN") && !Objects.equals(teamNumber, user.getTeamNumber())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
+		List<EventInfo> events = matchService.getEventList(user.getTeamNumber());
+		return ResponseEntity.ok(events);
+	}
 
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, true);
+
+	@PutMapping(value = "/match/{matchId}/hide")
+	public ResponseEntity<MatchEntity> hideMatch(
+		@PathVariable Long matchId,
+		@RequestHeader(value = "Authorization") String token
+	) {
+		logger.debug("Received hideMatch request: {}", matchId);
+
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
+		Long userId = tokenService.validateToken(token);
+		UserEntity user = userService.findUserById(userId);
+
+		MatchEntity result = switch (user.getRole()) {
+			case "ADMIN" -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, true);
+			case "SUPERADMIN" -> matchService.setMatchHiddenStatus(matchId, true);
+			default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		};
+
 		return ResponseEntity.ok(result);
 	}
 
 
-	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/unhide")
+	@PutMapping(value = "/match/{matchId}/unhide")
 	public ResponseEntity<MatchEntity> unhideMatch(
-		@PathVariable Integer teamNumber,
 		@PathVariable Long matchId,
 		@RequestHeader(value = "Authorization") String token
 	) {
-		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
+		logger.debug("Received unhideMatch request: {}", matchId);
 
-		if (token.startsWith("bearer")) {
-			token = token.replace("bearer ", "");
-		}
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
-		List<String> allowedRoles = List.of("ADMIN", "SUPERADMIN");
-		if (!allowedRoles.contains(user.getRole())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
+		MatchEntity result = switch (user.getRole()) {
+			case "ADMIN" -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, false);
+			case "SUPERADMIN" -> matchService.setMatchHiddenStatus(matchId, false);
+			default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		};
 
-		if (user.getRole().equals("ADMIN") && !Objects.equals(teamNumber, user.getTeamNumber())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
-
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, false);
 		return ResponseEntity.ok(result);
 	}
 

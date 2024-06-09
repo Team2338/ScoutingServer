@@ -60,6 +60,17 @@ public class MatchService {
 		return match;
 	}
 
+	public MatchEntity setMatchHiddenStatus(Integer teamNumber, Long matchId, boolean isHidden) {
+		MatchEntity match = matchRepository
+			.findMatchEntryByIdAndTeamNumber(matchId, teamNumber)
+			.orElseThrow(() -> new MatchNotFoundException(matchId));
+
+		match.setIsHidden(isHidden);
+		match = matchRepository.save(match);
+
+		return match;
+	}
+
 	public MatchEntity setMatchHiddenStatus(Long matchId, boolean isHidden) {
 		MatchEntity match = matchRepository
 			.findById(matchId)
@@ -70,7 +81,11 @@ public class MatchService {
 
 		return match;
 	}
-	
+
+	public List<EventInfo> getEventList(Integer teamNumber) {
+		return matchRepository.getEventListForTeam(teamNumber);
+	}
+
 	public List<Integer> getDistinctTeamNumbers() {
 		return matchRepository.findDistinctTeamNumbers();
 	}

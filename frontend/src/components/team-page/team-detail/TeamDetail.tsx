@@ -4,6 +4,7 @@ import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 import './TeamDetail.scss';
+import SelectItemPlaceholder from '../../shared/select-item-placeholder/SelectItemPlaceholder';
 import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import { Button, Icon } from '@mui/material';
@@ -21,7 +22,11 @@ export default function TeamDetail(props: IProps) {
 	const [isInspectionDrawerOpen, setInspectionDrawerOpen]: Statelet<boolean> = useState(false);
 
 	if (!props.robotNumber) {
-		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
+		return (
+			<div className="team-detail__placeholder">
+				<SelectItemPlaceholder messageKey="SELECT_TEAM_VIEW_MORE_DETAILS" />
+			</div>
+		);
 	}
 
 	let gamemodeElements: any = [];

@@ -9,6 +9,7 @@ import {
 } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getComments, getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
+import SelectItemPlaceholder from '../shared/select-item-placeholder/SelectItemPlaceholder';
 import StatList from './stat-list/StatList';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
@@ -62,7 +63,11 @@ function StatPage() {
 		);
 	}
 
-	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
+	let content = (
+		<div className="stat-detail__placeholder">
+			<SelectItemPlaceholder messageKey="SELECT_STAT_VIEW_MORE_DETAILS" />
+		</div>
+	);
 	if (selectedStats.length > 0) {
 		const teamStats: TeamObjectiveStats[] = teamData
 			.map((team: Team) => team.stats

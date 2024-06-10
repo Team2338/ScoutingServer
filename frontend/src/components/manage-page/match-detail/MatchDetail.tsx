@@ -4,6 +4,7 @@ import { Match, Objective, superchargeGridScoreConfig } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 import './MatchDetail.scss';
+import SelectItemPlaceholder from '../../shared/select-item-placeholder/SelectItemPlaceholder';
 
 interface IProps {
 	match: Match;
@@ -18,7 +19,11 @@ export default function MatchDetail(props: IProps) {
 	const translate = useTranslator();
 
 	if (!props.match) {
-		return <div>{ translate('SELECT_MATCH_VIEW_MORE_DETAILS') }</div>;
+		return (
+			<div className="match-detail__placeholder">
+				<SelectItemPlaceholder messageKey="SELECT_MATCH_VIEW_MORE_DETAILS" />
+			</div>
+		);
 	}
 
 	const gamemodeElements = [];

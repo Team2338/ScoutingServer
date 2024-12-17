@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { IToken, IUser } from '../models';
+import { ILoginResponse, IUser } from '../models';
 import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
@@ -11,12 +11,12 @@ class ApiService {
 	});
 
 
-	login = (data: {
-		teamNumber: number,
-		username: string
-	}): GearscoutResponse<IToken> => {
-		const url = '/v1/auth/login';
-		return this.service.post(url, data);
+	login = (email: string, password: string): GearscoutResponse<ILoginResponse> => {
+		const url = '/v2/auth/login';
+		return this.service.post(url, {
+			email: email,
+			password: password
+		});
 	};
 
 

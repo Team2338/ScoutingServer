@@ -1,19 +1,16 @@
 import React from 'react';
 import { IForm } from './UiModels';
+import {IEventInfo, IUserInfo} from './ResponseModels';
+import { ITokenModel, UserRoles } from './AuthModels';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export interface IPitState {
-	login: {
-		loadStatus: LoadStatus;
-		error: string;
-		user: IUser;
-		token: IToken;
-	},
+	loginv2: ILoginState;
 	upload: {
 		loadStatus: LoadStatus;
 		error: string;
-	},
+	};
 	forms: {
 		loadStatus: LoadStatus;
 		error: string;
@@ -22,12 +19,22 @@ export interface IPitState {
 		data: {
 			[robotNumber: number]: IForm
 		}
-	},
+	};
 	snackbar: {
 		message: string;
 		severity: 'error' | 'warning' | 'info' | 'success';
 		isOpen: boolean;
-	}
+	};
+}
+
+export interface ILoginState {
+	loginStatus: LoginStatus;
+	error: string;
+	role: UserRoles;
+	token: ITokenModel;
+	tokenString: string;
+	user: IUserInfo;
+	selectedEvent: IEventInfo;
 }
 
 export interface IUser {
@@ -37,10 +44,11 @@ export interface IUser {
 	secretCode: string;
 }
 
-export interface IToken {
-	teamNumber: number;
-	username: string;
-	role: UserRoles;
+export enum LoginStatus {
+	none = 'none',
+	loggedIn = 'loggedIn',
+	loggingIn = 'loggingIn',
+	logInFailed = 'logInFailed'
 }
 
 export enum LoadStatus {
@@ -50,9 +58,4 @@ export enum LoadStatus {
 	success = 'success',
 	failed = 'failed',
 	failedWithPriorSuccess = 'failed reload'
-}
-
-export enum UserRoles {
-	admin = 'admin',
-	none = 'none'
 }

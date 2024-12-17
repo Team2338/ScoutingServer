@@ -5,13 +5,15 @@ import {
 	IForm,
 	IFormQuestions,
 	IPitState,
-	IToken,
+	ITokenModel,
 	IUser,
+	IUserInfo,
 	LoginErrors,
 	UploadErrors
 } from '../../models';
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
+import TokenService from '../../services/TokenService';
 import {
 	AppDispatch,
 	getAllFormsFailed,
@@ -19,7 +21,7 @@ import {
 	getAllFormsSuccess,
 	loginFailed,
 	loginStart,
-	loginSuccess,
+	loginSuccess, loginV2Start, loginV2Success,
 	logoutSuccess,
 	uploadFailed,
 	uploadFormFailed,
@@ -55,27 +57,30 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 	}
 };
 
-export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
-	dispatch(loginStart());
+export const login = (
+	email: string,
+	password: string
+) => async (dispatch: AppDispatch) => {
+	console.log('Logging in as member');
+	dispatch(loginV2Start());
 
 	try {
-		const response = await ApiService.login({
-			teamNumber: Number(credentials.teamNumber),
-			username: credentials.username
-		});
+		const response = await ApiService.login(email, password);
+		const user: IUserInfo = response.data.user;
+		const tokenString: string = response.data.token;
+		const token: ITokenModel = TokenService.createTokenModel(tokenString);
 
-		const token: IToken = response.data;
+		localStorage.setItem('member', JSON.stringify(user));
+		localStorage.setItem('tokenString', tokenString);
 
-		localStorage.setItem('teamNumber', credentials.teamNumber);
-		localStorage.setItem('username', credentials.username);
-		localStorage.setItem('eventCode', credentials.eventCode);
-		localStorage.setItem('secretCode', credentials.secretCode);
-		localStorage.setItem('token', JSON.stringify(token));
-
-		dispatch(loginSuccess({ user: credentials, token }));
+		dispatch(loginV2Success({
+			user: user,
+			token: token,
+			tokenString: tokenString,
+		}));
 	} catch (error) {
-		console.error(error);
-		dispatch(loginFailed(LoginErrors.unknown));
+		console.error('Error logging in as member', error);
+		dispatch(loginFailed(LoginErrors.unknown)); // TODO: pass actual error
 	}
 };
 

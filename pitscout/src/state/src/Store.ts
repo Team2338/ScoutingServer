@@ -5,15 +5,21 @@ import {
 	IForm,
 	IPitState,
 	IToken,
+	ITokenModel,
 	IUser,
+	IUserInfo,
 	LoadStatus,
 	LoginErrors,
+	LoginStatus,
 	UploadErrors
 } from '../../models';
 
 export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
+export const loginV2Start = createAction('loginV2/login-start');
+export const loginV2Success = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
+export const loginV2Failed = createAction<LoginErrors>('loginV2/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
 
@@ -36,11 +42,14 @@ export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 export const closeSnackbar = createAction('snackbar/clear');
 
 const initialState: IPitState = {
-	login: {
-		loadStatus: LoadStatus.none,
+	loginv2: {
+		loginStatus: LoginStatus.none,
 		error: null,
+		role: null,
+		tokenString: null,
+		token: null,
 		user: null,
-		token: null
+		selectedEvent: null
 	},
 	upload: {
 		loadStatus: LoadStatus.none,
@@ -62,27 +71,27 @@ const initialState: IPitState = {
 
 const reducer = createReducer(initialState, builder => {
 	builder
-		.addCase(loginStart, (state: IPitState) => {
-			state.login.loadStatus = LoadStatus.loading;
-			state.login.error = null;
+		.addCase(loginV2Start, (state: IPitState) => {
+			state.loginv2.loginStatus = LoginStatus.loggingIn;
+			state.loginv2.error = null;
 		})
-		.addCase(loginSuccess, (state: IPitState, action) => {
-			state.login.loadStatus = LoadStatus.success;
-			state.login.user = action.payload.user;
-			state.login.token = action.payload.token;
+		.addCase(loginV2Success, (state: IPitState, action) => {
+			state.loginv2.user = action.payload.user;
+			state.loginv2.token = action.payload.token;
+			state.loginv2.tokenString = action.payload.tokenString;
 		})
-		.addCase(loginFailed, (state: IPitState, action) => {
-			state.login.loadStatus = LoadStatus.failed;
-			state.login.error = action.payload;
+		.addCase(loginV2Failed, (state: IPitState, action) => {
+			state.loginv2.loginStatus = LoginStatus.logInFailed;
+			state.loginv2.error = action.payload;
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
-			state.login = initialState.login;
+			state.loginv2 = initialState.loginv2;
 			state.forms = initialState.forms;
 			state.upload = initialState.upload;
 			state.snackbar = initialState.snackbar;
 		})
 		.addCase(clearLoginError, (state: IPitState) => {
-			state.login.error = null;
+			state.loginv2.error = null;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.loading;
@@ -182,4 +191,4 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<IPitState> = useSelector;
 
-export const selectIsLoggedIn = (state: IPitState): boolean => state.login.loadStatus === LoadStatus.success;
+export const selectIsLoggedIn = (state: IPitState): boolean => state.loginv2.loginStatus === LoginStatus.loggedIn;

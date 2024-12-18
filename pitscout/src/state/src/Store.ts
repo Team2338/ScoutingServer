@@ -14,10 +14,9 @@ import {
 } from '../../models';
 import { ReducerWithInitialState } from '@reduxjs/toolkit/dist/createReducer';
 
+export const loginStart = createAction('loginV2/login-start');
+export const loginSuccess = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
-export const loginV2Start = createAction('loginV2/login-start');
-export const loginV2Success = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
-export const loginV2Failed = createAction<LoginErrors>('loginV2/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
 
@@ -49,7 +48,6 @@ const initialState: IPitState = {
 		tokenString: null,
 		token: null,
 		user: null,
-		selectedEvent: null
 	},
 	selectedEvent: null,
 	upload: {
@@ -72,23 +70,25 @@ const initialState: IPitState = {
 
 const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, builder => {
 	builder
-		.addCase(loginV2Start, (state: IPitState) => {
+		.addCase(loginStart, (state: IPitState) => {
 			state.loginv2.loginStatus = LoginStatus.loggingIn;
 			state.loginv2.error = null;
 		})
-		.addCase(loginV2Success, (state: IPitState, action) => {
+		.addCase(loginSuccess, (state: IPitState, action) => {
+			state.loginv2.loginStatus = LoginStatus.loggedIn;
 			state.loginv2.user = action.payload.user;
 			state.loginv2.token = action.payload.token;
 			state.loginv2.tokenString = action.payload.tokenString;
 		})
-		.addCase(loginV2Failed, (state: IPitState, action) => {
+		.addCase(loginFailed, (state: IPitState, action) => {
 			state.loginv2.loginStatus = LoginStatus.logInFailed;
 			state.loginv2.error = action.payload;
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
 			state.loginv2 = initialState.loginv2;
-			state.forms = initialState.forms;
+			state.selectedEvent = initialState.selectedEvent;
 			state.upload = initialState.upload;
+			state.forms = initialState.forms;
 			state.snackbar = initialState.snackbar;
 		})
 		.addCase(clearLoginError, (state: IPitState) => {

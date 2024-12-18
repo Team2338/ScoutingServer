@@ -35,14 +35,6 @@ export interface ILoginState {
 	token: ITokenModel;
 	tokenString: string;
 	user: IUserInfo;
-	selectedEvent: IEventInfo;
-}
-
-export interface IUser {
-	teamNumber: string;
-	username: string;
-	eventCode: string;
-	secretCode: string;
 }
 
 export enum LoginStatus {

@@ -1,14 +1,16 @@
 import { AxiosError, HttpStatusCode } from 'axios';
 import {
 	FormErrors,
-	ICreateDetailNoteRequest, IEventInfo,
+	ICreateDetailNoteRequest,
+	IEventInfo,
 	IForm,
 	IFormQuestions,
 	IPitState,
 	ITokenModel,
 	IUserInfo,
 	LoginErrors,
-	UploadErrors
+	UploadErrors,
+	UserRoles
 } from '../../models';
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
@@ -19,8 +21,8 @@ import {
 	getAllFormsStart,
 	getAllFormsSuccess,
 	loginFailed,
-	loginV2Start,
-	loginV2Success,
+	loginStart,
+	loginSuccess,
 	logoutSuccess,
 	uploadFailed,
 	uploadFormFailed,
@@ -45,7 +47,7 @@ const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
 		// TODO: check if token is still valid
 		// TODO: dispatch loginStart if token validation requires an HTTP request
 		const token: ITokenModel = TokenService.createTokenModel(tokenString);
-		dispatch(loginV2Success({
+		dispatch(loginSuccess({
 			user: JSON.parse(member),
 			token: token,
 			tokenString: tokenString
@@ -62,7 +64,7 @@ export const login = (
 	password: string
 ) => async (dispatch: AppDispatch) => {
 	console.log('Logging in as member');
-	dispatch(loginV2Start());
+	dispatch(loginStart());
 
 	try {
 		const response = await ApiService.login(email, password);
@@ -70,10 +72,15 @@ export const login = (
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = TokenService.createTokenModel(tokenString);
 
+		if (user.role !== UserRoles.admin && user.role !== UserRoles.superAdmin) {
+			dispatch(loginFailed(LoginErrors.unauthorized));
+		}
+
 		localStorage.setItem('member', JSON.stringify(user));
 		localStorage.setItem('tokenString', tokenString);
 
-		dispatch(loginV2Success({
+		console.log('Successfully logged in as member');
+		dispatch(loginSuccess({
 			user: user,
 			token: token,
 			tokenString: tokenString,

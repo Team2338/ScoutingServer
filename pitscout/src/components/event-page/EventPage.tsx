@@ -1,7 +1,8 @@
-import { selectEvent, useAppDispatch, useAppSelector } from '../../state';
+import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import { IEventInfo, IUserInfo, LoadStatus } from '../../models';
-import { Button, Skeleton } from '@mui/material';
-import React, { useState } from 'react';
+import { Button, Skeleton, TextField } from '@mui/material';
+import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
+import './EventPage.scss';
 
 export default function EventPage() {
 	const dispatch = useAppDispatch();
@@ -24,29 +25,125 @@ export default function EventPage() {
 		});
 	};
 
-	if (eventLoadStatus === LoadStatus.none || eventLoadStatus === LoadStatus.loading) {
+	useEffect(
+		() => {
+			dispatch(getEvents());
+		},
+		[dispatch]
+	);
+
+	const loadingList = () => {
 		return (
-			<main className="page event-page">
-				<section className="event-input-section">
-					<h2 className="event-section-header">Manually enter event</h2>
-					<input placeholder="event code"/>
-					<input placeholder="secret code"/>
-					<Button
-						variant="contained"
-						onClick={manuallySelectEvent}
-						disabled={eventCode.trim() === '' || secretCode.trim() === ''}
-					>
-						Confirm
-					</Button>
-				</section>
-				<div className="event-section-separator">-- or --</div>
-				<section className="event-list-section">
-					<h2 className="event-section-header">Choose existing event</h2>
-					{ new Array(8).map((_, index: number) => <Skeleton key={ index }/>) }
-				</section>
-			</main>
+			<ol className="event-list">
+				{ new Array(8).fill(0).map((_, index: number) => (
+					<li key={index} className="event-list-item">
+						<Skeleton
+							variant="rounded"
+							width={ '100%' }
+							height={ 56 }
+						/>
+					</li>
+				))
+				}
+			</ol>
 		);
-	}
+	};
+
+	const actualEventList = () => {
+		return (
+			<ol className="event-list">
+				{
+					events
+						.filter((event: IEventInfo) => event.gameYear === new Date().getFullYear())
+						.map((event: IEventInfo, index: number) => (
+							<li key={ index } className="event-list-item">
+								<button>
+									<span className="event-code-label">{ event.eventCode }</span>
+									<span className="inspection-count">{ 0 } Inspections</span>
+									<span className="secret-code-label">{ event.secretCode }</span>
+									<span className="match-count">{ event.matchCount } Matches</span>
+								</button>
+							</li>
+						))
+				}
+			</ol>
+		);
+	};
+
+	const failedList = () => {
+		return (
+			<Fragment>
+				<div>Failed to load events</div>
+				<Button>Retry</Button>
+			</Fragment>
+		);
+	};
+
+	const EventList = () => {
+		switch (eventLoadStatus) {
+			case LoadStatus.loadingWithPriorSuccess: // Fallthrough
+			case LoadStatus.failedWithPriorSuccess: // Fallthrough
+			case LoadStatus.success:
+				return actualEventList();
+			case LoadStatus.failed:
+				return failedList();
+			default:
+				return loadingList();
+		}
+	};
+
+	return (
+		<main className="page event-page">
+			<section className="event-input-section">
+				<h2 className="event-section-header">Manually enter event</h2>
+				<TextField
+					id="event-code-input"
+					label="Event code"
+					name="eventCode"
+					type="text"
+					margin="dense"
+					variant="outlined"
+					value={ eventCode }
+					onChange={ (event: ChangeEvent<HTMLInputElement>) => setEventCode(event.target.value) }
+					inputProps={ {
+						maxLength: 32,
+						required: true,
+						pattern: /.*\S.*/
+					} }
+					autoComplete="off"
+				/>
+				<TextField
+					id="secret-code-input"
+					label="Secret code"
+					name="secretCode"
+					type="text"
+					margin="dense"
+					variant="outlined"
+					value={ secretCode }
+					onChange={ (event: ChangeEvent<HTMLInputElement>) => setSecretCode(event.target.value) }
+					inputProps={ {
+						maxLength: 32,
+						required: true,
+						pattern: /.*\S.*/
+					} }
+					autoComplete="off"
+				/>
+				<Button
+					className="event-input-submit-button"
+					variant="contained"
+					onClick={ manuallySelectEvent }
+					disabled={ eventCode.trim() === '' || secretCode.trim() === '' }
+				>
+					Confirm
+				</Button>
+			</section>
+			<div className="event-section-separator">&minus; or &minus;</div>
+			<section className="event-list-section">
+				<h2 className="event-section-header">Choose existing event</h2>
+				<EventList />
+			</section>
+		</main>
+	);
 
 
 }

@@ -57,7 +57,7 @@ export default function EventPage() {
 						.filter((event: IEventInfo) => event.gameYear === new Date().getFullYear())
 						.map((event: IEventInfo, index: number) => (
 							<li key={ index } className="event-list-item">
-								<button>
+								<button onClick={ () => _selectEvent(event) }>
 									<span className="event-code-label">{ event.eventCode }</span>
 									<span className="inspection-count">{ 0 } Inspections</span>
 									<span className="secret-code-label">{ event.secretCode }</span>

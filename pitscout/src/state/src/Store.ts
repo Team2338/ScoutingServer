@@ -2,26 +2,26 @@ import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
 	FormErrors,
+	IEventInfo,
 	IForm,
 	IPitState,
-	IToken,
 	ITokenModel,
-	IUser,
 	IUserInfo,
 	LoadStatus,
 	LoginErrors,
 	LoginStatus,
 	UploadErrors
 } from '../../models';
+import { ReducerWithInitialState } from '@reduxjs/toolkit/dist/createReducer';
 
-export const loginStart = createAction('login/login-start');
-export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const loginV2Start = createAction('loginV2/login-start');
 export const loginV2Success = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
 export const loginV2Failed = createAction<LoginErrors>('loginV2/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
+
+export const selectEvent = createAction<IEventInfo>('selectEvent');
 
 export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
@@ -51,6 +51,7 @@ const initialState: IPitState = {
 		user: null,
 		selectedEvent: null
 	},
+	selectedEvent: null,
 	upload: {
 		loadStatus: LoadStatus.none,
 		error: null
@@ -69,7 +70,7 @@ const initialState: IPitState = {
 	}
 };
 
-const reducer = createReducer(initialState, builder => {
+const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, builder => {
 	builder
 		.addCase(loginV2Start, (state: IPitState) => {
 			state.loginv2.loginStatus = LoginStatus.loggingIn;
@@ -92,6 +93,9 @@ const reducer = createReducer(initialState, builder => {
 		})
 		.addCase(clearLoginError, (state: IPitState) => {
 			state.loginv2.error = null;
+		})
+		.addCase(selectEvent, (state: IPitState, action) => {
+			state.selectedEvent = action.payload;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.loading;

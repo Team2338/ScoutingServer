@@ -1,12 +1,11 @@
 import { AxiosError, HttpStatusCode } from 'axios';
 import {
 	FormErrors,
-	ICreateDetailNoteRequest,
+	ICreateDetailNoteRequest, IEventInfo,
 	IForm,
 	IFormQuestions,
 	IPitState,
 	ITokenModel,
-	IUser,
 	IUserInfo,
 	LoginErrors,
 	UploadErrors
@@ -20,8 +19,8 @@ import {
 	getAllFormsStart,
 	getAllFormsSuccess,
 	loginFailed,
-	loginStart,
-	loginSuccess, loginV2Start, loginV2Success,
+	loginV2Start,
+	loginV2Success,
 	logoutSuccess,
 	uploadFailed,
 	uploadFormFailed,
@@ -34,27 +33,28 @@ import {
 type GetState = () => IPitState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
-	const teamNumber: string = localStorage.getItem('teamNumber');
-	const username: string = localStorage.getItem('username');
-	const eventCode: string = localStorage.getItem('eventCode');
-	const secretCode: string = localStorage.getItem('secretCode');
+	attemptLoginFromStorage(dispatch);
+	// TODO: if login succeeded, try to recall last selected event
+};
 
-	// Only login if all information is present
-	if (teamNumber && username && eventCode && secretCode) {
-		const user: IUser = {
-			teamNumber: teamNumber,
-			username: username,
-			eventCode: eventCode,
-			secretCode: secretCode
-		};
-		const token = JSON.parse(localStorage.getItem('token'));
+const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
+	const member = localStorage.getItem('member');
+	const tokenString = localStorage.getItem('tokenString');
 
-		if (token) {
-			dispatch(loginSuccess({ user, token }));
-		} else {
-			dispatch(login(user));
-		}
+	if (member && tokenString) {
+		// TODO: check if token is still valid
+		// TODO: dispatch loginStart if token validation requires an HTTP request
+		const token: ITokenModel = TokenService.createTokenModel(tokenString);
+		dispatch(loginV2Success({
+			user: JSON.parse(member),
+			token: token,
+			tokenString: tokenString
+		}));
+
+		return true;
 	}
+
+	return false;
 };
 
 export const login = (
@@ -92,16 +92,15 @@ export const logout = () => async (dispatch: AppDispatch) => {
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(uploadStart());
 
-	const user: IUser = getState().login.user;
-	const token: IToken = getState().login.token;
+	const selectedEvent: IEventInfo = getState().selectedEvent;
+	const tokenString: string = getState().loginv2.tokenString;
 	try {
-		await ApiService.uploadImage(
-			user,
-			new Date().getFullYear(),
-			robotNumber,
-			token,
-			file
-		);
+		await ApiService.uploadImage({
+			event: selectedEvent,
+			robotNumber: robotNumber,
+			tokenString: tokenString,
+			image: file
+		});
 		dispatch(uploadSuccess());
 	} catch (error) {
 		console.log(error);
@@ -128,21 +127,24 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 
 export const uploadForm = (robotNumber: number, questions: IFormQuestions) => async (dispatch: AppDispatch, getState: GetState) => {
 	const formState: IForm = FormModelService.convertQuestionsToFormState(
-		getState().login.user,
 		robotNumber,
 		questions
 	);
 	dispatch(uploadFormStart(formState));
 
-	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
-		getState().login.user,
-		new Date().getFullYear(),
-		robotNumber,
-		questions
-	);
+	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest({
+		user: getState().loginv2.user,
+		event: getState().selectedEvent,
+		robotNumber: robotNumber,
+		questions: questions
+	});
 
 	try {
-		await ApiService.uploadForm(getState().login.user, request, getState().login.token);
+		await ApiService.uploadForm({
+			event: getState().selectedEvent,
+			form: request,
+			tokenString: getState().loginv2.tokenString
+		});
 		dispatch(uploadFormSuccess(robotNumber));
 	} catch (error) {
 		console.log(error);
@@ -168,11 +170,10 @@ export const loadForms = () => async (dispatch: AppDispatch, getState: GetState)
 	dispatch(getAllFormsStart());
 
 	try {
-		const questions = await ApiService.getAllForms(
-			new Date().getFullYear(),
-			getState().login.user,
-			getState().login.token
-		);
+		const questions = await ApiService.getAllForms({
+			event: getState().selectedEvent,
+			tokenString: getState().loginv2.tokenString
+		});
 
 		const forms = FormModelService.convertResponseQuestionsToForms(questions.data);
 

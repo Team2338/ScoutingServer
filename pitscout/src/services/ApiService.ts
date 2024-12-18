@@ -19,6 +19,18 @@ class ApiService {
 	};
 
 
+	getEvents = (tokenString: string): GearscoutResponse<IEventInfo[]> => {
+		const url = '/v2/events';
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${tokenString}`
+			}
+		};
+
+		return this.service.get(url, config);
+	};
+
+
 	uploadImage = (data: {
 		event: IEventInfo;
 		robotNumber: string;

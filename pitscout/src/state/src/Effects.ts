@@ -20,6 +20,9 @@ import {
 	getAllFormsFailed,
 	getAllFormsStart,
 	getAllFormsSuccess,
+	getEventsFailed,
+	getEventsStart,
+	getEventsSuccess,
 	loginFailed,
 	loginStart,
 	loginSuccess,
@@ -95,6 +98,20 @@ export const logout = () => async (dispatch: AppDispatch) => {
 	localStorage.clear();
 	dispatch(logoutSuccess());
 };
+
+export const getEvents = () => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(getEventsStart());
+
+	const tokenString: string = getState().loginv2.tokenString;
+	try {
+		const response = await ApiService.getEvents(tokenString);
+		const events: IEventInfo[] = response.data;
+		dispatch(getEventsSuccess(events));
+	} catch (error) {
+		console.error('Error retrieving events', error);
+		dispatch(getEventsFailed(error.message));
+	}
+}
 
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(uploadStart());

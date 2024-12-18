@@ -7,6 +7,12 @@ export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export interface IPitState {
 	loginv2: ILoginState;
+	events: {
+		loadStatus: LoadStatus;
+		error: string;
+		list: IEventInfo[];
+		selectedEvent: IEventInfo;
+	};
 	selectedEvent: IEventInfo;
 	upload: {
 		loadStatus: LoadStatus;

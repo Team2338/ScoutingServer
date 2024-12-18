@@ -20,7 +20,10 @@ export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
 
-export const selectEvent = createAction<IEventInfo>('selectEvent');
+export const getEventsStart = createAction('event/get-events-start');
+export const getEventsSuccess = createAction<IEventInfo[]>('event/get-events-success');
+export const getEventsFailed = createAction<string>('event/get-events-failure');
+export const selectEvent = createAction<IEventInfo>('event/selectEvent');
 
 export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
@@ -48,6 +51,12 @@ const initialState: IPitState = {
 		tokenString: null,
 		token: null,
 		user: null,
+	},
+	events: {
+		loadStatus: LoadStatus.none,
+		error: null,
+		list: [],
+		selectedEvent: null
 	},
 	selectedEvent: null,
 	upload: {
@@ -83,9 +92,11 @@ const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, 
 		.addCase(loginFailed, (state: IPitState, action) => {
 			state.loginv2.loginStatus = LoginStatus.logInFailed;
 			state.loginv2.error = action.payload;
+			showSnackbar(state, 'error', action.payload);
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
 			state.loginv2 = initialState.loginv2;
+			state.events = initialState.events;
 			state.selectedEvent = initialState.selectedEvent;
 			state.upload = initialState.upload;
 			state.forms = initialState.forms;
@@ -94,8 +105,21 @@ const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, 
 		.addCase(clearLoginError, (state: IPitState) => {
 			state.loginv2.error = null;
 		})
+		.addCase(getEventsStart, (state: IPitState) => {
+			state.events.loadStatus = getNextStatusOnLoad(state.events.loadStatus);
+		})
+		.addCase(getEventsSuccess, (state: IPitState, action) => {
+			state.events.loadStatus = LoadStatus.success;
+			state.events.list = action.payload;
+		})
+		.addCase(getEventsFailed, (state: IPitState, action) => {
+			state.events.loadStatus = getNextStatusOnFail(state.events.loadStatus);
+			state.events.error = action.payload;
+			showSnackbar(state, 'error', action.payload);
+		})
 		.addCase(selectEvent, (state: IPitState, action) => {
 			state.selectedEvent = action.payload;
+			state.events.selectedEvent = action.payload;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.loading;
@@ -183,6 +207,14 @@ const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {
 	}
 
 	return LoadStatus.loading;
+};
+
+const getNextStatusOnFail = (previousStatus: LoadStatus) : LoadStatus=> {
+	if (previousStatus === LoadStatus.loadingWithPriorSuccess) {
+		return LoadStatus.failedWithPriorSuccess
+	}
+
+	return LoadStatus.failed;
 };
 
 const showSnackbar = (state: IPitState, severity: 'error' | 'success', message: string): void => {

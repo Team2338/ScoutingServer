@@ -1,0 +1,18 @@
+.event-page {
+  background-color: #eeeeee;
+
+  .event-input-section, .event-list-section {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: #fff;
+  }
+
+  .event-section-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+}

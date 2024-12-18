@@ -211,7 +211,7 @@ const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {
 
 const getNextStatusOnFail = (previousStatus: LoadStatus) : LoadStatus=> {
 	if (previousStatus === LoadStatus.loadingWithPriorSuccess) {
-		return LoadStatus.failedWithPriorSuccess
+		return LoadStatus.failedWithPriorSuccess;
 	}
 
 	return LoadStatus.failed;

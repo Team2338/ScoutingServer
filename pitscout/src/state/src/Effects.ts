@@ -111,7 +111,7 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 		console.error('Error retrieving events', error);
 		dispatch(getEventsFailed(error.message));
 	}
-}
+};
 
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(uploadStart());

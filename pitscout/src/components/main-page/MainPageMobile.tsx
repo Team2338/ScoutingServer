@@ -17,7 +17,7 @@ const Transition = forwardRef(function Transition(props: any, ref) {
 export default function MainPageMobile() {
 
 	const dispatch = useAppDispatch();
-	const role: UserRoles = useAppSelector(state => state.login.token.role);
+	const role: UserRoles = useAppSelector(state => state.loginv2.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const loadStatus: LoadStatus = useAppSelector(state => state.forms.loadStatus);
 	const [isAddDialogOpen, setAddDialogOpen]: Statelet<boolean> = useState<boolean>(false);

@@ -22,6 +22,7 @@ function App() {
 	if (!isLoggedIn) {
 		return (
 			<div className="App">
+				<Header />
 				<LoginPage />
 			</div>
 		);
@@ -30,6 +31,7 @@ function App() {
 	if (!selectedEvent) {
 		return (
 			<div className="App">
+				<Header />
 				<EventPage />
 			</div>
 		);

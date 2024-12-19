@@ -120,6 +120,7 @@ const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, 
 		.addCase(selectEvent, (state: IPitState, action) => {
 			state.selectedEvent = action.payload;
 			state.events.selectedEvent = action.payload;
+			state.forms = initialState.forms;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.loading;

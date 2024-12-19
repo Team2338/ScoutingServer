@@ -3,8 +3,10 @@ import { IEventInfo, IUserInfo, LoadStatus } from '../../models';
 import { Button, Skeleton, TextField } from '@mui/material';
 import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import './EventPage.scss';
+import { useNavigate } from 'react-router-dom';
 
 export default function EventPage() {
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
@@ -15,6 +17,7 @@ export default function EventPage() {
 
 	const _selectEvent = async (event: IEventInfo) => {
 		await dispatch(selectEvent(event));
+		navigate('/');
 	};
 	const manuallySelectEvent = () => {
 		_selectEvent({

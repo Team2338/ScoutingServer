@@ -12,7 +12,7 @@ import {
 	Typography
 } from '@mui/material';
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
-import { ExitToApp } from '@mui/icons-material';
+import { ExitToApp, Shuffle } from '@mui/icons-material';
 import ProfileCard from './profile-card/ProfileCard';
 import { IEventInfo } from '../../models';
 import { NavLink } from 'react-router-dom';
@@ -58,11 +58,17 @@ export default function Header() {
 			<ProfileCard sx={{ margin: '8px 12px' }}/>
 			{
 				selectedEvent &&
-				<NavLink to="/events" onClick={ handleAccountMenuClose }>
-					Switch event
+				<NavLink id="switch-event-link" to="/events" onClick={ handleAccountMenuClose }>
+					<MenuItem>
+						<ListItemIcon>
+							<Shuffle />
+						</ListItemIcon>
+						<ListItemText>
+							Switch events
+						</ListItemText>
+					</MenuItem>
 				</NavLink>
 			}
-			{ /* TODO: Change event button */ }
 			<MenuItem onClick={ _logout }>
 				<ListItemIcon>
 					<ExitToApp />

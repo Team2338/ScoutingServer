@@ -6,6 +6,7 @@ import MainPage from './main-page/MainPage';
 import LoginPage from './login-page/LoginPage';
 import { IEventInfo } from '../models';
 import EventPage from './event-page/EventPage';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -40,7 +41,13 @@ function App() {
 	return (
 		<div className="App">
 			<Header />
-			<MainPage />
+			<Routes>
+				<Route path="/" element={ <MainPage /> } />
+				<Route path="/events" element={ <EventPage /> } />
+
+				{/*	Default: redirect to the home page */}
+				<Route path="*" element={ <Navigate to="/" />} />
+			</Routes>
 		</div>
 	);
 }

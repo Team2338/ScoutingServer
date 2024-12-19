@@ -12,7 +12,6 @@ import {
 	LoginStatus,
 	UploadErrors
 } from '../../models';
-import { ReducerWithInitialState } from '@reduxjs/toolkit/dist/createReducer';
 
 export const loginStart = createAction('loginV2/login-start');
 export const loginSuccess = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
@@ -77,7 +76,7 @@ const initialState: IPitState = {
 	}
 };
 
-const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, builder => {
+const reducer = createReducer(initialState, builder => {
 	builder
 		.addCase(loginStart, (state: IPitState) => {
 			state.loginv2.loginStatus = LoginStatus.loggingIn;

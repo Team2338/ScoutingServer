@@ -14,11 +14,13 @@ import {
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
 import { ExitToApp } from '@mui/icons-material';
 import ProfileCard from './profile-card/ProfileCard';
+import { IEventInfo } from '../../models';
+import { NavLink } from 'react-router-dom';
 
 export default function Header() {
-	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
-
 	const dispatch = useAppDispatch();
+	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 
 	const [accountAnchor, setAccountAnchor] = useState(null);
 	const handleAccountMenuClick = (event) => setAccountAnchor(event.currentTarget);
@@ -54,6 +56,12 @@ export default function Header() {
 			keepMounted={ true }
 		>
 			<ProfileCard sx={{ margin: '8px 12px' }}/>
+			{
+				selectedEvent &&
+				<NavLink to="/events" onClick={ handleAccountMenuClose }>
+					Switch event
+				</NavLink>
+			}
 			{ /* TODO: Change event button */ }
 			<MenuItem onClick={ _logout }>
 				<ListItemIcon>
@@ -79,7 +87,7 @@ export default function Header() {
 					>
 						PitScout
 					</Typography>
-					<span>{ process.env.REACT_APP_VERSION }</span>
+					<span>{ import.meta.env.VITE_APP_VERSION }</span>
 				</div>
 				{ isLoggedIn && accountButton }
 				{ isLoggedIn && accountMenu }

@@ -5,13 +5,15 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './state';
 import './index.scss';
-import { unregister } from './serviceWorkerRegistration';
+import { BrowserRouter } from 'react-router-dom';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
 	<Provider store={ store }>
-		<App />
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
 	</Provider>
 );
 
@@ -19,5 +21,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-unregister();
-// myRegister();

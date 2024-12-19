@@ -6,7 +6,7 @@ type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 class ApiService {
 
 	service = axios.create({
-		baseURL: process.env.REACT_APP_SERVER_URL
+		baseURL: import.meta.env.VITE_APP_SERVER_URL
 	});
 
 

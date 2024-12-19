@@ -23,7 +23,7 @@ export const clearLoginError = createAction('login/clear-error');
 export const getEventsStart = createAction('event/get-events-start');
 export const getEventsSuccess = createAction<IEventInfo[]>('event/get-events-success');
 export const getEventsFailed = createAction<string>('event/get-events-failure');
-export const selectEvent = createAction<IEventInfo>('event/selectEvent');
+export const selectEventSuccess = createAction<IEventInfo>('event/selectEvent');
 
 export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
@@ -117,7 +117,7 @@ const reducer: ReducerWithInitialState<IPitState> = createReducer(initialState, 
 			state.events.error = action.payload;
 			showSnackbar(state, 'error', action.payload);
 		})
-		.addCase(selectEvent, (state: IPitState, action) => {
+		.addCase(selectEventSuccess, (state: IPitState, action) => {
 			state.selectedEvent = action.payload;
 			state.events.selectedEvent = action.payload;
 			state.forms = initialState.forms;

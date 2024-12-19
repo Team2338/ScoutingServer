@@ -27,6 +27,7 @@ import {
 	loginStart,
 	loginSuccess,
 	logoutSuccess,
+	selectEventSuccess,
 	uploadFailed,
 	uploadFormFailed,
 	uploadFormStart,
@@ -38,8 +39,8 @@ import {
 type GetState = () => IPitState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
+	attemptEventSelectionFromStorage(dispatch);
 	attemptLoginFromStorage(dispatch);
-	// TODO: if login succeeded, try to recall last selected event
 };
 
 const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
@@ -56,6 +57,17 @@ const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
 			tokenString: tokenString
 		}));
 
+		return true;
+	}
+
+	return false;
+};
+
+const attemptEventSelectionFromStorage = (dispatch: AppDispatch): boolean => {
+	const selectedEvent: string = localStorage.getItem('selectedEvent');
+
+	if (selectedEvent) {
+		dispatch(selectEvent(JSON.parse(selectedEvent)));
 		return true;
 	}
 
@@ -111,6 +123,11 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 		console.error('Error retrieving events', error);
 		dispatch(getEventsFailed(error.message));
 	}
+};
+
+export const selectEvent = (event: IEventInfo) => async (dispatch: AppDispatch) => {
+	localStorage.setItem('selectedEvent', JSON.stringify(event));
+	dispatch(selectEventSuccess(event));
 };
 
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {

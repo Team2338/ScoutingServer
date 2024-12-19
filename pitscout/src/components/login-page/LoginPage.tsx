@@ -69,8 +69,10 @@ export default function LoginPage() {
 					variant="outlined"
 					value={ password }
 					onChange={ (event) => setPassword(event.target.value) }
-					inputProps={{
-						maxLength: 32
+					slotProps={{
+						htmlInput: {
+							maxLength: 32
+						}
 					}}
 				/>
 				<Button

@@ -7,8 +7,8 @@
     "@emotion/babel-plugin": "^11.13.5",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.7",
-    "@mui/material": "^5.15.7",
+    "@mui/icons-material": "^6.2.1",
+    "@mui/material": "^6.2.1",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.7.9",
     "react": "^18.2.0",
@@ -19,7 +19,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@types/node": "^20.17.10",
+    "@types/node": "^22.10.2",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
     "@types/react-redux": "^7.1.34",

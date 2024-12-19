@@ -5,6 +5,14 @@ import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 
+const inputProps = {
+	htmlInput: {
+		maxLength: 32,
+		required: true,
+		pattern: /.*\S.*/
+	}
+};
+
 export default function EventPage() {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -108,11 +116,7 @@ export default function EventPage() {
 					variant="outlined"
 					value={ eventCode }
 					onChange={ (event: ChangeEvent<HTMLInputElement>) => setEventCode(event.target.value) }
-					inputProps={ {
-						maxLength: 32,
-						required: true,
-						pattern: /.*\S.*/
-					} }
+					slotProps={ inputProps }
 					autoComplete="off"
 				/>
 				<TextField
@@ -124,11 +128,7 @@ export default function EventPage() {
 					variant="outlined"
 					value={ secretCode }
 					onChange={ (event: ChangeEvent<HTMLInputElement>) => setSecretCode(event.target.value) }
-					inputProps={ {
-						maxLength: 32,
-						required: true,
-						pattern: /.*\S.*/
-					} }
+					slotProps={ inputProps }
 					autoComplete="off"
 				/>
 				<Button
@@ -147,6 +147,4 @@ export default function EventPage() {
 			</section>
 		</main>
 	);
-
-
 }

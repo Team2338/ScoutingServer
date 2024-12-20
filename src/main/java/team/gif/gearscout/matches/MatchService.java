@@ -2,6 +2,7 @@ package team.gif.gearscout.matches;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team.gif.gearscout.shared.EventInfo;
 import team.gif.gearscout.shared.exception.MatchNotFoundException;
 
 import jakarta.transaction.Transactional;

@@ -23,6 +23,7 @@ export default function EventPage() {
 	const [eventCode, setEventCode] = useState<string>('');
 	const [secretCode, setSecretCode] = useState<string>('');
 
+	const _getEvents = () => dispatch(getEvents());
 	const _selectEvent = async (event: IEventInfo) => {
 		await dispatch(selectEvent(event));
 		navigate('/');
@@ -32,13 +33,15 @@ export default function EventPage() {
 			gameYear: new Date().getFullYear(),
 			eventCode: eventCode.trim(),
 			secretCode: secretCode.trim(),
-			teamNumber: user.teamNumber
+			teamNumber: user.teamNumber,
+			matchCount: null,
+			inspectionCount: null
 		});
 	};
 
 	useEffect(
 		() => {
-			dispatch(getEvents());
+			_getEvents();
 		},
 		[dispatch]
 	);
@@ -70,9 +73,9 @@ export default function EventPage() {
 							<li key={ index } className="event-list-item">
 								<button onClick={ () => _selectEvent(event) }>
 									<span className="event-code-label">{ event.eventCode }</span>
-									<span className="inspection-count">{ 0 } Inspections</span>
+									<span className="inspection-count">{ event.inspectionCount ?? 0 } Inspections</span>
 									<span className="secret-code-label">{ event.secretCode }</span>
-									<span className="match-count">{ event.matchCount } Matches</span>
+									<span className="match-count">{ event.matchCount ?? 0 } Matches</span>
 								</button>
 							</li>
 						))
@@ -85,7 +88,7 @@ export default function EventPage() {
 		return (
 			<Fragment>
 				<div>Failed to load events</div>
-				<Button>Retry</Button>
+				<Button onClick={_getEvents}>Retry</Button>
 			</Fragment>
 		);
 	};

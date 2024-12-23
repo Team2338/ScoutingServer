@@ -13,6 +13,7 @@ export interface IEventInfo {
 	eventCode: string;
 	secretCode: string;
 	matchCount?: number;
+	inspectionCount: number;
 }
 
 export interface ILoginResponse {

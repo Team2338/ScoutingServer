@@ -51,7 +51,7 @@ public interface InspectionRepository extends CrudRepository<InspectionEntity, L
 		inspection.gameYear,
 		inspection.secretCode,
 		inspection.eventCode,
-		COUNT(inspection.robotNumber)
+		COUNT(DISTINCT inspection.robotNumber)
 	)
 	FROM InspectionEntity inspection
 	WHERE inspection.teamNumber = :teamNumber

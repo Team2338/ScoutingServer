@@ -19,6 +19,8 @@ public class AggregateEventInfo {
 		this.gameYear = gameYear;
 		this.eventCode = eventCode;
 		this.secretCode = secretCode;
+		this.matchCount = 0L;
+		this.inspectionCount = 0L;
 	}
 
 	public void setMatchCount(Long matchCount) {

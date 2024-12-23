@@ -20,7 +20,7 @@ class ApiService {
 
 
 	getEvents = (tokenString: string): GearscoutResponse<IEventInfo[]> => {
-		const url = '/v2/events';
+		const url = '/v1/events';
 		const config: AxiosRequestConfig = {
 			headers: {
 				Authorization: `Bearer ${tokenString}`

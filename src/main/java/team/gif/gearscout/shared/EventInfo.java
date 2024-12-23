@@ -1,4 +1,4 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.shared;
 
 public record EventInfo(
 	Integer teamNumber,

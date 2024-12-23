@@ -2,25 +2,32 @@ import { AxiosError, HttpStatusCode } from 'axios';
 import {
 	FormErrors,
 	ICreateDetailNoteRequest,
+	IEventInfo,
 	IForm,
 	IFormQuestions,
 	IPitState,
-	IToken,
-	IUser,
+	ITokenModel,
+	IUserInfo,
 	LoginErrors,
-	UploadErrors
+	UploadErrors,
+	UserRoles
 } from '../../models';
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
+import TokenService from '../../services/TokenService';
 import {
 	AppDispatch,
 	getAllFormsFailed,
 	getAllFormsStart,
 	getAllFormsSuccess,
+	getEventsFailed,
+	getEventsStart,
+	getEventsSuccess,
 	loginFailed,
 	loginStart,
 	loginSuccess,
 	logoutSuccess,
+	selectEventSuccess,
 	uploadFailed,
 	uploadFormFailed,
 	uploadFormStart,
@@ -32,50 +39,70 @@ import {
 type GetState = () => IPitState;
 
 export const initApp = () => async (dispatch: AppDispatch) => {
-	const teamNumber: string = localStorage.getItem('teamNumber');
-	const username: string = localStorage.getItem('username');
-	const eventCode: string = localStorage.getItem('eventCode');
-	const secretCode: string = localStorage.getItem('secretCode');
-
-	// Only login if all information is present
-	if (teamNumber && username && eventCode && secretCode) {
-		const user: IUser = {
-			teamNumber: teamNumber,
-			username: username,
-			eventCode: eventCode,
-			secretCode: secretCode
-		};
-		const token = JSON.parse(localStorage.getItem('token'));
-
-		if (token) {
-			dispatch(loginSuccess({ user, token }));
-		} else {
-			dispatch(login(user));
-		}
-	}
+	attemptEventSelectionFromStorage(dispatch);
+	attemptLoginFromStorage(dispatch);
 };
 
-export const login = (credentials: IUser) => async (dispatch: AppDispatch) => {
+const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
+	const member = localStorage.getItem('member');
+	const tokenString = localStorage.getItem('tokenString');
+
+	if (member && tokenString) {
+		// TODO: check if token is still valid
+		// TODO: dispatch loginStart if token validation requires an HTTP request
+		const token: ITokenModel = TokenService.createTokenModel(tokenString);
+		dispatch(loginSuccess({
+			user: JSON.parse(member),
+			token: token,
+			tokenString: tokenString
+		}));
+
+		return true;
+	}
+
+	return false;
+};
+
+const attemptEventSelectionFromStorage = (dispatch: AppDispatch): boolean => {
+	const selectedEvent: string = localStorage.getItem('selectedEvent');
+
+	if (selectedEvent) {
+		dispatch(selectEvent(JSON.parse(selectedEvent)));
+		return true;
+	}
+
+	return false;
+};
+
+export const login = (
+	email: string,
+	password: string
+) => async (dispatch: AppDispatch) => {
+	console.log('Logging in as member');
 	dispatch(loginStart());
 
 	try {
-		const response = await ApiService.login({
-			teamNumber: Number(credentials.teamNumber),
-			username: credentials.username
-		});
+		const response = await ApiService.login(email, password);
+		const user: IUserInfo = response.data.user;
+		const tokenString: string = response.data.token;
+		const token: ITokenModel = TokenService.createTokenModel(tokenString);
 
-		const token: IToken = response.data;
+		if (user.role !== UserRoles.admin && user.role !== UserRoles.superAdmin) {
+			dispatch(loginFailed(LoginErrors.unauthorized));
+		}
 
-		localStorage.setItem('teamNumber', credentials.teamNumber);
-		localStorage.setItem('username', credentials.username);
-		localStorage.setItem('eventCode', credentials.eventCode);
-		localStorage.setItem('secretCode', credentials.secretCode);
-		localStorage.setItem('token', JSON.stringify(token));
+		localStorage.setItem('member', JSON.stringify(user));
+		localStorage.setItem('tokenString', tokenString);
 
-		dispatch(loginSuccess({ user: credentials, token }));
+		console.log('Successfully logged in as member');
+		dispatch(loginSuccess({
+			user: user,
+			token: token,
+			tokenString: tokenString,
+		}));
 	} catch (error) {
-		console.error(error);
-		dispatch(loginFailed(LoginErrors.unknown));
+		console.error('Error logging in as member', error);
+		dispatch(loginFailed(LoginErrors.unknown)); // TODO: pass actual error
 	}
 };
 
@@ -84,19 +111,37 @@ export const logout = () => async (dispatch: AppDispatch) => {
 	dispatch(logoutSuccess());
 };
 
+export const getEvents = () => async (dispatch: AppDispatch, getState: GetState) => {
+	dispatch(getEventsStart());
+
+	const tokenString: string = getState().loginv2.tokenString;
+	try {
+		const response = await ApiService.getEvents(tokenString);
+		const events: IEventInfo[] = response.data;
+		dispatch(getEventsSuccess(events));
+	} catch (error) {
+		console.error('Error retrieving events', error);
+		dispatch(getEventsFailed(error.message));
+	}
+};
+
+export const selectEvent = (event: IEventInfo) => async (dispatch: AppDispatch) => {
+	localStorage.setItem('selectedEvent', JSON.stringify(event));
+	dispatch(selectEventSuccess(event));
+};
+
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(uploadStart());
 
-	const user: IUser = getState().login.user;
-	const token: IToken = getState().login.token;
+	const selectedEvent: IEventInfo = getState().selectedEvent;
+	const tokenString: string = getState().loginv2.tokenString;
 	try {
-		await ApiService.uploadImage(
-			user,
-			new Date().getFullYear(),
-			robotNumber,
-			token,
-			file
-		);
+		await ApiService.uploadImage({
+			event: selectedEvent,
+			robotNumber: robotNumber,
+			tokenString: tokenString,
+			image: file
+		});
 		dispatch(uploadSuccess());
 	} catch (error) {
 		console.log(error);
@@ -123,21 +168,24 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 
 export const uploadForm = (robotNumber: number, questions: IFormQuestions) => async (dispatch: AppDispatch, getState: GetState) => {
 	const formState: IForm = FormModelService.convertQuestionsToFormState(
-		getState().login.user,
 		robotNumber,
 		questions
 	);
 	dispatch(uploadFormStart(formState));
 
-	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest(
-		getState().login.user,
-		new Date().getFullYear(),
-		robotNumber,
-		questions
-	);
+	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest({
+		user: getState().loginv2.user,
+		event: getState().selectedEvent,
+		robotNumber: robotNumber,
+		questions: questions
+	});
 
 	try {
-		await ApiService.uploadForm(getState().login.user, request, getState().login.token);
+		await ApiService.uploadForm({
+			event: getState().selectedEvent,
+			form: request,
+			tokenString: getState().loginv2.tokenString
+		});
 		dispatch(uploadFormSuccess(robotNumber));
 	} catch (error) {
 		console.log(error);
@@ -163,11 +211,10 @@ export const loadForms = () => async (dispatch: AppDispatch, getState: GetState)
 	dispatch(getAllFormsStart());
 
 	try {
-		const questions = await ApiService.getAllForms(
-			new Date().getFullYear(),
-			getState().login.user,
-			getState().login.token
-		);
+		const questions = await ApiService.getAllForms({
+			event: getState().selectedEvent,
+			tokenString: getState().loginv2.tokenString
+		});
 
 		const forms = FormModelService.convertResponseQuestionsToForms(questions.data);
 

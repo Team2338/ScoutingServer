@@ -2,20 +2,27 @@ import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
 	FormErrors,
+	IEventInfo,
 	IForm,
 	IPitState,
-	IToken,
-	IUser,
+	ITokenModel,
+	IUserInfo,
 	LoadStatus,
 	LoginErrors,
+	LoginStatus,
 	UploadErrors
 } from '../../models';
 
-export const loginStart = createAction('login/login-start');
-export const loginSuccess = createAction<{ user: IUser, token: IToken }>('login/login-success');
+export const loginStart = createAction('loginV2/login-start');
+export const loginSuccess = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
+
+export const getEventsStart = createAction('event/get-events-start');
+export const getEventsSuccess = createAction<IEventInfo[]>('event/get-events-success');
+export const getEventsFailed = createAction<string>('event/get-events-failure');
+export const selectEventSuccess = createAction<IEventInfo>('event/selectEvent');
 
 export const uploadStart = createAction('upload/upload-start');
 export const uploadSuccess = createAction('upload/upload-success');
@@ -36,12 +43,21 @@ export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 export const closeSnackbar = createAction('snackbar/clear');
 
 const initialState: IPitState = {
-	login: {
+	loginv2: {
+		loginStatus: LoginStatus.none,
+		error: null,
+		role: null,
+		tokenString: null,
+		token: null,
+		user: null,
+	},
+	events: {
 		loadStatus: LoadStatus.none,
 		error: null,
-		user: null,
-		token: null
+		list: [],
+		selectedEvent: null
 	},
+	selectedEvent: null,
 	upload: {
 		loadStatus: LoadStatus.none,
 		error: null
@@ -63,26 +79,47 @@ const initialState: IPitState = {
 const reducer = createReducer(initialState, builder => {
 	builder
 		.addCase(loginStart, (state: IPitState) => {
-			state.login.loadStatus = LoadStatus.loading;
-			state.login.error = null;
+			state.loginv2.loginStatus = LoginStatus.loggingIn;
+			state.loginv2.error = null;
 		})
 		.addCase(loginSuccess, (state: IPitState, action) => {
-			state.login.loadStatus = LoadStatus.success;
-			state.login.user = action.payload.user;
-			state.login.token = action.payload.token;
+			state.loginv2.loginStatus = LoginStatus.loggedIn;
+			state.loginv2.user = action.payload.user;
+			state.loginv2.token = action.payload.token;
+			state.loginv2.tokenString = action.payload.tokenString;
 		})
 		.addCase(loginFailed, (state: IPitState, action) => {
-			state.login.loadStatus = LoadStatus.failed;
-			state.login.error = action.payload;
+			state.loginv2.loginStatus = LoginStatus.logInFailed;
+			state.loginv2.error = action.payload;
+			showSnackbar(state, 'error', action.payload);
 		})
 		.addCase(logoutSuccess, (state: IPitState) => {
-			state.login = initialState.login;
-			state.forms = initialState.forms;
+			state.loginv2 = initialState.loginv2;
+			state.events = initialState.events;
+			state.selectedEvent = initialState.selectedEvent;
 			state.upload = initialState.upload;
+			state.forms = initialState.forms;
 			state.snackbar = initialState.snackbar;
 		})
 		.addCase(clearLoginError, (state: IPitState) => {
-			state.login.error = null;
+			state.loginv2.error = null;
+		})
+		.addCase(getEventsStart, (state: IPitState) => {
+			state.events.loadStatus = getNextStatusOnLoad(state.events.loadStatus);
+		})
+		.addCase(getEventsSuccess, (state: IPitState, action) => {
+			state.events.loadStatus = LoadStatus.success;
+			state.events.list = action.payload;
+		})
+		.addCase(getEventsFailed, (state: IPitState, action) => {
+			state.events.loadStatus = getNextStatusOnFail(state.events.loadStatus);
+			state.events.error = action.payload;
+			showSnackbar(state, 'error', action.payload);
+		})
+		.addCase(selectEventSuccess, (state: IPitState, action) => {
+			state.selectedEvent = action.payload;
+			state.events.selectedEvent = action.payload;
+			state.forms = initialState.forms;
 		})
 		.addCase(uploadStart, (state: IPitState) => {
 			state.upload.loadStatus = LoadStatus.loading;
@@ -172,6 +209,14 @@ const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {
 	return LoadStatus.loading;
 };
 
+const getNextStatusOnFail = (previousStatus: LoadStatus) : LoadStatus=> {
+	if (previousStatus === LoadStatus.loadingWithPriorSuccess) {
+		return LoadStatus.failedWithPriorSuccess;
+	}
+
+	return LoadStatus.failed;
+};
+
 const showSnackbar = (state: IPitState, severity: 'error' | 'success', message: string): void => {
 	state.snackbar.severity = severity;
 	state.snackbar.message = message;
@@ -182,4 +227,4 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<IPitState> = useSelector;
 
-export const selectIsLoggedIn = (state: IPitState): boolean => state.login.loadStatus === LoadStatus.success;
+export const selectIsLoggedIn = (state: IPitState): boolean => state.loginv2.loginStatus === LoginStatus.loggedIn;

@@ -1,43 +1,54 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { IToken, IUser } from '../models';
-import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse } from '../models';
+import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse, IEventInfo, ILoginResponse } from '../models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
 class ApiService {
 
 	service = axios.create({
-		baseURL: process.env.REACT_APP_SERVER_URL
+		baseURL: import.meta.env.VITE_APP_SERVER_URL
 	});
 
 
-	login = (data: {
-		teamNumber: number,
-		username: string
-	}): GearscoutResponse<IToken> => {
-		const url = '/v1/auth/login';
-		return this.service.post(url, data);
+	login = (email: string, password: string): GearscoutResponse<ILoginResponse> => {
+		const url = '/v2/auth/login';
+		return this.service.post(url, {
+			email: email,
+			password: password
+		});
 	};
 
 
-	uploadImage = (
-		user: IUser,
-		gameYear: number,
-		robotNumber: string,
-		token: IToken,
-		image: Blob
-	) => {
-		const url = `/v1/images/team/${user.teamNumber}/gameYear/${gameYear}/event/${user.eventCode}/robot/${robotNumber}`;
+	getEvents = (tokenString: string): GearscoutResponse<IEventInfo[]> => {
+		const url = '/v1/events';
 		const config: AxiosRequestConfig = {
 			headers: {
-				secretCode: user.secretCode,
+				Authorization: `Bearer ${tokenString}`
+			}
+		};
+
+		return this.service.get(url, config);
+	};
+
+
+	uploadImage = (data: {
+		event: IEventInfo;
+		robotNumber: string;
+		tokenString: string;
+		image: Blob;
+	}): GearscoutResponse<null> => {
+		const { event } = data;
+		const url = `/v1/images/team/${event.teamNumber}/gameYear/${event.gameYear}/event/${event.eventCode}/robot/${data.robotNumber}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				secretCode: event.secretCode,
 				timeCreated: Date.now(),
-				token: JSON.stringify(token)
+				Authorization: `Bearer ${data.tokenString}`
 			}
 		};
 
 		const formData = new FormData();
-		formData.append('image', image, robotNumber);
+		formData.append('image', data.image, data.robotNumber);
 
 		return this.service.post(
 			url,
@@ -47,32 +58,33 @@ class ApiService {
 	};
 
 
-	uploadForm = (
-		user: IUser,
-		form: ICreateDetailNoteRequest,
-		token: IToken
-	): GearscoutResponse<null> => {
-		const url = `/v1/detailnotes/team/${user.teamNumber}`;
+	uploadForm = (data: {
+		event: IEventInfo;
+		form: ICreateDetailNoteRequest;
+		tokenString: string;
+	}): GearscoutResponse<null> => {
+		const url = `/v1/detailnotes/team/${ data.event.teamNumber }`;
 		const config: AxiosRequestConfig = {
 			headers: {
-				secretCode: user.secretCode,
-				token: JSON.stringify(token)
+				secretCode: data.event.secretCode,
+				Authorization: `Bearer ${data.tokenString}`
 			}
 		};
 
-		return this.service.post(url, form, config);
+		return this.service.post(url, data.form, config);
 	};
 
 
-	getAllForms = (
-		gameYear: number,
-		user: IUser,
-		token: IToken
-	): GearscoutResponse<IDetailNoteQuestionResponse[]> => {
-		const url: string = `/v1/detailnotes/team/${user.teamNumber}/gameYear/${gameYear}/event/${user.eventCode}`;
+	getAllForms = (data: {
+		event: IEventInfo;
+		tokenString: string;
+	}): GearscoutResponse<IDetailNoteQuestionResponse[]> => {
+		const { event } = data;
+		const url: string = `/v1/detailnotes/team/${event.teamNumber}/gameYear/${event.gameYear}/event/${event.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {
-				secretCode: user.secretCode
+				secretCode: event.secretCode,
+				Authorization: `Bearer ${data.tokenString}`
 			}
 		};
 

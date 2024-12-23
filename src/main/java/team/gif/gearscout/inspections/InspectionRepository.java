@@ -3,6 +3,7 @@ package team.gif.gearscout.inspections;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.shared.EventInfo;
 
 import java.util.List;
 
@@ -43,5 +44,20 @@ public interface InspectionRepository extends CrudRepository<InspectionEntity, L
 		String secretCode,
 		List<String> questions
 	);
+
+	@Query(value = """
+	SELECT new team.gif.gearscout.shared.EventInfo(
+		inspection.teamNumber,
+		inspection.gameYear,
+		inspection.secretCode,
+		inspection.eventCode,
+		COUNT(DISTINCT inspection.robotNumber)
+	)
+	FROM InspectionEntity inspection
+	WHERE inspection.teamNumber = :teamNumber
+	GROUP BY inspection.teamNumber, inspection.gameYear, inspection.eventCode, inspection.secretCode
+	ORDER BY inspection.gameYear DESC
+	""")
+	List<EventInfo> getEventListForTeam(Integer teamNumber);
 
 }

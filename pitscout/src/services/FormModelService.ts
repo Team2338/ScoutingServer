@@ -3,30 +3,36 @@ import {
 	ICreateDetailNoteRequest,
 	IDetailNoteQuestion,
 	IDetailNoteQuestionResponse,
+	IEventInfo,
 	IForm,
 	IFormQuestions,
-	IUser,
+	IUserInfo,
 	LoadStatus
 } from '../models';
 
 class FormModelService {
 
-	convertQuestionsToRequest = (user: IUser, gameYear: number, robotNumber: number, questions: IFormQuestions): ICreateDetailNoteRequest => {
+	convertQuestionsToRequest = (data: {
+		user: IUserInfo;
+		event: IEventInfo;
+		robotNumber: number;
+		questions: IFormQuestions;
+	}): ICreateDetailNoteRequest => {
 		return {
-			robotNumber: robotNumber,
-			gameYear: gameYear,
-			eventCode: user.eventCode,
-			questions: Object.keys(questions)
-				.filter((q: FormQuestions) => questions[q]?.length > 0) // TODO: eventually we'll want to allow null
+			robotNumber: data.robotNumber,
+			gameYear: data.event.gameYear,
+			eventCode: data.event.eventCode,
+			questions: Object.keys(data.questions)
+				.filter((q: FormQuestions) => data.questions[q]?.length > 0) // TODO: eventually we'll want to allow null
 				.map((q: FormQuestions): IDetailNoteQuestion => ({
 					question: q,
-					answer: questions[q],
-					creator: user.username
+					answer: data.questions[q],
+					creator: data.user.username
 				}))
 		};
 	};
 
-	convertQuestionsToFormState = (user: IUser, robotNumber: number, questions: IFormQuestions): IForm => {
+	convertQuestionsToFormState = (robotNumber: number, questions: IFormQuestions): IForm => {
 		return {
 			robotNumber: robotNumber,
 			error: null,

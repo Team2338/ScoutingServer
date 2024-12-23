@@ -26,7 +26,7 @@ export default function MainPage() {
 
 	const dispatch = useAppDispatch();
 	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
-	const role: UserRoles = useAppSelector(state => state.login.token.role);
+	const role: UserRoles = useAppSelector(state => state.loginv2.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const snackbar = useAppSelector(state => state.snackbar);
 	const loadStatus: LoadStatus = useAppSelector(state => state.forms.loadStatus);

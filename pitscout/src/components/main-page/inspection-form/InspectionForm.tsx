@@ -219,7 +219,6 @@ export default function InspectionForm(props: IProps) {
 						labelId="drivetrain-selector__label"
 						value={ drivetrain }
 						label="Drivetrain"
-						placeholder="Drivetrain"
 						onChange={ (event) => setDrivetrain(event.target.value) }
 						startAdornment={ <DrivetrainIcon className="selector-adornment" /> }
 					>
@@ -233,7 +232,6 @@ export default function InspectionForm(props: IProps) {
 						labelId="drive-motor-selector__label"
 						value={ driveMotorType }
 						label="Drive motor type"
-						placeholder="Drive motor type"
 						onChange={ (event) => setDriveMotorType(event.target.value) }
 						startAdornment={ <MotorIcon className="selector-adornment"/> }
 					>
@@ -249,13 +247,15 @@ export default function InspectionForm(props: IProps) {
 					variant="outlined"
 					value={ weight }
 					onChange={ event => setWeight(event.target.value) }
-					InputProps={{
-						startAdornment: <InputAdornment position="start"><Icon>scale</Icon></InputAdornment>,
-						endAdornment: <InputAdornment position="end">lbs</InputAdornment>
-					}}
-					inputProps={{
-						min: 0,
-						max: 9999
+					slotProps={{
+						input: {
+							startAdornment: <InputAdornment position="start"><Icon>scale</Icon></InputAdornment>,
+							endAdornment: <InputAdornment position="end">lbs</InputAdornment>
+						},
+						htmlInput: {
+							min: 0,
+							max: 9999
+						}
 					}}
 					autoComplete="off"
 				/>
@@ -266,7 +266,6 @@ export default function InspectionForm(props: IProps) {
 						labelId="collector-selector__label"
 						value={ collectorType }
 						label="Collector type"
-						placeholder="Collector type"
 						onChange={ (event) => setCollectorType(event.target.value) }
 						startAdornment={ <Icon className="selector-adornment">input</Icon> }
 					>
@@ -280,7 +279,6 @@ export default function InspectionForm(props: IProps) {
 						labelId="under-stage-selector__label"
 						value={ underStage }
 						label="Can go under stage"
-						placeholder="Can go under stage"
 						onChange={ (event) => setUnderStage(event.target.value) }
 					>
 						{ yesAndNoOptionElements }
@@ -294,11 +292,13 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Describe auto paths"
 					value={ autoPaths }
-					InputProps={{
-						startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
-					}}
-					inputProps={{
-						maxLength: 1024
+					slotProps={{
+						input: {
+							startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
+						},
+						htmlInput: {
+							maxLength: 1024
+						}
 					}}
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
@@ -310,11 +310,13 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Vision capabilities"
 					value={ visionCapabilities }
-					InputProps={{
-						startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
-					}}
-					inputProps={{
-						maxLength: 1024
+					slotProps={{
+						input: {
+							startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
+						},
+						htmlInput: {
+							maxLength: 1024
+						}
 					}}
 					onChange={ (event) => setVisionCapabilities(event.target.value) }
 				/>
@@ -355,11 +357,13 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Notes on robot"
 					value={ robotNotes }
-					InputProps={{
-						startAdornment: <InputAdornment position="start"><Icon>note_alt</Icon></InputAdornment>
-					}}
-					inputProps={{
-						maxLength: 1024
+					slotProps={{
+						input: {
+							startAdornment: <InputAdornment position="start"><Icon>note_alt</Icon></InputAdornment>
+						},
+						htmlInput: {
+							maxLength: 1024
+						}
 					}}
 					onChange={ (event) => setRobotNotes(event.target.value) }
 				/>

@@ -3,6 +3,7 @@ package team.gif.gearscout.matches;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import team.gif.gearscout.shared.EventInfo;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 	);
 
 	@Query(value = """
-	SELECT new team.gif.gearscout.matches.EventInfo(
+	SELECT new team.gif.gearscout.shared.EventInfo(
 		match.teamNumber,
 		match.gameYear,
 		match.secretCode,

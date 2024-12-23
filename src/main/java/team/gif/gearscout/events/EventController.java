@@ -1,0 +1,66 @@
+package team.gif.gearscout.events;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.token.TokenService;
+import team.gif.gearscout.token.UserEntity;
+import team.gif.gearscout.token.UserService;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@RestController
+@RequestMapping(value = "/api/v1/events", produces = MediaType.APPLICATION_JSON_VALUE)
+public class EventController {
+
+	private static final Logger logger = LogManager.getLogger(EventController.class);
+	private final EventService eventService;
+	private final TokenService tokenService;
+	private final UserService userService;
+
+
+	@Autowired
+	public EventController(
+		EventService eventService,
+		TokenService tokenService,
+		UserService userService
+	) {
+		this.eventService = eventService;
+		this.tokenService = tokenService;
+		this.userService = userService;
+	}
+
+
+	@GetMapping(value = "")
+	public ResponseEntity<List<AggregateEventInfo>> getEvents(
+		@RequestHeader(value = "Authorization") String token
+	) {
+		logger.debug("Received getEvents request");
+
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
+		Long userId = tokenService.validateToken(token);
+		UserEntity user = userService.findUserById(userId);
+
+		if (!user.getRole().equals("ADMIN") && !user.getRole().equals("SUPERADMIN")) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		List<AggregateEventInfo> events = eventService.getEventList(user.getTeamNumber());
+		return ResponseEntity.ok(events);
+	}
+
+}

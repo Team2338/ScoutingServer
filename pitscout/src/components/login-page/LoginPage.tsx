@@ -1,36 +1,22 @@
-import { Alert, Button, InputAdornment, Snackbar, TextField, Typography } from '@mui/material';
+import { clearLoginError, login, useAppDispatch, useAppSelector } from '../../state';
 import React, { useState } from 'react';
-import { AppDispatch, clearLoginError, login, useAppDispatch, useAppSelector } from '../../state';
+import { Alert, Button, Snackbar, TextField, Typography } from '@mui/material';
 import './LoginPage.scss';
-import { Statelet } from '../../models';
 
 export default function LoginPage() {
+	const dispatch = useAppDispatch();
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const errorMessage: string = useAppSelector(state => state.loginv2.error);
 
-	const dispatch: AppDispatch = useAppDispatch();
-	const [teamNumber, setTeamNumber]: Statelet<string> = useState<string>('');
-	const [username, setUsername]: Statelet<string> = useState<string>('');
-	const [eventCode, setEventCode]: Statelet<string> = useState<string>('');
-	const [secretCode, setSecretCode]: Statelet<string> = useState<string>('');
-	const errorMessage: string = useAppSelector(state => state.login.error);
-
-	const isValid: boolean = (
-		teamNumber.length > 0
-		&& eventCode.length > 0
-		&& secretCode.length > 0
-		&& username.length > 0
-	);
+	const isValid: boolean = Boolean(email && password);
 
 	const handleSubmit = (event): void => {
 		event.preventDefault();
-		dispatch(login({
-			teamNumber: teamNumber,
-			username: username,
-			eventCode: eventCode,
-			secretCode: secretCode
-		}));
+		dispatch(login(email, password));
 	};
 
-	const handleErrorToastClose = (event, reason): void => {
+	const handleErrorToastClose = (_event, reason: string): void => {
 		if (reason === 'clickaway') {
 			return;
 		}
@@ -63,80 +49,44 @@ export default function LoginPage() {
 			<form className="login-form" onSubmit={ handleSubmit }>
 				<Typography variant="h4">Sign in</Typography>
 				<TextField
-					id="team-number-input"
-					label="Your team number"
-					name="teamNumber"
-					type="number"
+					id="email-input"
+					label="Email"
+					name="email"
+					type="email"
 					margin="dense"
 					variant="outlined"
-					value={ teamNumber }
-					onChange={ event => setTeamNumber(event.target.value) }
-					InputProps={{
-						startAdornment: <InputAdornment position="start">#</InputAdornment>
-					}}
-					inputProps={{
-						min: 0,
-						max: 9999
-					}}
-					autoComplete="off"
+					value={ email }
+					onChange={ (event) => setEmail(event.target.value) }
+					autoComplete="on"
 					autoFocus={ true }
 				/>
 				<TextField
-					id="username-input"
-					label="Username"
-					name="username"
-					type="text"
+					id="password-input"
+					label="Password"
+					name="password"
+					type="password"
 					margin="dense"
 					variant="outlined"
-					value={ username }
-					onChange={ event => setUsername(event.target.value) }
-					inputProps={{
-						maxLength: 32
+					value={ password }
+					onChange={ (event) => setPassword(event.target.value) }
+					slotProps={{
+						htmlInput: {
+							maxLength: 32
+						}
 					}}
-					autoComplete="section-login username"
-				/>
-				<TextField
-					id="event-code-input"
-					label="Event code"
-					name="eventCode"
-					type="text"
-					margin="dense"
-					variant="outlined"
-					value={ eventCode }
-					onChange={ event => setEventCode(event.target.value) }
-					inputProps={{
-						maxLength: 32
-					}}
-					autoComplete="off"
-				/>
-				<TextField
-					id="secret-code-input"
-					label="Secret code"
-					name="secretCode"
-					type="text"
-					margin="dense"
-					variant="outlined"
-					value={ secretCode }
-					onChange={ event => setSecretCode(event.target.value) }
-					inputProps={{
-						maxLength: 32
-					}}
-					autoComplete="off"
 				/>
 				<Button
-					id="login-form-submit"
+					className="login-form-submit"
 					variant="contained"
 					color="primary"
 					type="submit"
 					onClick={ handleSubmit }
 					disabled={ !isValid }
-					sx={{
-						marginTop: '8px'
-					}}
 				>
 					Sign in
 				</Button>
 			</form>
 		</div>
 	);
+
 }

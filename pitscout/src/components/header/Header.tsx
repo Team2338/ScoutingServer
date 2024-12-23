@@ -1,28 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Header.scss';
-import { AppBar, Button, Toolbar, Typography } from '@mui/material';
+import {
+	AppBar,
+	Icon,
+	IconButton,
+	ListItemIcon, ListItemText,
+	Menu,
+	MenuItem,
+	Toolbar,
+	Tooltip,
+	Typography
+} from '@mui/material';
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
+import { ExitToApp, Shuffle } from '@mui/icons-material';
+import ProfileCard from './profile-card/ProfileCard';
+import { IEventInfo } from '../../models';
+import { NavLink } from 'react-router-dom';
 
 export default function Header() {
-	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
-
 	const dispatch = useAppDispatch();
-	const _logout = () => dispatch(logout());
+	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 
-	const logoutButton = (
-		<Button
-			className="logout-button"
-			color="primary"
-			disableElevation={true}
-			variant="contained"
-			aria-label="Logout"
-			onClick={_logout}
-			sx={{
-				marginLeft: 'auto'
-			}}
+	const [accountAnchor, setAccountAnchor] = useState(null);
+	const handleAccountMenuClick = (event) => setAccountAnchor(event.currentTarget);
+	const handleAccountMenuClose = () => setAccountAnchor(null);
+
+	const _logout = () => {
+		handleAccountMenuClose();
+		dispatch(logout());
+	};
+
+	const accountButton = (
+		<Tooltip title="Account">
+			<IconButton
+				id="account-button"
+				edge="end"
+				color="inherit"
+				aria-label="Account"
+				aria-controls="account-menu"
+				aria-haspopup="true"
+				onClick={ handleAccountMenuClick }
+			>
+				<Icon>account_circle</Icon>
+			</IconButton>
+		</Tooltip>
+	);
+
+	const accountMenu = (
+		<Menu
+			id="account-menu"
+			anchorEl={ accountAnchor }
+			open={ Boolean(accountAnchor) }
+			onClose={ handleAccountMenuClose }
+			keepMounted={ true }
 		>
-			Logout
-		</Button>
+			<ProfileCard sx={{ margin: '8px 12px' }}/>
+			{
+				selectedEvent &&
+				<NavLink id="switch-event-link" to="/events" onClick={ handleAccountMenuClose }>
+					<MenuItem>
+						<ListItemIcon>
+							<Shuffle />
+						</ListItemIcon>
+						<ListItemText>
+							Switch events
+						</ListItemText>
+					</MenuItem>
+				</NavLink>
+			}
+			<MenuItem onClick={ _logout }>
+				<ListItemIcon>
+					<ExitToApp />
+				</ListItemIcon>
+				<ListItemText>
+					Logout
+				</ListItemText>
+			</MenuItem>
+		</Menu>
 	);
 
 	return (
@@ -38,9 +93,10 @@ export default function Header() {
 					>
 						PitScout
 					</Typography>
-					<span>{ process.env.REACT_APP_VERSION }</span>
+					<span>{ import.meta.env.VITE_APP_VERSION }</span>
 				</div>
-				{ isLoggedIn ? logoutButton : null }
+				{ isLoggedIn && accountButton }
+				{ isLoggedIn && accountMenu }
 			</Toolbar>
 		</AppBar>
 	);

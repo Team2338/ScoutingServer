@@ -20,6 +20,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@gearscout/engines": ["libs/shared/engines/src/index.ts"],
       "@gearscout/models": ["libs/shared/models/src/index.ts"]
     },
     "strict": false,

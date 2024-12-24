@@ -13,7 +13,7 @@ import {
 	EventInfo,
 	UserInfo
 } from '../models';
-import authService from '../service/AuthService';
+import { authEngine } from '@gearscout/engines';
 import commentService from '../service/CommentService';
 import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
@@ -91,7 +91,7 @@ const attemptMemberLoginFromStorage = (dispatch: AppDispatch): boolean => {
 	if (member && tokenString) {
 		// TODO: check if token is still valid
 		// TODO: dispatch loginAsMemberStart if token validation requires an HTTP request
-		const token: ITokenModel = authService.createTokenModel(tokenString);
+		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 		dispatch(loginAsMemberSuccess(JSON.parse(member), tokenString, token));
 		dispatch(selectEvent(JSON.parse(selectedEvent)));
 
@@ -198,7 +198,7 @@ export const loginAsMember = (
 		const response = await GearscoutService.login(email, password);
 		const user: UserInfo = response.data.user;
 		const tokenString: string = response.data.token;
-		const token: ITokenModel = authService.createTokenModel(tokenString);
+		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 
 		localStorage.setItem('member', JSON.stringify(user));
 		localStorage.setItem('tokenString', tokenString);
@@ -224,7 +224,7 @@ export const createUser = (data: {
 		const response = await GearscoutService.createUser(data);
 		const user: UserInfo = response.data.user;
 		const tokenString: string = response.data.token;
-		const token: ITokenModel = authService.createTokenModel(tokenString);
+		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 
 		localStorage.setItem('member', JSON.stringify(user));
 		localStorage.setItem('tokenString', tokenString);

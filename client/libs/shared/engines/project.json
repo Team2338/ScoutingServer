@@ -1,0 +1,19 @@
+{
+  "name": "engines",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/engines/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/engines",
+        "main": "libs/shared/engines/src/index.ts",
+        "tsConfig": "libs/shared/engines/tsconfig.lib.json",
+        "assets": ["libs/shared/engines/*.md"]
+      }
+    }
+  }
+}

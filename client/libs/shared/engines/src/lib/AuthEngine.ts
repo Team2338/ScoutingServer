@@ -1,6 +1,6 @@
 import { ITokenHeaderResponse, ITokenModel, ITokenPayloadResponse, ITokenResponse, UserRole } from '@gearscout/models';
 
-class AuthService {
+class AuthEngine {
 
 	createTokenModel = (token: string): ITokenModel => {
 		const response: ITokenResponse = this.convertTokenStringToResponse(token);
@@ -9,8 +9,8 @@ class AuthService {
 
 	private convertTokenStringToResponse = (tokenString: string): ITokenResponse => {
 		const parts: string[] = tokenString.split('.');
-		const headerString : string= atob(parts[0]); // Decode from Base64
-		const payloadString: string = atob(parts[1]); // Decode from Base64
+		const headerString : string = window.atob(parts[0]); // Decode from Base64
+		const payloadString: string = window.atob(parts[1]); // Decode from Base64
 		const header: ITokenHeaderResponse = JSON.parse(headerString);
 		const payload: ITokenPayloadResponse = JSON.parse(payloadString);
 
@@ -32,5 +32,4 @@ class AuthService {
 
 }
 
-const service = new AuthService();
-export default service;
+export const authEngine = new AuthEngine();

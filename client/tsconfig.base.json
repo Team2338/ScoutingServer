@@ -19,9 +19,9 @@
     "importHelpers": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {},
-
-    // Linting
+    "paths": {
+      "@gearscout/models": ["libs/shared/models/src/index.ts"]
+    },
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true

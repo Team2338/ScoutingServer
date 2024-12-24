@@ -10,7 +10,6 @@ import {
 	Team,
 	GlobalObjectiveStats,
 	ImageInfoResponse,
-	ITokenModel,
 	EventInfo,
 	UserInfo
 } from '../models';
@@ -61,6 +60,7 @@ import {
 } from './Actions';
 import { AppDispatch } from './Store';
 import GearscoutService from '../service/GearscoutService';
+import { ITokenModel } from '@gearscout/models';
 
 type GetState = () => AppState;
 

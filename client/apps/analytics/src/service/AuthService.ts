@@ -1,10 +1,4 @@
-import {
-	ITokenHeaderResponse,
-	ITokenModel,
-	ITokenPayloadResponse,
-	ITokenResponse,
-	UserRole
-} from '../models';
+import { ITokenHeaderResponse, ITokenModel, ITokenPayloadResponse, ITokenResponse, UserRole } from '@gearscout/models';
 
 class AuthService {
 

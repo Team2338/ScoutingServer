@@ -7,10 +7,11 @@ import {
 	MatchResponse,
 	ObjectiveDescriptor,
 	Plan,
-	Team, UserInfo
+	Team,
+	UserInfo
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
-import { ITokenModel, UserRole } from './auth.model';
+import { ITokenModel, UserRole } from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 

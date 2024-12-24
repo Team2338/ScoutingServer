@@ -7,8 +7,10 @@ import {
 	Match,
 	MatchResponse,
 	Team,
-	ITokenModel, EventInfo, UserInfo
+	EventInfo,
+	UserInfo
 } from '../models';
+import { ITokenModel } from '@gearscout/models';
 
 export interface Action {
 	type: Actions;

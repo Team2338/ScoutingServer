@@ -8,10 +8,10 @@ import {
 	LoginStatus,
 	Match,
 	MatchResponse,
-	UserRole
 } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
+import { UserRole } from '@gearscout/models';
 
 
 const INITIAL_STATE: AppState = {

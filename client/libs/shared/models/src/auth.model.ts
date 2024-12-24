@@ -1,15 +1,9 @@
-
 export enum UserRole {
 	guest = 'GUEST',
 	unverifiedMember = 'UNVERIFIED_MEMBER',
 	verifiedMember = 'VERIFIED_MEMBER',
 	admin = 'ADMIN',
 	superAdmin = 'SUPERADMIN',
-}
-
-export interface ILoginRequest {
-	email: string;
-	password: string;
 }
 
 export interface ICreateUserRequest {

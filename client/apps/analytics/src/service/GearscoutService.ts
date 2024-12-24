@@ -4,8 +4,10 @@ import {
 	InspectionQuestionResponse,
 	MatchResponse,
 	ImageInfoResponse,
-	ICreateUserRequest, EventInfo, LoginResponse
+	EventInfo,
+	LoginResponse
 } from '../models';
+import { ICreateUserRequest } from '@gearscout/models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 

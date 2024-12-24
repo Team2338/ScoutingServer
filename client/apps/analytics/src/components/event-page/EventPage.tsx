@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
-import { EventInfo, LoadStatus, UserRole } from '../../models';
+import { EventInfo, LoadStatus } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
 import EventSelectorForm from './event-selector-form/EventSelectorForm';
 import EventSelectorList from './event-selector-list/EventSelectorList';
+import { UserRole } from '@gearscout/models';
 
 export default function EventPage() {
 

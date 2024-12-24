@@ -1,7 +1,7 @@
 import React from 'react';
 import { IForm } from './UiModels';
 import {IEventInfo, IUserInfo} from './ResponseModels';
-import { ITokenModel, UserRoles } from './AuthModels';
+import { ITokenModel, UserRole } from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -37,7 +37,7 @@ export interface IPitState {
 export interface ILoginState {
 	loginStatus: LoginStatus;
 	error: string;
-	role: UserRoles;
+	role: UserRole;
 	token: ITokenModel;
 	tokenString: string;
 	user: IUserInfo;

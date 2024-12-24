@@ -6,15 +6,12 @@ import {
 	IForm,
 	IFormQuestions,
 	IPitState,
-	ITokenModel,
 	IUserInfo,
 	LoginErrors,
 	UploadErrors,
-	UserRoles
 } from '../../models';
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
-import TokenService from '../../services/TokenService';
 import {
 	AppDispatch,
 	getAllFormsFailed,
@@ -35,6 +32,8 @@ import {
 	uploadStart,
 	uploadSuccess
 } from './Store';
+import { ITokenModel, UserRole } from '@gearscout/models';
+import { authEngine } from '@gearscout/engines';
 
 type GetState = () => IPitState;
 
@@ -50,7 +49,7 @@ const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
 	if (member && tokenString) {
 		// TODO: check if token is still valid
 		// TODO: dispatch loginStart if token validation requires an HTTP request
-		const token: ITokenModel = TokenService.createTokenModel(tokenString);
+		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 		dispatch(loginSuccess({
 			user: JSON.parse(member),
 			token: token,
@@ -85,9 +84,9 @@ export const login = (
 		const response = await ApiService.login(email, password);
 		const user: IUserInfo = response.data.user;
 		const tokenString: string = response.data.token;
-		const token: ITokenModel = TokenService.createTokenModel(tokenString);
+		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 
-		if (user.role !== UserRoles.admin && user.role !== UserRoles.superAdmin) {
+		if (user.role !== UserRole.admin && user.role !== UserRole.superAdmin) {
 			dispatch(loginFailed(LoginErrors.unauthorized));
 		}
 

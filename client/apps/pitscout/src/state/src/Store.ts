@@ -5,13 +5,13 @@ import {
 	IEventInfo,
 	IForm,
 	IPitState,
-	ITokenModel,
 	IUserInfo,
 	LoadStatus,
 	LoginErrors,
 	LoginStatus,
 	UploadErrors
 } from '../../models';
+import { ITokenModel } from '@gearscout/models';
 
 export const loginStart = createAction('loginV2/login-start');
 export const loginSuccess = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');

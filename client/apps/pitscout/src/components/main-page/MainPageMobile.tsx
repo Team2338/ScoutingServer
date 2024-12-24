@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
-import { LoadStatus, Statelet, UserRoles } from '../../models';
+import { LoadStatus, Statelet } from '../../models';
 import { Button, Dialog, DialogContent, Icon, IconButton, Slide } from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
@@ -9,6 +9,7 @@ import './MainPageMobile.scss';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
+import { UserRole } from '@gearscout/models';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="up" ref={ ref } { ...props }>{ props.children }</Slide>;
@@ -17,7 +18,7 @@ const Transition = forwardRef(function Transition(props: any, ref) {
 export default function MainPageMobile() {
 
 	const dispatch = useAppDispatch();
-	const role: UserRoles = useAppSelector(state => state.loginv2.role);
+	const role: UserRole = useAppSelector(state => state.loginv2.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const loadStatus: LoadStatus = useAppSelector(state => state.forms.loadStatus);
 	const [isAddDialogOpen, setAddDialogOpen]: Statelet<boolean> = useState<boolean>(false);
@@ -71,7 +72,7 @@ export default function MainPageMobile() {
 						Team { selectedRobot }
 					</span>
 					{
-						role === UserRoles.admin &&
+						role === UserRole.admin &&
 						<IconButton
 							id="inspection-form-dialog__add-image-button"
 							color="primary"

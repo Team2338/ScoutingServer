@@ -11,18 +11,9 @@ import {
 	UserInfo
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
-import { ITokenModel, UserRole } from '@gearscout/models';
+import { ITokenModel, LoadStatus, UserRole } from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
-
-export enum LoadStatus {
-	none = 'none',
-	loading = 'loading',
-	loadingWithPriorSuccess = 'reloading',
-	failed = 'failed',
-	failedWithPriorSuccess = 'failed reload',
-	success = 'success',
-}
 
 export enum LoginPageVariant { // TODO: Use URL instead
 	guestPage = 'guestPage',

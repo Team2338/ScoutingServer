@@ -18,8 +18,9 @@ import {
 	useAppDispatch,
 	useAppSelector
 } from '../../../state';
-import { FILE_SIZE_LIMIT_BYTES, LoadStatus, Statelet, UploadErrors } from '../../../models';
+import { FILE_SIZE_LIMIT_BYTES, Statelet, UploadErrors } from '../../../models';
 import ImagePicker from '../../image-picker/ImagePicker';
+import { LoadStatus } from '@gearscout/models';
 
 interface IProps {
 	robotNumber: number;

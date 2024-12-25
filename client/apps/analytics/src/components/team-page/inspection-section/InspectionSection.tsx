@@ -1,9 +1,10 @@
 import './InspectionSection.scss';
 import React, { useMemo } from 'react';
-import { ImageState, Inspection, InspectionQuestion, InspectionState, LoadStatus } from '../../../models';
+import { ImageState, Inspection, InspectionQuestion, InspectionState } from '../../../models';
 import { useAppSelector } from '../../../state';
 import { CircularProgress, Drawer, Skeleton } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
+import { LoadStatus } from '@gearscout/models';
 
 interface IProps {
 	robotNumber: number;

@@ -4,9 +4,9 @@ import { initApp, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../st
 import Header from './header/Header';
 import MainPage from './main-page/MainPage';
 import LoginPage from './login-page/LoginPage';
-import { IEventInfo } from '../models';
 import EventPage from './event-page/EventPage';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { IEventInfo } from '@gearscout/models';
 
 function App() {
 	const dispatch = useAppDispatch();

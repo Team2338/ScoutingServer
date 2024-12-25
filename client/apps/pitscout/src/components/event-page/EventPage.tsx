@@ -1,9 +1,9 @@
 import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
-import { IEventInfo, IUserInfo, LoadStatus } from '../../models';
 import { Button, Skeleton, TextField } from '@mui/material';
 import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
+import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
 
 const inputProps = {
 	htmlInput: {

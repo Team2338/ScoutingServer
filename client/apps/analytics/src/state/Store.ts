@@ -4,14 +4,13 @@ import {
 	ImageInfo,
 	ImageState,
 	Language,
-	LoadStatus,
 	LoginStatus,
 	Match,
 	MatchResponse,
 } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
-import { UserRole } from '@gearscout/models';
+import { LoadStatus, UserRole } from '@gearscout/models';
 
 
 const INITIAL_STATE: AppState = {

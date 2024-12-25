@@ -2,11 +2,9 @@ import { AxiosError, HttpStatusCode } from 'axios';
 import {
 	FormErrors,
 	ICreateDetailNoteRequest,
-	IEventInfo,
 	IForm,
 	IFormQuestions,
 	IPitState,
-	IUserInfo,
 	LoginErrors,
 	UploadErrors,
 } from '../../models';
@@ -32,7 +30,12 @@ import {
 	uploadStart,
 	uploadSuccess
 } from './Store';
-import { ITokenModel, UserRole } from '@gearscout/models';
+import {
+	IEventInfo,
+	ITokenModel,
+	IUserInfo,
+	UserRole
+} from '@gearscout/models';
 import { authEngine } from '@gearscout/engines';
 
 type GetState = () => IPitState;

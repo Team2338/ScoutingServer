@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Divider, Icon, List, ListItemButton, Skeleton, Typography } from '@mui/material';
-import { ImageState, LoadStatus, Statelet, Team } from '../../../models';
+import { ImageState, Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
 import SearchInput from '../../shared/search-input/SearchInput';
 import { useSelectedTeam } from '../../../state/src/Selectors';
 import { selectTeam, useAppDispatch, useAppSelector } from '../../../state';
+import { LoadStatus } from '@gearscout/models';
 
 interface IProps {
 	teams: Team[];

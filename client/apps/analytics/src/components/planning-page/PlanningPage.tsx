@@ -1,6 +1,6 @@
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import React, { ReactElement } from 'react';
-import { LoadStatus, Plan, Team, TeamObjectiveStats } from '../../models';
+import { Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
 import { useTranslator } from '../../service/TranslateService';
 import {
@@ -17,6 +17,7 @@ import { GridScore } from '../shared/GridScore';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
+import { LoadStatus } from '@gearscout/models';
 
 
 function PlanningPage() {

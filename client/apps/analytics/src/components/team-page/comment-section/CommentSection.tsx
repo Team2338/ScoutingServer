@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
 import './CommentSection.scss';
-import { CommentsForRobot, Comment, LoadStatus, Statelet } from '../../../models';
+import { CommentsForRobot, Comment, Statelet } from '../../../models';
 import { useAppSelector } from '../../../state';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
 import Topic from './topic/Topic';
+import { LoadStatus } from '@gearscout/models';
 
 interface IProps {
 	teamNumber: number;

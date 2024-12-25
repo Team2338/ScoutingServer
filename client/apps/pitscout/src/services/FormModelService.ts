@@ -3,12 +3,10 @@ import {
 	ICreateDetailNoteRequest,
 	IDetailNoteQuestion,
 	IDetailNoteQuestionResponse,
-	IEventInfo,
 	IForm,
 	IFormQuestions,
-	IUserInfo,
-	LoadStatus
 } from '../models';
+import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
 
 class FormModelService {
 

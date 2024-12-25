@@ -1,6 +1,6 @@
 import { useMediaQuery } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
-import { CommentsForEvent, ImageState, Inspection, LoadStatus, Team } from '../../models';
+import { CommentsForEvent, ImageState, Inspection, Team } from '../../models';
 import {
 	getAllImageInfoForEvent,
 	getComments,
@@ -17,6 +17,7 @@ import CommentSection from './comment-section/CommentSection';
 import DataFailure from '../shared/data-failure/DataFailure';
 import TeamListSkeleton from './team-list-skeleton/TeamListSkeleton';
 import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
+import { LoadStatus } from '@gearscout/models';
 
 
 export default function TeamPage() {

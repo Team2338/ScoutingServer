@@ -10,14 +10,14 @@ import {
 	Snackbar,
 	useMediaQuery
 } from '@mui/material';
-import { LoadStatus, Statelet } from '../../models';
+import { Statelet } from '../../models';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
 import RobotList from './robot-list/RobotList';
 import MainPageMobile from './MainPageMobile';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
-import { UserRole } from '@gearscout/models';
+import { LoadStatus, UserRole } from '@gearscout/models';
 
 function SlideTransition(props: SlideProps) {
 	return <Slide {...props} direction="down"/>;

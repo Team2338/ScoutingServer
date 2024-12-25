@@ -1,10 +1,10 @@
+import { IEventInfo, IUserInfo } from '@gearscout/models';
+import React, { CSSProperties } from 'react';
 import { useAppSelector } from '../../../state';
-import React from 'react';
 import './ProfileCard.scss';
-import { IEventInfo, IUserInfo } from '../../../models';
 
 interface IProps {
-	sx?: any;
+	sx?: CSSProperties;
 	onClick?: () => void;
 }
 

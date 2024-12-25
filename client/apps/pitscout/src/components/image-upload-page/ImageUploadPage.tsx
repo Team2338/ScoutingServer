@@ -1,9 +1,10 @@
 import { Alert, Button, InputAdornment, Snackbar, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { FILE_SIZE_LIMIT_BYTES, LoadStatus, Statelet, UploadErrors } from '../../models';
+import { FILE_SIZE_LIMIT_BYTES, Statelet, UploadErrors } from '../../models';
 import { clearUploadError, uploadImage, useAppDispatch, useAppSelector } from '../../state';
 import './ImageUploadPage.scss';
 import ImagePicker from '../image-picker/ImagePicker';
+import { LoadStatus } from '@gearscout/models';
 
 export default function ImageUploadPage() {
 	const dispatch = useAppDispatch();

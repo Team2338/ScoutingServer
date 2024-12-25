@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './InspectionPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { Inspection, InspectionQuestion, LoadStatus } from '../../models';
+import { Inspection, InspectionQuestion } from '../../models';
 import {
 	getInspections,
 	useAppDispatch,
@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 import InspectionTableConfigDrawer from './inspection-table-config-drawer/InspectionTableConfigDrawer';
 import DataFailure from '../shared/data-failure/DataFailure';
+import { LoadStatus } from '@gearscout/models';
 
 export default function InspectionPage() {
 	const translate = useTranslator();

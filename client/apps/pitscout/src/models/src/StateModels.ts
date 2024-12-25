@@ -1,7 +1,13 @@
 import React from 'react';
 import { IForm } from './UiModels';
-import {IEventInfo, IUserInfo} from './ResponseModels';
-import { ITokenModel, UserRole } from '@gearscout/models';
+import {
+	IEventInfo,
+	ITokenModel,
+	IUserInfo,
+	LoadStatus,
+	LoginStatus,
+	UserRole
+} from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -41,20 +47,4 @@ export interface ILoginState {
 	token: ITokenModel;
 	tokenString: string;
 	user: IUserInfo;
-}
-
-export enum LoginStatus {
-	none = 'none',
-	loggedIn = 'loggedIn',
-	loggingIn = 'loggingIn',
-	logInFailed = 'logInFailed'
-}
-
-export enum LoadStatus {
-	none = 'none',
-	loading = 'loading',
-	loadingWithPriorSuccess = 'reloading',
-	success = 'success',
-	failed = 'failed',
-	failedWithPriorSuccess = 'failed reload'
 }

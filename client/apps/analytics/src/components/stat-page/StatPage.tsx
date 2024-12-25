@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
 	GlobalObjectiveStats,
-	LoadStatus,
 	ObjectiveDescriptor,
 	Statelet,
 	Team,
@@ -16,6 +15,7 @@ import DataFailure from '../shared/data-failure/DataFailure';
 import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
 import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
 import MultiStatTable from './multi-stat-table/MultiStatTable';
+import { LoadStatus } from '@gearscout/models';
 
 
 function StatPage() {

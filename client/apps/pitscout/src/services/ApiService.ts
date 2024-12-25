@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse, IEventInfo, ILoginResponse } from '../models';
+import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse } from '../models';
+import { IEventInfo, ILoginResponse } from '@gearscout/models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 

@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, Typography, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { LoadStatus, Match, Statelet } from '../../models';
+import { Match, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getAllData, hideMatch, selectMatch, unhideMatch, useAppDispatch, useAppSelector } from '../../state';
 import SearchInput from '../shared/search-input/SearchInput';
@@ -8,6 +8,7 @@ import './ManagePage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 import DataFailure from '../shared/data-failure/DataFailure';
+import { LoadStatus } from '@gearscout/models';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;

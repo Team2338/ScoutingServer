@@ -17,12 +17,13 @@ import {
 } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { EventInfo, Language, LanguageDescriptor, LanguageInfo, LoadStatus, Statelet } from '../../models';
+import { EventInfo, Language, LanguageDescriptor, LanguageInfo, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
 import ProfileCard from '../shared/profile-card/ProfileCard';
 import { ExitToApp } from '@mui/icons-material';
+import { LoadStatus } from '@gearscout/models';
 
 
 interface IRoute {

@@ -8,7 +8,6 @@ import {
 	FormQuestions,
 	IForm,
 	INTAKE_LOCATIONS,
-	LoadStatus,
 	SCORE_LOCATIONS,
 	SHOOTING_LOCATIONS,
 	Statelet, YES_AND_NO
@@ -29,6 +28,7 @@ import {
 } from '@mui/material';
 import { AppDispatch, uploadForm, useAppDispatch, useAppSelector } from '../../../state';
 import { DrivetrainIcon, MotorIcon } from '../../../icons';
+import { LoadStatus } from '@gearscout/models';
 
 
 interface IProps {

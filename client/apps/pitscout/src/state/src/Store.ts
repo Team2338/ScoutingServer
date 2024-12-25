@@ -2,19 +2,25 @@ import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import {
 	FormErrors,
-	IEventInfo,
 	IForm,
 	IPitState,
-	IUserInfo,
-	LoadStatus,
 	LoginErrors,
-	LoginStatus,
 	UploadErrors
 } from '../../models';
-import { ITokenModel } from '@gearscout/models';
+import {
+	IEventInfo,
+	ITokenModel,
+	IUserInfo,
+	LoadStatus,
+	LoginStatus
+} from '@gearscout/models';
 
 export const loginStart = createAction('loginV2/login-start');
-export const loginSuccess = createAction<{ user: IUserInfo, token: ITokenModel, tokenString: string }>('loginV2/login-success');
+export const loginSuccess = createAction<{
+	user: IUserInfo,
+	token: ITokenModel,
+	tokenString: string
+}>('loginV2/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
@@ -49,7 +55,7 @@ const initialState: IPitState = {
 		role: null,
 		tokenString: null,
 		token: null,
-		user: null,
+		user: null
 	},
 	events: {
 		loadStatus: LoadStatus.none,
@@ -209,7 +215,7 @@ const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {
 	return LoadStatus.loading;
 };
 
-const getNextStatusOnFail = (previousStatus: LoadStatus) : LoadStatus=> {
+const getNextStatusOnFail = (previousStatus: LoadStatus): LoadStatus => {
 	if (previousStatus === LoadStatus.loadingWithPriorSuccess) {
 		return LoadStatus.failedWithPriorSuccess;
 	}

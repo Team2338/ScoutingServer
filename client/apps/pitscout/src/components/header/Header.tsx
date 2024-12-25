@@ -14,8 +14,8 @@ import {
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
 import { ExitToApp, Shuffle } from '@mui/icons-material';
 import ProfileCard from './profile-card/ProfileCard';
-import { IEventInfo } from '../../models';
 import { NavLink } from 'react-router-dom';
+import { IEventInfo } from '@gearscout/models';
 
 export default function Header() {
 	const dispatch = useAppDispatch();

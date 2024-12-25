@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
-import { LoadStatus, Statelet } from '../../models';
+import { Statelet } from '../../models';
 import { Button, Dialog, DialogContent, Icon, IconButton, Slide } from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
@@ -9,7 +9,7 @@ import './MainPageMobile.scss';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
-import { UserRole } from '@gearscout/models';
+import { LoadStatus, UserRole } from '@gearscout/models';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="up" ref={ ref } { ...props }>{ props.children }</Slide>;

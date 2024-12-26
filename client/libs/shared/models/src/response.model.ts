@@ -1,3 +1,5 @@
+import { UserRole } from './auth.model';
+
 export interface IEventInfo {
 	teamNumber: number;
 	gameYear: number;
@@ -12,7 +14,7 @@ export interface IUserInfo {
 	email: string;
 	teamNumber: number;
 	username: string;
-	role: string;
+	role: UserRole;
 }
 
 export interface ILoginResponse {

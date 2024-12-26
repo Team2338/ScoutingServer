@@ -21,7 +21,6 @@ import { Language, LanguageDescriptor, LanguageInfo, Statelet } from '../../mode
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
-import ProfileCard from '../shared/profile-card/ProfileCard';
 import {
 	ExitToApp,
 	Shuffle
@@ -32,6 +31,9 @@ import {
 	LoadStatus,
 	UserRole
 } from '@gearscout/models';
+import {
+	ProfileCard
+} from '@gearscout/components'
 
 
 interface IRoute {

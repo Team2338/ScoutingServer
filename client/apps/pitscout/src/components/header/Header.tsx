@@ -14,12 +14,12 @@ import {
 } from '@mui/material';
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
 import { ExitToApp, Shuffle } from '@mui/icons-material';
-import ProfileCard from './profile-card/ProfileCard';
 import { NavLink } from 'react-router-dom';
 import {
 	IEventInfo,
 	IUserInfo
 } from '@gearscout/models';
+import { ProfileCard } from '@gearscout/components';
 
 export default function Header() {
 	const dispatch = useAppDispatch();

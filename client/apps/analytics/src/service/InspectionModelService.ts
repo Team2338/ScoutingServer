@@ -1,8 +1,9 @@
-import { Inspection, InspectionQuestion, InspectionQuestionResponse } from '../models';
+import { Inspection, InspectionQuestion } from '../models';
+import { IInspectionQuestionResponse } from '@gearscout/models';
 
 class InspectionModelService {
 
-	convertResponsesToModels = (inspections: InspectionQuestionResponse[]): Inspection[] => {
+	convertResponsesToModels = (inspections: IInspectionQuestionResponse[]): Inspection[] => {
 		if (!inspections || inspections.length === 0) {
 			return [];
 		}
@@ -28,7 +29,7 @@ class InspectionModelService {
 		return results;
 	};
 
-	generateEmptyInspection = (inspection: InspectionQuestionResponse): Inspection => {
+	generateEmptyInspection = (inspection: IInspectionQuestionResponse): Inspection => {
 		return {
 			eventCode: inspection.eventCode,
 			gameYear: inspection.gameYear,
@@ -37,7 +38,7 @@ class InspectionModelService {
 		};
 	};
 
-	generateQuestion = (inspection: InspectionQuestionResponse): InspectionQuestion => {
+	generateQuestion = (inspection: IInspectionQuestionResponse): InspectionQuestion => {
 		return {
 			id: inspection.id,
 			question: inspection.question,
@@ -47,7 +48,7 @@ class InspectionModelService {
 		};
 	};
 
-	getUniqueQuestionNames = (inspections: InspectionQuestionResponse[]): string[] => {
+	getUniqueQuestionNames = (inspections: IInspectionQuestionResponse[]): string[] => {
 		const names: string[] = inspections.map(inspection => inspection.question);
 		const uniqueNames: Set<string> = new Set(names);
 		const results: string[] = [];

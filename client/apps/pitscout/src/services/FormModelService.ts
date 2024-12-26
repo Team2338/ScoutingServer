@@ -1,12 +1,16 @@
 import {
 	FormQuestions,
-	ICreateDetailNoteRequest,
-	IDetailNoteQuestion,
-	IDetailNoteQuestionResponse,
+	ICreateInspectionRequest,
+	IInspectionQuestion,
 	IForm,
-	IFormQuestions,
+	IFormQuestions
 } from '../models';
-import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
+import {
+	IEventInfo,
+	IInspectionQuestionResponse,
+	IUserInfo,
+	LoadStatus
+} from '@gearscout/models';
 
 class FormModelService {
 
@@ -15,14 +19,14 @@ class FormModelService {
 		event: IEventInfo;
 		robotNumber: number;
 		questions: IFormQuestions;
-	}): ICreateDetailNoteRequest => {
+	}): ICreateInspectionRequest => {
 		return {
 			robotNumber: data.robotNumber,
 			gameYear: data.event.gameYear,
 			eventCode: data.event.eventCode,
 			questions: Object.keys(data.questions)
 				.filter((q: FormQuestions) => data.questions[q]?.length > 0) // TODO: eventually we'll want to allow null
-				.map((q: FormQuestions): IDetailNoteQuestion => ({
+				.map((q: FormQuestions): IInspectionQuestion => ({
 					question: q,
 					answer: data.questions[q],
 					creator: data.user.username
@@ -40,7 +44,7 @@ class FormModelService {
 	};
 
 
-	convertResponseQuestionsToForms = (questions: IDetailNoteQuestionResponse[]): {
+	convertResponseQuestionsToForms = (questions: IInspectionQuestionResponse[]): {
 		forms: Record<string, IForm>,
 		robots: number[]
 	} => {

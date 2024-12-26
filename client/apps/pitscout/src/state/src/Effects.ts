@@ -1,7 +1,7 @@
 import { AxiosError, HttpStatusCode } from 'axios';
 import {
 	FormErrors,
-	ICreateDetailNoteRequest,
+	ICreateInspectionRequest,
 	IForm,
 	IFormQuestions,
 	IPitState,
@@ -175,7 +175,7 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 	);
 	dispatch(uploadFormStart(formState));
 
-	const request: ICreateDetailNoteRequest = FormModelService.convertQuestionsToRequest({
+	const request: ICreateInspectionRequest = FormModelService.convertQuestionsToRequest({
 		user: getState().loginv2.user,
 		event: getState().selectedEvent,
 		robotNumber: robotNumber,

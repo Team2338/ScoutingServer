@@ -1,12 +1,13 @@
 import './EventSelectorForm.scss';
 import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { EventInfo, Statelet } from '../../../models';
+import { Statelet } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { useAppSelector } from '../../../state';
+import { IEventInfo } from '@gearscout/models';
 
 interface IProps {
-	selectEvent: (event: EventInfo) => void;
+	selectEvent: (event: IEventInfo) => void;
 }
 
 export default function EventSelectorForm(props: IProps) {
@@ -19,12 +20,13 @@ export default function EventSelectorForm(props: IProps) {
 	const handleEventSubmission = (event): void => {
 		event.preventDefault();
 
-		const selectedEvent: EventInfo = {
+		const selectedEvent: IEventInfo = {
 			teamNumber: teamNumber,
 			gameYear: Number(gameYear),
 			eventCode: eventCode,
 			secretCode: secretCode,
-			matchCount: null
+			matchCount: null,
+			inspectionCount: null
 		};
 
 		props.selectEvent(selectedEvent);

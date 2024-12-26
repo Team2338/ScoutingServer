@@ -1,14 +1,14 @@
 import './EventSelectorList.scss';
 import React from 'react';
-import { EventInfo } from '../../../models';
+import { IEventInfo } from '@gearscout/models';
 
 interface IProps {
-	events: EventInfo[];
-	selectEvent: (event: EventInfo) => void;
+	events: IEventInfo[];
+	selectEvent: (event: IEventInfo) => void;
 }
 
 export default function EventSelectorList(props: IProps) {
-	const eventListItems = props.events.map((event: EventInfo) => (
+	const eventListItems = props.events.map((event: IEventInfo) => (
 		<li
 			key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode }
 			className="event-selector-list-option"

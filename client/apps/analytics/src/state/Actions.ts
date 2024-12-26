@@ -6,11 +6,13 @@ import {
 	Language,
 	Match,
 	MatchResponse,
-	Team,
-	EventInfo,
-	UserInfo
+	Team
 } from '../models';
-import { ITokenModel } from '@gearscout/models';
+import {
+	IEventInfo,
+	ITokenModel,
+	IUserInfo
+} from '@gearscout/models';
 
 export interface Action {
 	type: Actions;
@@ -90,7 +92,7 @@ export const loginAsMemberStart = (): Action => ({
 	type: Actions.LOGIN_AS_MEMBER_START
 });
 
-export const loginAsMemberSuccess = (user: UserInfo, tokenString: string, token: ITokenModel): Action => ({
+export const loginAsMemberSuccess = (user: IUserInfo, tokenString: string, token: ITokenModel): Action => ({
 	type: Actions.LOGIN_AS_MEMBER_SUCCESS,
 	payload: {
 		user: user,
@@ -108,7 +110,7 @@ export const createUserStart = (): Action => ({
 	type: Actions.CREATE_USER_START
 });
 
-export const createUserSuccess = (user: UserInfo, tokenString: string, token: ITokenModel): Action => ({
+export const createUserSuccess = (user: IUserInfo, tokenString: string, token: ITokenModel): Action => ({
 	type: Actions.CREATE_USER_SUCCESS,
 	payload: {
 		user: user,
@@ -135,7 +137,7 @@ export const getEventsStart = (): Action => ({
 	type: Actions.GET_EVENTS_START
 });
 
-export const getEventsSuccess = (events: EventInfo[]): Action => ({
+export const getEventsSuccess = (events: IEventInfo[]): Action => ({
 	type: Actions.GET_EVENTS_SUCCESS,
 	payload: events
 });
@@ -145,7 +147,7 @@ export const getEventsFail = (message: string): Action => ({
 	payload: message
 });
 
-export const selectEventSuccess = (event: EventInfo): Action => ({
+export const selectEventSuccess = (event: IEventInfo): Action => ({
 	type: Actions.SELECT_EVENT_SUCCESS,
 	payload: event
 });

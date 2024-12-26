@@ -97,7 +97,8 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 						gameYear: action.payload.gameYear,
 						eventCode: action.payload.eventCode,
 						secretCode: action.payload.secretCode,
-						matchCount: null
+						matchCount: null,
+						inspectionCount: null
 					}
 				}
 			};

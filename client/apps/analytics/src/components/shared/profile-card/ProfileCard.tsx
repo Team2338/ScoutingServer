@@ -1,7 +1,7 @@
 import { useAppSelector, useUsernameSelector } from '../../../state';
 import React from 'react';
 import './ProfileCard.scss';
-import { EventInfo } from '../../../models';
+import { IEventInfo } from '@gearscout/models';
 
 interface IProps {
 	sx?: any;
@@ -11,7 +11,7 @@ interface IProps {
 export default function ProfileCard(props: IProps) {
 
 	const username: string = useUsernameSelector();
-	const selectedEvent: EventInfo = useAppSelector(state => state.loginV2.selectedEvent);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.loginV2.selectedEvent);
 
 	// TODO: Convert the div to a button or link for accessibility
 	return (

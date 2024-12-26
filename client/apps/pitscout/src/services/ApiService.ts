@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ICreateDetailNoteRequest, IDetailNoteQuestionResponse } from '../models';
-import { IEventInfo, ILoginResponse } from '@gearscout/models';
+import { ICreateInspectionRequest } from '../models';
+import { IEventInfo, IInspectionQuestionResponse, ILoginResponse } from '@gearscout/models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -61,7 +61,7 @@ class ApiService {
 
 	uploadForm = (data: {
 		event: IEventInfo;
-		form: ICreateDetailNoteRequest;
+		form: ICreateInspectionRequest;
 		tokenString: string;
 	}): GearscoutResponse<null> => {
 		const url = `/v1/detailnotes/team/${ data.event.teamNumber }`;
@@ -79,7 +79,7 @@ class ApiService {
 	getAllForms = (data: {
 		event: IEventInfo;
 		tokenString: string;
-	}): GearscoutResponse<IDetailNoteQuestionResponse[]> => {
+	}): GearscoutResponse<IInspectionQuestionResponse[]> => {
 		const { event } = data;
 		const url: string = `/v1/detailnotes/team/${event.teamNumber}/gameYear/${event.gameYear}/event/${event.eventCode}`;
 		const config: AxiosRequestConfig = {

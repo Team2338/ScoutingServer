@@ -93,19 +93,6 @@ export interface ImageInfoResponse {
 	timeCreated: string;
 }
 
-export interface InspectionQuestionResponse {
-	id: number;
-	teamNumber: number;
-	robotNumber: number;
-	gameYear: number;
-	eventCode: string;
-	secretCode: string;
-	question: string;
-	answer: string;
-	creator: string;
-	timeCreated: string;
-}
-
 export interface CommentResponse {
 	id: number;
 	teamNumber: number;
@@ -118,25 +105,4 @@ export interface CommentResponse {
 	content: string;
 	creator: string;
 	timeCreated: string;
-}
-
-export interface EventInfo {
-	teamNumber: number;
-	gameYear: number;
-	eventCode: string;
-	secretCode: string;
-	matchCount?: number;
-}
-
-export interface LoginResponse {
-	token: string;
-	user: UserInfo;
-}
-
-export interface UserInfo {
-	id: number;
-	email: string;
-	teamNumber: number;
-	username: string;
-	role: string;
 }

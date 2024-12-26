@@ -9,9 +9,7 @@ import {
 	MatchResponse,
 	Team,
 	GlobalObjectiveStats,
-	ImageInfoResponse,
-	EventInfo,
-	UserInfo
+	ImageInfoResponse
 } from '../models';
 import { authEngine } from '@gearscout/engines';
 import commentService from '../service/CommentService';
@@ -60,7 +58,11 @@ import {
 } from './Actions';
 import { AppDispatch } from './Store';
 import GearscoutService from '../service/GearscoutService';
-import { ITokenModel } from '@gearscout/models';
+import {
+	IEventInfo,
+	ITokenModel,
+	IUserInfo
+} from '@gearscout/models';
 
 type GetState = () => AppState;
 
@@ -196,7 +198,7 @@ export const loginAsMember = (
 
 	try {
 		const response = await GearscoutService.login(email, password);
-		const user: UserInfo = response.data.user;
+		const user: IUserInfo = response.data.user;
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 
@@ -222,7 +224,7 @@ export const createUser = (data: {
 
 	try {
 		const response = await GearscoutService.createUser(data);
-		const user: UserInfo = response.data.user;
+		const user: IUserInfo = response.data.user;
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 
@@ -269,7 +271,7 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 	try {
 		const tokenString: string = getState().loginV2.tokenString;
 		const response = await gearscoutService.getEvents(tokenString);
-		const events: EventInfo[] = response.data;
+		const events: IEventInfo[] = response.data;
 		dispatch(getEventsSuccess(events));
 	} catch (error) {
 		console.log('Error getting events', error);
@@ -277,7 +279,7 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 	}
 };
 
-export const selectEvent = (event: EventInfo) => async (dispatch: AppDispatch) => {
+export const selectEvent = (event: IEventInfo) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('selectedEvent', JSON.stringify(event));
 	dispatch(selectEventSuccess(event));
 };

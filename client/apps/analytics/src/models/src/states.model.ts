@@ -1,17 +1,21 @@
 import React from 'react';
 import { Language } from './languages.model';
 import {
-	EventInfo,
 	GlobalObjectiveStats,
 	Match,
 	MatchResponse,
 	ObjectiveDescriptor,
 	Plan,
-	Team,
-	UserInfo
+	Team
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
-import { ITokenModel, LoadStatus, UserRole } from '@gearscout/models';
+import {
+	IEventInfo,
+	ITokenModel,
+	IUserInfo,
+	LoadStatus,
+	UserRole
+} from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -70,13 +74,13 @@ export interface LoginV2State {
 	role: UserRole;
 	token: ITokenModel;
 	tokenString: string;
-	user: UserInfo;
-	selectedEvent: EventInfo;
+	user: IUserInfo;
+	selectedEvent: IEventInfo;
 }
 
 export interface EventState {
 	loadStatus: LoadStatus;
-	events: EventInfo[];
+	events: IEventInfo[];
 }
 
 export interface ImageState {

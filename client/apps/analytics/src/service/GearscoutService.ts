@@ -1,13 +1,15 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
 	CommentResponse,
-	InspectionQuestionResponse,
 	MatchResponse,
-	ImageInfoResponse,
-	EventInfo,
-	LoginResponse
+	ImageInfoResponse
 } from '../models';
-import { ICreateUserRequest } from '@gearscout/models';
+import {
+	ICreateUserRequest,
+	IEventInfo,
+	IInspectionQuestionResponse,
+	ILoginResponse
+} from '@gearscout/models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -18,7 +20,7 @@ class GearscoutService {
 	});
 
 
-	login = (email: string, password: string): GearscoutResponse<LoginResponse> => {
+	login = (email: string, password: string): GearscoutResponse<ILoginResponse> => {
 		const url: string = '/v2/auth/login';
 		return this.http.post(url, {
 			email: email,
@@ -30,12 +32,12 @@ class GearscoutService {
 	 * @param data Information about the new user
 	 * @returns A serialized auth token
 	 */
-	createUser = (data: ICreateUserRequest): GearscoutResponse<LoginResponse> => {
+	createUser = (data: ICreateUserRequest): GearscoutResponse<ILoginResponse> => {
 		const url: string = '/v2/user';
 		return this.http.post(url, data);
 	};
 
-	getEvents = (tokenString: string): GearscoutResponse<EventInfo[]> => {
+	getEvents = (tokenString: string): GearscoutResponse<IEventInfo[]> => {
 		const url: string = '/v1/events';
 		const config: AxiosRequestConfig = {
 			headers: {
@@ -136,7 +138,7 @@ class GearscoutService {
 		gameYear: number;
 		eventCode: string;
 		secretCode: string;
-	}): GearscoutResponse<InspectionQuestionResponse[]> => {
+	}): GearscoutResponse<IInspectionQuestionResponse[]> => {
 		const url: string = `/v1/detailnotes/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {

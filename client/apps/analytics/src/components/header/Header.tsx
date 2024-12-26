@@ -17,13 +17,16 @@ import {
 } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { EventInfo, Language, LanguageDescriptor, LanguageInfo, Statelet } from '../../models';
+import { Language, LanguageDescriptor, LanguageInfo, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
 import ProfileCard from '../shared/profile-card/ProfileCard';
 import { ExitToApp } from '@mui/icons-material';
-import { LoadStatus } from '@gearscout/models';
+import {
+	IEventInfo,
+	LoadStatus
+} from '@gearscout/models';
 
 
 interface IRoute {
@@ -40,7 +43,7 @@ export default function Header() {
 
 	const _logout = () => dispatch(logout());
 	const isLoggedIn: boolean = useIsLoggedInSelector();
-	const selectedEvent: EventInfo = useAppSelector(state => state.loginV2.selectedEvent);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.loginV2.selectedEvent);
 
 	const [isDrawerOpen, setDrawerOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [accountAnchor, setAccountAnchor] = useState(null);
@@ -238,7 +241,7 @@ export default function Header() {
 
 function DownloadButton() {
 	const translate = useTranslator();
-	const selectedEvent: EventInfo = useAppSelector(state => state.loginV2.selectedEvent);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.loginV2.selectedEvent);
 	const csv = useAppSelector(state => state.csv);
 
 	if (!selectedEvent) {

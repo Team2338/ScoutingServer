@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
-import { EventInfo } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
 import EventSelectorForm from './event-selector-form/EventSelectorForm';
 import EventSelectorList from './event-selector-list/EventSelectorList';
-import { LoadStatus, UserRole } from '@gearscout/models';
+import {
+	IEventInfo,
+	LoadStatus,
+	UserRole
+} from '@gearscout/models';
 
 export default function EventPage() {
 
@@ -16,8 +19,8 @@ export default function EventPage() {
 	const dispatch: AppDispatch = useAppDispatch();
 	const userRole: UserRole = useAppSelector(state => state.loginV2.role);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
-	const events: EventInfo[] = useAppSelector(state => state.events.events);
-	const _selectEvent = async (event: EventInfo) => {
+	const events: IEventInfo[] = useAppSelector(state => state.events.events);
+	const _selectEvent = async (event: IEventInfo) => {
 		await dispatch(selectEvent(event));
 		navigate('/matches');
 	};

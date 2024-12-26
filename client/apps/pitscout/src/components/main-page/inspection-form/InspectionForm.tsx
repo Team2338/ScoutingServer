@@ -10,7 +10,8 @@ import {
 	INTAKE_LOCATIONS,
 	SCORE_LOCATIONS,
 	SHOOTING_LOCATIONS,
-	Statelet, YES_AND_NO
+	Statelet,
+	YES_AND_NO
 } from '../../../models';
 import {
 	Button,

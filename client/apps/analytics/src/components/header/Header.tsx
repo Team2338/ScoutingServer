@@ -33,7 +33,7 @@ import {
 } from '@gearscout/models';
 import {
 	ProfileCard
-} from '@gearscout/components'
+} from '@gearscout/components';
 
 
 interface IRoute {

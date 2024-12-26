@@ -22,10 +22,15 @@ import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
 import ProfileCard from '../shared/profile-card/ProfileCard';
-import { ExitToApp } from '@mui/icons-material';
+import {
+	ExitToApp,
+	Shuffle
+} from '@mui/icons-material';
 import {
 	IEventInfo,
-	LoadStatus
+	IUserInfo,
+	LoadStatus,
+	UserRole
 } from '@gearscout/models';
 
 
@@ -43,6 +48,7 @@ export default function Header() {
 
 	const _logout = () => dispatch(logout());
 	const isLoggedIn: boolean = useIsLoggedInSelector();
+	const user: IUserInfo = useAppSelector(state => state.loginV2.user);
 	const selectedEvent: IEventInfo = useAppSelector(state => state.loginV2.selectedEvent);
 
 	const [isDrawerOpen, setDrawerOpen]: Statelet<boolean> = useState<boolean>(false);
@@ -111,11 +117,24 @@ export default function Header() {
 			onClose={ handleAccountMenuClose }
 			keepMounted
 		>
+			<ProfileCard
+				sx={{ margin: '8px 12px' }}
+				user={ user }
+				selectedEvent={ selectedEvent }
+			/>
 			{
-				selectedEvent &&
-				<NavLink className="profile-card-link" to="/events" onClick={ handleAccountMenuClose }>
-					<ProfileCard sx={{ margin: '8px 12px' }} />
-				</NavLink>
+				selectedEvent && (user.role !== UserRole.guest) && (
+					<NavLink id="switch-event-link" to="/events" onClick={ handleAccountMenuClose }>
+						<MenuItem>
+							<ListItemIcon>
+								<Shuffle />
+							</ListItemIcon>
+							<ListItemText>
+								{ translate('SWITCH_EVENTS') }
+							</ListItemText>
+						</MenuItem>
+					</NavLink>
+				)
 			}
 			<MenuItem onClick={ handleLogout }>
 				<ListItemIcon>

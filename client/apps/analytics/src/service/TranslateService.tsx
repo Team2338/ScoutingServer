@@ -144,6 +144,7 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'Email',
 		'PASSWORD': 'Password',
 		'EVENTS': 'Events',
+		'SWITCH_EVENTS': 'Switch events'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -260,6 +261,7 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'Correo electrónico',
 		'PASSWORD': 'Contraseña',
 		'EVENTS': 'Eventos',
+		'SWITCH_EVENTS': 'Cambiar el evento'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -376,6 +378,7 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'E-mail',
 		'PASSWORD': 'Mot de passe',
 		'EVENTS': 'Événements',
+		'SWITCH_EVENTS': 'Changer l\'événement'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -393,7 +396,7 @@ const languages: ILanguageTranslation = {
 		'PLAN': 'Planlamak',
 		'DATA': 'Veri',
 		'LANGUAGE': 'Dilim',
-		'LOGOUT': 'Çıkış Yap',
+		'LOGOUT': 'Çıkış yap',
 		'SELECT_MATCH_VIEW_MORE_DETAILS': 'Daha fazla ayrıntı görmek için bir eşleşme seçin',
 		'NOTES_TABLE': 'Not tablosu',
 		'STATS_TABLE': 'Istatistik tablosu',
@@ -492,6 +495,7 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'E-posta',
 		'PASSWORD': 'Şifre',
 		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
+		'SWITCH_EVENTS': 'Etkinliği değiştir'
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -607,5 +611,6 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'E-mailem', // TODO verify
 		'PASSWORD': 'Heslo', // TODO verify
 		'EVENTS': 'Události', // TODO verify
+		'SWITCH_EVENTS': 'Přepněte událost' // TODO: verify
 	}
 };

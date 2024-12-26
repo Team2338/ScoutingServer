@@ -4,7 +4,8 @@ import {
 	AppBar,
 	Icon,
 	IconButton,
-	ListItemIcon, ListItemText,
+	ListItemIcon,
+	ListItemText,
 	Menu,
 	MenuItem,
 	Toolbar,
@@ -15,11 +16,15 @@ import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../
 import { ExitToApp, Shuffle } from '@mui/icons-material';
 import ProfileCard from './profile-card/ProfileCard';
 import { NavLink } from 'react-router-dom';
-import { IEventInfo } from '@gearscout/models';
+import {
+	IEventInfo,
+	IUserInfo
+} from '@gearscout/models';
 
 export default function Header() {
 	const dispatch = useAppDispatch();
 	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
+	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
 	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 
 	const [accountAnchor, setAccountAnchor] = useState(null);
@@ -55,7 +60,11 @@ export default function Header() {
 			onClose={ handleAccountMenuClose }
 			keepMounted={ true }
 		>
-			<ProfileCard sx={{ margin: '8px 12px' }}/>
+			<ProfileCard
+				sx={{ margin: '8px 12px' }}
+				user={ user }
+				selectedEvent={ selectedEvent }
+			/>
 			{
 				selectedEvent &&
 				<NavLink id="switch-event-link" to="/events" onClick={ handleAccountMenuClose }>

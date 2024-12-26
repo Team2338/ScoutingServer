@@ -18,13 +18,9 @@
 }
 
 #account-menu {
-	.profile-card-link {
+	#switch-event-link {
 		text-decoration: unset;
 		color: unset;
-
-		&:hover > * {
-			background-color: #1976d233;
-		}
 	}
 }
 

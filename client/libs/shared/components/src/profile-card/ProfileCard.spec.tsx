@@ -23,7 +23,7 @@ describe('ProfileCard', () => {
 		secretCode: 'secret',
 		matchCount: null,
 		inspectionCount: null
-	}
+	};
 
 	it('should render without event info', () => {
 		const { baseElement } = render(<ProfileCard user={ mockUser }/>);

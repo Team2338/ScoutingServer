@@ -14,7 +14,7 @@ export default function EventSelectorList(props: IProps) {
 			className="event-selector-list-option"
 			onClick={ () => props.selectEvent(event) }
 		>
-			<div>{ event.eventCode } <span>({ event.matchCount })</span></div>
+			<div>{ event.eventCode } <span>({ event.matchCount ?? 0 })</span></div>
 			<div>********</div>
 		</li>
 	));

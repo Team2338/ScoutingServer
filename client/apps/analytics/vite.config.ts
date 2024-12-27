@@ -25,6 +25,13 @@ export default defineConfig({
 	// worker: {
 	//  plugins: [ nxViteTsPaths() ],
 	// },
+	css: { // TODO: Can remove this block after Vite 6 upgrade
+		preprocessorOptions: {
+			scss: {
+				api: 'modern'
+			}
+		}
+	},
 	build: {
 		outDir: '../../dist/apps/analytics',
 		emptyOutDir: true,

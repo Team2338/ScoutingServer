@@ -135,7 +135,7 @@ export const selectEvent = (event: IEventInfo) => async (dispatch: AppDispatch) 
 export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(uploadStart());
 
-	const selectedEvent: IEventInfo = getState().selectedEvent;
+	const selectedEvent: IEventInfo = getState().events.selectedEvent;
 	const tokenString: string = getState().loginv2.tokenString;
 	try {
 		await ApiService.uploadImage({
@@ -177,14 +177,14 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 
 	const request: ICreateInspectionRequest = FormModelService.convertQuestionsToRequest({
 		user: getState().loginv2.user,
-		event: getState().selectedEvent,
+		event: getState().events.selectedEvent,
 		robotNumber: robotNumber,
 		questions: questions
 	});
 
 	try {
 		await ApiService.uploadForm({
-			event: getState().selectedEvent,
+			event: getState().events.selectedEvent,
 			form: request,
 			tokenString: getState().loginv2.tokenString
 		});
@@ -214,7 +214,7 @@ export const loadForms = () => async (dispatch: AppDispatch, getState: GetState)
 
 	try {
 		const questions = await ApiService.getAllForms({
-			event: getState().selectedEvent,
+			event: getState().events.selectedEvent,
 			tokenString: getState().loginv2.tokenString
 		});
 

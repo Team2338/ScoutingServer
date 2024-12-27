@@ -63,7 +63,6 @@ const initialState: IPitState = {
 		list: [],
 		selectedEvent: null
 	},
-	selectedEvent: null,
 	upload: {
 		loadStatus: LoadStatus.none,
 		error: null
@@ -102,7 +101,6 @@ const reducer = createReducer(initialState, builder => {
 		.addCase(logoutSuccess, (state: IPitState) => {
 			state.loginv2 = initialState.loginv2;
 			state.events = initialState.events;
-			state.selectedEvent = initialState.selectedEvent;
 			state.upload = initialState.upload;
 			state.forms = initialState.forms;
 			state.snackbar = initialState.snackbar;
@@ -123,7 +121,6 @@ const reducer = createReducer(initialState, builder => {
 			showSnackbar(state, 'error', action.payload);
 		})
 		.addCase(selectEventSuccess, (state: IPitState, action) => {
-			state.selectedEvent = action.payload;
 			state.events.selectedEvent = action.payload;
 			state.forms = initialState.forms;
 		})

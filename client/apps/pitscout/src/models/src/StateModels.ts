@@ -19,7 +19,6 @@ export interface IPitState {
 		list: IEventInfo[];
 		selectedEvent: IEventInfo;
 	};
-	selectedEvent: IEventInfo;
 	upload: {
 		loadStatus: LoadStatus;
 		error: string;

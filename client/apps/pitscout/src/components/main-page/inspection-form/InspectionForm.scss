@@ -1,0 +1,94 @@
+.inspection-form {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	height: fit-content;
+	width: fit-content;
+
+	.title-area {
+		display: flex;
+		align-items: center;
+		margin-bottom: 12px;
+
+		.title {
+			font-weight: 600;
+			font-size: 36px;
+			line-height: 44px;
+			margin: 0;
+		}
+
+		#add-image-button {
+			margin-left: auto;
+		}
+	}
+
+	.selector-adornment {
+		color: rgba(0, 0, 0, 0.54);
+		margin-right: 8px;
+	}
+
+	#under-stage-checkbox {
+		padding-left: 14px;
+	}
+
+	.checkbox-group {
+		position: relative;
+		display: flex;
+		margin-top: 16px;
+		margin-bottom: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.23);
+		border-radius: 4px;
+		padding: 8px 14px;
+
+    &::before {
+			content: 'Score locations';
+			position: absolute;
+			top: -10px;
+			left: 8px;
+			padding: 0 5px;
+			color: rgba(0, 0, 0, 0.6);
+			font-weight: 400;
+			font-size: 0.75rem;
+			line-height: 1.4375em;
+			letter-spacing: 0.00938em;
+			white-space: nowrap;
+			background-color: white;
+    }
+
+		&.score-locations-wrapper::before {
+			content: 'Score locations';
+		}
+
+		&.intake-locations-wrapper::before {
+			content: 'Intake locations';
+		}
+
+		&.shooting-locations-wrapper::before {
+			content: 'Shooting locations';
+		}
+
+		&.climb-capabilities-wrapper::before {
+			content: 'Climb capabilities'
+		}
+
+		.checkbox-row {
+			display: flex;
+			flex-direction: row;
+			column-gap: 4px;
+			flex-wrap: wrap;
+		}
+	}
+
+	#submit-note {
+		position: relative;
+		margin-top: 32px;
+
+		&__loader {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -12px;
+			margin-left: -12px;
+		}
+	}
+}

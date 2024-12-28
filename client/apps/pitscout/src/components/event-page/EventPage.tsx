@@ -4,6 +4,7 @@ import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
+import { type TGameYear } from '../../models';
 
 const inputProps = {
 	htmlInput: {
@@ -19,6 +20,8 @@ export default function EventPage() {
 	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
+	const eventsByYear: Record<TGameYear, IEventInfo[]> = useAppSelector(state => state.events.byYear);
+	const gameYears: TGameYear[] = useAppSelector(state => state.events.years);
 
 	const [eventCode, setEventCode] = useState<string>('');
 	const [secretCode, setSecretCode] = useState<string>('');
@@ -46,6 +49,7 @@ export default function EventPage() {
 		[dispatch]
 	);
 
+
 	const loadingList = () => {
 		return (
 			<ol className="event-list">
@@ -63,26 +67,25 @@ export default function EventPage() {
 		);
 	};
 
-	const actualEventList = () => {
-		return (
+	const actualEventList = () => gameYears.map(year => (
+		<Fragment key={year}>
+			<h3 className="event-list-header">{ year }</h3>
 			<ol className="event-list">
 				{
-					events
-						.filter((event: IEventInfo) => event.gameYear === new Date().getFullYear())
-						.map((event: IEventInfo, index: number) => (
-							<li key={ index } className="event-list-item">
-								<button onClick={ () => _selectEvent(event) }>
-									<span className="event-code-label">{ event.eventCode }</span>
-									<span className="inspection-count">{ event.inspectionCount ?? 0 } Inspections</span>
-									<span className="secret-code-label">{ event.secretCode }</span>
-									<span className="match-count">{ event.matchCount ?? 0 } Matches</span>
-								</button>
-							</li>
-						))
+					eventsByYear[year].map((event: IEventInfo, index: number) => (
+						<li key={ index } className="event-list-item">
+							<button onClick={ () => _selectEvent(event) }>
+								<span className="event-code-label">{ event.eventCode }</span>
+								<span className="inspection-count">{ event.inspectionCount ?? 0 } Inspections</span>
+								<span className="secret-code-label">{ event.secretCode }</span>
+								<span className="match-count">{ event.matchCount ?? 0 } Matches</span>
+							</button>
+						</li>
+					))
 				}
 			</ol>
-		);
-	};
+		</Fragment>
+	));
 
 	const failedList = () => {
 		return (

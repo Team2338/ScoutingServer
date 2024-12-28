@@ -11,14 +11,10 @@ import {
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
+export type TGameYear = number;
 export interface IPitState {
 	loginv2: ILoginState;
-	events: {
-		loadStatus: LoadStatus;
-		error: string;
-		list: IEventInfo[];
-		selectedEvent: IEventInfo;
-	};
+	events: IEventState;
 	upload: {
 		loadStatus: LoadStatus;
 		error: string;
@@ -39,11 +35,20 @@ export interface IPitState {
 	};
 }
 
-export interface ILoginState {
+interface ILoginState {
 	loginStatus: LoginStatus;
 	error: string;
 	role: UserRole;
 	token: ITokenModel;
 	tokenString: string;
 	user: IUserInfo;
+}
+
+interface IEventState {
+	loadStatus: LoadStatus;
+	error: string;
+	list: IEventInfo[];
+	byYear: Record<TGameYear, IEventInfo[]>;
+	years: TGameYear[];
+	selectedEvent: IEventInfo;
 }

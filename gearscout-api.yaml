@@ -280,41 +280,51 @@ components:
       format: password
       minLength: 8
       maxLength: 32
+      example: CorrectHorseBatteryStaple
     token:
       type: string
     teamNumber:
       type: integer
       format: int32
       minimum: 0
+      example: 2338
     gameYear:
       type: integer
       format: int32
+      example: 2025
     eventCode:
       type: string
       minLength: 1
       maxLength: 32
+      example: MID2024
     secretCode:
       type: string
       minLength: 1
       maxLength: 32
+      example: TeamSecret2338
     matchNumber:
       type: integer
       format: int32
+      example: 12
     robotNumber:
       type: integer
       format: int32
+      example: 111
     username:
       type: string
       minLength: 1
       maxLength: 32
+      example: Garrett Gears
     creator:
       type: string
       minLength: 1
       maxLength: 32
+      example: Garrett Gears
     allianceColor:
       type: string
       minLength: 1
       maxLength: 32
+      example: red
     role:
       type: string
       enum: [
@@ -381,10 +391,7 @@ components:
         robotNumber:
           $ref: '#/components/schemas/robotNumber'
         creator:
-          type: string
-          minLength: 1
-          maxLength: 32
-          description: Username of the scouter that created this entry
+          $ref: '#/components/schemas/creator'
         allianceColor:
           $ref: '#/components/schemas/allianceColor'
         timeCreated:
@@ -393,6 +400,7 @@ components:
           maxLength: 64
           description: 'This format is dumb :) It is the creation time of the record,
             formatted as a unix timestamp. This will *eventually* be an ISO 8601 date-time'
+          example: 1735459715
         isHidden:
           type: boolean
           description: 'Whether this match should be excluded from statistics; it
@@ -408,18 +416,29 @@ components:
         id:
           $ref: '#/components/schemas/id'
         gamemode:
+          description: "Can be any arbitrary name - we use 'AUTONOMOUS' and 'TELEOP'"
           type: string
           minLength: 1
           maxLength: 64
+          example: autonomous
         objective:
+          description: Can be any arbitrary name
           type: string
           minLength: 1
           maxLength: 128
+          example: HIGH_GOAL_2024
         count:
+          description: "Typically used to count the number of times the objective
+            was scored, i.e. 'scored 6 high goals'"
           type: integer
           format: int32
+          example: 6
         list:
+          description: "Sometimes, `count` is not sufficient to encapsulate an
+            objective. In 2023, we used a list of 27 numbers to represent pieces
+            placed on the grid."
           type: array
+          maxLength: 128
           items:
             type: integer
             format: int32

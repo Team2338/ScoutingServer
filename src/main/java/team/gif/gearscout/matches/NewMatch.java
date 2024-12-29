@@ -4,6 +4,7 @@ import java.util.List;
 
 public class NewMatch {
 
+	// TODO: Shouldn't we be performing property validation here???
 	private Integer gameYear;
 	private String eventCode;
 	private Integer matchNumber;

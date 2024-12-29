@@ -43,9 +43,11 @@ public class ObjectiveEntity {
 	
 	@Column(nullable = false)
 	private Integer count;
-	
+
+	// TODO: Set a maximum list length here
 	@Column(columnDefinition = "int[]", nullable = true)
 	@JdbcTypeCode(SqlTypes.ARRAY)
+	@Size(max = 128, message = "Objective.list may not contain more than 128 scores")
 	private Integer[] list;
 	
 	

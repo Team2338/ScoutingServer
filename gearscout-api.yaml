@@ -11,6 +11,10 @@ tags:
   - name: Users
   - name: Matches
     description: Quantitative match info
+  - name: Comments
+    description: Qualitative notes
+  - name: Inspections
+    description: Pit scouting
 paths:
   /v1/hello:
     get:
@@ -197,6 +201,48 @@ paths:
           description: Could not find match with that ID and secret code
         default:
           $ref: '#/components/responses/GeneralError'
+  /v2/notes/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}:
+    get:
+      tags: [Comments]
+      summary: Get comments
+      description: Get all comments associated with an event
+      parameters:
+        - $ref: '#/components/parameters/teamNumberPathParam'
+        - $ref: '#/components/parameters/gameYearPathParam'
+        - $ref: '#/components/parameters/eventCodePathParam'
+        - $ref: '#/components/parameters/secretCodeHeaderParam'
+      responses:
+        '200':
+          description: The list of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentResponseBody'
+        default:
+          $ref: '#/components/responses/GeneralError'
+  /v2/notes/team/{teamNumber}:
+    post:
+      tags: [Comments]
+      summary: Create comments
+      description: Create multiple comments
+      parameters:
+        - $ref: '#/components/parameters/teamNumberPathParam'
+        - $ref: '#/components/parameters/secretCodeHeaderParam'
+      requestBody:
+        $ref: '#/components/schemas/CreateCommentBulkRequestBody'
+      responses:
+        '200':
+          description: A list of the newly created comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentResponseBody'
+        default:
+          $ref: '#/components/responses/GeneralError'
 
 components:
   examples:
@@ -350,6 +396,18 @@ components:
         'ADMIN',
         'SUPERADMIN'
       ]
+    commentTopic:
+      type: string
+      minLength: 1
+      maxLength: 32
+      description: Comment category, used for grouping and/or filtering
+      example: Driver skill
+    commentContent:
+      type: string
+      minLength: 1
+      maxLength: 1024
+      description: An observation
+      example: 'Calm under pressure, but drive too slowly'
     UserEntity:
       type: object
       properties:
@@ -390,6 +448,25 @@ components:
           $ref: '#/components/schemas/teamNumber'
         username:
           $ref: '#/components/schemas/username'
+    CreateMatchRequestBody:
+      type: object
+      properties:
+        gameYear:
+          $ref: '#/components/schemas/gameYear'
+        eventCode:
+          $ref: '#/components/schemas/eventCode'
+        matchNumber:
+          $ref: '#/components/schemas/matchNumber'
+        robotNumber:
+          $ref: '#/components/schemas/robotNumber'
+        creator:
+          $ref: '#/components/schemas/creator'
+        allianceColor:
+          $ref: '#/components/schemas/allianceColor'
+        objectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectiveEntity'
     MatchResponseBody:
       type: object
       properties:
@@ -451,7 +528,7 @@ components:
           format: int32
           example: 6
         list:
-          description: "Sometimes, `count` is not sufficient to encapsulate an
+          description: "Sometimes, `count` is not sufficient to represent an
             objective. In 2023, we used a list of 27 numbers to represent pieces
             placed on the grid."
           type: array
@@ -459,26 +536,59 @@ components:
           items:
             type: integer
             format: int32
-
-    CreateMatchRequestBody:
+    CreateCommentBulkRequestBody:
       type: object
+      required: [robotNumber, gameYear, eventCode, matchNumber, creator, comments]
       properties:
+        robotNumber:
+          $ref: '#/components/schemas/robotNumber'
         gameYear:
           $ref: '#/components/schemas/gameYear'
         eventCode:
           $ref: '#/components/schemas/eventCode'
         matchNumber:
           $ref: '#/components/schemas/matchNumber'
-        robotNumber:
-          $ref: '#/components/schemas/robotNumber'
         creator:
           $ref: '#/components/schemas/creator'
-        allianceColor:
-          $ref: '#/components/schemas/allianceColor'
-        objectives:
+        comments:
           type: array
+          minItems: 1
           items:
-            $ref: '#/components/schemas/ObjectiveEntity'
+            type: object
+            required: [topic, content]
+            properties:
+              topic:
+                $ref: '#/components/schemas/commentTopic'
+              content:
+                $ref: '#/components/schemas/commentContent'
+    CommentResponseBody:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        teamNumber:
+          $ref: '#/components/schemas/teamNumber'
+        robotNumber:
+          $ref: '#/components/schemas/robotNumber'
+        gameYear:
+          $ref: '#/components/schemas/gameYear'
+        eventCode:
+          $ref: '#/components/schemas/eventCode'
+        secretCode:
+          $ref: '#/components/schemas/secretCode'
+        matchNumber:
+          $ref: '#/components/schemas/matchNumber'
+        creator:
+          $ref: '#/components/schemas/creator'
+        topic:
+          $ref: '#/components/schemas/commentTopic'
+        content:
+          $ref: '#/components/schemas/commentContent'
+        timeCreated:
+          type: string
+          format: date-time
+          description: Time at which this comment was initially received
+          example: '2024-03-14T15:31:42Z'
     ErrorModel:
       type: string
 

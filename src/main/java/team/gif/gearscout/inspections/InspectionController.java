@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import java.util.List;
 
+// TODO: Start accepting tokens and not secret codes
+// TODO: Get 'creator' from token and not request body
 @RestController
 @RequestMapping(value = "/api/v1/detailnotes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class InspectionController {

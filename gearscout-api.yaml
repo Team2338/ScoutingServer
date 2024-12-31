@@ -3,7 +3,7 @@ info:
   title: GearScout Server
   description: A server for hosting FRC scouting data. Designed and developed by
     Gear It Forward (Team \#2338), and open for any teams to use.
-  version: 3.1.0-beta
+  version: 3.1.0
 servers:
   - url: 'https://data.gearitforward.com/api'
     description: Production server
@@ -231,7 +231,12 @@ paths:
         - $ref: '#/components/parameters/teamNumberPathParam'
         - $ref: '#/components/parameters/secretCodeHeaderParam'
       requestBody:
-        $ref: '#/components/schemas/CreateCommentBulkRequestBody'
+        description: A list of comments about a specific robot in a match
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentBulkRequestBody'
       responses:
         '200':
           description: A list of the newly created comments
@@ -243,30 +248,52 @@ paths:
                   $ref: '#/components/schemas/CommentResponseBody'
         default:
           $ref: '#/components/responses/GeneralError'
+  /v1/detailnotes/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}:
+    get:
+      tags: [Inspections]
+      summary: Get inspections
+      description: Returns the list of inspections for an event
+      parameters:
+        - $ref: '#/components/parameters/teamNumberPathParam'
+        - $ref: '#/components/parameters/gameYearPathParam'
+        - $ref: '#/components/parameters/eventCodePathParam'
+        - $ref: '#/components/parameters/secretCodeHeaderParam'
+      responses:
+        '200':
+          description: The list of inspections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InspectionResponseBody'
+        default:
+          $ref: '#/components/responses/GeneralError'
+  /v1/detailnotes/team/{teamNumber}:
+    post:
+      tags: [Inspections]
+      summary: Add/update inspection questions
+      description: 'Attempts to save a set of question/answer pairs for a specific
+        robot at a specific event. If a question contained within the request has
+        already been uploaded for that robot, then the answer is updated. Otherwise,
+        the question/answer pair is added for that robot.'
+      parameters:
+        - $ref: '#/components/parameters/teamNumberPathParam'
+        - $ref: '#/components/parameters/secretCodeHeaderParam'
+      requestBody:
+        description: A list of question/answer pairs for a specific robot and event
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInspectionRequestBody'
+      responses:
+        '200':
+          description: Empty response body
+        default:
+          $ref: '#/components/responses/GeneralError'
 
 components:
-  examples:
-    NewMatch:
-      summary: A new frame of match data to log
-      value: {
-        "eventCode": "CIR",
-        "matchNumber": 4,
-        "robotNumber": 2338,
-        "creator": "Nate",
-        "objectives": [
-          {
-            "gamemode": "auto",
-            "objective": "High Goal",
-            "count": 2
-          },
-          {
-            "gamemode": "auto",
-            "objective": "Low Goal",
-            "count": 1
-          }
-        ]
-      }
-
   parameters:
     teamNumberPathParam:
       name: teamNumber
@@ -396,6 +423,13 @@ components:
         'ADMIN',
         'SUPERADMIN'
       ]
+    unixTimestamp:
+      type: string
+      minLength: 8
+      maxLength: 32
+      description: 'This format is dumb :) It is the creation time of the record,
+        formatted as a unix timestamp. This will *eventually* be an ISO 8601 date-time'
+      example: 1735459715
     commentTopic:
       type: string
       minLength: 1
@@ -407,7 +441,19 @@ components:
       minLength: 1
       maxLength: 1024
       description: An observation
-      example: 'Calm under pressure, but drive too slowly'
+      example: "They're awesome and calm under pressure!"
+    inspectionQuestion:
+      type: string
+      minLength: 1
+      maxLength: 32
+      description: Question header on a pit scouting form
+      example: Drivetrain type
+    inspectionAnswer:
+      type: string
+      minLength: 1
+      maxLength: 1024
+      description: Value entered into a pit scouting form
+      example: Swerve
     UserEntity:
       type: object
       properties:
@@ -489,12 +535,7 @@ components:
         allianceColor:
           $ref: '#/components/schemas/allianceColor'
         timeCreated:
-          type: string
-          minLength: 8
-          maxLength: 64
-          description: 'This format is dumb :) It is the creation time of the record,
-            formatted as a unix timestamp. This will *eventually* be an ISO 8601 date-time'
-          example: 1735459715
+          $ref: '#/components/schemas/unixTimestamp'
         isHidden:
           type: boolean
           description: 'Whether this match should be excluded from statistics; it
@@ -589,6 +630,52 @@ components:
           format: date-time
           description: Time at which this comment was initially received
           example: '2024-03-14T15:31:42Z'
+    CreateInspectionRequestBody:
+      type: object
+      required: [robotNumber, gameYear, eventCode, questions]
+      properties:
+        robotNumber:
+          $ref: '#/components/schemas/robotNumber'
+        gameYear:
+          $ref: '#/components/schemas/gameYear'
+        eventCode:
+          $ref: '#/components/schemas/eventCode'
+        questions:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [question, answer, creator]
+            properties:
+              question:
+                $ref: '#/components/schemas/inspectionQuestion'
+              answer:
+                $ref: '#/components/schemas/inspectionAnswer'
+              creator:
+                $ref: '#/components/schemas/creator'
+    InspectionResponseBody:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        teamNumber:
+          $ref: '#/components/schemas/teamNumber'
+        robotNumber:
+          $ref: '#/components/schemas/robotNumber'
+        gameYear:
+          $ref: '#/components/schemas/gameYear'
+        eventCode:
+          $ref: '#/components/schemas/eventCode'
+        secretCode:
+          $ref: '#/components/schemas/secretCode'
+        question:
+          $ref: '#/components/schemas/inspectionQuestion'
+        answer:
+          $ref: '#/components/schemas/inspectionAnswer'
+        creator:
+          $ref: '#/components/schemas/creator'
+        timeCreated:
+          $ref: '#/components/schemas/unixTimestamp'
     ErrorModel:
       type: string
 

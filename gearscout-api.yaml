@@ -7,6 +7,10 @@ info:
 servers:
   - url: 'https://data.gearitforward.com/api'
     description: Production server
+tags:
+  - name: Users
+  - name: Matches
+    description: Quantitative match info
 paths:
   /v1/hello:
     get:
@@ -21,6 +25,7 @@ paths:
                 type: string
   /v2/auth/login:
     post:
+      tags: [Users]
       summary: Log in
       description: Attempts to authenticate a user and provide a login token
       requestBody:
@@ -43,6 +48,7 @@ paths:
           $ref: '#/components/responses/GeneralError'
   /v2/user:
     post:
+      tags: [Users]
       summary: Create user
       description: Create a new (unverified) user for a team. A user must receive
         verification to unlock certain features. Contact GiF to receive verification.
@@ -69,6 +75,7 @@ paths:
       - $ref: '#/components/parameters/eventCodePathParam'
       - $ref: '#/components/parameters/secretCodeHeaderParam'
     get:
+      tags: [Matches]
       summary: Get matches
       description: Returns the list of scouted matches for an event
       responses:
@@ -89,6 +96,7 @@ paths:
       - $ref: '#/components/parameters/eventCodePathParam'
       - $ref: '#/components/parameters/secretCodeHeaderParam'
     get:
+      tags: [Matches]
       summary: Export matches as CSV
       description: 'Returns CSV file with list of scouted matches for an event.
         Note: this may have been broken with the `Match->list` parameter'
@@ -106,6 +114,7 @@ paths:
       - $ref: '#/components/parameters/teamNumberPathParam'
       - $ref: '#/components/parameters/secretCodeHeaderParam'
     post:
+      tags: [Matches]
       summary: Add match
       description: Creates a new match for a particular event and robot
       requestBody:
@@ -126,6 +135,7 @@ paths:
       - $ref: '#/components/parameters/matchIdPathParam'
       - $ref: '#/components/parameters/secretCodeHeaderParam'
     put:
+      tags: [Matches]
       summary: Hide match
       description: Marks a match as "hidden" so that it isn't included in analytics or CSV export
       responses:
@@ -141,6 +151,7 @@ paths:
       - $ref: '#/components/parameters/matchIdPathParam'
       - $ref: '#/components/parameters/secretCodeHeaderParam'
     put:
+      tags: [Matches]
       summary: Unhide match
       description: Removes "hidden" state from match so that it gets included in analytics and CSV export
       responses:
@@ -154,6 +165,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/matchIdPathParam'
     put:
+      tags: [Matches]
       summary: Hide match
       description: Marks a match as "hidden" so that it isn't included in analytics or CSV export
       security:
@@ -171,6 +183,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/matchIdPathParam'
     put:
+      tags: [Matches]
       summary: Unhide match
       description: Removes "hidden" state from match so that it gets included in analytics and CSV export
       security:
@@ -217,7 +230,6 @@ components:
       schema:
         $ref: '#/components/schemas/teamNumber'
       style: simple
-      example: 2338
     gameYearPathParam:
       name: gameYear
       in: path
@@ -226,7 +238,6 @@ components:
       schema:
         $ref: '#/components/schemas/gameYear'
       style: simple
-      example: 2025
     eventCodePathParam:
       name: eventCode
       in: path
@@ -235,7 +246,6 @@ components:
       schema:
         $ref: '#/components/schemas/eventCode'
       style: simple
-      example: CIR2024
     matchIdPathParam:
       name: matchId
       in: path
@@ -244,16 +254,14 @@ components:
       schema:
         $ref: '#/components/schemas/id'
       style: simple
-      example: 12
     secretCodeHeaderParam:
       name: secretCode
       in: header
-      description: Secret code used to limit data access
+      description: Secret phrase used to limit data access
       required: true
       schema:
         $ref: '#/components/schemas/secretCode'
       style: simple
-      example: '9t9JB#h'
 
   responses:
     UpdatedMatchResponse:
@@ -272,6 +280,7 @@ components:
     id:
       type: integer
       format: int64
+      description: Unique entity ID
     email:
       type: string
       format: email
@@ -283,10 +292,12 @@ components:
       example: CorrectHorseBatteryStaple
     token:
       type: string
+      description: Auth token received upon login
     teamNumber:
       type: integer
       format: int32
       minimum: 0
+      description: Team number that owns the data
       example: 2338
     gameYear:
       type: integer
@@ -296,19 +307,23 @@ components:
       type: string
       minLength: 1
       maxLength: 32
+      description: Name of the event that was scouted
       example: MID2024
     secretCode:
       type: string
       minLength: 1
       maxLength: 32
+      description: Secret phrase used to limit data access
       example: TeamSecret2338
     matchNumber:
       type: integer
       format: int32
+      description: Event-defined, chronological match number
       example: 12
     robotNumber:
       type: integer
       format: int32
+      description: Team number of the robot being scouted
       example: 111
     username:
       type: string
@@ -319,6 +334,7 @@ components:
       type: string
       minLength: 1
       maxLength: 32
+      description: Name of the user that created this record
       example: Garrett Gears
     allianceColor:
       type: string
@@ -327,6 +343,7 @@ components:
       example: red
     role:
       type: string
+      description: Authorization level of the user
       enum: [
         'UNVERIFIED_MEMBER',
         'VERIFIED_MEMBER',

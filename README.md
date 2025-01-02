@@ -9,13 +9,13 @@ The frontend is divided into four applications based on user roles. Each applica
 installed as a PWA, and are written with React + TypeScript.
 
 ## Table of Contents
-* [Design Intention](#Design Intention)
+* [Design](#Design)
 * [Frontends](#Frontends)
 * [Backend](#Backend)
 * [Deployment](#Deployment)
 
 
-## Design Intention
+## Design
 The intention of GearScout is to design a scouting system that needs minimal
 (or zero) changes between game years. We accomplish this by keeping all interfaces
 fairly generalized - take a look at the [API documentation](gearscout-api.yaml).
@@ -48,7 +48,7 @@ Hosted at https://data.gearitforward.com
 [Website](https://pit.gearitforward.com)\
 Pit scouting app (of course). Users perform 'inspections' by answering questions on a form.
 
-<img src="https://pit.gearitforward.com/Screenshot_GSP.png" alt="" role="presentation"/>
+<img src="https://pit.gearitforward.com/Screenshot_GSP.png" alt="" role="presentation" height="512"/>
 
 ### Collection
 [GitHub](https://github.com/Team2338/GearScout2024) | [Website](https://gearitforward.com)\
@@ -58,7 +58,7 @@ Quantitative scouting app. Users record 'objectives' scored in a match.
 ### QualScout
 [GitHub](https://github.com/Team2338/QualScout) |
 [Website](https://qual.gearitforward.com)\
-A qualitative scouting app - users make 'comments' about a robot's match performance.
+A qualitative scouting app. Users make 'comments' about a robot's match performance.
 
 ## Backend
 [API documentation](gearscout-api.yaml)

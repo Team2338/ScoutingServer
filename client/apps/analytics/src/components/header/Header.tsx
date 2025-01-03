@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Language, LanguageDescriptor, LanguageInfo, Statelet } from '../../models';
+import { Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
@@ -28,6 +28,9 @@ import {
 import {
 	IEventInfo,
 	IUserInfo,
+	Language,
+	LanguageDescriptor,
+	LanguageInfo,
 	LoadStatus,
 	UserRole
 } from '@gearscout/models';

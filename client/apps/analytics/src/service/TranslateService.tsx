@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppState, ILanguageTranslation, Language } from '../models';
+import { AppState, ILanguageTranslation } from '../models';
 import { useAppSelector } from '../state';
+import { Language } from '@gearscout/models';
 
 const translateKey = (language: string, key: string): string => {
 	const mapping = languages[language];

@@ -3,8 +3,6 @@ import {
 	CommentsForEvent,
 	Inspection,
 	ImageInfo,
-	Language,
-	LanguageInfo,
 	Match,
 	MatchResponse,
 	Team,
@@ -60,7 +58,9 @@ import { AppDispatch } from './Store';
 import {
 	IEventInfo,
 	ITokenModel,
-	IUserInfo
+	IUserInfo,
+	Language,
+	LanguageInfo
 } from '@gearscout/models';
 
 type GetState = () => AppState;

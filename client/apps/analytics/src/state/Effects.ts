@@ -57,7 +57,6 @@ import {
 	showInspectionColumnStart
 } from './Actions';
 import { AppDispatch } from './Store';
-import GearscoutService from '../service/GearscoutService';
 import {
 	IEventInfo,
 	ITokenModel,
@@ -197,7 +196,7 @@ export const loginAsMember = (
 	dispatch(loginAsMemberStart());
 
 	try {
-		const response = await GearscoutService.login(email, password);
+		const response = await gearscoutService.login(email, password);
 		const user: IUserInfo = response.data.user;
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = authEngine.createTokenModel(tokenString);
@@ -223,7 +222,7 @@ export const createUser = (data: {
 	dispatch(createUserStart());
 
 	try {
-		const response = await GearscoutService.createUser(data);
+		const response = await gearscoutService.createUser(data);
 		const user: IUserInfo = response.data.user;
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = authEngine.createTokenModel(tokenString);

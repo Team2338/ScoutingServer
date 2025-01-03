@@ -1,4 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, {
+	Fragment,
+	useEffect,
+	useState
+} from 'react';
 import './InspectionForm.scss';
 import {
 	CLIMBING_CAPABILITIES,
@@ -27,8 +31,16 @@ import {
 	Select,
 	TextField
 } from '@mui/material';
-import { AppDispatch, uploadForm, useAppDispatch, useAppSelector } from '../../../state';
-import { DrivetrainIcon, MotorIcon } from '../../../icons';
+import {
+	AppDispatch,
+	uploadForm,
+	useAppDispatch,
+	useAppSelector
+} from '../../../state';
+import {
+	DrivetrainIcon,
+	MotorIcon
+} from '../../../icons';
 import { LoadStatus } from '@gearscout/models';
 
 
@@ -119,7 +131,7 @@ export default function InspectionForm(props: IProps) {
 	const scoreLocationCheckboxElements = SCORE_LOCATIONS.map((location: string) => (
 		<FormControlLabel
 			key={ location }
-			control={ <Checkbox/> }
+			control={ <Checkbox /> }
 			label={ location }
 			checked={ scoreLocations.includes(location) }
 			onChange={ (event) => handleScoreLocationChange(event, location) }
@@ -141,7 +153,7 @@ export default function InspectionForm(props: IProps) {
 	const intakeLocationCheckboxElements = INTAKE_LOCATIONS.map((location: string) => (
 		<FormControlLabel
 			key={ location }
-			control={ <Checkbox/> }
+			control={ <Checkbox /> }
 			label={ location }
 			checked={ intakeLocations.includes(location) }
 			onChange={ (event) => handleIntakeLocationChange(event, location) }
@@ -163,7 +175,7 @@ export default function InspectionForm(props: IProps) {
 	const shootingLocationCheckboxElements = SHOOTING_LOCATIONS.map((location: string) => (
 		<FormControlLabel
 			key={ location }
-			control={ <Checkbox/> }
+			control={ <Checkbox /> }
 			label={ location }
 			checked={ shootingLocations.includes(location) }
 			onChange={ (event) => handleShootingLocationChange(event, location) }
@@ -185,7 +197,7 @@ export default function InspectionForm(props: IProps) {
 	const climbCapabilityCheckboxElements = CLIMBING_CAPABILITIES.map((capability: string) => (
 		<FormControlLabel
 			key={ capability }
-			control={ <Checkbox/> }
+			control={ <Checkbox /> }
 			label={ capability }
 			checked={ climbCapabilities.includes(capability) }
 			onChange={ (event) => handleClimbCapabilityChange(event, capability) }
@@ -234,7 +246,7 @@ export default function InspectionForm(props: IProps) {
 						value={ driveMotorType }
 						label="Drive motor type"
 						onChange={ (event) => setDriveMotorType(event.target.value) }
-						startAdornment={ <MotorIcon className="selector-adornment"/> }
+						startAdornment={ <MotorIcon className="selector-adornment" /> }
 					>
 						{ driveMotorOptionElements }
 					</Select>
@@ -248,7 +260,7 @@ export default function InspectionForm(props: IProps) {
 					variant="outlined"
 					value={ weight }
 					onChange={ event => setWeight(event.target.value) }
-					slotProps={{
+					slotProps={ {
 						input: {
 							startAdornment: <InputAdornment position="start"><Icon>scale</Icon></InputAdornment>,
 							endAdornment: <InputAdornment position="end">lbs</InputAdornment>
@@ -257,7 +269,7 @@ export default function InspectionForm(props: IProps) {
 							min: 0,
 							max: 9999
 						}
-					}}
+					} }
 					autoComplete="off"
 				/>
 				<FormControl margin="normal">
@@ -293,14 +305,14 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Describe auto paths"
 					value={ autoPaths }
-					slotProps={{
+					slotProps={ {
 						input: {
 							startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
 						},
 						htmlInput: {
 							maxLength: 1024
 						}
-					}}
+					} }
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
 				<TextField
@@ -311,14 +323,14 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Vision capabilities"
 					value={ visionCapabilities }
-					slotProps={{
+					slotProps={ {
 						input: {
 							startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
 						},
 						htmlInput: {
 							maxLength: 1024
 						}
-					}}
+					} }
 					onChange={ (event) => setVisionCapabilities(event.target.value) }
 				/>
 				<div className="checkbox-group score-locations-wrapper">
@@ -343,7 +355,8 @@ export default function InspectionForm(props: IProps) {
 					</FormGroup>
 				</div>
 				<div
-					className="checkbox-group climb-capabilities-wrapper">
+					className="checkbox-group climb-capabilities-wrapper"
+				>
 					<FormGroup>
 						<div className="checkbox-row">
 							{ climbCapabilityCheckboxElements }
@@ -358,14 +371,15 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Notes on robot"
 					value={ robotNotes }
-					slotProps={{
+					slotProps={ {
 						input: {
-							startAdornment: <InputAdornment position="start"><Icon>note_alt</Icon></InputAdornment>
+							startAdornment:
+								<InputAdornment position="start"><Icon>note_alt</Icon></InputAdornment>
 						},
 						htmlInput: {
 							maxLength: 1024
 						}
-					}}
+					} }
 					onChange={ (event) => setRobotNotes(event.target.value) }
 				/>
 				<Button

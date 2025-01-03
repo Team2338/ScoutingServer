@@ -1,7 +1,19 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
+import {
+	loadForms,
+	selectForm,
+	useAppDispatch,
+	useAppSelector
+} from '../../state';
 import { Statelet } from '../../models';
-import { Button, Dialog, DialogContent, Icon, IconButton, Slide } from '@mui/material';
+import {
+	Button,
+	Dialog,
+	DialogContent,
+	Icon,
+	IconButton,
+	Slide
+} from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
 import InspectionForm from './inspection-form/InspectionForm';

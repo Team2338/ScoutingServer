@@ -1,11 +1,15 @@
 import nx from '@nx/eslint-plugin';
+import importPlugin from 'eslint-plugin-import';
 
 export default [
 	...nx.configs['flat/base'],
 	...nx.configs['flat/typescript'],
 	...nx.configs['flat/javascript'],
 	{
-		ignores: ['**/dist']
+		ignores: ['**/dist'],
+		plugins: {
+			'import': importPlugin,
+		},
 	},
 	{
 		files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -28,6 +32,30 @@ export default [
 	{
 		files: [
 			'**/*.ts',
+			'**/*.tsx'
+		],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname
+			},
+		},
+		rules: {
+			'@typescript-eslint/consistent-type-exports': [
+				'off', // TODO: set this to error when fixed
+			],
+			'@typescript-eslint/consistent-type-imports': [
+				'warn',  // TODO: set this to error when fixed
+				{
+					fixStyle: 'inline-type-imports',
+					prefer: 'no-type-imports'
+				}
+			]
+		}
+	},
+	{
+		files: [
+			'**/*.ts',
 			'**/*.tsx',
 			'**/*.js',
 			'**/*.jsx',
@@ -42,6 +70,8 @@ export default [
 			quotes: ['error', 'single'],
 			semi: ['error', 'always'],
 			'no-case-declarations': ['warn'],
+
+			'import/no-duplicates': ['warn', { 'prefer-inline': true }],
 
 			/* TypeScript rules */
 			'@typescript-eslint/array-type': [
@@ -64,22 +94,6 @@ export default [
 			'@typescript-eslint/no-unused-vars': 'warn',
 			'no-array-constructor': 'off', // Disable base rule - let TS plugin handle it
 			'@typescript-eslint/no-array-constructor': 'error'
-		}
-	},
-	{
-		files: [
-			'**/*.ts',
-			'**/*.tsx'
-		],
-		languageOptions: {
-			parserOptions: {
-				projectService: true,
-				tsconfigRootDir: import.meta.dirname
-			},
-		},
-		rules: {
-			'@typescript-eslint/consistent-type-exports': 'warn', // TODO: set this to error when fixed
-			'@typescript-eslint/consistent-type-imports': 'warn', // TODO: set this to error when fixed
 		}
 	}
 ];

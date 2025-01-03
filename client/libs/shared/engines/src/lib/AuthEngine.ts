@@ -1,4 +1,10 @@
-import { ITokenHeaderResponse, ITokenModel, ITokenPayloadResponse, ITokenResponse, UserRole } from '@gearscout/models';
+import {
+	ITokenHeaderResponse,
+	ITokenModel,
+	ITokenPayloadResponse,
+	ITokenResponse,
+	UserRole
+} from '@gearscout/models';
 
 class AuthEngine {
 
@@ -16,7 +22,7 @@ class AuthEngine {
 
 		return {
 			header: header,
-			payload: payload,
+			payload: payload
 		};
 	};
 

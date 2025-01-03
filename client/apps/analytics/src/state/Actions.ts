@@ -3,7 +3,6 @@ import {
 	Inspection,
 	GlobalObjectiveStats,
 	ImageInfo,
-	Language,
 	Match,
 	MatchResponse,
 	Team
@@ -11,7 +10,8 @@ import {
 import {
 	IEventInfo,
 	ITokenModel,
-	IUserInfo
+	IUserInfo,
+	Language
 } from '@gearscout/models';
 
 export interface Action {

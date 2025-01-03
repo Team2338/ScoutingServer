@@ -1,5 +1,4 @@
 import React from 'react';
-import { Language } from './languages.model';
 import {
 	GlobalObjectiveStats,
 	Match,
@@ -13,6 +12,7 @@ import {
 	IEventInfo,
 	ITokenModel,
 	IUserInfo,
+	Language,
 	LoadStatus,
 	UserRole
 } from '@gearscout/models';

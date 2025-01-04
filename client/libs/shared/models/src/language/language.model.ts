@@ -5,7 +5,6 @@ export enum Language {
 	FRENCH = 'french',
 	TURKISH = 'turkish',
 	CZECH = 'czech'
-	// HINDI = 'hindi'
 }
 
 export interface LanguageDescriptor {

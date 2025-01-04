@@ -17,6 +17,7 @@ interface IProps {
 	eventLoadStatus: LoadStatus;
 	handleEventSelected: (event: IEventInfo) => void;
 	handleRetry: () => void;
+	translate: (key: string) => string;
 }
 
 interface IGroupedEvents {
@@ -66,9 +67,9 @@ const ActualList = (props: IProps) => {
 						<li key={ index } className={ styles.eventListItem }>
 							<button onClick={ () => props.handleEventSelected(event) }>
 								<span className={ styles.eventCodeLabel }>{ event.eventCode }</span>
-								<span className={ styles.inspectionCount }>{ event.inspectionCount ?? 0 } Inspections</span>
+								<span className={ styles.inspectionCount }>{ event.inspectionCount ?? 0 } { props.translate('INSPECTIONS') }</span>
 								<span className={ styles.secretCodeLabel }>{ event.secretCode }</span>
-								<span className={ styles.matchCount }>{ event.matchCount ?? 0 } Matches</span>
+								<span className={ styles.matchCount }>{ event.matchCount ?? 0 } { props.translate('MATCHES') }</span>
 							</button>
 						</li>
 					))
@@ -79,10 +80,17 @@ const ActualList = (props: IProps) => {
 };
 
 const FailedList = (props: IProps) => (
-	<Fragment>
-		<div>Failed to load events</div>
-		<Button onClick={ props.handleRetry }>Retry</Button>
-	</Fragment>
+	<div className={ styles.errorContainer }>
+		<div>{ props.translate('FAILED_TO_LOAD_EVENTS') }</div>
+		<Button
+			onClick={ props.handleRetry }
+			color="error"
+			variant="contained"
+			disableElevation={ true }
+		>
+			{ props.translate('RETRY') }
+		</Button>
+	</div>
 );
 
 const groupEventsByYear = (events: IEventInfo[]): IGroupedEvents => {

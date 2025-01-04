@@ -5,6 +5,7 @@ import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
 import { EventSelectorList } from '@gearscout/components';
+import { useTranslator } from '../../services/TranslateService';
 
 const inputProps = {
 	htmlInput: {
@@ -15,6 +16,7 @@ const inputProps = {
 };
 
 export default function EventPage() {
+	const translate = useTranslator();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
@@ -93,6 +95,7 @@ export default function EventPage() {
 					eventLoadStatus={ eventLoadStatus }
 					handleEventSelected={ _selectEvent }
 					handleRetry={ _getEvents }
+					translate={ translate }
 				/>
 			</section>
 		</main>

@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, {
+	Fragment,
+	useEffect
+} from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
 import EventSelectorForm from './event-selector-form/EventSelectorForm';
-import EventSelectorList from './event-selector-list/EventSelectorList';
+import { EventSelectorList } from '@gearscout/components';
 import {
 	IEventInfo,
 	LoadStatus,
@@ -25,54 +28,40 @@ export default function EventPage() {
 		navigate('/matches');
 	};
 
+	const _loadEvents = () => {
+		dispatch(getEvents());
+	};
+
 	useEffect(
 		() => {
 			if (userRole === UserRole.admin || userRole === UserRole.superAdmin) {
-				dispatch(getEvents())
-					.catch((reason) => {
-						// TODO: proper error handling; maybe fall back to manual event entry
-						alert('Failed to get the list of events!\n');
-						console.error('Failed to get the list of events', reason);
-					});
+				dispatch(getEvents());
 			}
 		},
 		[dispatch, userRole]
 	);
 
-	if (userRole !== UserRole.admin && userRole !== UserRole.superAdmin) {
-		return (
-			<main className="page event-page">
-				<div className="event-list-wrapper">
-					<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
-					<EventSelectorForm selectEvent={ _selectEvent } />
-				</div>
-			</main>
-		);
-	}
-
-	if (eventLoadStatus === LoadStatus.none || eventLoadStatus === LoadStatus.loading) {
-		return (
-			<main className="page event-page">
-				{ translate('LOADING') }
-			</main>
-		);
-	}
-
-	if (eventLoadStatus === LoadStatus.failed) {
-		// TODO: Should default to manual event entry
-		return (
-			<main className="page event-page event-page-failed">
-				<DataFailure messageKey="FAILED_TO_LOAD_EVENTS" />
-			</main>
-		);
-	}
-
 	return (
 		<main className="page event-page">
 			<div className="event-list-wrapper">
 				<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
-				<EventSelectorList events={ events } selectEvent={ _selectEvent } />
+				<EventSelectorForm selectEvent={ _selectEvent } />
 			</div>
+			{ (userRole === UserRole.admin || userRole === UserRole.superAdmin) &&
+				<Fragment>
+					<div className="event-section-separator">&minus; or &minus;</div>
+					<div className="event-list-wrapper">
+						<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
+						<EventSelectorList
+							events={ events }
+							eventLoadStatus={ eventLoadStatus }
+							handleEventSelected={ _selectEvent }
+							handleRetry={ _loadEvents }
+							translate={ translate }
+						/>
+					</div>
+				</Fragment>
+			}
 		</main>
 	);
 }

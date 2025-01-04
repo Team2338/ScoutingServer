@@ -63,8 +63,11 @@ const ActualList = (props: IProps) => {
 			<h3 className={ styles.year }>{ year }</h3>
 			<ol className={ styles.eventList }>
 				{
-					groupedEvents[year].map((event: IEventInfo, index: number) => (
-						<li key={ index } className={ styles.eventListItem }>
+					groupedEvents[year].map((event: IEventInfo) => (
+						<li
+							key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode }
+							className={ styles.eventListItem }
+						>
 							<button onClick={ () => props.handleEventSelected(event) }>
 								<span className={ styles.eventCodeLabel }>{ event.eventCode }</span>
 								<span className={ styles.inspectionCount }>{ event.inspectionCount ?? 0 } { props.translate('INSPECTIONS') }</span>

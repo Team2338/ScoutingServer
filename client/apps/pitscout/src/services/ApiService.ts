@@ -1,6 +1,13 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+	AxiosRequestConfig,
+	AxiosResponse
+} from 'axios';
 import { ICreateInspectionRequest } from '../models';
-import { IEventInfo, IInspectionQuestionResponse, ILoginResponse } from '@gearscout/models';
+import {
+	IEventInfo,
+	IInspectionQuestionResponse,
+	ILoginResponse
+} from '@gearscout/models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 
@@ -24,7 +31,7 @@ class ApiService {
 		const url = '/v1/events';
 		const config: AxiosRequestConfig = {
 			headers: {
-				Authorization: `Bearer ${tokenString}`
+				Authorization: `Bearer ${ tokenString }`
 			}
 		};
 
@@ -39,12 +46,12 @@ class ApiService {
 		image: Blob;
 	}): GearscoutResponse<null> => {
 		const { event } = data;
-		const url = `/v1/images/team/${event.teamNumber}/gameYear/${event.gameYear}/event/${event.eventCode}/robot/${data.robotNumber}`;
+		const url = `/v1/images/team/${ event.teamNumber }/gameYear/${ event.gameYear }/event/${ event.eventCode }/robot/${ data.robotNumber }`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: event.secretCode,
 				timeCreated: Date.now(),
-				Authorization: `Bearer ${data.tokenString}`
+				Authorization: `Bearer ${ data.tokenString }`
 			}
 		};
 
@@ -68,7 +75,7 @@ class ApiService {
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: data.event.secretCode,
-				Authorization: `Bearer ${data.tokenString}`
+				Authorization: `Bearer ${ data.tokenString }`
 			}
 		};
 
@@ -81,11 +88,11 @@ class ApiService {
 		tokenString: string;
 	}): GearscoutResponse<IInspectionQuestionResponse[]> => {
 		const { event } = data;
-		const url: string = `/v1/detailnotes/team/${event.teamNumber}/gameYear/${event.gameYear}/event/${event.eventCode}`;
+		const url: string = `/v1/detailnotes/team/${ event.teamNumber }/gameYear/${ event.gameYear }/event/${ event.eventCode }`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: event.secretCode,
-				Authorization: `Bearer ${data.tokenString}`
+				Authorization: `Bearer ${ data.tokenString }`
 			}
 		};
 

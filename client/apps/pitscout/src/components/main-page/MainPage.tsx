@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './MainPage.scss';
-import { closeSnackbar, loadForms, selectForm, useAppDispatch, useAppSelector } from '../../state';
+import {
+	closeSnackbar,
+	loadForms,
+	selectForm,
+	useAppDispatch,
+	useAppSelector
+} from '../../state';
 import InspectionForm from './inspection-form/InspectionForm';
 import {
 	Alert,

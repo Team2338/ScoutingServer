@@ -5,8 +5,8 @@ import {
 	IForm,
 	IPitState,
 	LoginErrors,
-	type TGameYear,
-	UploadErrors
+	UploadErrors,
+	TGameYear
 } from '../../models';
 import {
 	IEventInfo,

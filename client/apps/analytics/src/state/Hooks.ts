@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import type { TypedUseSelectorHook } from 'react-redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { TypedUseSelectorHook , useDispatch, useSelector } from 'react-redux';
 import { AppState, LoginStatus } from '../models';
 import { getAllData } from './Effects';
-import type { AppDispatch } from './Store';
+import { AppDispatch } from './Store';
 import { LoadStatus } from '@gearscout/models';
 
 export const useAppDispatch: () => AppDispatch = useDispatch;

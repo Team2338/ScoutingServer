@@ -1,10 +1,11 @@
 import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
-import { Button, Skeleton, TextField } from '@mui/material';
-import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
+import { Button, TextField } from '@mui/material';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
-import { type TGameYear } from '../../models';
+import { EventSelectorList } from '@gearscout/components';
+import { useTranslator } from '../../services/TranslateService';
 
 const inputProps = {
 	htmlInput: {
@@ -15,13 +16,12 @@ const inputProps = {
 };
 
 export default function EventPage() {
+	const translate = useTranslator();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
-	const eventsByYear: Record<TGameYear, IEventInfo[]> = useAppSelector(state => state.events.byYear);
-	const gameYears: TGameYear[] = useAppSelector(state => state.events.years);
 
 	const [eventCode, setEventCode] = useState<string>('');
 	const [secretCode, setSecretCode] = useState<string>('');
@@ -49,65 +49,6 @@ export default function EventPage() {
 		[dispatch]
 	);
 
-
-	const loadingList = () => {
-		return (
-			<ol className="event-list">
-				{ new Array(8).fill(0).map((_, index: number) => (
-					<li key={index} className="event-list-item">
-						<Skeleton
-							variant="rounded"
-							width={ '100%' }
-							height={ 56 }
-						/>
-					</li>
-				))
-				}
-			</ol>
-		);
-	};
-
-	const actualEventList = () => gameYears.map(year => (
-		<Fragment key={year}>
-			<h3 className="event-list-header">{ year }</h3>
-			<ol className="event-list">
-				{
-					eventsByYear[year].map((event: IEventInfo, index: number) => (
-						<li key={ index } className="event-list-item">
-							<button onClick={ () => _selectEvent(event) }>
-								<span className="event-code-label">{ event.eventCode }</span>
-								<span className="inspection-count">{ event.inspectionCount ?? 0 } Inspections</span>
-								<span className="secret-code-label">{ event.secretCode }</span>
-								<span className="match-count">{ event.matchCount ?? 0 } Matches</span>
-							</button>
-						</li>
-					))
-				}
-			</ol>
-		</Fragment>
-	));
-
-	const failedList = () => {
-		return (
-			<Fragment>
-				<div>Failed to load events</div>
-				<Button onClick={_getEvents}>Retry</Button>
-			</Fragment>
-		);
-	};
-
-	const EventList = () => {
-		switch (eventLoadStatus) {
-			case LoadStatus.loadingWithPriorSuccess: // Fallthrough
-			case LoadStatus.failedWithPriorSuccess: // Fallthrough
-			case LoadStatus.success:
-				return actualEventList();
-			case LoadStatus.failed:
-				return failedList();
-			default:
-				return loadingList();
-		}
-	};
 
 	return (
 		<main className="page event-page">
@@ -149,7 +90,13 @@ export default function EventPage() {
 			<div className="event-section-separator">&minus; or &minus;</div>
 			<section className="event-list-section">
 				<h2 className="event-section-header">Choose existing event</h2>
-				<EventList />
+				<EventSelectorList
+					events={ events }
+					eventLoadStatus={ eventLoadStatus }
+					handleEventSelected={ _selectEvent }
+					handleRetry={ _getEvents }
+					translate={ translate }
+				/>
 			</section>
 		</main>
 	);

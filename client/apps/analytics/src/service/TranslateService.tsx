@@ -1,6 +1,10 @@
 import React from 'react';
-import { AppState, ILanguageTranslation, Language } from '../models';
+import { AppState } from '../models';
 import { useAppSelector } from '../state';
+import {
+	ILanguageTranslation,
+	Language
+} from '@gearscout/models';
 
 const translateKey = (language: string, key: string): string => {
 	const mapping = languages[language];
@@ -144,7 +148,8 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'Email',
 		'PASSWORD': 'Password',
 		'EVENTS': 'Events',
-		'SWITCH_EVENTS': 'Switch events'
+		'SWITCH_EVENTS': 'Switch events',
+		'RETRY': 'Retry'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -261,7 +266,8 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'Correo electrónico',
 		'PASSWORD': 'Contraseña',
 		'EVENTS': 'Eventos',
-		'SWITCH_EVENTS': 'Cambiar el evento'
+		'SWITCH_EVENTS': 'Cambiar el evento',
+		'RETRY': 'Rever'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -378,7 +384,8 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'E-mail',
 		'PASSWORD': 'Mot de passe',
 		'EVENTS': 'Événements',
-		'SWITCH_EVENTS': 'Changer l\'événement'
+		'SWITCH_EVENTS': 'Changer l\'événement',
+		'RETRY': 'Réessayer'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -495,7 +502,8 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'E-posta',
 		'PASSWORD': 'Şifre',
 		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
-		'SWITCH_EVENTS': 'Etkinliği değiştir'
+		'SWITCH_EVENTS': 'Etkinliği değiştir',
+		'RETRY': 'Tekrar dene'
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -611,6 +619,7 @@ const languages: ILanguageTranslation = {
 		'EMAIL': 'E-mailem', // TODO verify
 		'PASSWORD': 'Heslo', // TODO verify
 		'EVENTS': 'Události', // TODO verify
-		'SWITCH_EVENTS': 'Přepněte událost' // TODO: verify
+		'SWITCH_EVENTS': 'Přepněte událost', // TODO: verify
+		'RETRY': 'Zkuste to znovu'
 	}
 };

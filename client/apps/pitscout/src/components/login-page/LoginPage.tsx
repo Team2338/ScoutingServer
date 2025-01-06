@@ -2,7 +2,7 @@ import { login, useAppDispatch, useAppSelector } from '../../state';
 import React, { useState } from 'react';
 import { Alert, Button, Snackbar, TextField, Typography } from '@mui/material';
 import './LoginPage.scss';
-import { clearLoginError } from '../../state-refactor';
+import { clearLoginError } from '@gearscout/state';
 
 export default function LoginPage() {
 	const dispatch = useAppDispatch();

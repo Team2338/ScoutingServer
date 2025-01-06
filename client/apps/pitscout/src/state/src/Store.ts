@@ -12,7 +12,10 @@ import {
 	LoadStatus,
 	LoginStatus
 } from '@gearscout/models';
-import { loginSlice } from '../../state-refactor';
+import {
+	loginSlice,
+	logoutSuccess
+} from '@gearscout/state';
 
 
 export const getEventsStart = createAction('event/get-events-start');
@@ -75,6 +78,9 @@ const initialState: IPitState = {
 
 const oldReducer = createReducer(initialState, builder => {
 	builder
+		.addCase(logoutSuccess, () => {
+			return initialState;
+		})
 		.addCase(getEventsStart, (state: IPitState) => {
 			state.events.loadStatus = getNextStatusOnLoad(state.events.loadStatus);
 		})

@@ -1,12 +1,10 @@
 import {
+	ILoginState,
 	ITokenModel,
 	IUserInfo,
+	LoginErrors,
 	LoginStatus
 } from '@gearscout/models';
-import {
-	ILoginState,
-	LoginErrors
-} from '../../models';
 import {
 	createAction,
 	createReducer
@@ -48,10 +46,8 @@ export const loginSlice = createReducer(initialState, builder => {
 			state.loginStatus = LoginStatus.logInFailed;
 			state.error = action.payload;
 		})
-		.addCase(logoutSuccess, (state: ILoginState) => {
-			for (const key in Object.keys(initialState)) {
-				state[key] = initialState[key];
-			}
+		.addCase(logoutSuccess, () => {
+			return initialState;
 		})
 		.addCase(clearLoginError, (state: ILoginState) => {
 			state.error = null;

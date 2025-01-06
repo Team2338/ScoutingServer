@@ -5,7 +5,6 @@ import {
 	IForm,
 	IFormQuestions,
 	IPitState,
-	LoginErrors,
 	UploadErrors,
 } from '../../models';
 import ApiService from '../../services/ApiService';
@@ -30,6 +29,7 @@ import {
 	IEventInfo,
 	ITokenModel,
 	IUserInfo,
+	LoginErrors,
 	UserRole
 } from '@gearscout/models';
 import { authEngine } from '@gearscout/engines';
@@ -38,7 +38,7 @@ import {
 	loginStart,
 	loginSuccess,
 	logoutSuccess
-} from '../../state-refactor';
+} from '@gearscout/state';
 
 type GetState = () => IPitState;
 

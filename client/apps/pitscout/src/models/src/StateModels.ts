@@ -2,32 +2,19 @@ import React from 'react';
 import { IForm } from './UiModels';
 import {
 	IEventInfo,
-	ITokenModel,
-	IUserInfo,
-	LoadStatus,
-	LoginStatus,
-	UserRole
+	ILoginState,
+	LoadStatus
 } from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export type TGameYear = number;
 export interface IPitState {
-	// loginv2: ILoginState;
 	login: ILoginState;
 	events: IEventState;
 	upload: IImageUploadState;
 	forms: IFormsState;
 	snackbar: ISnackbarState;
-}
-
-export interface ILoginState {
-	loginStatus: LoginStatus;
-	error: string;
-	role: UserRole;
-	token: ITokenModel;
-	tokenString: string;
-	user: IUserInfo;
 }
 
 export interface IImageUploadState {

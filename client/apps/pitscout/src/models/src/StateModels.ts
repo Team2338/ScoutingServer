@@ -13,35 +13,42 @@ export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export type TGameYear = number;
 export interface IPitState {
-	loginv2: ILoginState;
+	// loginv2: ILoginState;
+	login: ILoginState;
 	events: IEventState;
-	upload: {
-		loadStatus: LoadStatus;
-		error: string;
-	};
-	forms: {
-		loadStatus: LoadStatus;
-		error: string;
-		selected: number;
-		robots: number[];
-		data: {
-			[robotNumber: number]: IForm
-		}
-	};
-	snackbar: {
-		message: string;
-		severity: 'error' | 'warning' | 'info' | 'success';
-		isOpen: boolean;
-	};
+	upload: IImageUploadState;
+	forms: IFormsState;
+	snackbar: ISnackbarState;
 }
 
-interface ILoginState {
+export interface ILoginState {
 	loginStatus: LoginStatus;
 	error: string;
 	role: UserRole;
 	token: ITokenModel;
 	tokenString: string;
 	user: IUserInfo;
+}
+
+export interface IImageUploadState {
+	loadStatus: LoadStatus;
+	error: string;
+}
+
+export interface IFormsState {
+	loadStatus: LoadStatus;
+	error: string;
+	selected: number;
+	robots: number[];
+	data: {
+		[robotNumber: number]: IForm
+	}
+}
+
+export interface ISnackbarState {
+	message: string;
+	severity: 'error' | 'warning' | 'info' | 'success';
+	isOpen: boolean;
 }
 
 interface IEventState {

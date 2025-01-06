@@ -24,7 +24,7 @@ import { ProfileCard } from '@gearscout/components';
 export default function Header() {
 	const dispatch = useAppDispatch();
 	const isLoggedIn: boolean = useAppSelector(selectIsLoggedIn);
-	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
+	const user: IUserInfo = useAppSelector(state => state.login.user);
 	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 
 	const [accountAnchor, setAccountAnchor] = useState(null);

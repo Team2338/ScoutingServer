@@ -1,13 +1,14 @@
-import { clearLoginError, login, useAppDispatch, useAppSelector } from '../../state';
+import { login, useAppDispatch, useAppSelector } from '../../state';
 import React, { useState } from 'react';
 import { Alert, Button, Snackbar, TextField, Typography } from '@mui/material';
 import './LoginPage.scss';
+import { clearLoginError } from '../../state-refactor';
 
 export default function LoginPage() {
 	const dispatch = useAppDispatch();
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const errorMessage: string = useAppSelector(state => state.loginv2.error);
+	const errorMessage: string = useAppSelector(state => state.login.error);
 
 	const isValid: boolean = Boolean(email && password);
 

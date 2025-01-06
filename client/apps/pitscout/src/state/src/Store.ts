@@ -4,27 +4,16 @@ import {
 	FormErrors,
 	IForm,
 	IPitState,
-	LoginErrors,
 	UploadErrors,
 	TGameYear
 } from '../../models';
 import {
 	IEventInfo,
-	ITokenModel,
-	IUserInfo,
 	LoadStatus,
 	LoginStatus
 } from '@gearscout/models';
+import { loginSlice } from '../../state-refactor';
 
-export const loginStart = createAction('loginV2/login-start');
-export const loginSuccess = createAction<{
-	user: IUserInfo,
-	token: ITokenModel,
-	tokenString: string
-}>('loginV2/login-success');
-export const loginFailed = createAction<LoginErrors>('login/login-failed');
-export const logoutSuccess = createAction('login/logout-success');
-export const clearLoginError = createAction('login/clear-error');
 
 export const getEventsStart = createAction('event/get-events-start');
 export const getEventsSuccess = createAction<IEventInfo[]>('event/get-events-success');
@@ -50,7 +39,7 @@ export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 export const closeSnackbar = createAction('snackbar/clear');
 
 const initialState: IPitState = {
-	loginv2: {
+	login: {
 		loginStatus: LoginStatus.none,
 		error: null,
 		role: null,
@@ -86,31 +75,6 @@ const initialState: IPitState = {
 
 const reducer = createReducer(initialState, builder => {
 	builder
-		.addCase(loginStart, (state: IPitState) => {
-			state.loginv2.loginStatus = LoginStatus.loggingIn;
-			state.loginv2.error = null;
-		})
-		.addCase(loginSuccess, (state: IPitState, action) => {
-			state.loginv2.loginStatus = LoginStatus.loggedIn;
-			state.loginv2.user = action.payload.user;
-			state.loginv2.token = action.payload.token;
-			state.loginv2.tokenString = action.payload.tokenString;
-		})
-		.addCase(loginFailed, (state: IPitState, action) => {
-			state.loginv2.loginStatus = LoginStatus.logInFailed;
-			state.loginv2.error = action.payload;
-			showSnackbar(state, 'error', action.payload);
-		})
-		.addCase(logoutSuccess, (state: IPitState) => {
-			state.loginv2 = initialState.loginv2;
-			state.events = initialState.events;
-			state.upload = initialState.upload;
-			state.forms = initialState.forms;
-			state.snackbar = initialState.snackbar;
-		})
-		.addCase(clearLoginError, (state: IPitState) => {
-			state.loginv2.error = null;
-		})
 		.addCase(getEventsStart, (state: IPitState) => {
 			state.events.loadStatus = getNextStatusOnLoad(state.events.loadStatus);
 		})
@@ -213,8 +177,15 @@ const reducer = createReducer(initialState, builder => {
 	;
 });
 
+const r = (state = initialState, action) => {
+	return {
+		...(reducer(state, action)),
+		login: loginSlice(state.login, action)
+	};
+};
+
 export const store = configureStore({
-	reducer: reducer
+	reducer: r
 });
 
 const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {
@@ -247,4 +218,4 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<IPitState> = useSelector;
 
-export const selectIsLoggedIn = (state: IPitState): boolean => state.loginv2.loginStatus === LoginStatus.loggedIn;
+export const selectIsLoggedIn = (state: IPitState): boolean => state.login.loginStatus === LoginStatus.loggedIn;

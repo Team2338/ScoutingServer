@@ -19,7 +19,7 @@ export default function EventPage() {
 	const translate = useTranslator();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const user: IUserInfo = useAppSelector(state => state.loginv2.user);
+	const user: IUserInfo = useAppSelector(state => state.login.user);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 

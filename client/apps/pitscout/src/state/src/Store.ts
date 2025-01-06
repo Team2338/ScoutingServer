@@ -73,7 +73,7 @@ const initialState: IPitState = {
 	}
 };
 
-const reducer = createReducer(initialState, builder => {
+const oldReducer = createReducer(initialState, builder => {
 	builder
 		.addCase(getEventsStart, (state: IPitState) => {
 			state.events.loadStatus = getNextStatusOnLoad(state.events.loadStatus);
@@ -177,15 +177,15 @@ const reducer = createReducer(initialState, builder => {
 	;
 });
 
-const r = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
 	return {
-		...(reducer(state, action)),
+		...(oldReducer(state, action)),
 		login: loginSlice(state.login, action)
 	};
 };
 
 export const store = configureStore({
-	reducer: r
+	reducer: reducer
 });
 
 const getNextStatusOnLoad = (previousStatus: LoadStatus): LoadStatus => {

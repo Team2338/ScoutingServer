@@ -21,12 +21,12 @@ const initialState: ILoginState = {
 	user: null
 };
 
-export const loginStart = createAction('loginV2/login-start');
+export const loginStart = createAction('login/login-start');
 export const loginSuccess = createAction<{
 	user: IUserInfo,
 	token: ITokenModel,
 	tokenString: string
-}>('loginV2/login-success');
+}>('login/login-success');
 export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');

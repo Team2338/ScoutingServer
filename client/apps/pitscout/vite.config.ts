@@ -23,10 +23,11 @@ export default defineConfig({
 		nxCopyAssetsPlugin(['*.md']),
 		VitePWA({
 			injectRegister: null, // Manually register the service worker
+			manifest: false,
 			strategies: 'injectManifest',
 			srcDir: 'src',
 			filename: 'service-worker.ts',
-			// outDir: '../../build',
+			includeAssets: ['logos/*.{png,ico,svg,jpg,gif,webp}']
 		})
 	],
 	// Uncomment this if you are using workers.

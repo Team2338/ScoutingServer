@@ -5,6 +5,7 @@ import App from './components/App';
 import { store } from './state';
 import './index.scss';
 import { BrowserRouter } from 'react-router-dom';
+import { register } from './ServiceWorkerRegistration';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -15,3 +16,5 @@ root.render(
 		</BrowserRouter>
 	</Provider>
 );
+
+register();

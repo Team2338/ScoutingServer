@@ -27,7 +27,7 @@ export default defineConfig({
 			strategies: 'injectManifest',
 			srcDir: 'src',
 			filename: 'service-worker.ts',
-			includeAssets: ['logos/*.{png,ico,svg,jpg,gif,webp}']
+			includeAssets: ['manifest.json', 'logos/*.{png,ico,svg,jpg,gif,webp}']
 		})
 	],
 	// Uncomment this if you are using workers.

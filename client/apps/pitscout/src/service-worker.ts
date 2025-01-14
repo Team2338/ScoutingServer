@@ -6,7 +6,7 @@ declare let self: ServiceWorkerGlobalScope;
 
 const precacheManifest = self.__WB_MANIFEST;
 console.log('precache', precacheManifest);
-const precacheUrls: string[] = precacheManifest.map((x: PrecacheEntry) => x.url);
+const precacheUrls: string[] = precacheManifest.map((x: PrecacheEntry) => '/' + x.url);
 
 const version = import.meta.env.VITE_APP_VERSION;
 const cachePrefix = 'gs-analytics';

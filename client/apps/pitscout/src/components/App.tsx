@@ -24,6 +24,7 @@ function App() {
 		return (
 			<div className="App">
 				<Header />
+				<UpdateBanner />
 				<LoginPage />
 			</div>
 		);
@@ -33,6 +34,7 @@ function App() {
 		return (
 			<div className="App">
 				<Header />
+				<UpdateBanner />
 				<EventPage />
 			</div>
 		);
@@ -41,6 +43,7 @@ function App() {
 	return (
 		<div className="App">
 			<Header />
+			<UpdateBanner />
 			<Routes>
 				<Route path="/" element={ <MainPage /> } />
 				<Route path="/events" element={ <EventPage /> } />
@@ -48,6 +51,25 @@ function App() {
 				{/*	Default: redirect to the home page */}
 				<Route path="*" element={ <Navigate to="/" />} />
 			</Routes>
+		</div>
+	);
+}
+
+function UpdateBanner() {
+	const appHasUpdateAvailable: boolean = useAppSelector(state => state.serviceWorker.updated);
+	const serviceWorker: ServiceWorker = useAppSelector(state => state.serviceWorker.sw);
+
+	return appHasUpdateAvailable && (
+		<div className="update-available-banner">
+			<span>An update is available!</span>
+			<button
+				className="update-button"
+				onClick={ () => {
+					serviceWorker.postMessage('SKIP_WAITING');
+				}}
+			>
+				Update
+			</button>
 		</div>
 	);
 }

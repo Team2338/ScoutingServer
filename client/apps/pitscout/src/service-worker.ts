@@ -12,6 +12,13 @@ const version = import.meta.env.VITE_APP_VERSION;
 const cachePrefix = 'gs-analytics';
 const cacheName = `${cachePrefix}_${version}`;
 
+const messageAllClients = (msg: string): void => {
+	self.clients.matchAll()
+		.then((clients: readonly Client[]) =>
+			clients.forEach(client => client.postMessage(msg))
+		);
+};
+
 self.addEventListener('install', (event: ExtendableEvent) => {
 	console.log(`Installing service worker ${version}...`);
 
@@ -51,4 +58,16 @@ self.addEventListener('fetch', (event: FetchEvent) => {
 	}
 
 	return;
+});
+
+self.addEventListener('message', (event: ExtendableMessageEvent) => {
+	console.log('Received message:', event);
+	if (event.data === 'SKIP_WAITING') {
+		console.log('Received update signal!');
+		self.skipWaiting()
+			.then(() => {
+				self.clients.claim()
+					.then(() => messageAllClients('UPDATED'));
+			});
+	}
 });

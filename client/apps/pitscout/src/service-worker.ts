@@ -1,15 +1,16 @@
 /// <reference lib="webworker" />
-/* eslint-disable no-restricted-globals */
 import { PrecacheEntry } from 'workbox-precaching';
 
 declare let self: ServiceWorkerGlobalScope;
 
 const precacheManifest = self.__WB_MANIFEST;
 console.log('precache', precacheManifest);
-const precacheUrls: string[] = precacheManifest.map((x: PrecacheEntry) => '/' + x.url);
+const precacheUrls: string[] = precacheManifest
+	.map((x: PrecacheEntry) => '/' + x.url)
+	.concat('/');
 
-const version = import.meta.env.VITE_APP_VERSION;
-const cachePrefix = 'gs-analytics';
+const version: string = import.meta.env.VITE_APP_VERSION;
+const cachePrefix = 'gs-pitscout';
 const cacheName = `${cachePrefix}_${version}`;
 
 const messageAllClients = (msg: string): void => {
@@ -51,9 +52,7 @@ self.addEventListener('fetch', (event: FetchEvent) => {
 	const url: URL = new URL(event.request.url);
 
 	if (precacheUrls.includes(url.pathname)) {
-		// TODO: respond with web request if cache misses
-		// A device can decide to free up the cache at any time if memory pressure is high
-		event.respondWith(caches.match(event.request));
+		event.respondWith(cacheFirstThenNetworkAndSave(event));
 		return;
 	}
 
@@ -71,3 +70,15 @@ self.addEventListener('message', (event: ExtendableMessageEvent) => {
 			});
 	}
 });
+
+const cacheFirstThenNetworkAndSave = async (event: FetchEvent): Promise<Response> => {
+	const request: Request = event.request.clone();
+	const cache: Cache = await caches.open(cacheName);
+	const cacheResponse: Response = await cache.match(event.request);
+
+	if (cacheResponse) return cacheResponse;
+
+	const networkResponse: Response = await fetch(request);
+	cache.put(request, networkResponse.clone());
+	return networkResponse;
+};

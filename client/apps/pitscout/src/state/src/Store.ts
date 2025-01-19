@@ -16,6 +16,9 @@ import {
 	LoginStatus
 } from '@gearscout/models';
 
+export const serviceWorkerInstalled = createAction<ServiceWorker>('serviceWorker/updated');
+export const serviceWorkerActivated = createAction<ServiceWorker>('serviceWorker/activated');
+
 export const loginStart = createAction('loginV2/login-start');
 export const loginSuccess = createAction<{
 	user: IUserInfo,
@@ -50,6 +53,10 @@ export const getAllFormsFailed = createAction<string>('form/get-all-failed');
 export const closeSnackbar = createAction('snackbar/clear');
 
 const initialState: IPitState = {
+	serviceWorker: {
+		updated: false,
+		sw: null
+	},
 	loginv2: {
 		loginStatus: LoginStatus.none,
 		error: null,
@@ -86,6 +93,17 @@ const initialState: IPitState = {
 
 const reducer = createReducer(initialState, builder => {
 	builder
+		.addCase(serviceWorkerInstalled, (state: IPitState, action) => {
+			state.serviceWorker.updated = true;
+			state.serviceWorker.sw = action.payload;
+		})
+		.addCase(serviceWorkerActivated, (state: IPitState, action) => {
+			state.serviceWorker.updated = false;
+			if (action.payload === state.serviceWorker.sw) {
+				console.log('Redundant!');
+			}
+			state.serviceWorker.sw = action.payload;
+		})
 		.addCase(loginStart, (state: IPitState) => {
 			state.loginv2.loginStatus = LoginStatus.loggingIn;
 			state.loginv2.error = null;

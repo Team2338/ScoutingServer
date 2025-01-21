@@ -6,7 +6,7 @@ interface IConfig {
 
 export const register = async (config?: IConfig) => {
 	window.addEventListener('load', async () => {
-		if ('serviceWorker' in navigator) {
+		if ('serviceWorker' in navigator && import.meta.env.MODE === 'production') {
 			try {
 				const registration: ServiceWorkerRegistration = await navigator.serviceWorker
 					.register('/service-worker.js', {

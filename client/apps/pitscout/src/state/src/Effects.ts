@@ -5,7 +5,6 @@ import {
 	IForm,
 	IFormQuestions,
 	IPitState,
-	LoginErrors,
 	UploadErrors,
 } from '../../models';
 import ApiService from '../../services/ApiService';
@@ -18,10 +17,6 @@ import {
 	getEventsFailed,
 	getEventsStart,
 	getEventsSuccess,
-	loginFailed,
-	loginStart,
-	loginSuccess,
-	logoutSuccess,
 	selectEventSuccess,
 	uploadFailed,
 	uploadFormFailed,
@@ -34,9 +29,16 @@ import {
 	IEventInfo,
 	ITokenModel,
 	IUserInfo,
+	LoginErrors,
 	UserRole
 } from '@gearscout/models';
 import { authEngine } from '@gearscout/engines';
+import {
+	loginFailed,
+	loginStart,
+	loginSuccess,
+	logoutSuccess
+} from '@gearscout/state';
 
 type GetState = () => IPitState;
 
@@ -116,7 +118,7 @@ export const logout = () => async (dispatch: AppDispatch) => {
 export const getEvents = () => async (dispatch: AppDispatch, getState: GetState) => {
 	dispatch(getEventsStart());
 
-	const tokenString: string = getState().loginv2.tokenString;
+	const tokenString: string = getState().login.tokenString;
 	try {
 		const response = await ApiService.getEvents(tokenString);
 		const events: IEventInfo[] = response.data;
@@ -136,7 +138,7 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 	dispatch(uploadStart());
 
 	const selectedEvent: IEventInfo = getState().events.selectedEvent;
-	const tokenString: string = getState().loginv2.tokenString;
+	const tokenString: string = getState().login.tokenString;
 	try {
 		await ApiService.uploadImage({
 			event: selectedEvent,
@@ -176,7 +178,7 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 	dispatch(uploadFormStart(formState));
 
 	const request: ICreateInspectionRequest = FormModelService.convertQuestionsToRequest({
-		user: getState().loginv2.user,
+		user: getState().login.user,
 		event: getState().events.selectedEvent,
 		robotNumber: robotNumber,
 		questions: questions
@@ -186,7 +188,7 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 		await ApiService.uploadForm({
 			event: getState().events.selectedEvent,
 			form: request,
-			tokenString: getState().loginv2.tokenString
+			tokenString: getState().login.tokenString
 		});
 		dispatch(uploadFormSuccess(robotNumber));
 	} catch (error) {
@@ -215,7 +217,7 @@ export const loadForms = () => async (dispatch: AppDispatch, getState: GetState)
 	try {
 		const questions = await ApiService.getAllForms({
 			event: getState().events.selectedEvent,
-			tokenString: getState().loginv2.tokenString
+			tokenString: getState().login.tokenString
 		});
 
 		const forms = FormModelService.convertResponseQuestionsToForms(questions.data);

@@ -4,30 +4,21 @@ import {
 	FormErrors,
 	IForm,
 	IPitState,
-	LoginErrors,
 	UploadErrors,
 	TGameYear
 } from '../../models';
 import {
 	IEventInfo,
-	ITokenModel,
-	IUserInfo,
 	LoadStatus,
 	LoginStatus
 } from '@gearscout/models';
+import {
+	loginSlice,
+	logoutSuccess
+} from '@gearscout/state';
 
 export const serviceWorkerInstalled = createAction<ServiceWorker>('serviceWorker/updated');
 export const serviceWorkerActivated = createAction<ServiceWorker>('serviceWorker/activated');
-
-export const loginStart = createAction('loginV2/login-start');
-export const loginSuccess = createAction<{
-	user: IUserInfo,
-	token: ITokenModel,
-	tokenString: string
-}>('loginV2/login-success');
-export const loginFailed = createAction<LoginErrors>('login/login-failed');
-export const logoutSuccess = createAction('login/logout-success');
-export const clearLoginError = createAction('login/clear-error');
 
 export const getEventsStart = createAction('event/get-events-start');
 export const getEventsSuccess = createAction<IEventInfo[]>('event/get-events-success');
@@ -57,7 +48,7 @@ const initialState: IPitState = {
 		updated: false,
 		sw: null
 	},
-	loginv2: {
+	login: {
 		loginStatus: LoginStatus.none,
 		error: null,
 		role: null,
@@ -91,8 +82,11 @@ const initialState: IPitState = {
 	}
 };
 
-const reducer = createReducer(initialState, builder => {
+const oldReducer = createReducer(initialState, builder => {
 	builder
+		.addCase(logoutSuccess, () => {
+			return initialState;
+		})
 		.addCase(serviceWorkerInstalled, (state: IPitState, action) => {
 			state.serviceWorker.updated = true;
 			state.serviceWorker.sw = action.payload;
@@ -103,31 +97,6 @@ const reducer = createReducer(initialState, builder => {
 				console.log('Redundant!');
 			}
 			state.serviceWorker.sw = action.payload;
-		})
-		.addCase(loginStart, (state: IPitState) => {
-			state.loginv2.loginStatus = LoginStatus.loggingIn;
-			state.loginv2.error = null;
-		})
-		.addCase(loginSuccess, (state: IPitState, action) => {
-			state.loginv2.loginStatus = LoginStatus.loggedIn;
-			state.loginv2.user = action.payload.user;
-			state.loginv2.token = action.payload.token;
-			state.loginv2.tokenString = action.payload.tokenString;
-		})
-		.addCase(loginFailed, (state: IPitState, action) => {
-			state.loginv2.loginStatus = LoginStatus.logInFailed;
-			state.loginv2.error = action.payload;
-			showSnackbar(state, 'error', action.payload);
-		})
-		.addCase(logoutSuccess, (state: IPitState) => {
-			state.loginv2 = initialState.loginv2;
-			state.events = initialState.events;
-			state.upload = initialState.upload;
-			state.forms = initialState.forms;
-			state.snackbar = initialState.snackbar;
-		})
-		.addCase(clearLoginError, (state: IPitState) => {
-			state.loginv2.error = null;
 		})
 		.addCase(getEventsStart, (state: IPitState) => {
 			state.events.loadStatus = getNextStatusOnLoad(state.events.loadStatus);
@@ -231,6 +200,13 @@ const reducer = createReducer(initialState, builder => {
 	;
 });
 
+const reducer = (state = initialState, action) => {
+	return {
+		...(oldReducer(state, action)),
+		login: loginSlice(state.login, action)
+	};
+};
+
 export const store = configureStore({
 	reducer: reducer
 });
@@ -265,4 +241,4 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<IPitState> = useSelector;
 
-export const selectIsLoggedIn = (state: IPitState): boolean => state.loginv2.loginStatus === LoginStatus.loggedIn;
+export const selectIsLoggedIn = (state: IPitState): boolean => state.login.loginStatus === LoginStatus.loggedIn;

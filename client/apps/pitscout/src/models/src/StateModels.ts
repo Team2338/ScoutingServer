@@ -10,6 +10,10 @@ export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
 export type TGameYear = number;
 export interface IPitState {
+	serviceWorker: {
+		updated: boolean;
+		sw: ServiceWorker | null;
+	};
 	login: ILoginState;
 	events: IEventState;
 	upload: IImageUploadState;

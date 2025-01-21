@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
 	root: __dirname,
@@ -16,7 +17,19 @@ export default defineConfig({
 		port: 4300,
 		host: 'localhost',
 	},
-	plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+	plugins: [
+		react(),
+		nxViteTsPaths(),
+		nxCopyAssetsPlugin(['*.md']),
+		VitePWA({
+			injectRegister: null, // Manually register the service worker
+			manifest: false,
+			strategies: 'injectManifest',
+			srcDir: 'src',
+			filename: 'service-worker.ts',
+			includeAssets: ['manifest.json', 'logos/*.{png,ico,svg,jpg,gif,webp}']
+		})
+	],
 	// Uncomment this if you are using workers.
 	// worker: {
 	//  plugins: [ nxViteTsPaths() ],
@@ -29,7 +42,7 @@ export default defineConfig({
 		}
 	},
 	build: {
-		outDir: '../../dist/apps/pitscout',
+		outDir: '../../_build/pitscout',
 		emptyOutDir: true,
 		reportCompressedSize: true,
 		commonjsOptions: {

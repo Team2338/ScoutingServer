@@ -13,6 +13,7 @@ import {
 	LoginStatus
 } from '@gearscout/models';
 import {
+	initialLoginState,
 	loginSlice,
 	logoutSuccess
 } from '@gearscout/state';
@@ -48,14 +49,7 @@ const initialState: IPitState = {
 		updated: false,
 		sw: null
 	},
-	login: {
-		loginStatus: LoginStatus.none,
-		error: null,
-		role: null,
-		tokenString: null,
-		token: null,
-		user: null
-	},
+	login: initialLoginState,
 	events: {
 		loadStatus: LoadStatus.none,
 		error: null,

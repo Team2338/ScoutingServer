@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import DataFailure from '../shared/data-failure/DataFailure';
-import EventSelectorForm from './event-selector-form/EventSelectorForm';
-import { EventSelectorList } from '@gearscout/components';
+import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
 import {
 	IEventInfo,
 	LoadStatus,
@@ -21,6 +20,7 @@ export default function EventPage() {
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useAppDispatch();
 	const userRole: UserRole = useAppSelector(state => state.loginV2.role);
+	const teamNumber: number = useAppSelector(state => state.loginV2.user.teamNumber);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.events);
 	const _selectEvent = async (event: IEventInfo) => {
@@ -45,7 +45,11 @@ export default function EventPage() {
 		<main className="page event-page">
 			<div className="event-list-wrapper">
 				<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
-				<EventSelectorForm selectEvent={ _selectEvent } />
+				<EventSelectorForm
+					teamNumber={ teamNumber }
+					handleEventSelected={ _selectEvent }
+					translate={ translate }
+				/>
 			</div>
 			{ (userRole === UserRole.admin || userRole === UserRole.superAdmin) &&
 				<Fragment>

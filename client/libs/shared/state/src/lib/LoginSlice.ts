@@ -10,7 +10,7 @@ import {
 	createReducer
 } from '@reduxjs/toolkit';
 
-const initialState: ILoginState = {
+export const initialLoginState: ILoginState = {
 	loginStatus: LoginStatus.none,
 	error: null,
 	role: null,
@@ -29,7 +29,7 @@ export const loginFailed = createAction<LoginErrors>('login/login-failed');
 export const logoutSuccess = createAction('login/logout-success');
 export const clearLoginError = createAction('login/clear-error');
 
-export const loginSlice = createReducer(initialState, builder => {
+export const loginSlice = createReducer(initialLoginState, builder => {
 	builder
 		.addCase(loginStart, (state: ILoginState) => {
 			state.loginStatus = LoginStatus.loggingIn;
@@ -47,7 +47,7 @@ export const loginSlice = createReducer(initialState, builder => {
 			state.error = action.payload;
 		})
 		.addCase(logoutSuccess, () => {
-			return initialState;
+			return initialLoginState;
 		})
 		.addCase(clearLoginError, (state: ILoginState) => {
 			state.error = null;

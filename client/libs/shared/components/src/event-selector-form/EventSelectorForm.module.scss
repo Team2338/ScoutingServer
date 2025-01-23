@@ -1,8 +1,9 @@
-.event-selector-form {
+
+.eventSelectorForm {
 	display: flex;
 	flex-direction: column;
 
-	#event-selector-form__submit-button {
+	#submitButton {
 		margin-top: 16px;
 	}
 }

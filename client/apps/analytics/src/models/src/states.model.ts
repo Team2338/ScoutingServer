@@ -81,6 +81,7 @@ export interface LoginV2State {
 export interface EventState {
 	loadStatus: LoadStatus;
 	events: IEventInfo[];
+
 }
 
 export interface ImageState {

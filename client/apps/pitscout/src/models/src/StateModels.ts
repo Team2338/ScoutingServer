@@ -8,7 +8,6 @@ import {
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
-export type TGameYear = number;
 export interface IPitState {
 	serviceWorker: {
 		updated: boolean;
@@ -46,7 +45,5 @@ interface IEventState {
 	loadStatus: LoadStatus;
 	error: string;
 	list: IEventInfo[];
-	byYear: Record<TGameYear, IEventInfo[]>;
-	years: TGameYear[];
 	selectedEvent: IEventInfo;
 }

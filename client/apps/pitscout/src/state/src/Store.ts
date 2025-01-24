@@ -4,8 +4,7 @@ import {
 	FormErrors,
 	IForm,
 	IPitState,
-	UploadErrors,
-	TGameYear
+	UploadErrors
 } from '../../models';
 import {
 	IEventInfo,
@@ -54,8 +53,6 @@ const initialState: IPitState = {
 		loadStatus: LoadStatus.none,
 		error: null,
 		list: [],
-		byYear: {},
-		years: [],
 		selectedEvent: null
 	},
 	upload: {
@@ -97,21 +94,9 @@ const oldReducer = createReducer(initialState, builder => {
 		})
 		.addCase(getEventsSuccess, (state: IPitState, action) => {
 			const sortedEvents: IEventInfo[] = action.payload.toSorted((a, b) => b.gameYear - a.gameYear);
-			const groupedEvents: Record<TGameYear, IEventInfo[]> = {};
-			const years: TGameYear[] = [];
-			for (const event of sortedEvents) {
-				if (!Object.hasOwn(groupedEvents, event.gameYear)) {
-					groupedEvents[event.gameYear] = [];
-					years.push(event.gameYear);
-				}
-
-				groupedEvents[event.gameYear].push(event);
-			}
 
 			state.events.loadStatus = LoadStatus.success;
 			state.events.list = sortedEvents;
-			state.events.byYear = groupedEvents;
-			state.events.years = years;
 		})
 		.addCase(getEventsFailed, (state: IPitState, action) => {
 			state.events.loadStatus = getNextStatusOnFail(state.events.loadStatus);

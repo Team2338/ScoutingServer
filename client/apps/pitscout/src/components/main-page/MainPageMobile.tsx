@@ -84,7 +84,7 @@ export default function MainPageMobile() {
 						Team { selectedRobot }
 					</span>
 					{
-						role === UserRole.admin &&
+						[UserRole.superAdmin, UserRole.admin].includes(role) &&
 						<IconButton
 							id="inspection-form-dialog__add-image-button"
 							color="primary"

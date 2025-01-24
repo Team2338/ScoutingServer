@@ -64,13 +64,15 @@ export default function ImageUploadPage() {
 				label="Team number"
 				value={ teamNumber }
 				onChange={ (event) => setTeamNumber(event.target.value) }
-				InputProps={{
-					startAdornment: <InputAdornment position="start">#</InputAdornment>
-				}}
-				inputProps={{
-					min: 0,
-					max: 9999,
-					maxLength: 4
+				slotProps={{
+					input: {
+						startAdornment: <InputAdornment position="start">#</InputAdornment>
+					},
+					htmlInput: {
+						min: 0,
+						max: 9999,
+						maxLength: 4
+					}
 				}}
 			/>
 			<ImagePicker

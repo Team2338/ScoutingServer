@@ -1,7 +1,7 @@
 
 interface IConfig {
 	onUpdate?: (sw: ServiceWorker) => void;
-	onSuccess?: (sw: ServiceWorker) => void;
+	onSuccess?: (sw?: ServiceWorker) => void;
 }
 
 export const register = async (config?: IConfig) => {

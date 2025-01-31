@@ -1,4 +1,8 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, {
+	forwardRef,
+	useEffect,
+	useState
+} from 'react';
 import {
 	loadForms,
 	selectForm,
@@ -16,12 +20,14 @@ import {
 } from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
-import InspectionForm2024 from './inspection-form/2024/InspectionForm2024';
 import './MainPageMobile.scss';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
-import { LoadStatus, UserRole } from '@gearscout/models';
+import {
+	LoadStatus,
+	UserRole
+} from '@gearscout/models';
 import InspectionForm2025 from './inspection-form/2025/InspectionForm2025';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
@@ -85,7 +91,7 @@ export default function MainPageMobile() {
 						Team { selectedRobot }
 					</span>
 					{
-						role === UserRole.admin &&
+						(role === UserRole.superAdmin || role === UserRole.admin) &&
 						<IconButton
 							id="inspection-form-dialog__add-image-button"
 							color="primary"

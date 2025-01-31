@@ -51,7 +51,7 @@ export default function MainPage() {
 		return <MainPageMobile />;
 	}
 
-	const addImageButton = role === UserRole.admin && (
+	const addImageButton = (role === UserRole.superAdmin || role === UserRole.admin) && (
 		<Button
 			id="add-image-button"
 			aria-label="Add image"

@@ -1,4 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, {
+	Fragment,
+	useEffect,
+	useState
+} from 'react';
 import './AddImageDialog.scss';
 import {
 	Alert,
@@ -40,6 +44,10 @@ export default function AddImageDialog(props: IProps) {
 
 	const isFileTooLarge: boolean = image?.size >= FILE_SIZE_LIMIT_BYTES;
 	const isUploading: boolean = loadStatus === LoadStatus.loading;
+	const handleCancel = () => {
+		props.handleClose();
+		setImage(null);
+	};
 	const { handleClose } = props; // Destructured for the effect dependency below
 
 	useEffect(
@@ -94,7 +102,7 @@ export default function AddImageDialog(props: IProps) {
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={ props.handleClose }>Close</Button>
+					<Button onClick={ handleCancel }>Close</Button>
 					<Button
 						color="primary"
 						variant="contained"

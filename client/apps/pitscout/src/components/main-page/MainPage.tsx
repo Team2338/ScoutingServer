@@ -7,7 +7,6 @@ import {
 	useAppDispatch,
 	useAppSelector
 } from '../../state';
-import InspectionForm from './inspection-form/InspectionForm';
 import {
 	Alert,
 	Button,
@@ -73,7 +72,7 @@ export default function MainPage() {
 					<h1 className="title">Team { selectedRobot }</h1>
 					{ addImageButton }
 				</div>
-				<InspectionForm robotNumber={ selectedRobot } />
+				<InspectionForm2025 robotNumber={ selectedRobot } />
 			</div>
 		)
 		: <div>Pick or add a robot number!</div>;

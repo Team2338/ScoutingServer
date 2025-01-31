@@ -3,7 +3,7 @@ import React, {
 	useEffect,
 	useState
 } from 'react';
-import './InspectionForm.scss';
+import '../InspectionForm.scss';
 import {
 	CLIMBING_CAPABILITIES_2024,
 	COLLECTOR_TYPES,
@@ -16,7 +16,7 @@ import {
 	SHOOTING_LOCATIONS,
 	Statelet,
 	YES_AND_NO
-} from '../../../models';
+} from '../../../../models';
 import {
 	Button,
 	CircularProgress,
@@ -27,18 +27,18 @@ import {
 	uploadForm,
 	useAppDispatch,
 	useAppSelector
-} from '../../../state';
+} from '../../../../state';
 import {
 	DrivetrainIcon,
 	MotorIcon
-} from '../../../icons';
+} from '../../../../icons';
 import { LoadStatus } from '@gearscout/models';
-import Dropdown from './dropdown/Dropdown';
-import RobotWeightInput from './fields/RobotWeightInput';
-import RobotNotesInput from './fields/RobotNotesInput';
-import CheckboxGroup from './fields/CheckboxGroup';
-import VisionCapabilitiesInput from './fields/VisionCapabilitiesInput';
-import AutoPathsInput from './fields/AutoPathsInput';
+import Dropdown from '../fields/Dropdown';
+import RobotWeightInput from '../fields/RobotWeightInput';
+import RobotNotesInput from '../fields/RobotNotesInput';
+import CheckboxGroup from '../fields/CheckboxGroup';
+import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
+import AutoPathsInput from '../fields/AutoPathsInput';
 
 
 interface IProps {
@@ -60,7 +60,7 @@ interface IProps {
  * Climbing capabilities (solo, harmonize, triple climb)
  */
 
-export default function InspectionForm(props: IProps) {
+export default function InspectionForm2024(props: IProps) {
 
 	const dispatch: AppDispatch = useAppDispatch();
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);

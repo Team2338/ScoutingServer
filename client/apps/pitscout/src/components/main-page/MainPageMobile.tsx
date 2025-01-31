@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
-import InspectionForm from './inspection-form/InspectionForm';
+import InspectionForm2024 from './inspection-form/2024/InspectionForm2024';
 import './MainPageMobile.scss';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -98,7 +98,7 @@ export default function MainPageMobile() {
 				<DialogContent id="inspection-form-dialog__body">
 					{
 						selectedRobot &&
-						// <InspectionForm robotNumber={ selectedRobot } shouldFloatSubmit={ true } />
+						// <InspectionForm2024 robotNumber={ selectedRobot } shouldFloatSubmit={ true } />
 						<InspectionForm2025 robotNumber={ selectedRobot } />
 					}
 				</DialogContent>

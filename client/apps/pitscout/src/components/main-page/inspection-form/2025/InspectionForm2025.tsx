@@ -18,7 +18,7 @@ import React, {
 	useEffect,
 	useState
 } from 'react';
-import Dropdown from '../dropdown/Dropdown';
+import Dropdown from '../fields/Dropdown';
 import {
 	DrivetrainIcon,
 	MotorIcon

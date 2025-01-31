@@ -46,7 +46,7 @@ class ApiService {
 		image: Blob;
 	}): GearscoutResponse<null> => {
 		const { event } = data;
-		const url = `/v1/images/team/${ event.teamNumber }/gameYear/${ event.gameYear }/event/${ event.eventCode }/robot/${ data.robotNumber }`;
+		const url = `/v2/images/team/${ event.teamNumber }/gameYear/${ event.gameYear }/event/${ event.eventCode }/robot/${ data.robotNumber }`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: event.secretCode,

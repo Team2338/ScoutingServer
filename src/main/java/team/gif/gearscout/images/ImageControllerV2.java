@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.token.UserEntity;
 import team.gif.gearscout.token.UserService;
@@ -66,7 +67,7 @@ public class ImageControllerV2 {
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
-		List<String> allowedRoles = List.of("OWNER", "ADMIN");
+		List<String> allowedRoles = List.of(UserRoles.SUPERADMIN, UserRoles.ADMIN);
 		if (!allowedRoles.contains(user.getRole())) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}

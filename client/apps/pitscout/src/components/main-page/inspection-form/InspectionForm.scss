@@ -54,37 +54,6 @@
 			background-color: white;
 		}
 
-    &::before {
-			content: 'Score locations';
-			position: absolute;
-			top: -10px;
-			left: 8px;
-			padding: 0 5px;
-			color: rgba(0, 0, 0, 0.6);
-			font-weight: 400;
-			font-size: 0.75rem;
-			line-height: 1.4375em;
-			letter-spacing: 0.00938em;
-			white-space: nowrap;
-			background-color: white;
-    }
-
-		&.score-locations-wrapper::before {
-			content: 'Score locations';
-		}
-
-		&.intake-locations-wrapper::before {
-			content: 'Intake locations';
-		}
-
-		&.shooting-locations-wrapper::before {
-			content: 'Shooting locations';
-		}
-
-		&.climb-capabilities-wrapper::before {
-			content: 'Climb capabilities'
-		}
-
 		.checkbox-row {
 			display: flex;
 			flex-direction: row;

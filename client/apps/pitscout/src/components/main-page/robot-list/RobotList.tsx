@@ -8,7 +8,8 @@ import {
 } from '../../../state';
 import {
 	List,
-	ListItemButton
+	ListItemButton,
+	useMediaQuery
 } from '@mui/material';
 
 export default function RobotList() {
@@ -16,6 +17,7 @@ export default function RobotList() {
 	const dispatch: AppDispatch = useAppDispatch();
 	const robotNumbers: number[] = useAppSelector(state => state.forms.robots);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
+	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
 
 	const listOptions = robotNumbers.map((robot: number) => (
 		<Fragment>
@@ -30,7 +32,8 @@ export default function RobotList() {
 					fontWeight: robot === selectedRobot ? 600 : 400,
 					borderRadius: '12px',
 					width: '100%',
-					justifyContent: 'center'
+					justifyContent: 'center',
+					border: isMobile ? '2px solid #1976d220' : 'none'
 				}}
 			>
 				<span className="robot-list-item__number">{ robot }</span>

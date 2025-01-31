@@ -6,6 +6,12 @@
 	row-gap: 4px;
 	width: 100%;
 
+	@media only screen and (max-width: 700px) {
+		width: 8em;
+		row-gap: 8px;
+		padding-top: 16px;
+	}
+
 	.robot-list-item__number {
 		display: flex;
 		justify-content: right;

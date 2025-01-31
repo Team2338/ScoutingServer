@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.token.UserEntity;
 import team.gif.gearscout.token.UserService;
@@ -55,7 +56,7 @@ public class EventController {
 		Long userId = tokenService.validateToken(token);
 		UserEntity user = userService.findUserById(userId);
 
-		if (!user.getRole().equals("ADMIN") && !user.getRole().equals("SUPERADMIN")) {
+		if (!user.getRole().equals(UserRoles.ADMIN) && !user.getRole().equals(UserRoles.SUPERADMIN)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 

@@ -27,10 +27,6 @@
 		margin-right: 8px;
 	}
 
-	#under-stage-checkbox {
-		padding-left: 14px;
-	}
-
 	.checkbox-group {
 		position: relative;
 		display: flex;
@@ -40,8 +36,7 @@
 		border-radius: 4px;
 		padding: 8px 14px;
 
-    &::before {
-			content: 'Score locations';
+		&__label {
 			position: absolute;
 			top: -10px;
 			left: 8px;
@@ -53,22 +48,6 @@
 			letter-spacing: 0.00938em;
 			white-space: nowrap;
 			background-color: white;
-    }
-
-		&.score-locations-wrapper::before {
-			content: 'Score locations';
-		}
-
-		&.intake-locations-wrapper::before {
-			content: 'Intake locations';
-		}
-
-		&.shooting-locations-wrapper::before {
-			content: 'Shooting locations';
-		}
-
-		&.climb-capabilities-wrapper::before {
-			content: 'Climb capabilities'
 		}
 
 		.checkbox-row {

@@ -7,12 +7,14 @@ export enum FormQuestions {
 	collectorType = 'COLLECTOR_TYPE',
 	underStage = 'UNDER_STAGE',
 	autoPaths = 'AUTO_PATHS',
+	humanPosition = 'HUMAN_POSITION',
 	visionCapabilities = 'VISION_CAPABILITIES',
 	scoreLocations = 'SCORE_LOCATIONS',
 	intakeLocations = 'INTAKE_LOCATIONS',
 	shootingLocations = 'SHOOTING_LOCATIONS',
 	climbCapabilities = 'CLIMB_CAPABILITIES',
-	robotNotes = 'ROBOT_NOTES'
+	robotNotes = 'ROBOT_NOTES',
+	removeAlgae = 'REMOVE_ALGAE'
 }
 
 export interface IForm {
@@ -54,7 +56,7 @@ export const COLLECTOR_TYPES: string[] = [
 	'Frame cutout'
 ];
 
-export const SCORE_LOCATIONS: string[] = [
+export const SCORE_LOCATIONS_2024: string[] = [
 	'Amp',
 	'Speaker',
 	'Trap'
@@ -73,9 +75,31 @@ export const SHOOTING_LOCATIONS: string[] = [
 	'Source area',
 ];
 
-export const CLIMBING_CAPABILITIES: string[] = [
+export const CLIMBING_CAPABILITIES_2024: string[] = [
 	'None',
 	'Solo',
 	'Double',
 	'Triple'
+];
+
+export const CLIMBING_CAPABILITIES_2025: string[] = [
+	'None',
+	'Shallow',
+	'Deep',
+	'Both'
+];
+
+export const HUMAN_PLAYER_POSITIONS_2025: string[] = [
+	'Net',
+	'Feeder',
+	'No preference'
+];
+
+export const SCORE_LOCATIONS_2025: string[] = [
+	'L1',
+	'L2',
+	'L3',
+	'L4',
+	'Processor',
+	'Net'
 ];

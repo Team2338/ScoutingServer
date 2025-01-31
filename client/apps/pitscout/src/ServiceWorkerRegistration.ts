@@ -1,7 +1,7 @@
 
 interface IConfig {
 	onUpdate?: (sw: ServiceWorker) => void;
-	onSuccess?: (sw: ServiceWorker) => void;
+	onSuccess?: (sw?: ServiceWorker) => void;
 }
 
 export const register = async (config?: IConfig) => {
@@ -47,7 +47,7 @@ function listenForUpdatedWorkerDownload(registration: ServiceWorkerRegistration,
 
 function listenForWorkerActivation(registration: ServiceWorkerRegistration, config: IConfig): void {
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		config.onSuccess?.(registration.active);
+		config.onSuccess?.();
 	});
 }
 

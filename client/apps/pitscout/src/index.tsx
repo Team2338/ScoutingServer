@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import {
-	serviceWorkerActivated,
 	serviceWorkerInstalled,
 	store
 } from './state';
@@ -23,5 +22,7 @@ root.render(
 
 register({
 	onUpdate: sw => store.dispatch(serviceWorkerInstalled(sw)),
-	onSuccess: sw => store.dispatch(serviceWorkerActivated(sw)),
+	onSuccess: () => {
+		window.location.reload();
+	}
 });

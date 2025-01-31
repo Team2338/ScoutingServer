@@ -18,7 +18,6 @@ import {
 } from '@gearscout/state';
 
 export const serviceWorkerInstalled = createAction<ServiceWorker>('serviceWorker/updated');
-export const serviceWorkerActivated = createAction<ServiceWorker>('serviceWorker/activated');
 
 export const getEventsStart = createAction('event/get-events-start');
 export const getEventsSuccess = createAction<IEventInfo[]>('event/get-events-success');
@@ -89,13 +88,6 @@ const oldReducer = createReducer(initialState, builder => {
 		})
 		.addCase(serviceWorkerInstalled, (state: IPitState, action) => {
 			state.serviceWorker.updated = true;
-			state.serviceWorker.sw = action.payload;
-		})
-		.addCase(serviceWorkerActivated, (state: IPitState, action) => {
-			state.serviceWorker.updated = false;
-			if (action.payload === state.serviceWorker.sw) {
-				console.log('Redundant!');
-			}
 			state.serviceWorker.sw = action.payload;
 		})
 		.addCase(getEventsStart, (state: IPitState) => {

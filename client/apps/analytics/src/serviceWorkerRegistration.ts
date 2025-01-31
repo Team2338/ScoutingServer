@@ -110,7 +110,7 @@ function registerValidSW(swUrl: string, config?: Config) {
 
 							// Execute callback
 							if (config && config.onSuccess) {
-								config.onSuccess(registration);
+								config.onSuccess();
 							}
 						}
 					}

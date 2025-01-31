@@ -47,7 +47,7 @@ function listenForUpdatedWorkerDownload(registration: ServiceWorkerRegistration,
 
 function listenForWorkerActivation(registration: ServiceWorkerRegistration, config: IConfig): void {
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		config.onSuccess?.(registration.active);
+		config.onSuccess?.();
 	});
 }
 

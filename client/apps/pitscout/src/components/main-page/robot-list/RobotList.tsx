@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './RobotList.scss';
 import {
 	AppDispatch,
@@ -18,19 +18,24 @@ export default function RobotList() {
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 
 	const listOptions = robotNumbers.map((robot: number) => (
-		<ListItemButton
-			key={ robot }
-			id="robot-list-item"
-			selected={ robot === selectedRobot }
-			onClick={ () => dispatch(selectForm(robot)) }
-			sx={{
-				paddingTop: '12px',
-				paddingBottom: '12px',
-				fontWeight: robot === selectedRobot ? 600 : 400
-			}}
-		>
-			<span className="robot-list-item__number">{ robot }</span>
-		</ListItemButton>
+		<Fragment>
+			<ListItemButton
+				key={ robot }
+				id={ 'robot-list-item-' + robot }
+				selected={ robot === selectedRobot }
+				onClick={ () => dispatch(selectForm(robot)) }
+				sx={{
+					paddingTop: '12px',
+					paddingBottom: '12px',
+					fontWeight: robot === selectedRobot ? 600 : 400,
+					borderRadius: '12px',
+					width: '100%',
+					justifyContent: 'center'
+				}}
+			>
+				<span className="robot-list-item__number">{ robot }</span>
+			</ListItemButton>
+		</Fragment>
 	));
 
 	return (

@@ -19,13 +19,8 @@ import {
 } from '../../../models';
 import {
 	Button,
-	Checkbox,
 	CircularProgress,
-	FormControlLabel,
-	FormGroup,
 	Icon,
-	InputAdornment,
-	TextField
 } from '@mui/material';
 import {
 	AppDispatch,
@@ -41,6 +36,9 @@ import { LoadStatus } from '@gearscout/models';
 import Dropdown from './dropdown/Dropdown';
 import RobotWeightInput from './fields/RobotWeightInput';
 import RobotNotesInput from './fields/RobotNotesInput';
+import CheckboxGroup from './fields/CheckboxGroup';
+import VisionCapabilitiesInput from './fields/VisionCapabilitiesInput';
+import AutoPathsInput from './fields/AutoPathsInput';
 
 
 interface IProps {
@@ -114,94 +112,6 @@ export default function InspectionForm(props: IProps) {
 		}));
 	};
 
-	const handleScoreLocationChange = (event, location: string): void => {
-		if (event.target.checked && !scoreLocations.includes(location)) {
-			setScoreLocations([...scoreLocations, location]);
-			return;
-		}
-
-		if (!event.target.checked && scoreLocations.includes(location)) {
-			const updatedLocations: string[] = scoreLocations.filter((loc: string) => loc !== location);
-			setScoreLocations(updatedLocations);
-		}
-	};
-
-	const scoreLocationCheckboxElements = SCORE_LOCATIONS_2024.map((location: string) => (
-		<FormControlLabel
-			key={ location }
-			control={ <Checkbox /> }
-			label={ location }
-			checked={ scoreLocations.includes(location) }
-			onChange={ (event) => handleScoreLocationChange(event, location) }
-		/>
-	));
-
-	const handleIntakeLocationChange = (event, location: string): void => {
-		if (event.target.checked && !intakeLocations.includes(location)) {
-			setIntakeLocations([...intakeLocations, location]);
-			return;
-		}
-
-		if (!event.target.checked && intakeLocations.includes(location)) {
-			const updatedLocations: string[] = intakeLocations.filter((loc: string) => loc !== location);
-			setIntakeLocations(updatedLocations);
-		}
-	};
-
-	const intakeLocationCheckboxElements = INTAKE_LOCATIONS.map((location: string) => (
-		<FormControlLabel
-			key={ location }
-			control={ <Checkbox /> }
-			label={ location }
-			checked={ intakeLocations.includes(location) }
-			onChange={ (event) => handleIntakeLocationChange(event, location) }
-		/>
-	));
-
-	const handleShootingLocationChange = (event, location: string): void => {
-		if (event.target.checked && !shootingLocations.includes(location)) {
-			setShootingLocations([...shootingLocations, location]);
-			return;
-		}
-
-		if (!event.target.checked && shootingLocations.includes(location)) {
-			const updatedLocations: string[] = shootingLocations.filter((loc: string) => loc !== location);
-			setShootingLocations(updatedLocations);
-		}
-	};
-
-	const shootingLocationCheckboxElements = SHOOTING_LOCATIONS.map((location: string) => (
-		<FormControlLabel
-			key={ location }
-			control={ <Checkbox /> }
-			label={ location }
-			checked={ shootingLocations.includes(location) }
-			onChange={ (event) => handleShootingLocationChange(event, location) }
-		/>
-	));
-
-	const handleClimbCapabilityChange = (event, capability: string): void => {
-		if (event.target.checked && !climbCapabilities.includes(capability)) {
-			setClimbCapabilities([...climbCapabilities, capability]);
-			return;
-		}
-
-		if (!event.target.checked && climbCapabilities.includes(capability)) {
-			const updatedCapabilities: string[] = climbCapabilities.filter((cap: string) => cap !== capability);
-			setClimbCapabilities(updatedCapabilities);
-		}
-	};
-
-	const climbCapabilityCheckboxElements = CLIMBING_CAPABILITIES_2024.map((capability: string) => (
-		<FormControlLabel
-			key={ capability }
-			control={ <Checkbox /> }
-			label={ capability }
-			checked={ climbCapabilities.includes(capability) }
-			onChange={ (event) => handleClimbCapabilityChange(event, capability) }
-		/>
-	));
-
 	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
 
 	return (
@@ -239,72 +149,32 @@ export default function InspectionForm(props: IProps) {
 					value={ underStage }
 					onChange={ setUnderStage }
 				/>
-				<TextField
-					id="auto-paths"
-					name="AutoPaths"
-					multiline={ true }
-					margin="normal"
-					autoComplete="off"
-					label="Describe auto paths"
-					value={ autoPaths }
-					slotProps={{
-						input: {
-							startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
-						},
-						htmlInput: {
-							maxLength: 1024
-						}
-					}}
-					onChange={ (event) => setAutoPaths(event.target.value) }
+				<AutoPathsInput value={ autoPaths } onChange={ setAutoPaths } />
+				<VisionCapabilitiesInput value={ visionCapabilities } onChange={ setVisionCapabilities } />
+				<CheckboxGroup
+					title="Score locations"
+					options={ SCORE_LOCATIONS_2024 }
+					values={ scoreLocations }
+					onChange={ setScoreLocations }
 				/>
-				<TextField
-					id="vision-capabilities"
-					name="VisionCapabilities"
-					multiline={ true }
-					margin="normal"
-					autoComplete="off"
-					label="Vision capabilities"
-					value={ visionCapabilities }
-					slotProps={{
-						input: {
-							startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
-						},
-						htmlInput: {
-							maxLength: 1024
-						}
-					}}
-					onChange={ (event) => setVisionCapabilities(event.target.value) }
+				<CheckboxGroup
+					title="Intake locations"
+					options={ INTAKE_LOCATIONS }
+					values={ intakeLocations }
+					onChange={ setIntakeLocations }
 				/>
-				<div className="checkbox-group score-locations-wrapper">
-					<FormGroup>
-						<div className="checkbox-row">
-							{ scoreLocationCheckboxElements }
-						</div>
-					</FormGroup>
-				</div>
-				<div className="checkbox-group intake-locations-wrapper">
-					<FormGroup>
-						<div className="checkbox-row">
-							{ intakeLocationCheckboxElements }
-						</div>
-					</FormGroup>
-				</div>
-				<div className="checkbox-group shooting-locations-wrapper">
-					<FormGroup>
-						<div className="checkbox-row">
-							{ shootingLocationCheckboxElements }
-						</div>
-					</FormGroup>
-				</div>
-				<div
-					className="checkbox-group climb-capabilities-wrapper"
-				>
-					<FormGroup>
-						<div className="checkbox-row">
-							{ climbCapabilityCheckboxElements }
-						</div>
-					</FormGroup>
-				</div>
+				<CheckboxGroup
+					title="Shooting locations"
+					options={ SHOOTING_LOCATIONS }
+					values={ shootingLocations }
+					onChange={ setShootingLocations }
+				/>
+				<CheckboxGroup
+					title="Climb capabilities"
+					options={ CLIMBING_CAPABILITIES_2024 }
+					values={ climbCapabilities }
+					onChange={ setClimbCapabilities }
+				/>
 				<RobotNotesInput value={ robotNotes } onChange={ setRobotNotes } />
 				<Button
 					id="submit-note"

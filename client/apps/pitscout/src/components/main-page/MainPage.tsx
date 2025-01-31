@@ -73,7 +73,7 @@ export default function MainPage() {
 					<h1 className="title">Team { selectedRobot }</h1>
 					{ addImageButton }
 				</div>
-				<InspectionForm2025 robotNumber={ selectedRobot } />
+				<InspectionForm robotNumber={ selectedRobot } />
 			</div>
 		)
 		: <div>Pick or add a robot number!</div>;

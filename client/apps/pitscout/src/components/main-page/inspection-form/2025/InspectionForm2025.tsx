@@ -26,9 +26,6 @@ import {
 import {
 	Button,
 	CircularProgress,
-	Icon,
-	InputAdornment,
-	TextField
 } from '@mui/material';
 import { LoadStatus } from '@gearscout/models';
 import CheckboxGroup from '../fields/CheckboxGroup';
@@ -39,6 +36,8 @@ import {
 	DirectionsRun,
 	Phishing
 } from '@mui/icons-material';
+import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
+import AutoPathsInput from '../fields/AutoPathsInput';
 
 interface IProps {
 	robotNumber: number;
@@ -129,42 +128,8 @@ export default function InspectionForm2025(props: IProps) {
 				icon={ <MotorIcon className="selector-adornment" /> }
 			/>
 			<RobotWeightInput value={ weight } onChange={ setWeight } />
-			<TextField
-				id="auto-paths"
-				name="AutoPaths"
-				multiline={ true }
-				margin="normal"
-				autoComplete="off"
-				label="Describe auto paths"
-				value={ autoPaths }
-				slotProps={{
-					input: {
-						startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
-					},
-					htmlInput: {
-						maxLength: 1024
-					}
-				}}
-				onChange={ (event) => setAutoPaths(event.target.value) }
-			/>
-			<TextField
-				id="vision-capabilities"
-				name="VisionCapabilities"
-				multiline={ true }
-				margin="normal"
-				autoComplete="off"
-				label="Vision capabilities"
-				value={ visionCapabilities }
-				slotProps={{
-					input: {
-						startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
-					},
-					htmlInput: {
-						maxLength: 1024
-					}
-				}}
-				onChange={ (event) => setVisionCapabilities(event.target.value) }
-			/>
+			<AutoPathsInput value={ autoPaths } onChange={ setAutoPaths } />
+			<VisionCapabilitiesInput value={ visionCapabilities } onChange={ setVisionCapabilities } />
 			<CheckboxGroup
 				title="Intake locations"
 				options={ ['HP', 'Floor'] }

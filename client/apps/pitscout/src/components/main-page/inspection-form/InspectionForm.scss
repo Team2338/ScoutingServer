@@ -40,6 +40,20 @@
 		border-radius: 4px;
 		padding: 8px 14px;
 
+		&__label {
+			position: absolute;
+			top: -10px;
+			left: 8px;
+			padding: 0 5px;
+			color: rgba(0, 0, 0, 0.6);
+			font-weight: 400;
+			font-size: 0.75rem;
+			line-height: 1.4375em;
+			letter-spacing: 0.00938em;
+			white-space: nowrap;
+			background-color: white;
+		}
+
     &::before {
 			content: 'Score locations';
 			position: absolute;

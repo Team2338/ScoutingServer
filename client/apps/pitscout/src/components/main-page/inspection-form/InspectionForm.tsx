@@ -5,14 +5,14 @@ import React, {
 } from 'react';
 import './InspectionForm.scss';
 import {
-	CLIMBING_CAPABILITIES,
+	CLIMBING_CAPABILITIES_2024,
 	COLLECTOR_TYPES,
 	DRIVE_MOTOR_TYPES,
 	DRIVETRAIN_TYPES,
 	FormQuestions,
 	IForm,
 	INTAKE_LOCATIONS,
-	SCORE_LOCATIONS,
+	SCORE_LOCATIONS_2024,
 	SHOOTING_LOCATIONS,
 	Statelet,
 	YES_AND_NO
@@ -21,14 +21,10 @@ import {
 	Button,
 	Checkbox,
 	CircularProgress,
-	FormControl,
 	FormControlLabel,
 	FormGroup,
 	Icon,
 	InputAdornment,
-	InputLabel,
-	MenuItem,
-	Select,
 	TextField
 } from '@mui/material';
 import {
@@ -42,11 +38,13 @@ import {
 	MotorIcon
 } from '../../../icons';
 import { LoadStatus } from '@gearscout/models';
+import Dropdown from './dropdown/Dropdown';
+import RobotWeightInput from './fields/RobotWeightInput';
+import RobotNotesInput from './fields/RobotNotesInput';
 
 
 interface IProps {
 	robotNumber: number;
-	shouldFloatSubmit?: boolean;
 }
 
 /*
@@ -128,7 +126,7 @@ export default function InspectionForm(props: IProps) {
 		}
 	};
 
-	const scoreLocationCheckboxElements = SCORE_LOCATIONS.map((location: string) => (
+	const scoreLocationCheckboxElements = SCORE_LOCATIONS_2024.map((location: string) => (
 		<FormControlLabel
 			key={ location }
 			control={ <Checkbox /> }
@@ -194,7 +192,7 @@ export default function InspectionForm(props: IProps) {
 		}
 	};
 
-	const climbCapabilityCheckboxElements = CLIMBING_CAPABILITIES.map((capability: string) => (
+	const climbCapabilityCheckboxElements = CLIMBING_CAPABILITIES_2024.map((capability: string) => (
 		<FormControlLabel
 			key={ capability }
 			control={ <Checkbox /> }
@@ -204,99 +202,43 @@ export default function InspectionForm(props: IProps) {
 		/>
 	));
 
-	const drivetrainOptionElements = DRIVETRAIN_TYPES.map((drivetrainType: string) => (
-		<MenuItem key={ drivetrainType } value={ drivetrainType }>{ drivetrainType }</MenuItem>
-	));
-
-	const driveMotorOptionElements = DRIVE_MOTOR_TYPES.map((motor: string) => (
-		<MenuItem key={ motor } value={ motor }>{ motor }</MenuItem>
-	));
-
-	const collectorTypeOptionElements = COLLECTOR_TYPES.map((collector: string) => (
-		<MenuItem key={ collector } value={ collector }>{ collector }</MenuItem>
-	));
-
-	const yesAndNoOptionElements = YES_AND_NO.map((answer: string) => (
-		<MenuItem key={ answer } value={ answer }>{ answer }</MenuItem>
-	));
-
 	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
 
 	return (
 		<Fragment>
 			<form className="inspection-form">
-				<FormControl margin="normal">
-					<InputLabel id="drivetrain-selector__label">Drivetrain</InputLabel>
-					<Select
-						id="drivetrain-selector"
-						labelId="drivetrain-selector__label"
-						value={ drivetrain }
-						label="Drivetrain"
-						onChange={ (event) => setDrivetrain(event.target.value) }
-						startAdornment={ <DrivetrainIcon className="selector-adornment" /> }
-					>
-						{ drivetrainOptionElements }
-					</Select>
-				</FormControl>
-				<FormControl margin="normal">
-					<InputLabel id="drive-motor-selector__label">Drive motor type</InputLabel>
-					<Select
-						id="drive-motor-selector"
-						labelId="drive-motor-selector__label"
-						value={ driveMotorType }
-						label="Drive motor type"
-						onChange={ (event) => setDriveMotorType(event.target.value) }
-						startAdornment={ <MotorIcon className="selector-adornment" /> }
-					>
-						{ driveMotorOptionElements }
-					</Select>
-				</FormControl>
-				<TextField
-					id="robot-weight-input"
-					label="Robot weight"
-					name="robotWeight"
-					type="number"
-					margin="normal"
-					variant="outlined"
-					value={ weight }
-					onChange={ event => setWeight(event.target.value) }
-					slotProps={ {
-						input: {
-							startAdornment: <InputAdornment position="start"><Icon>scale</Icon></InputAdornment>,
-							endAdornment: <InputAdornment position="end">lbs</InputAdornment>
-						},
-						htmlInput: {
-							min: 0,
-							max: 9999
-						}
-					} }
-					autoComplete="off"
+				<Dropdown
+					id="drivetrain-selector"
+					title="Drivetrain"
+					options={ DRIVETRAIN_TYPES }
+					value={ drivetrain }
+					onChange={ setDrivetrain }
+					icon={ <DrivetrainIcon className="selector-adornment" /> }
 				/>
-				<FormControl margin="normal">
-					<InputLabel id="collector-selector__label">Collector type</InputLabel>
-					<Select
-						id="collector-selector"
-						labelId="collector-selector__label"
-						value={ collectorType }
-						label="Collector type"
-						onChange={ (event) => setCollectorType(event.target.value) }
-						startAdornment={ <Icon className="selector-adornment">input</Icon> }
-					>
-						{ collectorTypeOptionElements }
-					</Select>
-				</FormControl>
-				<FormControl margin="normal">
-					<InputLabel id="under-stage-selector__label">Can go under stage</InputLabel>
-					<Select
-						id="under-stage-selector"
-						labelId="under-stage-selector__label"
-						value={ underStage }
-						label="Can go under stage"
-						onChange={ (event) => setUnderStage(event.target.value) }
-					>
-						{ yesAndNoOptionElements }
-					</Select>
-				</FormControl>
+				<Dropdown
+					id="drive-motor-selector"
+					title="Drive motor type"
+					options={ DRIVE_MOTOR_TYPES }
+					value={ driveMotorType }
+					onChange={ setDriveMotorType }
+					icon={ <MotorIcon className="selector-adornment" /> }
+				/>
+				<RobotWeightInput value={ weight } onChange={setWeight } />
+				<Dropdown
+					id="collector-selector"
+					title="Collector type"
+					options={ COLLECTOR_TYPES }
+					value={ collectorType }
+					onChange={ setCollectorType }
+					icon={ <Icon className="selector-adornment">input</Icon> }
+				/>
+				<Dropdown
+					id="under-stage-selector"
+					title="Can go under stage"
+					options={ YES_AND_NO }
+					value={ underStage }
+					onChange={ setUnderStage }
+				/>
 				<TextField
 					id="auto-paths"
 					name="AutoPaths"
@@ -305,14 +247,14 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Describe auto paths"
 					value={ autoPaths }
-					slotProps={ {
+					slotProps={{
 						input: {
 							startAdornment: <InputAdornment position="start"><Icon>route</Icon></InputAdornment>
 						},
 						htmlInput: {
 							maxLength: 1024
 						}
-					} }
+					}}
 					onChange={ (event) => setAutoPaths(event.target.value) }
 				/>
 				<TextField
@@ -323,14 +265,14 @@ export default function InspectionForm(props: IProps) {
 					autoComplete="off"
 					label="Vision capabilities"
 					value={ visionCapabilities }
-					slotProps={ {
+					slotProps={{
 						input: {
 							startAdornment: <InputAdornment position="start"><Icon>camera</Icon></InputAdornment>
 						},
 						htmlInput: {
 							maxLength: 1024
 						}
-					} }
+					}}
 					onChange={ (event) => setVisionCapabilities(event.target.value) }
 				/>
 				<div className="checkbox-group score-locations-wrapper">
@@ -363,25 +305,7 @@ export default function InspectionForm(props: IProps) {
 						</div>
 					</FormGroup>
 				</div>
-				<TextField
-					id="robot-notes"
-					name="RobotNotes"
-					margin="normal"
-					multiline={ true }
-					autoComplete="off"
-					label="Notes on robot"
-					value={ robotNotes }
-					slotProps={ {
-						input: {
-							startAdornment:
-								<InputAdornment position="start"><Icon>note_alt</Icon></InputAdornment>
-						},
-						htmlInput: {
-							maxLength: 1024
-						}
-					} }
-					onChange={ (event) => setRobotNotes(event.target.value) }
-				/>
+				<RobotNotesInput value={ robotNotes } onChange={ setRobotNotes } />
 				<Button
 					id="submit-note"
 					variant="contained"

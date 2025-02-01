@@ -1,3 +1,4 @@
+import { IEventInfo } from '@gearscout/models';
 
 export interface ICreateInspectionRequest {
 	robotNumber: number;
@@ -10,4 +11,9 @@ export interface IInspectionQuestion {
 	question: string;
 	answer: string;
 	creator: string;
+}
+
+export interface IOfflineCreateInspectionRequest {
+	inspection: ICreateInspectionRequest;
+	event: IEventInfo;
 }

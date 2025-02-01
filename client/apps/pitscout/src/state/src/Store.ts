@@ -5,7 +5,8 @@ import {
 	IForm,
 	IPitState,
 	UploadErrors,
-	TGameYear
+	TGameYear,
+	IOfflineCreateInspectionRequest
 } from '../../models';
 import {
 	IEventInfo,
@@ -32,8 +33,10 @@ export const resetImageUpload = createAction('upload/reset');
 
 export const createForm = createAction<number>('form/create-form');
 export const selectForm = createAction<number>('form/select-form');
+export const recallOfflineFormsSuccess = createAction<IOfflineCreateInspectionRequest[]>('form/recall-offline');
 export const uploadFormStart = createAction<IForm>('form/upload-form-start');
 export const uploadFormSuccess = createAction<number>('form/upload-form-success');
+export const uploadFormOffline = createAction<{ robotNumber: number, requests: IOfflineCreateInspectionRequest[] }>('form/upload-form-offline');
 export const uploadFormFailed = createAction<{ robotNumber: number, error: FormErrors }>('form/upload-form-failed');
 export const getAllFormsStart = createAction('form/get-all-start');
 export const getAllFormsSuccess = createAction<{ forms: Record<number, IForm>, robots: number[] }>('form/get-all-success');
@@ -72,7 +75,8 @@ const initialState: IPitState = {
 		error: null,
 		selected: null,
 		robots: [],
-		data: {}
+		data: {},
+		offline: []
 	},
 	snackbar: {
 		message: null,
@@ -154,11 +158,14 @@ const oldReducer = createReducer(initialState, builder => {
 			};
 		})
 		.addCase(selectForm, (state: IPitState, action) => {
-			if (!state.forms.robots.includes(action.payload)) {
+			if (!state.forms.robots.includes(action.payload) && action.payload !== null) {
 				console.error('Tried to select form, but one does not exist for that robot');
 			}
 
 			state.forms.selected = action.payload;
+		})
+		.addCase(recallOfflineFormsSuccess, (state: IPitState, action) => {
+			state.forms.offline = action.payload;
 		})
 		.addCase(uploadFormStart, (state: IPitState, action) => {
 			state.forms.data[action.payload.robotNumber] = action.payload;
@@ -167,6 +174,11 @@ const oldReducer = createReducer(initialState, builder => {
 		.addCase(uploadFormSuccess, (state: IPitState, action) => {
 			state.forms.data[action.payload].loadStatus = LoadStatus.success;
 			showSnackbar(state, 'success', 'Successfully submitted inspection');
+		})
+		.addCase(uploadFormOffline, (state: IPitState, action) => {
+			state.forms.offline = action.payload.requests;
+			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.success;
+			showSnackbar(state, 'warning', 'Poor network connection - inspection saved for later submission');
 		})
 		.addCase(uploadFormFailed, (state: IPitState, action) => {
 			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.failed;
@@ -223,7 +235,7 @@ const getNextStatusOnFail = (previousStatus: LoadStatus): LoadStatus => {
 	return LoadStatus.failed;
 };
 
-const showSnackbar = (state: IPitState, severity: 'error' | 'success', message: string): void => {
+const showSnackbar = (state: IPitState, severity: 'error' | 'warning' | 'success', message: string): void => {
 	state.snackbar.severity = severity;
 	state.snackbar.message = message;
 	state.snackbar.isOpen = true;

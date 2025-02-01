@@ -4,6 +4,7 @@ import React, {
 	useState
 } from 'react';
 import {
+	closeSnackbar,
 	loadForms,
 	selectForm,
 	useAppDispatch,
@@ -11,12 +12,15 @@ import {
 } from '../../state';
 import { Statelet } from '../../models';
 import {
+	Alert,
 	Button,
 	Dialog,
 	DialogContent,
 	Icon,
 	IconButton,
-	Slide
+	Slide,
+	SlideProps,
+	Snackbar
 } from '@mui/material';
 import RobotList from './robot-list/RobotList';
 import AddRobotDialog from './add-robot-dialog/AddRobotDialog';
@@ -30,19 +34,25 @@ import {
 } from '@gearscout/models';
 import InspectionForm2025 from './inspection-form/2025/InspectionForm2025';
 
-const Transition = forwardRef(function Transition(props: any, ref) {
+const InspectionTransition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="up" ref={ ref } { ...props }>{ props.children }</Slide>;
 });
+
+function SnackbarTransition(props: SlideProps) {
+	return <Slide {...props} direction="down"/>;
+}
 
 export default function MainPageMobile() {
 
 	const dispatch = useAppDispatch();
 	const role: UserRole = useAppSelector(state => state.login.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
+	const snackbar = useAppSelector(state => state.snackbar);
 	const loadStatus: LoadStatus = useAppSelector(state => state.forms.loadStatus);
 	const [isAddDialogOpen, setAddDialogOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const _selectRobot = (robotNum: number) => dispatch(selectForm(robotNum));
+	const _closeSnackbar = () => dispatch(closeSnackbar());
 
 	const showSkeletonLoader: boolean = (loadStatus === LoadStatus.none) || (loadStatus === LoadStatus.loading);
 
@@ -53,6 +63,26 @@ export default function MainPageMobile() {
 
 	return (
 		<main className="mobile__main-page">
+			<Snackbar
+				autoHideDuration={ 6000 }
+				open={ !!snackbar.isOpen }
+				onClose={ _closeSnackbar }
+				TransitionComponent={ SnackbarTransition }
+				anchorOrigin={{
+					horizontal: 'center',
+					vertical: 'top'
+				}}
+			>
+				<Alert
+					variant="filled"
+					elevation={ 6 }
+					severity={ snackbar.severity }
+					onClose={ _closeSnackbar }
+					sx={{ width: '100%' }}
+				>
+					{ snackbar.message }
+				</Alert>
+			</Snackbar>
 			<Button
 				id="robot-list-add"
 				variant="text"
@@ -75,7 +105,7 @@ export default function MainPageMobile() {
 				fullScreen={ true }
 				open={ !!selectedRobot }
 				aria-labelledby="inspection-form-dialog__title"
-				TransitionComponent={ Transition }
+				TransitionComponent={ InspectionTransition }
 				onClose={ () => _selectRobot(null) }
 			>
 				<div className="inspection-form-dialog__header">

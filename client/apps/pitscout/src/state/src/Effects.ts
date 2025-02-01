@@ -4,8 +4,9 @@ import {
 	ICreateInspectionRequest,
 	IForm,
 	IFormQuestions,
+	IOfflineCreateInspectionRequest,
 	IPitState,
-	UploadErrors,
+	UploadErrors
 } from '../../models';
 import ApiService from '../../services/ApiService';
 import FormModelService from '../../services/FormModelService';
@@ -17,9 +18,11 @@ import {
 	getEventsFailed,
 	getEventsStart,
 	getEventsSuccess,
+	recallOfflineFormsSuccess,
 	selectEventSuccess,
 	uploadFailed,
 	uploadFormFailed,
+	uploadFormOffline,
 	uploadFormStart,
 	uploadFormSuccess,
 	uploadStart,
@@ -41,10 +44,12 @@ import {
 } from '@gearscout/state';
 
 type GetState = () => IPitState;
+const OFFLINE_INSPECTION_LOCATION = 'offlineInspections';
 
 export const initApp = () => async (dispatch: AppDispatch) => {
 	attemptEventSelectionFromStorage(dispatch);
 	attemptLoginFromStorage(dispatch);
+	attemptOfflineInspectionRecallFromStorage(dispatch);
 };
 
 const attemptLoginFromStorage = (dispatch: AppDispatch): boolean => {
@@ -76,6 +81,14 @@ const attemptEventSelectionFromStorage = (dispatch: AppDispatch): boolean => {
 	}
 
 	return false;
+};
+
+const attemptOfflineInspectionRecallFromStorage = (dispatch: AppDispatch) => {
+	const offlineRequests: string = localStorage.getItem(OFFLINE_INSPECTION_LOCATION);
+
+	if (offlineRequests) {
+		dispatch(recallOfflineFormsSuccess(JSON.parse(offlineRequests)));
+	}
 };
 
 export const login = (
@@ -177,16 +190,17 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 	);
 	dispatch(uploadFormStart(formState));
 
+	const event: IEventInfo = getState().events.selectedEvent;
 	const request: ICreateInspectionRequest = FormModelService.convertQuestionsToRequest({
 		user: getState().login.user,
-		event: getState().events.selectedEvent,
+		event: event,
 		robotNumber: robotNumber,
 		questions: questions
 	});
 
 	try {
 		await ApiService.uploadForm({
-			event: getState().events.selectedEvent,
+			event: event,
 			form: request,
 			tokenString: getState().login.tokenString
 		});
@@ -194,8 +208,26 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 	} catch (error) {
 		console.log(error);
 		const err = error as AxiosError;
+
+		if (err.code === 'ERR_NETWORK') {
+			const offlineRequests: IOfflineCreateInspectionRequest[] =
+				getState().forms.offline.filter(r => r.inspection.robotNumber !== robotNumber);
+			offlineRequests.push({
+				event: event,
+				inspection: request
+			});
+
+			localStorage.setItem(OFFLINE_INSPECTION_LOCATION, JSON.stringify(offlineRequests));
+			dispatch(uploadFormOffline({
+				robotNumber: robotNumber,
+				requests: offlineRequests
+			}));
+
+			return;
+		}
+
 		let msg: FormErrors = FormErrors.unknown;
-		if (error.response) {
+		if (err.response) {
 			switch (err.response.status) {
 				case HttpStatusCode.Unauthorized: // Fallthrough
 				case HttpStatusCode.Forbidden:

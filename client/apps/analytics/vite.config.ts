@@ -33,7 +33,7 @@ export default defineConfig({
 		}
 	},
 	build: {
-		outDir: '../../dist/apps/analytics',
+		outDir: '../../_build/analytics',
 		emptyOutDir: true,
 		reportCompressedSize: true,
 		commonjsOptions: {

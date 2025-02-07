@@ -72,7 +72,8 @@ export default function InspectionForm2025(props: IProps) {
 	const [canRemoveAlgae,	setCanRemoveAlgae]	= useState<string>('');
 	const [humanPosition,		setHumanPosition]		= useState<string>('');
 	const [scoreLocations,	setScoreLocations]	= useState<string[]>([]);
-	const [intakeLocations,	setIntakeLocations]	= useState<string[]>([]);
+	const [coralIntakeLocations,	setCoralIntakeLocations]	= useState<string[]>([]);
+	const [algaeIntakeLocations,	setAlgaeIntakeLocations]	= useState<string[]>([]);
 	const [climbHeight,			setClimbHeight]			= useState<string>('');
 	const [robotNotes,			setRobotNotes]			= useState<string>('');
 	/* End form questions */
@@ -86,7 +87,8 @@ export default function InspectionForm2025(props: IProps) {
 		setCanRemoveAlgae(savedForm.questions[FormQuestions.removeAlgae] ?? '');
 		setHumanPosition(savedForm.questions[FormQuestions.humanPosition] ?? '');
 		setScoreLocations(savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []);
-		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
+		setCoralIntakeLocations(savedForm.questions[FormQuestions.coralIntakeLocations]?.split(', ') ?? []);
+		setAlgaeIntakeLocations(savedForm.questions[FormQuestions.algaeIntakeLocations]?.split(', ') ?? []);
 		setClimbHeight(savedForm.questions[FormQuestions.climbCapabilities] ?? '');
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
@@ -101,7 +103,8 @@ export default function InspectionForm2025(props: IProps) {
 			[FormQuestions.removeAlgae]: canRemoveAlgae,
 			[FormQuestions.humanPosition]: humanPosition,
 			[FormQuestions.scoreLocations]: scoreLocations.join(', '),
-			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
+			[FormQuestions.coralIntakeLocations]: coralIntakeLocations.join(', '),
+			[FormQuestions.algaeIntakeLocations]: algaeIntakeLocations.join(', '),
 			[FormQuestions.climbCapabilities]: climbHeight,
 			[FormQuestions.robotNotes]: robotNotes
 		}));
@@ -131,15 +134,24 @@ export default function InspectionForm2025(props: IProps) {
 			<AutoPathsInput value={ autoPaths } onChange={ setAutoPaths } />
 			<VisionCapabilitiesInput value={ visionCapabilities } onChange={ setVisionCapabilities } />
 			<CheckboxGroup
-				title="Intake locations"
+				title="Coral intake locations"
 				options={ ['HP', 'Floor'] }
-				values={ intakeLocations }
-				onChange={ setIntakeLocations }
+				values={ coralIntakeLocations }
+				includeNoneOption={ true }
+				onChange={ setCoralIntakeLocations }
+			/>
+			<CheckboxGroup
+				title="Algae intake locations"
+				options={ ['Reef', 'Floor'] }
+				values={ algaeIntakeLocations }
+				includeNoneOption={ true }
+				onChange={ setAlgaeIntakeLocations }
 			/>
 			<CheckboxGroup
 				title="Score locations"
 				options={ SCORE_LOCATIONS_2025 }
 				values={ scoreLocations }
+				includeNoneOption={ true }
 				onChange={ setScoreLocations }
 			/>
 			<Dropdown

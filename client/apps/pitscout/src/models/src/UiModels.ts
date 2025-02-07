@@ -14,6 +14,8 @@ export enum FormQuestions {
 	shootingLocations = 'SHOOTING_LOCATIONS',
 	climbCapabilities = 'CLIMB_CAPABILITIES',
 	robotNotes = 'ROBOT_NOTES',
+	coralIntakeLocations = 'INTAKE_LOCATIONS_CORAL',
+	algaeIntakeLocations = 'INTAKE_LOCATIONS_ALGAE',
 	removeAlgae = 'REMOVE_ALGAE'
 }
 

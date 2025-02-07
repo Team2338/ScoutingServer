@@ -91,9 +91,9 @@ export const login = (
 		const tokenString: string = response.data.token;
 		const token: ITokenModel = authEngine.createTokenModel(tokenString);
 
-		if (user.role !== UserRole.admin && user.role !== UserRole.superAdmin) {
-			dispatch(loginFailed(LoginErrors.unauthorized));
-		}
+		// if (user.role !== UserRole.admin && user.role !== UserRole.superAdmin) {
+		// 	dispatch(loginFailed(LoginErrors.unauthorized));
+		// }
 
 		localStorage.setItem('member', JSON.stringify(user));
 		localStorage.setItem('tokenString', tokenString);

@@ -9,14 +9,20 @@ interface IProps {
 	title: string;
 	options: string[];
 	values: string[];
+	includeNoneOption?: boolean;
 	onChange: (values: string[]) => void;
 }
+
+const NONE = 'None';
 
 export default function CheckboxGroup(props: IProps) {
 
 	const handleSelection = (event, option: string): void => {
 		if (event.target.checked && !props.values.includes(option)) {
-			props.onChange([...props.values, option]);
+			const nextValues = props.values
+				.filter((value: string) => value !== NONE)
+				.concat(option);
+			props.onChange(nextValues);
 			return;
 		}
 
@@ -26,11 +32,31 @@ export default function CheckboxGroup(props: IProps) {
 		}
 	};
 
+	const handleNoneSelection = (event): void => {
+		if (event.target.checked) {
+			props.onChange([NONE]);
+			return;
+		}
+
+		props.onChange([]);
+	};
+
 	return (
 		<div className="checkbox-group">
 			<span className="checkbox-group__label">{ props.title }</span>
 			<FormGroup>
 				<div className="checkbox-row">
+					{
+						props.includeNoneOption && (
+							<FormControlLabel
+								key={ NONE }
+								control={ <Checkbox /> }
+								label={ NONE }
+								checked={ props.values.includes(NONE) }
+								onChange={ handleNoneSelection}
+							/>
+						)
+					}
 					{
 						props.options.map((option) => (
 							<FormControlLabel

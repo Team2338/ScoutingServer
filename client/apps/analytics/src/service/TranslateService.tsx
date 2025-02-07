@@ -149,7 +149,11 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Password',
 		'EVENTS': 'Events',
 		'SWITCH_EVENTS': 'Switch events',
-		'RETRY': 'Retry'
+		'RETRY': 'Retry',
+		'INTAKE_LOCATIONS_CORAL': 'Coral intake locations',
+		'INTAKE_LOCATIONS_ALGAE': 'Algae intake locations',
+		'REMOVE_ALGAE': 'Can remove algae',
+		'HUMAN_POSITION': 'Preferred HP role'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -267,7 +271,11 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Contraseña',
 		'EVENTS': 'Eventos',
 		'SWITCH_EVENTS': 'Cambiar el evento',
-		'RETRY': 'Rever'
+		'RETRY': 'Rever',
+		'INTAKE_LOCATIONS_CORAL': 'Lugares de captación de corales',
+		'INTAKE_LOCATIONS_ALGAE': 'Lugares de captación de algas',
+		'REMOVE_ALGAE': 'Puede eliminar las algas',
+		'HUMAN_POSITION': 'Rol de jugador humano preferido'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -385,7 +393,11 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Mot de passe',
 		'EVENTS': 'Événements',
 		'SWITCH_EVENTS': 'Changer l\'événement',
-		'RETRY': 'Réessayer'
+		'RETRY': 'Réessayer',
+		'INTAKE_LOCATIONS_CORAL': 'Emplacements des prises d\'eau de corail',
+		'INTAKE_LOCATIONS_ALGAE': 'Emplacements de captage des algues',
+		'REMOVE_ALGAE': 'Peut éliminer les algues',
+		'HUMAN_POSITION': 'Rôle de joueur humain préféré'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -503,7 +515,11 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Şifre',
 		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
 		'SWITCH_EVENTS': 'Etkinliği değiştir',
-		'RETRY': 'Tekrar dene'
+		'RETRY': 'Tekrar dene',
+		'INTAKE_LOCATIONS_CORAL': 'Mercan giriş yerleri',
+		'INTAKE_LOCATIONS_ALGAE': 'Alg giriş yerleri',
+		'REMOVE_ALGAE': 'Algleri kaldırabilir',
+		'HUMAN_POSITION': 'Tercih edilen insan oyuncu rolü'
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -620,6 +636,10 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Heslo', // TODO verify
 		'EVENTS': 'Události', // TODO verify
 		'SWITCH_EVENTS': 'Přepněte událost', // TODO: verify
-		'RETRY': 'Zkuste to znovu'
+		'RETRY': 'Zkuste to znovu',
+		'INTAKE_LOCATIONS_CORAL': 'Místa příjmu korálů', // TODO: verify
+		'INTAKE_LOCATIONS_ALGAE': 'Místa příjmu řas', // TODO: verify
+		'REMOVE_ALGAE': 'Dokáže odstranit řasy', // TODO: verify
+		'HUMAN_POSITION': 'Preferovaná role lidského hráče' //TODO: verify
 	}
 };

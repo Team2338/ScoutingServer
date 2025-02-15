@@ -1,14 +1,12 @@
 import React from 'react';
-import { IForm } from './UiModels';
+import {
+	IForm,
+} from './UiModels';
 import {
 	IEventInfo,
 	ILoginState,
 	LoadStatus
 } from '@gearscout/models';
-import {
-	ICreateInspectionRequest,
-	IOfflineCreateInspectionRequest
-} from './RequestModels';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
@@ -38,7 +36,7 @@ export interface IFormsState {
 	data: {
 		[robotNumber: number]: IForm
 	};
-	offline: IOfflineCreateInspectionRequest[];
+	offline: IForm[];
 }
 
 export interface ISnackbarState {

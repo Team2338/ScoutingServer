@@ -5,8 +5,7 @@ import {
 	IForm,
 	IPitState,
 	UploadErrors,
-	TGameYear,
-	IOfflineCreateInspectionRequest
+	TGameYear
 } from '../../models';
 import {
 	IEventInfo,
@@ -33,10 +32,11 @@ export const resetImageUpload = createAction('upload/reset');
 
 export const createForm = createAction<number>('form/create-form');
 export const selectForm = createAction<number>('form/select-form');
-export const recallOfflineFormsSuccess = createAction<IOfflineCreateInspectionRequest[]>('form/recall-offline');
+export const recallOfflineFormsSuccess = createAction<IForm[]>('form/recall-offline');
+export const retryOfflineFormsStart = createAction('form/retry-offline-forms-start');
 export const uploadFormStart = createAction<IForm>('form/upload-form-start');
 export const uploadFormSuccess = createAction<number>('form/upload-form-success');
-export const uploadFormOffline = createAction<{ robotNumber: number, requests: IOfflineCreateInspectionRequest[] }>('form/upload-form-offline');
+export const uploadFormOffline = createAction<IForm>('form/upload-form-offline');
 export const uploadFormFailed = createAction<{ robotNumber: number, error: FormErrors }>('form/upload-form-failed');
 export const getAllFormsStart = createAction('form/get-all-start');
 export const getAllFormsSuccess = createAction<{ forms: Record<number, IForm>, robots: number[] }>('form/get-all-success');
@@ -167,6 +167,9 @@ const oldReducer = createReducer(initialState, builder => {
 		.addCase(recallOfflineFormsSuccess, (state: IPitState, action) => {
 			state.forms.offline = action.payload;
 		})
+		.addCase(retryOfflineFormsStart, (state: IPitState) => {
+			state.forms.offline = [];
+		})
 		.addCase(uploadFormStart, (state: IPitState, action) => {
 			state.forms.data[action.payload.robotNumber] = action.payload;
 			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.loading;
@@ -176,7 +179,9 @@ const oldReducer = createReducer(initialState, builder => {
 			showSnackbar(state, 'success', 'Successfully submitted inspection');
 		})
 		.addCase(uploadFormOffline, (state: IPitState, action) => {
-			state.forms.offline = action.payload.requests;
+			state.forms.offline = state.forms.offline
+				.filter(form => form.robotNumber !== action.payload.robotNumber)
+				.concat(action.payload);
 			state.forms.data[action.payload.robotNumber].loadStatus = LoadStatus.success;
 			showSnackbar(state, 'warning', 'Poor network connection - inspection saved for later submission');
 		})

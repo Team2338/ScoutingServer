@@ -6,6 +6,10 @@
 	padding: 20px 12px 12px 12px;
 	max-height: calc(100vh - var(--header-height));
 	overflow-y: auto;
+
+	#resend-offline-button {
+		margin-bottom: 20px;
+	}
 }
 
 .inspection-form-dialog__header {

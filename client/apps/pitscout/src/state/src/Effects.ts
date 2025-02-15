@@ -4,7 +4,6 @@ import {
 	ICreateInspectionRequest,
 	IForm,
 	IFormQuestions,
-	IOfflineCreateInspectionRequest,
 	IPitState,
 	UploadErrors
 } from '../../models';
@@ -19,6 +18,7 @@ import {
 	getEventsStart,
 	getEventsSuccess,
 	recallOfflineFormsSuccess,
+	retryOfflineFormsStart,
 	selectEventSuccess,
 	uploadFailed,
 	uploadFormFailed,
@@ -76,7 +76,7 @@ const attemptEventSelectionFromStorage = (dispatch: AppDispatch): boolean => {
 	const selectedEvent: string = localStorage.getItem('selectedEvent');
 
 	if (selectedEvent) {
-		dispatch(selectEvent(JSON.parse(selectedEvent)));
+		dispatch(selectEvent(JSON.parse(selectedEvent), false));
 		return true;
 	}
 
@@ -142,8 +142,12 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 	}
 };
 
-export const selectEvent = (event: IEventInfo) => async (dispatch: AppDispatch) => {
+export const selectEvent = (event: IEventInfo, clearOfflineForms = true) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('selectedEvent', JSON.stringify(event));
+	if (clearOfflineForms) {
+		localStorage.removeItem(OFFLINE_INSPECTION_LOCATION);
+		dispatch(recallOfflineFormsSuccess([]));
+	}
 	dispatch(selectEventSuccess(event));
 };
 
@@ -183,6 +187,13 @@ export const uploadImage = (file: Blob, robotNumber: string) => async (dispatch:
 	}
 };
 
+export const uploadOfflineForms = () => async (dispatch: AppDispatch, getState: GetState) => {
+	const offlineForms: IForm[] = getState().forms.offline;
+	dispatch(retryOfflineFormsStart());
+	offlineForms
+		.forEach(form => dispatch(uploadForm(form.robotNumber, form.questions)));
+};
+
 export const uploadForm = (robotNumber: number, questions: IFormQuestions) => async (dispatch: AppDispatch, getState: GetState) => {
 	const formState: IForm = FormModelService.convertQuestionsToFormState(
 		robotNumber,
@@ -210,18 +221,9 @@ export const uploadForm = (robotNumber: number, questions: IFormQuestions) => as
 		const err = error as AxiosError;
 
 		if (err.code === 'ERR_NETWORK') {
-			const offlineRequests: IOfflineCreateInspectionRequest[] =
-				getState().forms.offline.filter(r => r.inspection.robotNumber !== robotNumber);
-			offlineRequests.push({
-				event: event,
-				inspection: request
-			});
-
-			localStorage.setItem(OFFLINE_INSPECTION_LOCATION, JSON.stringify(offlineRequests));
-			dispatch(uploadFormOffline({
-				robotNumber: robotNumber,
-				requests: offlineRequests
-			}));
+			dispatch(uploadFormOffline(formState));
+			const offlineForms: IForm[] = getState().forms.offline;
+			localStorage.setItem(OFFLINE_INSPECTION_LOCATION, JSON.stringify(offlineForms));
 
 			return;
 		}

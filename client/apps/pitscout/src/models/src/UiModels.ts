@@ -1,4 +1,7 @@
-import { LoadStatus } from '@gearscout/models';
+import {
+	IEventInfo,
+	LoadStatus
+} from '@gearscout/models';
 
 export enum FormQuestions {
 	drivetrain = 'DRIVETRAIN',

@@ -4,6 +4,7 @@ import {
 	closeSnackbar,
 	loadForms,
 	selectForm,
+	uploadOfflineForms,
 	useAppDispatch,
 	useAppSelector
 } from '../../state';
@@ -36,10 +37,12 @@ export default function MainPage() {
 	const role: UserRole = useAppSelector(state => state.login.role);
 	const selectedRobot: number = useAppSelector(state => state.forms.selected);
 	const snackbar = useAppSelector(state => state.snackbar);
+	const hasOfflineForms: boolean = useAppSelector(state => state.forms.offline.length > 0);
 	const loadStatus: LoadStatus = useAppSelector(state => state.forms.loadStatus);
 	const [isNewRobotModalOpen, setNewRobotModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [isImageModalOpen, setImageModalOpen]: Statelet<boolean> = useState<boolean>(false);
 	const _closeSnackbar = () => dispatch(closeSnackbar());
+	const _resendOfflineForms = () => dispatch(uploadOfflineForms());
 
 	const showSkeletonLoader: boolean = (loadStatus === LoadStatus.none) || (loadStatus === LoadStatus.loading);
 
@@ -101,6 +104,16 @@ export default function MainPage() {
 			</Snackbar>
 
 			<div className="robot-list-wrapper">
+				{ hasOfflineForms && (
+					<Button
+						id="resend-offline-button"
+						variant="contained"
+						color="secondary"
+						onClick={ _resendOfflineForms }
+					>
+						Resend offline inspections
+					</Button>
+				)}
 				<Button
 					id="robot-list-add"
 					variant="text"

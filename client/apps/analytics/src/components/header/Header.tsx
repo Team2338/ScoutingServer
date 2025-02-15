@@ -279,19 +279,21 @@ function DownloadButton() {
 
 	return (
 		<Tooltip title={ translate('DOWNLOAD_DATA_AS_CSV') }>
-			<Button
-				className="download-button"
-				color="primary"
-				disableElevation={ true }
-				variant="contained"
-				aria-label={ translate('DOWNLOAD_DATA') }
-				startIcon={ <Icon>download</Icon> }
-				href={ csv.url }
-				download={ filename }
-				disabled={ !(csv.loadStatus === LoadStatus.success) } // TODO: cover all the scenarios
-			>
-				{ translate('DATA') }
-			</Button>
+			<span>
+				<Button
+					className="download-button"
+					color="primary"
+					disableElevation={ true }
+					variant="contained"
+					aria-label={ translate('DOWNLOAD_DATA') }
+					startIcon={ <Icon>download</Icon> }
+					href={ csv.url }
+					download={ filename }
+					disabled={ !(csv.loadStatus === LoadStatus.success) } // TODO: cover all the scenarios
+				>
+					{ translate('DATA') }
+				</Button>
+			</span>
 		</Tooltip>
 	);
 }

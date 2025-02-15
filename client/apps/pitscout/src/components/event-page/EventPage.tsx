@@ -4,7 +4,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
-import { EventSelectorList } from '@gearscout/components';
+import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
 import { useTranslator } from '../../services/TranslateService';
 
 const inputProps = {
@@ -54,38 +54,11 @@ export default function EventPage() {
 		<main className="page event-page">
 			<section className="event-input-section">
 				<h2 className="event-section-header">Manually enter event</h2>
-				<TextField
-					id="event-code-input"
-					label="Event code"
-					name="eventCode"
-					type="text"
-					margin="dense"
-					variant="outlined"
-					value={ eventCode }
-					onChange={ (event: ChangeEvent<HTMLInputElement>) => setEventCode(event.target.value) }
-					slotProps={ inputProps }
-					autoComplete="off"
+				<EventSelectorForm
+					teamNumber={ user.teamNumber }
+					selectEvent={ _selectEvent }
+					translate={ translate }
 				/>
-				<TextField
-					id="secret-code-input"
-					label="Secret code"
-					name="secretCode"
-					type="text"
-					margin="dense"
-					variant="outlined"
-					value={ secretCode }
-					onChange={ (event: ChangeEvent<HTMLInputElement>) => setSecretCode(event.target.value) }
-					slotProps={ inputProps }
-					autoComplete="off"
-				/>
-				<Button
-					className="event-input-submit-button"
-					variant="contained"
-					onClick={ manuallySelectEvent }
-					disabled={ eventCode.trim() === '' || secretCode.trim() === '' }
-				>
-					Confirm
-				</Button>
 			</section>
 			<div className="event-section-separator">&minus; or &minus;</div>
 			<section className="event-list-section">

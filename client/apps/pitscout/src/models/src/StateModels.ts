@@ -1,5 +1,7 @@
 import React from 'react';
-import { IForm } from './UiModels';
+import {
+	IForm,
+} from './UiModels';
 import {
 	IEventInfo,
 	ILoginState,
@@ -33,7 +35,8 @@ export interface IFormsState {
 	robots: number[];
 	data: {
 		[robotNumber: number]: IForm
-	}
+	};
+	offline: IForm[];
 }
 
 export interface ISnackbarState {

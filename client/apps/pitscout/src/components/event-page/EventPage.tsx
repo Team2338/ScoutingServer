@@ -1,19 +1,11 @@
 import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
-import { Button, TextField } from '@mui/material';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { IEventInfo, IUserInfo, LoadStatus } from '@gearscout/models';
 import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
 import { useTranslator } from '../../services/TranslateService';
 
-const inputProps = {
-	htmlInput: {
-		maxLength: 32,
-		required: true,
-		pattern: /.*\S.*/
-	}
-};
 
 export default function EventPage() {
 	const translate = useTranslator();
@@ -23,23 +15,10 @@ export default function EventPage() {
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 
-	const [eventCode, setEventCode] = useState<string>('');
-	const [secretCode, setSecretCode] = useState<string>('');
-
 	const _getEvents = () => dispatch(getEvents());
 	const _selectEvent = async (event: IEventInfo) => {
 		await dispatch(selectEvent(event));
 		navigate('/');
-	};
-	const manuallySelectEvent = () => {
-		_selectEvent({
-			gameYear: new Date().getFullYear(),
-			eventCode: eventCode.trim(),
-			secretCode: secretCode.trim(),
-			teamNumber: user.teamNumber,
-			matchCount: null,
-			inspectionCount: null
-		});
 	};
 
 	useEffect(

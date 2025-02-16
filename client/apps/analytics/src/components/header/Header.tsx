@@ -54,7 +54,7 @@ export default function Header() {
 	const _logout = () => dispatch(logout());
 	const isLoggedIn: boolean = useIsLoggedInSelector();
 	const user: IUserInfo = useAppSelector(state => state.loginV2.user);
-	const selectedEvent: IEventInfo = useAppSelector(state => state.loginV2.selectedEvent);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 
 	const [isDrawerOpen, setDrawerOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [accountAnchor, setAccountAnchor] = useState(null);
@@ -265,7 +265,7 @@ export default function Header() {
 
 function DownloadButton() {
 	const translate = useTranslator();
-	const selectedEvent: IEventInfo = useAppSelector(state => state.loginV2.selectedEvent);
+	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 	const csv = useAppSelector(state => state.csv);
 
 	if (!selectedEvent) {

@@ -21,7 +21,7 @@ export default function EventPage() {
 	const teamNumber: number = useAppSelector(state => state.loginV2.user.teamNumber);
 	const userRole: UserRole = useAppSelector(state => state.loginV2.role);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
-	const events: IEventInfo[] = useAppSelector(state => state.events.events);
+	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 	const _selectEvent = async (event: IEventInfo) => {
 		await dispatch(selectEvent(event));
 		navigate('/matches');

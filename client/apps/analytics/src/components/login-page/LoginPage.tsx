@@ -9,10 +9,10 @@ import CreateUser from './create-user/CreateUser';
 import MemberLoginForm from './member-login-form/MemberLoginForm';
 
 const inputs = (state: AppState) => ({
-	initialGameYear: state.loginV2.selectedEvent?.gameYear ?? (new Date()).getFullYear(),
-	initialTeamNumber: state.loginV2.selectedEvent?.teamNumber ?? '',
-	initialEventCode: state.loginV2.selectedEvent?.eventCode ?? '',
-	initialSecretCode: state.loginV2.selectedEvent?.secretCode ?? '',
+	initialGameYear: state.events.selectedEvent?.gameYear ?? (new Date()).getFullYear(),
+	initialTeamNumber: state.events.selectedEvent?.teamNumber ?? '',
+	initialEventCode: state.events.selectedEvent?.eventCode ?? '',
+	initialSecretCode: state.events.selectedEvent?.secretCode ?? '',
 	initialUsername: state.loginV2.user?.username ?? ''
 });
 

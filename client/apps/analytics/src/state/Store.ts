@@ -28,7 +28,9 @@ const INITIAL_STATE: AppState = {
 	},
 	events: {
 		loadStatus: LoadStatus.none,
-		events: []
+		error: null,
+		list: [],
+		selectedEvent: null,
 	},
 	matches: {
 		loadStatus: LoadStatus.none,
@@ -192,7 +194,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				events: {
 					...state.events,
 					loadStatus: LoadStatus.success,
-					events: action.payload
+					list: action.payload
 				}
 			};
 		case Actions.GET_EVENTS_FAIL:
@@ -204,15 +206,16 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				}
 			};
 		case Actions.SELECT_EVENT_SUCCESS:
-			if (action.payload === state.loginV2.selectedEvent) { // TODO: compare IDs once available
+			if (action.payload === state.events.selectedEvent) { // TODO: compare IDs once available
 				return state;
 			}
 
 			return {
 				...INITIAL_STATE,
 				language: state.language,
-				loginV2: {
-					...state.loginV2,
+				loginV2: state.loginV2,
+				events: {
+					...state.events,
 					selectedEvent: action.payload
 				}
 			};

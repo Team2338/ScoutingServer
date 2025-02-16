@@ -9,7 +9,7 @@ import {
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
 import {
-	IEventInfo,
+	IEventInfo, IEventState,
 	ITokenModel,
 	IUserInfo,
 	Language,
@@ -40,7 +40,7 @@ export interface AppState {
 		loadStatus: LoadStatus;
 		url: string;
 	};
-	events: EventState,
+	events: IEventState,
 	matches: {
 		loadStatus: LoadStatus;
 		raw: MatchResponse[];
@@ -76,11 +76,6 @@ export interface LoginV2State {
 	tokenString: string;
 	user: IUserInfo;
 	selectedEvent: IEventInfo;
-}
-
-export interface EventState {
-	loadStatus: LoadStatus;
-	events: IEventInfo[];
 }
 
 export interface ImageState {

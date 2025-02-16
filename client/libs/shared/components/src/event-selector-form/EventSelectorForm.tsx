@@ -85,8 +85,7 @@ export const EventSelectorForm = (props: IProps) => {
 				slotProps={ textSlotProps }
 			/>
 			<Button
-				className={ styles.submitButton }
-				id="event-selector-form__submit-button"
+				id={ styles.test }
 				variant="contained"
 				color="primary"
 				type="submit"

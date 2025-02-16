@@ -42,18 +42,18 @@ export default function EventPage() {
 
 	return (
 		<main className="page event-page">
-			<div className="event-list-wrapper">
+			<section className="event-list-wrapper">
 				<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
 				<EventSelectorForm
 					teamNumber={ teamNumber }
 					selectEvent={ _selectEvent }
 					translate={ translate }
 				/>
-			</div>
+			</section>
 			{ (userRole === UserRole.admin || userRole === UserRole.superAdmin) &&
 				<Fragment>
 					<div className="event-section-separator">&minus; or &minus;</div>
-					<div className="event-list-wrapper">
+					<section className="event-list-wrapper">
 						<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
 						<EventSelectorList
 							events={ events }
@@ -62,7 +62,7 @@ export default function EventPage() {
 							handleRetry={ _loadEvents }
 							translate={ translate }
 						/>
-					</div>
+					</section>
 				</Fragment>
 			}
 		</main>

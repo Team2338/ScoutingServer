@@ -43,7 +43,7 @@ export default function TeamList({ teams }: IProps) {
 		return <div className="team-image-icon-missing"><Icon>question_mark</Icon></div>;
 	};
 
-	const userTeamNumber: number = useAppSelector(state => state.loginV2.selectedEvent.teamNumber);
+	const userTeamNumber: number = useAppSelector(state => state.events.selectedEvent.teamNumber);
 	const isInspectionsEnabled: boolean = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 
 	const dispatch = useAppDispatch();

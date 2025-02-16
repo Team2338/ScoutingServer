@@ -16,7 +16,7 @@ export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
 	const team: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === props.robotNumber));
-	const userTeamNumber = useAppSelector(state => state.loginV2.selectedEvent.teamNumber);
+	const userTeamNumber = useAppSelector(state => state.events.selectedEvent.teamNumber);
 	const isInspectionsEnabled = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 	const [isInspectionDrawerOpen, setInspectionDrawerOpen]: Statelet<boolean> = useState(false);
 

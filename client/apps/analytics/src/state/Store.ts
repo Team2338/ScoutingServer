@@ -16,11 +16,11 @@ const INITIAL_STATE: AppState = {
 	language: Language.ENGLISH,
 	loginV2: {
 		loginStatus: LoginStatus.none,
+		error: null,
 		role: null,
 		tokenString: null,
 		token: null,
 		user: null,
-		selectedEvent: null
 	},
 	csv: {
 		loadStatus: LoadStatus.none,
@@ -79,7 +79,7 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 				...state,
 				language: action.payload
 			};
-		case Actions.LOGIN:
+		case Actions.LOGIN_AS_GUEST:
 			return {
 				...state,
 				loginV2: {
@@ -92,7 +92,10 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 						teamNumber: action.payload.teamNumber,
 						username: action.payload.username,
 						role: UserRole.guest,
-					},
+					}
+				},
+				events: {
+					...state.events,
 					selectedEvent: {
 						teamNumber: action.payload.teamNumber,
 						gameYear: action.payload.gameYear,

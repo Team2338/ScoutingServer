@@ -16,8 +16,6 @@ export default function TeamDetail(props: IProps) {
 
 	const translate = useTranslator();
 	const team: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === props.robotNumber));
-	const userTeamNumber = useAppSelector(state => state.events.selectedEvent.teamNumber);
-	const isInspectionsEnabled = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 	const [isInspectionDrawerOpen, setInspectionDrawerOpen]: Statelet<boolean> = useState(false);
 
 	if (!props.robotNumber) {
@@ -43,26 +41,19 @@ export default function TeamDetail(props: IProps) {
 		<div className="team-detail">
 			<div className="team-number">
 				<span>{ translate('TEAM') } { props.robotNumber }</span>
-				{
-					isInspectionsEnabled
-					&& <Button
-						color="primary"
-						startIcon={ <Icon>assignment_turned_in</Icon> }
-						onClick={ () => setInspectionDrawerOpen(true) }
-					>
-						{ translate('INSPECTION') }&nbsp;&gt;
-					</Button>
-				}
-
+				<Button
+					color="primary"
+					startIcon={ <Icon>assignment_turned_in</Icon> }
+					onClick={ () => setInspectionDrawerOpen(true) }
+				>
+					{ translate('INSPECTION') }&nbsp;&gt;
+				</Button>
 			</div>
-			{
-				isInspectionsEnabled
-				&& <InspectionSection
-					robotNumber={ props.robotNumber }
-					isDrawerOpen={ isInspectionDrawerOpen }
-					closeDrawer={ () => setInspectionDrawerOpen(false) }
-				/>
-			}
+			<InspectionSection
+				robotNumber={ props.robotNumber }
+				isDrawerOpen={ isInspectionDrawerOpen }
+				closeDrawer={ () => setInspectionDrawerOpen(false) }
+			/>
 			<section className="gamemode-list">{ gamemodeElements }</section>
 		</div>
 	);

@@ -13,8 +13,8 @@ import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 import team.gif.gearscout.token.TokenService;
-import team.gif.gearscout.token.UserEntity;
-import team.gif.gearscout.token.UserService;
+import team.gif.gearscout.users.UserEntity;
+import team.gif.gearscout.users.UserService;
 
 import java.io.IOException;
 import java.util.List;

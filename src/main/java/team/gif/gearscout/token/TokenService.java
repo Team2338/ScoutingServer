@@ -20,6 +20,8 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -62,6 +64,21 @@ public class TokenService {
 		validateTokenExistence(tokenModel);
 
 		return tokenModel.getUserId();
+	}
+
+
+	public TokenModel validateTokenHeader(String token) throws ResponseStatusException {
+		// Strip "bearer " from the beginning if it exists
+		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = bearerPattern.matcher(token);
+		token = matcher.replaceFirst("");
+
+		validateTokenStructure(token);
+		validateTokenIntegrity(token);
+		TokenModel tokenModel = parseToken(token);
+		validateTokenExistence(tokenModel);
+
+		return tokenModel;
 	}
 
 

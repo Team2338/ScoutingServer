@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.shared.UserRoles;
+import team.gif.gearscout.token.TokenModel;
 import team.gif.gearscout.token.TokenService;
-import team.gif.gearscout.token.UserEntity;
-import team.gif.gearscout.token.UserService;
+import team.gif.gearscout.users.UserEntity;
+import team.gif.gearscout.users.UserService;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,21 +47,17 @@ public class MatchControllerV2 extends MatchController {
 	@PutMapping(value = "/match/{matchId}/hide")
 	public ResponseEntity<MatchEntity> hideMatch(
 		@PathVariable Long matchId,
-		@RequestHeader(value = "Authorization") String token
+		@RequestHeader(value = "Authorization") String tokenHeader
 	) {
 		logger.debug("Received hideMatch request: {}", matchId);
 
-		// Strip "bearer " from the beginning if it exists
-		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = bearerPattern.matcher(token);
-		token = matcher.replaceFirst("");
-
-		Long userId = tokenService.validateToken(token);
+		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
+		Long userId = token.getUserId();
 		UserEntity user = userService.findUserById(userId);
 
 		MatchEntity result = switch (user.getRole()) {
-			case "ADMIN" -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, true);
-			case "SUPERADMIN" -> matchService.setMatchHiddenStatus(matchId, true);
+			case UserRoles.ADMIN -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, true);
+			case UserRoles.SUPERADMIN -> matchService.setMatchHiddenStatus(matchId, true);
 			default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		};
 
@@ -70,21 +68,17 @@ public class MatchControllerV2 extends MatchController {
 	@PutMapping(value = "/match/{matchId}/unhide")
 	public ResponseEntity<MatchEntity> unhideMatch(
 		@PathVariable Long matchId,
-		@RequestHeader(value = "Authorization") String token
+		@RequestHeader(value = "Authorization") String tokenHeader
 	) {
 		logger.debug("Received unhideMatch request: {}", matchId);
 
-		// Strip "bearer " from the beginning if it exists
-		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = bearerPattern.matcher(token);
-		token = matcher.replaceFirst("");
-
-		Long userId = tokenService.validateToken(token);
+		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
+		Long userId = token.getUserId();
 		UserEntity user = userService.findUserById(userId);
 
 		MatchEntity result = switch (user.getRole()) {
-			case "ADMIN" -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, false);
-			case "SUPERADMIN" -> matchService.setMatchHiddenStatus(matchId, false);
+			case UserRoles.ADMIN -> matchService.setMatchHiddenStatus(user.getTeamNumber(), matchId, false);
+			case UserRoles.SUPERADMIN -> matchService.setMatchHiddenStatus(matchId, false);
 			default -> throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		};
 

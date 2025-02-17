@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.users.UserEntity;
+import team.gif.gearscout.users.UserService;
 
 @RestController
 @RequestMapping(value = "/api/v2/auth", produces = MediaType.APPLICATION_JSON_VALUE)

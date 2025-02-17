@@ -6,15 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.shared.UserRoles;
+import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
+import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.token.UserEntity;
 import team.gif.gearscout.token.UserService;
@@ -22,6 +19,7 @@ import team.gif.gearscout.token.UserService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,6 +88,79 @@ public class ImageControllerV2 {
 			image.getContentType()
 		);
 		return ResponseEntity.ok().build();
+	}
+
+
+	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/robot/{robotNumber}")
+	public ResponseEntity<ImageInfoEntity> getImageInfo(
+		@PathVariable Integer teamNumber,
+		@PathVariable Integer gameYear,
+		@PathVariable String eventCode,
+		@PathVariable Integer robotNumber,
+		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+	) {
+		logger.debug("Received getImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
+		return ResponseEntity.ok(
+			imageService.getImageInfo(
+				teamNumber,
+				gameYear,
+				robotNumber,
+				eventCode,
+				secretCode
+			)
+		);
+	}
+
+
+	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
+	public ResponseEntity<List<ImageInfoEntity>> getAllImageInfoForEvent(
+		@PathVariable Integer teamNumber,
+		@PathVariable Integer gameYear,
+		@PathVariable String eventCode,
+		@RequestHeader(value = "secretCode") String secretCode
+	) {
+		logger.debug("Received getAllImageInfoForEvent request");
+		return ResponseEntity.ok(
+			imageService.getImageInfoForEvent(
+				teamNumber,
+				gameYear,
+				eventCode,
+				secretCode
+			)
+		);
+	}
+
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<byte[]> getImage(
+		@PathVariable UUID id,
+		@RequestHeader(value = "If-None-Match", defaultValue = "") String oldChecksum
+	) {
+		ImageContentEntity image = imageService
+			.getImageContent(id)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+		String checksum = "\"%s\"".formatted(imageService.getChecksum(image));
+
+		if (Objects.equals(oldChecksum, checksum)) {
+			return ResponseEntity
+				.status(HttpStatus.NOT_MODIFIED)
+				.body(null);
+		}
+
+		return ResponseEntity
+			.ok()
+			.header("Content-Type", image.getContentType())
+			.header("Cache-Control", "private, no-cache, max-age=0")
+			.header("ETag", checksum)
+			.header("vary", "secretCode")
+			.body(image.getContent());
+	}
+
+
+	@ExceptionHandler(value = { EmptyFileNotAllowedException.class, ImageTypeInvalidException.class })
+	public ResponseEntity<Void> handleBadFileUpload(Exception e) {
+		return ResponseEntity.badRequest().build();
 	}
 
 }

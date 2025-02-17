@@ -107,7 +107,7 @@ class GearscoutService {
 		robotNumber: number;
 		secretCode: string;
 	}): GearscoutResponse<ImageInfoResponse> => {
-		const url: string = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}/robot/${data.robotNumber}`;
+		const url: string = `/v2/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}/robot/${data.robotNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: data.secretCode
@@ -123,7 +123,7 @@ class GearscoutService {
 		eventCode: string;
 		secretCode: string;
 	}): GearscoutResponse<ImageInfoResponse[]> => {
-		const url: string = `/v1/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
+		const url: string = `/v2/images/team/${data.teamNumber}/gameYear/${data.gameYear}/event/${data.eventCode}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				secretCode: data.secretCode

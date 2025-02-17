@@ -1,5 +1,6 @@
+import { UserRole } from '@gearscout/models';
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppState, LoginStatus } from '../models';
 import { initApp } from '../state';
@@ -12,11 +13,13 @@ import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
 import InspectionPage from './inspection-page/InspectionPage';
 import EventPage from './event-page/EventPage';
+import UserManagementPage from './user-management-page/UserManagementPage';
 
 
 const select = (state: AppState) => ({
 	isLoggedIn: state.loginV2.loginStatus === LoginStatus.loggedIn || state.loginV2.loginStatus === LoginStatus.guest,
 	loginStatus: state.loginV2.loginStatus,
+	userRole: state.loginV2.role,
 	hasSelectedEvent: state.events.selectedEvent
 });
 
@@ -24,8 +27,11 @@ const outputs = (dispatch) => ({
 	initApp: async () => dispatch(initApp())
 });
 
+const connector = connect(select, outputs);
+type IProps = ConnectedProps<typeof connector>;
 
-class ConnectedApp extends React.Component<any, null> {
+
+class ConnectedApp extends React.Component<IProps, null> {
 
 	componentDidMount(): void {
 		this.props.initApp();
@@ -51,6 +57,8 @@ class ConnectedApp extends React.Component<any, null> {
 		}
 
 		const isNotGuest: boolean = this.props.loginStatus === LoginStatus.loggedIn;
+		const isAdmin: boolean = this.props.userRole === UserRole.superAdmin || this.props.userRole === UserRole.admin;
+		console.log(this.props.userRole);
 
 		const eventPage = <EventPage />;
 		const managePage = <ManagePage />;
@@ -58,6 +66,7 @@ class ConnectedApp extends React.Component<any, null> {
 		const statPage = <StatPage />;
 		const planningPage = <PlanningPage />;
 		const inspectionPage = <InspectionPage />;
+		const userManagementPage = <UserManagementPage />;
 
 		return (
 			<React.Fragment>
@@ -70,6 +79,7 @@ class ConnectedApp extends React.Component<any, null> {
 					<Route path="/stats" element={ statPage } />
 					<Route path="/plan" element={ planningPage } />
 					<Route path="/inspections" element={ inspectionPage } />
+					{ isAdmin && <Route path="/user-management" element={ userManagementPage } /> }
 
 					{ /* Default: redirect to home page */ }
 					<Route path="*" element={ <Navigate to="/" /> } />
@@ -80,5 +90,5 @@ class ConnectedApp extends React.Component<any, null> {
 
 }
 
-const App = connect(select, outputs)(ConnectedApp);
+const App = connector(ConnectedApp);
 export default App;

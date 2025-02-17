@@ -43,6 +43,7 @@ interface IRoute {
 	path: string;
 	name: string;
 	icon: string;
+	roles?: UserRole[];
 }
 
 export default function Header() {
@@ -170,7 +171,8 @@ export default function Header() {
 		{
 			path: '/events',
 			name: 'EVENTS',
-			icon: 'event'
+			icon: 'event',
+			roles: [UserRole.unverifiedMember, UserRole.verifiedMember, UserRole.admin, UserRole.superAdmin]
 		},
 		{
 			path: '/matches',
@@ -196,22 +198,30 @@ export default function Header() {
 			path: '/inspections',
 			name: 'INSPECTIONS',
 			icon: 'assignment_turned_in'
+		},
+		{
+			path: '/user-management',
+			name: 'USER_MANAGEMENT',
+			icon: 'users',
+			roles: [UserRole.admin, UserRole.superAdmin]
 		}
 	];
 
-	const routeComponents = routes.map((route: IRoute) => (
-		<ListItemButton
-			key={ route.name }
-			component={ NavLink }
-			to={ route.path }
-			onClick={ toggleDrawer(false) }
-		>
-			<ListItemIcon>
-				<Icon>{ route.icon }</Icon>
-			</ListItemIcon>
-			<ListItemText primary={ translate(route.name) } />
-		</ListItemButton>
-	));
+	const routeComponents = routes
+		.filter((route: IRoute) => route.roles?.includes(user.role) ?? true) // Show by default
+		.map((route: IRoute) => (
+			<ListItemButton
+				key={ route.name }
+				component={ NavLink }
+				to={ route.path }
+				onClick={ toggleDrawer(false) }
+			>
+				<ListItemIcon>
+					<Icon>{ route.icon }</Icon>
+				</ListItemIcon>
+				<ListItemText primary={ translate(route.name) } />
+			</ListItemButton>
+		));
 
 	const drawer = (
 		<Drawer className="nav-drawer" anchor="left" open={ isDrawerOpen } onClose={ toggleDrawer(false) }>

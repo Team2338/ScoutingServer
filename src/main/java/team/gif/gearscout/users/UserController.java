@@ -100,6 +100,10 @@ public class UserController {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 
+		if (!requester.getTeamNumber().equals(target.getTeamNumber()) && !requester.getRole().equals(UserRoles.SUPERADMIN)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
 		if (!UserRoles.ALL.contains(role)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown role: " + role);
 		}

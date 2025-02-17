@@ -3,14 +3,13 @@ import {
 	IForm,
 } from './UiModels';
 import {
-	IEventInfo,
+	IEventState,
 	ILoginState,
 	LoadStatus
 } from '@gearscout/models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
-export type TGameYear = number;
 export interface IPitState {
 	serviceWorker: {
 		updated: boolean;
@@ -43,13 +42,4 @@ export interface ISnackbarState {
 	message: string;
 	severity: 'error' | 'warning' | 'info' | 'success';
 	isOpen: boolean;
-}
-
-interface IEventState {
-	loadStatus: LoadStatus;
-	error: string;
-	list: IEventInfo[];
-	byYear: Record<TGameYear, IEventInfo[]>;
-	years: TGameYear[];
-	selectedEvent: IEventInfo;
 }

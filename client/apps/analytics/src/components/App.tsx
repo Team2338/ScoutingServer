@@ -17,7 +17,7 @@ import EventPage from './event-page/EventPage';
 const select = (state: AppState) => ({
 	isLoggedIn: state.loginV2.loginStatus === LoginStatus.loggedIn || state.loginV2.loginStatus === LoginStatus.guest,
 	loginStatus: state.loginV2.loginStatus,
-	hasSelectedEvent: state.loginV2.selectedEvent
+	hasSelectedEvent: state.events.selectedEvent
 });
 
 const outputs = (dispatch) => ({

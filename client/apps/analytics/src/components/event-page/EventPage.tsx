@@ -6,9 +6,7 @@ import './EventPage.scss';
 import { useNavigate } from 'react-router-dom';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
-import DataFailure from '../shared/data-failure/DataFailure';
-import EventSelectorForm from './event-selector-form/EventSelectorForm';
-import { EventSelectorList } from '@gearscout/components';
+import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
 import {
 	IEventInfo,
 	LoadStatus,
@@ -20,9 +18,10 @@ export default function EventPage() {
 	const translate = useTranslator();
 	const navigate = useNavigate();
 	const dispatch: AppDispatch = useAppDispatch();
+	const teamNumber: number = useAppSelector(state => state.loginV2.user.teamNumber);
 	const userRole: UserRole = useAppSelector(state => state.loginV2.role);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
-	const events: IEventInfo[] = useAppSelector(state => state.events.events);
+	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 	const _selectEvent = async (event: IEventInfo) => {
 		await dispatch(selectEvent(event));
 		navigate('/matches');
@@ -43,14 +42,18 @@ export default function EventPage() {
 
 	return (
 		<main className="page event-page">
-			<div className="event-list-wrapper">
+			<section className="event-list-wrapper">
 				<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
-				<EventSelectorForm selectEvent={ _selectEvent } />
-			</div>
+				<EventSelectorForm
+					teamNumber={ teamNumber }
+					selectEvent={ _selectEvent }
+					translate={ translate }
+				/>
+			</section>
 			{ (userRole === UserRole.admin || userRole === UserRole.superAdmin) &&
 				<Fragment>
 					<div className="event-section-separator">&minus; or &minus;</div>
-					<div className="event-list-wrapper">
+					<section className="event-list-wrapper">
 						<h1 className="event-list-header">{ translate('SELECT_AN_EVENT') }</h1>
 						<EventSelectorList
 							events={ events }
@@ -59,7 +62,7 @@ export default function EventPage() {
 							handleRetry={ _loadEvents }
 							translate={ translate }
 						/>
-					</div>
+					</section>
 				</Fragment>
 			}
 		</main>

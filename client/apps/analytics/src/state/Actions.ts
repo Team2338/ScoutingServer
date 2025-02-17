@@ -21,7 +21,7 @@ export interface Action {
 
 export enum Actions {
 	SELECT_LANG_SUCCESS = '[LANG] Successfully selected language',
-	LOGIN = '[AUTH] Login',
+	LOGIN_AS_GUEST = '[AUTH] Login as guest',
 	LOGOUT = '[AUTH] Logout',
 	LOGIN_AS_MEMBER_START = '[AUTH] Start login as member',
 	LOGIN_AS_MEMBER_SUCCESS = '[AUTH] Successfully logged in as member',
@@ -80,7 +80,7 @@ export const loginSuccess = (data: {
 	eventCode: string;
 	secretCode: string;
 }): Action => ({
-	type: Actions.LOGIN,
+	type: Actions.LOGIN_AS_GUEST,
 	payload: data
 });
 

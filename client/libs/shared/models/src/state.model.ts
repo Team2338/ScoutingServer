@@ -2,7 +2,7 @@ import {
 	ITokenModel,
 	UserRole
 } from './auth.model';
-import { IUserInfo } from './response.model';
+import { IEventInfo, IUserInfo } from './response.model';
 
 export enum LoginStatus {
 	none = 'none',
@@ -32,4 +32,11 @@ export interface ILoginState {
 export enum LoginErrors { // TODO: use translation keys
 	unauthorized = 'You are not authorized to use this app yet',
 	unknown = 'Oops, something went wrong'
+}
+
+export interface IEventState {
+	loadStatus: LoadStatus;
+	error: string;
+	list: IEventInfo[];
+	selectedEvent: IEventInfo;
 }

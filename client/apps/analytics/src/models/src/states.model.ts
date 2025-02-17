@@ -9,11 +9,12 @@ import {
 } from './response.model';
 import { CommentsForEvent, Inspection } from './display.model';
 import {
-	IEventInfo,
+	IEventState,
 	ITokenModel,
 	IUserInfo,
 	Language,
 	LoadStatus,
+	LoginErrors,
 	UserRole
 } from '@gearscout/models';
 
@@ -40,7 +41,7 @@ export interface AppState {
 		loadStatus: LoadStatus;
 		url: string;
 	};
-	events: EventState,
+	events: IEventState,
 	matches: {
 		loadStatus: LoadStatus;
 		raw: MatchResponse[];
@@ -71,16 +72,11 @@ export interface AppState {
 
 export interface LoginV2State {
 	loginStatus: LoginStatus;
+	error: LoginErrors;
 	role: UserRole;
 	token: ITokenModel;
 	tokenString: string;
 	user: IUserInfo;
-	selectedEvent: IEventInfo;
-}
-
-export interface EventState {
-	loadStatus: LoadStatus;
-	events: IEventInfo[];
 }
 
 export interface ImageState {

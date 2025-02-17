@@ -292,10 +292,10 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 
 	try {
 		const response = await gearscoutService.getMatches(
-			getState().loginV2.selectedEvent.teamNumber,
-			getState().loginV2.selectedEvent.gameYear,
-			getState().loginV2.selectedEvent.eventCode,
-			getState().loginV2.selectedEvent.secretCode
+			getState().events.selectedEvent.teamNumber,
+			getState().events.selectedEvent.gameYear,
+			getState().events.selectedEvent.eventCode,
+			getState().events.selectedEvent.secretCode
 		);
 		const rawMatches: MatchResponse[] = response.data;
 		const matches: Match[] = matchModelService.convertMatchResponsesToModels(rawMatches);
@@ -323,10 +323,10 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 
 	try {
 		const response = await gearscoutService.getMatchesAsCsv(
-			getState().loginV2.selectedEvent.teamNumber,
-			getState().loginV2.selectedEvent.gameYear,
-			getState().loginV2.selectedEvent.eventCode,
-			getState().loginV2.selectedEvent.secretCode
+			getState().events.selectedEvent.teamNumber,
+			getState().events.selectedEvent.gameYear,
+			getState().events.selectedEvent.eventCode,
+			getState().events.selectedEvent.secretCode
 		);
 		const csvContent = response.data;
 		const csvBlob = new Blob([csvContent], {type: 'text/csv'});
@@ -347,9 +347,9 @@ export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getStat
 	console.log('Hiding match');
 	try {
 		const response = await gearscoutService.hideMatch(
-			getState().loginV2.selectedEvent.teamNumber,
+			getState().events.selectedEvent.teamNumber,
 			match.id,
-			getState().loginV2.selectedEvent.secretCode
+			getState().events.selectedEvent.secretCode
 		);
 		const rawMatch: MatchResponse = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
@@ -365,9 +365,9 @@ export const unhideMatch = (match: Match) => async (dispatch: AppDispatch, getSt
 	console.log('Unhiding match');
 	try {
 		const response = await gearscoutService.unhideMatch(
-			getState().loginV2.selectedEvent.teamNumber,
+			getState().events.selectedEvent.teamNumber,
 			match.id,
-			getState().loginV2.selectedEvent.secretCode
+			getState().events.selectedEvent.secretCode
 		);
 		const rawMatch = response.data;
 		const updatedMatch: Match = matchModelService.convertMatchResponseToModel(rawMatch);
@@ -418,10 +418,10 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 
 	try {
 		const response = await gearscoutService.getImageInfoForEvent({
-			teamNumber: getState().loginV2.selectedEvent.teamNumber,
-			gameYear: getState().loginV2.selectedEvent.gameYear,
-			eventCode: getState().loginV2.selectedEvent.eventCode,
-			secretCode: getState().loginV2.selectedEvent.secretCode
+			teamNumber: getState().events.selectedEvent.teamNumber,
+			gameYear: getState().events.selectedEvent.gameYear,
+			eventCode: getState().events.selectedEvent.eventCode,
+			secretCode: getState().events.selectedEvent.secretCode
 		});
 
 		const infoResponses: ImageInfoResponse[] = response.data;
@@ -439,10 +439,10 @@ export const getInspections = () => async (dispatch: AppDispatch, getState: GetS
 
 	try {
 		const response = await gearscoutService.getInspections({
-			teamNumber: getState().loginV2.selectedEvent.teamNumber,
-			gameYear: getState().loginV2.selectedEvent.gameYear,
-			eventCode: getState().loginV2.selectedEvent.eventCode,
-			secretCode: getState().loginV2.selectedEvent.secretCode
+			teamNumber: getState().events.selectedEvent.teamNumber,
+			gameYear: getState().events.selectedEvent.gameYear,
+			eventCode: getState().events.selectedEvent.eventCode,
+			secretCode: getState().events.selectedEvent.secretCode
 		});
 
 		const inspections: Inspection[] = inspectionModelService.convertResponsesToModels(response.data);
@@ -461,10 +461,10 @@ export const getComments = () => async (dispatch: AppDispatch, getState: GetStat
 
 	try {
 		const response = await gearscoutService.getCommentsForEvent({
-			teamNumber: getState().loginV2.selectedEvent.teamNumber,
-			gameYear: getState().loginV2.selectedEvent.gameYear,
-			eventCode: getState().loginV2.selectedEvent.eventCode,
-			secretCode: getState().loginV2.selectedEvent.secretCode
+			teamNumber: getState().events.selectedEvent.teamNumber,
+			gameYear: getState().events.selectedEvent.gameYear,
+			eventCode: getState().events.selectedEvent.eventCode,
+			secretCode: getState().events.selectedEvent.secretCode
 		});
 
 		const comments: CommentsForEvent = commentService.convertResponsesToModels(response.data);

@@ -43,8 +43,8 @@ export default function TeamList({ teams }: IProps) {
 		return <div className="team-image-icon-missing"><Icon>question_mark</Icon></div>;
 	};
 
-	const userTeamNumber: number = useAppSelector(state => state.loginV2.selectedEvent.teamNumber);
-	const isInspectionsEnabled: boolean = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
+	const userTeamNumber: number = useAppSelector(state => state.events.selectedEvent.teamNumber);
+	const areImagesEnabled: boolean = (userTeamNumber === 2338 || userTeamNumber === 9999); // TODO: move to service
 
 	const dispatch = useAppDispatch();
 	const _selectTeam = (team: Team) => dispatch(selectTeam(team.id));
@@ -63,7 +63,7 @@ export default function TeamList({ teams }: IProps) {
 					}}
 				>
 					<div className="team-list-item">
-						{ isInspectionsEnabled && getImage(team.id) }
+						{ areImagesEnabled && getImage(team.id) }
 						<div>{ team.id }</div>
 					</div>
 				</ListItemButton>

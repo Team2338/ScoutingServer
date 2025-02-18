@@ -1,9 +1,9 @@
 import { UserRole } from '@gearscout/models';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppState, LoginStatus } from '../models';
-import { initApp } from '../state';
+import { AppDispatch, initApp } from '../state';
 import './App.scss';
 import Header from './header/Header';
 import LoginPage from './login-page/LoginPage';
@@ -23,7 +23,7 @@ const select = (state: AppState) => ({
 	hasSelectedEvent: state.events.selectedEvent
 });
 
-const outputs = (dispatch) => ({
+const outputs = (dispatch: AppDispatch) => ({
 	initApp: async () => dispatch(initApp())
 });
 
@@ -40,25 +40,24 @@ class ConnectedApp extends React.Component<IProps, null> {
 	render() {
 		if (!this.props.isLoggedIn) {
 			return (
-				<React.Fragment>
+				<Fragment>
 					<Header />
 					<LoginPage />
-				</React.Fragment>
+				</Fragment>
 			);
 		}
 
 		if (!this.props.hasSelectedEvent) {
 			return (
-				<React.Fragment>
+				<Fragment>
 					<Header />
 					<EventPage />
-				</React.Fragment>
+				</Fragment>
 			);
 		}
 
 		const isNotGuest: boolean = this.props.loginStatus === LoginStatus.loggedIn;
 		const isAdmin: boolean = this.props.userRole === UserRole.superAdmin || this.props.userRole === UserRole.admin;
-		console.log(this.props.userRole);
 
 		const eventPage = <EventPage />;
 		const managePage = <ManagePage />;

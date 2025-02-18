@@ -58,7 +58,7 @@ public class UserController {
 	}
 
 
-	@GetMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "")
 	ResponseEntity<List<UserEntity>> getUsersForTeam(
 		@RequestHeader(value = "Authorization") String tokenHeader
 	) {

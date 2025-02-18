@@ -1,15 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import {
-	AppState,
-	ImageInfo,
-	ImageState,
-	LoginStatus,
-	Match,
-	MatchResponse,
-} from '../models';
+import { Language, LoadStatus, UserRole } from '@gearscout/models';
+import { configureStore, UnknownAction } from '@reduxjs/toolkit';
+import { userManagementSlice } from './src/UserManagementSlice';
+import { AppState, ImageInfo, ImageState, LoginStatus, Match, MatchResponse, } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
-import { LoadStatus, UserRole , Language } from '@gearscout/models';
+import { getNextStatusOnFail, getNextStatusOnLoad } from './src/Utility';
 
 
 const INITIAL_STATE: AppState = {
@@ -69,10 +64,14 @@ const INITIAL_STATE: AppState = {
 		loadStatus: LoadStatus.none,
 		comments: {},
 		topics: []
+	},
+	userManagement: {
+		loadStatus: LoadStatus.none,
+		users: []
 	}
 };
 
-const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {
+const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): AppState {
 	switch (action.type) {
 		case Actions.SELECT_LANG_SUCCESS:
 			return {
@@ -512,6 +511,13 @@ const reducer = function (state: AppState = INITIAL_STATE, action: Action): AppS
 	}
 };
 
+const reducer = (state: AppState = INITIAL_STATE, action: UnknownAction | Action) => {
+	return {
+		...(mainReducer(state, action as Action)),
+		userManagement: userManagementSlice(state.userManagement, action as UnknownAction),
+	};
+};
+
 export const store = configureStore({
 	reducer: reducer,
 	middleware: (getDefaultMiddleware) =>
@@ -551,26 +557,6 @@ function replaceRawMatch(matches: MatchResponse[], oldId: number, match: MatchRe
 	result[targetIndex] = match;
 
 	return result;
-}
-
-function getNextStatusOnLoad(previousStatus: LoadStatus): LoadStatus {
-	if (
-		previousStatus === LoadStatus.success
-		|| previousStatus === LoadStatus.loadingWithPriorSuccess
-		|| previousStatus === LoadStatus.failedWithPriorSuccess
-	) {
-		return LoadStatus.loadingWithPriorSuccess;
-	}
-
-	return LoadStatus.loading;
-}
-
-function getNextStatusOnFail(previousStatus: LoadStatus): LoadStatus {
-	if (previousStatus === LoadStatus.loadingWithPriorSuccess) {
-		return LoadStatus.failedWithPriorSuccess;
-	}
-
-	return LoadStatus.failed;
 }
 
 function createImageStateFromInfo(info: ImageInfo[]): ImageState {

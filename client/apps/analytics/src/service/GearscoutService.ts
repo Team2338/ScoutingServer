@@ -8,7 +8,7 @@ import {
 	ICreateUserRequest,
 	IEventInfo,
 	IInspectionQuestionResponse,
-	ILoginResponse
+	ILoginResponse, IUserInfo, UserRole
 } from '@gearscout/models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
@@ -163,6 +163,32 @@ class GearscoutService {
 		};
 
 		return this.http.get(url, config);
+	};
+
+	getUsersOnTeam = (tokenString: string): GearscoutResponse<IUserInfo[]> => {
+		const url: string = '/v2/user';
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${tokenString}`
+			}
+		};
+
+		return this.http.get(url, config);
+	};
+
+	updateUserRole = (data: {
+		userId: number,
+		role: UserRole,
+		tokenString: string
+	}): GearscoutResponse<IUserInfo> => {
+		const url: string = `/v2/user/${data.userId}/role/${data.role}`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${data.tokenString}`
+			}
+		};
+
+		return this.http.put(url, null, config);
 	};
 
 }

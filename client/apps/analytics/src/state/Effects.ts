@@ -54,13 +54,14 @@ import {
 	setHiddenInspectionColumnsStart,
 	showInspectionColumnStart
 } from './Actions';
+import { getUsersFail, getUsersStart, getUsersSuccess } from './src/UserManagementSlice';
 import { AppDispatch } from './Store';
 import {
 	IEventInfo,
 	ITokenModel,
 	IUserInfo,
 	Language,
-	LanguageInfo
+	LanguageInfo, UserRole
 } from '@gearscout/models';
 
 type GetState = () => AppState;
@@ -474,4 +475,26 @@ export const getComments = () => async (dispatch: AppDispatch, getState: GetStat
 		console.log('Error getting comments', error);
 		dispatch(getCommentsFail());
 	}
+};
+
+export const getUsers = () => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Getting users');
+	dispatch(getUsersStart());
+
+	try {
+		const tokenString = getState().loginV2.tokenString;
+		const response = await gearscoutService.getUsersOnTeam(tokenString);
+
+		const users: IUserInfo[] = response.data;
+		dispatch(getUsersSuccess(users));
+	} catch (error) {
+		console.log('Error getting users', error);
+		dispatch(getUsersFail(error));
+	}
+};
+
+export const updateUserRole = (userId: number, role: UserRole) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Updating user role');
+
+	// TODO: something
 };

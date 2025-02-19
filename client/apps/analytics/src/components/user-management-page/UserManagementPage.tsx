@@ -1,12 +1,29 @@
 import './UserManagementPage.scss';
 import { IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
-import { MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+	MenuItem,
+	Select,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+} from '@mui/material';
 import { useEffect, useMemo } from 'react';
 import { useTranslator } from '../../service/TranslateService';
 import { getUsers, updateUserRole, useAppDispatch, useAppSelector } from '../../state';
 
-export default function UserManagementPage() {
 
+const RoleHierarchy: Record<UserRole, number> = {
+	[UserRole.guest]: -1,
+	[UserRole.unverifiedMember]: 0,
+	[UserRole.verifiedMember]: 10,
+	[UserRole.admin]: 20,
+	[UserRole.superAdmin]: 30
+};
+
+export default function UserManagementPage() {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 
@@ -17,6 +34,13 @@ export default function UserManagementPage() {
 	useEffect(() => {
 		dispatch(getUsers());
 	}, [dispatch]);
+
+	const sortedUsers: IUserInfo[] = useMemo(() => (
+		users.toSorted((a: IUserInfo, b: IUserInfo) => (
+			(RoleHierarchy[b.role] - RoleHierarchy[a.role])
+			|| a.username.localeCompare(b.username)
+		))
+	), [users]);
 
 	const roleOptions = useMemo(() => [UserRole.unverifiedMember, UserRole.verifiedMember, UserRole.admin]
 		.map((role: UserRole) => (
@@ -57,7 +81,7 @@ export default function UserManagementPage() {
 						</TableHead>
 						<TableBody>
 							{
-								users.map((user: IUserInfo) => (
+								sortedUsers.map((user: IUserInfo) => (
 									<TableRow key={ user.userId }>
 										<TableCell>{ user.username }</TableCell>
 										<TableCell>{ user.email }</TableCell>
@@ -72,6 +96,7 @@ export default function UserManagementPage() {
 															variant="filled"
 															label={ null }
 															labelId="role-column-title"
+															fullWidth={ true }
 															value={ user.role }
 															onChange={ (event) => dispatch(updateUserRole(user.userId, event.target.value as UserRole)) }
 														>

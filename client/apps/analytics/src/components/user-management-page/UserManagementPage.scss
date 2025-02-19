@@ -2,10 +2,21 @@
 	padding: 16px;
 	background-color: #1976d220;
 
+	@media only screen and (width < 600px) {
+		background-color: #fff;
+	}
+
 	.wrapper {
 		border-radius: 16px;
 		padding: 12px;
 		background-color: #fff;
+		width: fit-content;
+		max-width: 100%;
+		justify-self: center;
+
+		@media only screen and (width < 600px) {
+			padding: 0;
+		}
 
 		h1 {
 			margin: 0 0 8px;
@@ -23,6 +34,10 @@
 			.MuiSelect-select {
 				padding-top: 8px;
 			}
+		}
+
+		tr > td:last-child {
+			padding-right: 0;
 		}
 
 		tbody > tr:last-of-type > td {

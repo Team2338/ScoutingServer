@@ -1,4 +1,6 @@
+import './UserManagementPage.scss';
 import { IUserInfo, LoadStatus } from '@gearscout/models';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslator } from '../../service/TranslateService';
 import { getUsers, useAppDispatch, useAppSelector } from '../../state';
@@ -25,15 +27,36 @@ export default function UserManagementPage() {
 
 	return (
 		<main className="page user-management-page">
-			{
-				users.map((user: IUserInfo) => (
-					<div key={ user.id }>
-						<div className="username">{ user.username }</div>
-						<div className="email">{ user.email }</div>
-						<div className="role">{ user.role }</div>
-					</div>
-				))
-			}
+			<div className="wrapper">
+				<h1 className="title">{ translate('USER_MANAGEMENT') }</h1>
+				<div className="legend">
+					<div>Admin - can modify data</div>
+					<div>Verified User - can see list of events</div>
+					<div>Unverified User - no privileges</div>
+				</div>
+				<TableContainer>
+					<Table aria-label={ translate('USERS') }>
+						<TableHead>
+							<TableRow>
+								<TableCell>{ translate('USERNAME') }</TableCell>
+								<TableCell>{ translate('EMAIL') }</TableCell>
+								<TableCell>{ translate('ROLE') }</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{
+								users.map((user: IUserInfo) => (
+									<TableRow key={ user.id }>
+										<TableCell>{ user.username }</TableCell>
+										<TableCell>{ user.email }</TableCell>
+										<TableCell>{ user.role }</TableCell>
+									</TableRow>
+								))
+							}
+						</TableBody>
+					</Table>
+				</TableContainer>
+			</div>
 		</main>
 	);
 }

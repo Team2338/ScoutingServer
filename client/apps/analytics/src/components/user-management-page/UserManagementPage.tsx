@@ -10,6 +10,7 @@ export default function UserManagementPage() {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 
+	const currentUser: IUserInfo = useAppSelector(state => state.loginV2.user);
 	const loadStatus: LoadStatus = useAppSelector(state => state.userManagement.loadStatus);
 	const users: IUserInfo[] = useAppSelector(state => state.userManagement.users);
 
@@ -45,13 +46,13 @@ export default function UserManagementPage() {
 					<div>Verified User - can see list of events</div>
 					<div>Unverified User - no privileges</div>
 				</div>
-				<TableContainer>
+				<TableContainer id="table-container">
 					<Table aria-label={ translate('USERS') }>
 						<TableHead>
 							<TableRow>
 								<TableCell>{ translate('USERNAME') }</TableCell>
 								<TableCell>{ translate('EMAIL') }</TableCell>
-								<TableCell>{ translate('ROLE') }</TableCell>
+								<TableCell id="role-column-title">{ translate('ROLE') }</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -62,12 +63,15 @@ export default function UserManagementPage() {
 										<TableCell>{ user.email }</TableCell>
 										<TableCell>
 											{
-												user.role === UserRole.superAdmin
+												(user.userId === currentUser.userId || user.role === UserRole.superAdmin)
 													? (
-														UserRole.superAdmin
+														<span className="readonly-role">{ user.role }</span>
 													) : (
 														<Select
+															id={ 'role-selector__' + user.userId}
 															variant="filled"
+															label={ null }
+															labelId="role-column-title"
 															value={ user.role }
 															onChange={ (event) => dispatch(updateUserRole(user.userId, event.target.value as UserRole)) }
 														>

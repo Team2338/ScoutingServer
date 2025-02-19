@@ -15,6 +15,16 @@
 			padding: 0 12px;
 		}
 
+		.readonly-role {
+			line-height: 39px;
+		}
+
+		#table-container {
+			.MuiSelect-select {
+				padding-top: 8px;
+			}
+		}
+
 		tbody > tr:last-of-type > td {
 			border-bottom: 0;
 		}

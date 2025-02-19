@@ -1,9 +1,9 @@
 import './UserManagementPage.scss';
-import { IUserInfo, LoadStatus } from '@gearscout/models';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useEffect } from 'react';
+import { IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
+import { MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useEffect, useMemo } from 'react';
 import { useTranslator } from '../../service/TranslateService';
-import { getUsers, useAppDispatch, useAppSelector } from '../../state';
+import { getUsers, updateUserRole, useAppDispatch, useAppSelector } from '../../state';
 
 export default function UserManagementPage() {
 
@@ -16,6 +16,17 @@ export default function UserManagementPage() {
 	useEffect(() => {
 		dispatch(getUsers());
 	}, [dispatch]);
+
+	const roleOptions = useMemo(() => [UserRole.unverifiedMember, UserRole.verifiedMember, UserRole.admin]
+		.map((role: UserRole) => (
+			<MenuItem
+				key={ role }
+				value={ role }
+			>
+				{ role }
+			</MenuItem>
+		)), []);
+
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
 		return <main className="page user-management-page">Loading...</main>;
@@ -46,10 +57,25 @@ export default function UserManagementPage() {
 						<TableBody>
 							{
 								users.map((user: IUserInfo) => (
-									<TableRow key={ user.id }>
+									<TableRow key={ user.userId }>
 										<TableCell>{ user.username }</TableCell>
 										<TableCell>{ user.email }</TableCell>
-										<TableCell>{ user.role }</TableCell>
+										<TableCell>
+											{
+												user.role === UserRole.superAdmin
+													? (
+														UserRole.superAdmin
+													) : (
+														<Select
+															variant="filled"
+															value={ user.role }
+															onChange={ (event) => dispatch(updateUserRole(user.userId, event.target.value as UserRole)) }
+														>
+															{ roleOptions }
+														</Select>
+													)
+											}
+										</TableCell>
 									</TableRow>
 								))
 							}

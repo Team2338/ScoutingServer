@@ -54,7 +54,7 @@ import {
 	setHiddenInspectionColumnsStart,
 	showInspectionColumnStart
 } from './Actions';
-import { getUsersFail, getUsersStart, getUsersSuccess } from './src/UserManagementSlice';
+import { getUsersFail, getUsersStart, getUsersSuccess, updateUserRoleSuccess } from './src/UserManagementSlice';
 import { AppDispatch } from './Store';
 import {
 	IEventInfo,
@@ -496,5 +496,15 @@ export const getUsers = () => async (dispatch: AppDispatch, getState: GetState) 
 export const updateUserRole = (userId: number, role: UserRole) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Updating user role');
 
-	// TODO: something
+	try {
+		const tokenString = getState().loginV2.tokenString;
+		dispatch(updateUserRoleSuccess({ userId, role }));
+		await gearscoutService.updateUserRole({
+			userId: userId,
+			role: role,
+			tokenString: tokenString,
+		});
+	} catch (error) {
+		console.log('Error updating user role', error);
+	}
 };

@@ -86,7 +86,7 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 					loginStatus: LoginStatus.guest,
 					role: UserRole.guest,
 					user: {
-						id: null,
+						userId: null,
 						email: null,
 						teamNumber: action.payload.teamNumber,
 						username: action.payload.username,

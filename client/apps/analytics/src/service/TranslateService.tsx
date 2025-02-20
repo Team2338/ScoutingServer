@@ -121,6 +121,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_TEAMS': 'Failed to load teams',
 		'FAILED_TO_LOAD_MATCHES': 'Failed to load matches',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Failed to load inspections',
+		'FAILED_TO_LOAD_USERS': 'Failed to load users',
 		'DRIVETRAIN': 'Drivetrain',
 		'PROGRAMMING_LANGUAGE': 'Programming language',
 		'GAMEPIECE_PREF': 'Gamepiece preference',
@@ -162,7 +163,17 @@ const languages: ILanguageTranslation = {
 		'INTAKE_LOCATIONS_CORAL': 'Coral intake locations',
 		'INTAKE_LOCATIONS_ALGAE': 'Algae intake locations',
 		'REMOVE_ALGAE': 'Can remove algae',
-		'HUMAN_POSITION': 'Preferred HP role'
+		'HUMAN_POSITION': 'Preferred HP role',
+		'USER_MANAGEMENT': 'User Management',
+		'USERS': 'Users',
+		'ROLE': 'Role',
+		'SUPERADMIN': 'Super Admin',
+		'ADMIN': 'Admin',
+		'VERIFIED_MEMBER': 'Verified Member',
+		'UNVERIFIED_MEMBER': 'Unverified Member',
+		'CAN_MODIFY_DATA': 'Can modify data',
+		'CAN_SEE_EVENT_LIST': 'Can see event list',
+		'NO_PRIVILEGES': 'No privileges'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -252,6 +263,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_TEAMS': 'Error al cargar los equipos',
 		'FAILED_TO_LOAD_MATCHES': 'Error al cargar los partidos',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Error al cargar las inspecciones',
+		'FAILED_TO_LOAD_USERS': 'Error al cargar los usuarios',
 		'DRIVETRAIN': 'Transmisión',
 		'PROGRAMMING_LANGUAGE': 'Lenguaje de programación',
 		'GAMEPIECE_PREF': 'Preferencia de piezas de juego',
@@ -293,7 +305,17 @@ const languages: ILanguageTranslation = {
 		'INTAKE_LOCATIONS_CORAL': 'Lugares de captación de corales',
 		'INTAKE_LOCATIONS_ALGAE': 'Lugares de captación de algas',
 		'REMOVE_ALGAE': 'Puede eliminar las algas',
-		'HUMAN_POSITION': 'Rol de jugador humano preferido'
+		'HUMAN_POSITION': 'Rol de jugador humano preferido',
+		'USER_MANAGEMENT': 'Gestión de Usuarios',
+		'USERS': 'Usuarios',
+		'ROLE': 'Rol', // TODO: unsure
+		'SUPERADMIN': 'Superadministrador',
+		'ADMIN': 'Administrador',
+		'VERIFIED_MEMBER': 'Miembro Verificado',
+		'UNVERIFIED_MEMBER': 'Miembro no Verificado',
+		'CAN_MODIFY_DATA': 'Puede modificar datos',
+		'CAN_SEE_EVENT_LIST': 'Puede ver la lista de eventos',
+		'NO_PRIVILEGES': 'Sin privilegios'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -383,6 +405,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_TEAMS': 'Échec du chargement des équipes',
 		'FAILED_TO_LOAD_MATCHES': 'Échec du chargement des matchs',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Échec du chargement des inspections',
+		'FAILED_TO_LOAD_USERS': 'Échec du chargement des utilisateurs',
 		'DRIVETRAIN': 'Transmission',
 		'PROGRAMMING_LANGUAGE': 'Langage de programmation',
 		'GAMEPIECE_PREF': 'Préférence de pièce de jeu',
@@ -424,7 +447,17 @@ const languages: ILanguageTranslation = {
 		'INTAKE_LOCATIONS_CORAL': 'Emplacements des prises d\'eau de corail',
 		'INTAKE_LOCATIONS_ALGAE': 'Emplacements de captage des algues',
 		'REMOVE_ALGAE': 'Peut éliminer les algues',
-		'HUMAN_POSITION': 'Rôle de joueur humain préféré'
+		'HUMAN_POSITION': 'Rôle de joueur humain préféré',
+		'USER_MANAGEMENT': 'Gestion des Utilisateurs',
+		'USERS': 'Utilisateurs',
+		'ROLE': 'Rôle',
+		'SUPERADMIN': 'Superadministrateur',
+		'ADMIN': 'Administrateur',
+		'VERIFIED_MEMBER': 'Membre Vérifié',
+		'UNVERIFIED_MEMBER': 'Membre non Vérifié',
+		'CAN_MODIFY_DATA': 'Peut modifier les données',
+		'CAN_SEE_EVENT_LIST': 'Peut voir la liste des événements',
+		'NO_PRIVILEGES': 'Aucun privilège'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -514,6 +547,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_TEAMS': 'Takımlar yüklenemedi',
 		'FAILED_TO_LOAD_MATCHES': 'Maçlar yüklenemedi',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Muayeneler yüklenemedi',
+		'FAILED_TO_LOAD_USERS': 'Kullanıcılar yüklenemedi',
 		'DRIVETRAIN': 'Aktarma organları',
 		'PROGRAMMING_LANGUAGE': 'Programlama dili',
 		'GAMEPIECE_PREF': 'Oyun parçası tercihi',
@@ -555,7 +589,17 @@ const languages: ILanguageTranslation = {
 		'INTAKE_LOCATIONS_CORAL': 'Mercan giriş yerleri',
 		'INTAKE_LOCATIONS_ALGAE': 'Alg giriş yerleri',
 		'REMOVE_ALGAE': 'Algleri kaldırabilir',
-		'HUMAN_POSITION': 'Tercih edilen insan oyuncu rolü'
+		'HUMAN_POSITION': 'Tercih edilen insan oyuncu rolü',
+		'USER_MANAGEMENT': 'Kullanıcı Yönetimi',
+		'USERS': 'Kullanıcılar',
+		'ROLE': 'Rol',
+		'SUPERADMIN': 'Süper Yönetici',
+		'ADMIN': 'Yönetici',
+		'VERIFIED_MEMBER': 'Doğrulanmış Üye',
+		'UNVERIFIED_MEMBER': 'Doğrulanmamış Üye',
+		'CAN_MODIFY_DATA': 'Verileri değiştirebilir',
+		'CAN_SEE_EVENT_LIST': 'Etkinlik listesini görebilirsiniz',
+		'NO_PRIVILEGES': 'Hiçbir ayrıcalık yok'
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -645,6 +689,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_TEAMS': 'Týmy se nepodařilo načíst',
 		'FAILED_TO_LOAD_MATCHES': 'Zápasy se nepodařilo načíst',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Prohlídky se nepodařilo načíst',
+		'FAILED_TO_LOAD_USERS': 'Uživatelů se nepodařilo načíst',
 		'DRIVETRAIN': 'Hnací ústrojí',
 		'PROGRAMMING_LANGUAGE': 'Programovací jazyk',
 		'GAMEPIECE_PREF': 'Preferovaný herní kus',
@@ -685,6 +730,16 @@ const languages: ILanguageTranslation = {
 		'INTAKE_LOCATIONS_CORAL': 'Místa příjmu korálů', // TODO: verify
 		'INTAKE_LOCATIONS_ALGAE': 'Místa příjmu řas', // TODO: verify
 		'REMOVE_ALGAE': 'Dokáže odstranit řasy', // TODO: verify
-		'HUMAN_POSITION': 'Preferovaná role lidského hráče' //TODO: verify
+		'HUMAN_POSITION': 'Preferovaná role lidského hráče', //TODO: verify
+		'USER_MANAGEMENT': 'Správa Uživatelů',
+		'USERS': 'Uživatelů',
+		'ROLE': 'Role',
+		'SUPERADMIN': 'Super Správce', // TODO: verify - or 'Super Administrátor'
+		'ADMIN': 'Správce',
+		'VERIFIED_MEMBER': 'Ověřený Člen', // TODO: verify - or 'Verifikovaný Člen'
+		'UNVERIFIED_MEMBER': 'Neověřený Člen',
+		'CAN_MODIFY_DATA': 'Může upravovat data',
+		'CAN_SEE_EVENT_LIST': 'Lze zobrazit seznam událostí',
+		'NO_PRIVILEGES': 'Žádná privilegia'
 	}
 };

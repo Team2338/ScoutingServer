@@ -182,7 +182,7 @@ export default function Header() {
 		{
 			path: '/teams',
 			name: 'TEAMS',
-			icon: 'groups'
+			icon: 'diversity_3'
 		},
 		{
 			path: '/stats',
@@ -202,7 +202,7 @@ export default function Header() {
 		{
 			path: '/user-management',
 			name: 'USER_MANAGEMENT',
-			icon: 'users',
+			icon: 'manage_accounts',
 			roles: [UserRole.admin, UserRole.superAdmin]
 		}
 	];

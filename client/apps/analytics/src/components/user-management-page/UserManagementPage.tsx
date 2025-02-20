@@ -48,17 +48,17 @@ export default function UserManagementPage() {
 				key={ role }
 				value={ role }
 			>
-				{ role }
+				{ translate(role) }
 			</MenuItem>
-		)), []);
+		)), [translate]);
 
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <main className="page user-management-page">Loading...</main>;
+		return <main className="page user-management-page">{ translate('LOADING') }</main>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <main className="page user-management-page">Failed to retrieve users!</main>;
+		return <main className="page user-management-page">{ translate('FAILED_TO_LOAD_USERS') }</main>;
 	}
 
 	return (
@@ -66,17 +66,20 @@ export default function UserManagementPage() {
 			<div className="wrapper">
 				<h1 className="title">{ translate('USER_MANAGEMENT') }</h1>
 				<div className="legend">
-					<div>Admin - can modify data</div>
-					<div>Verified User - can see list of events</div>
-					<div>Unverified User - no privileges</div>
+					<div>{ translate(UserRole.admin) }</div>
+					<span>&nbsp;- { translate('CAN_MODIFY_DATA') }</span>
+					<div>{ translate(UserRole.verifiedMember) }</div>
+					<span>&nbsp;- { translate('CAN_SEE_EVENT_LIST') }</span>
+					<div>{ translate(UserRole.unverifiedMember) }</div>
+					<span>&nbsp;- { translate('NO_PRIVILEGES') }</span>
 				</div>
 				<TableContainer id="table-container">
 					<Table aria-label={ translate('USERS') }>
 						<TableHead>
 							<TableRow>
-								<TableCell>{ translate('USERNAME') }</TableCell>
-								<TableCell>{ translate('EMAIL') }</TableCell>
-								<TableCell id="role-column-title">{ translate('ROLE') }</TableCell>
+								<TableCell className="column-title">{ translate('USERNAME') }</TableCell>
+								<TableCell className="column-title">{ translate('EMAIL') }</TableCell>
+								<TableCell id="role-column-title" className="column-title">{ translate('ROLE') }</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -89,7 +92,7 @@ export default function UserManagementPage() {
 											{
 												(user.userId === currentUser.userId || user.role === UserRole.superAdmin)
 													? (
-														<span className="readonly-role">{ user.role }</span>
+														<span className="readonly-role">{ translate(user.role) }</span>
 													) : (
 														<Select
 															id={ 'role-selector__' + user.userId}

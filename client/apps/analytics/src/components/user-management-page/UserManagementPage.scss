@@ -1,0 +1,68 @@
+.user-management-page {
+	padding: 16px;
+	//background-color: #1976d220;
+
+	@media only screen and (width < 600px) {
+		background-color: #fff;
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		border-radius: 16px;
+		padding: 12px;
+		background-color: #fff;
+		width: fit-content;
+		max-width: 100%;
+		justify-self: center;
+
+		@media only screen and (width < 600px) {
+			padding: 0;
+		}
+
+		h1 {
+			margin: 0 0 8px;
+		}
+
+		.legend {
+			display: grid;
+			grid-template-columns: auto auto;
+			width: fit-content;
+			padding: 0 12px;
+		}
+
+		.readonly-role {
+			line-height: 39px;
+		}
+
+		#table-container {
+			.MuiSelect-select {
+				padding-top: 8px;
+			}
+
+			.column-title {
+				font-size: 16px;
+				font-weight: 600;
+				padding-bottom: 8px;
+			}
+		}
+
+		tbody > tr:last-of-type > td {
+			border-bottom: 0;
+		}
+	}
+
+	.error-wrapper {
+		align-items: center;
+		min-width: 200px;
+
+		#error-icon {
+			color: #D32F2F;
+			font-size: 96px;
+		}
+
+		.retry-button {
+			margin-top: 12px;
+		}
+	}
+}

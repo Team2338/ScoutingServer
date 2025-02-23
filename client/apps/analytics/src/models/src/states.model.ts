@@ -68,6 +68,7 @@ export interface AppState {
 	images: ImageState;
 	inspections: InspectionState;
 	comments: CommentState;
+	userManagement: IUserManagementState;
 }
 
 export interface LoginV2State {
@@ -101,4 +102,9 @@ export interface CommentState {
 	loadStatus: LoadStatus;
 	comments: CommentsForEvent;
 	topics: string[];
+}
+
+export interface IUserManagementState {
+	loadStatus: LoadStatus;
+	users: IUserInfo[];
 }

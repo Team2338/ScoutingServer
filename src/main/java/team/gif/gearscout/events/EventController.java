@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.token.TokenService;
-import team.gif.gearscout.token.UserEntity;
-import team.gif.gearscout.token.UserService;
+import team.gif.gearscout.users.UserEntity;
+import team.gif.gearscout.users.UserService;
 
 import java.util.List;
 import java.util.regex.Matcher;

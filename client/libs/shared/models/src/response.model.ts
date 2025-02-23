@@ -10,7 +10,7 @@ export interface IEventInfo {
 }
 
 export interface IUserInfo {
-	id: number;
+	userId: number;
 	email: string;
 	teamNumber: number;
 	username: string;

@@ -1,6 +1,7 @@
 import './UserManagementPage.scss';
 import { IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
 import {
+	Button,
 	MenuItem,
 	Select,
 	Table,
@@ -8,11 +9,12 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow,
+	TableRow
 } from '@mui/material';
 import { useEffect, useMemo } from 'react';
 import { useTranslator } from '../../service/TranslateService';
 import { getUsers, updateUserRole, useAppDispatch, useAppSelector } from '../../state';
+import { ErrorOutline } from '@mui/icons-material';
 
 
 const RoleHierarchy: Record<UserRole, number> = {
@@ -58,7 +60,22 @@ export default function UserManagementPage() {
 	}
 
 	if (loadStatus === LoadStatus.failed) {
-		return <main className="page user-management-page">{ translate('FAILED_TO_LOAD_USERS') }</main>;
+		return (
+			<main className="page user-management-page">
+				<div className="wrapper error-wrapper">
+					<ErrorOutline id="error-icon" />
+					<span>{ translate('FAILED_TO_LOAD_USERS') }</span>
+					<Button
+						className="retry-button"
+						variant="contained"
+						disableElevation={ true }
+						onClick={ () => dispatch(getUsers()) }
+					>
+						{ translate('RETRY') }
+					</Button>
+				</div>
+			</main>
+		);
 	}
 
 	return (

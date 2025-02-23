@@ -1,12 +1,14 @@
 .user-management-page {
 	padding: 16px;
-	background-color: #1976d220;
+	//background-color: #1976d220;
 
 	@media only screen and (width < 600px) {
 		background-color: #fff;
 	}
 
 	.wrapper {
+		display: flex;
+		flex-direction: column;
 		border-radius: 16px;
 		padding: 12px;
 		background-color: #fff;
@@ -45,12 +47,22 @@
 			}
 		}
 
-		tr > td:last-child {
-			padding-right: 0;
-		}
-
 		tbody > tr:last-of-type > td {
 			border-bottom: 0;
+		}
+	}
+
+	.error-wrapper {
+		align-items: center;
+		min-width: 200px;
+
+		#error-icon {
+			color: #D32F2F;
+			font-size: 96px;
+		}
+
+		.retry-button {
+			margin-top: 12px;
 		}
 	}
 }

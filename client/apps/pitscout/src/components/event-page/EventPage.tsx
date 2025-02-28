@@ -1,7 +1,7 @@
 import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import React, { Fragment, useEffect } from 'react';
 import './EventPage.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { IEventInfo, IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
 import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
 import { useTranslator } from '../../services/TranslateService';

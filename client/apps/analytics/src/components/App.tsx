@@ -1,7 +1,7 @@
 import { UserRole } from '@gearscout/models';
 import React, { Fragment } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router';
 import { AppState, LoginStatus } from '../models';
 import { AppDispatch, initApp } from '../state';
 import './App.scss';

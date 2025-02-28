@@ -7,19 +7,14 @@ import {
 	store
 } from './state';
 import './index.scss';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import { register } from './ServiceWorkerRegistration';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
 	<Provider store={ store }>
-		<BrowserRouter
-			future={{
-				v7_relativeSplatPath: true,
-				v7_startTransition: true
-			}}
-		>
+		<BrowserRouter>
 			<App />
 		</BrowserRouter>
 	</Provider>

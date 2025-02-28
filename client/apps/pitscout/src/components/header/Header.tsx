@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { logout, selectIsLoggedIn, useAppDispatch, useAppSelector } from '../../state';
 import { ExitToApp, Shuffle } from '@mui/icons-material';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router';
 import {
 	IEventInfo,
 	IUserInfo

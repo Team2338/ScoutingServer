@@ -4,7 +4,7 @@ import { Match, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getAllData, hideMatch, selectMatch, unhideMatch, useAppDispatch, useAppSelector } from '../../state';
 import SearchInput from '../shared/search-input/SearchInput';
-import './ManagePage.scss';
+import './MatchPage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
 import DataFailure from '../shared/data-failure/DataFailure';
@@ -14,7 +14,7 @@ const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;
 });
 
-function ManagePage() {
+function MatchPage() {
 
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
@@ -138,4 +138,4 @@ function ManagePage() {
 	);
 }
 
-export default ManagePage;
+export default MatchPage;

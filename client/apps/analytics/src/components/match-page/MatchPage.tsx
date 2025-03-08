@@ -1,6 +1,6 @@
 import { RefreshRounded } from '@mui/icons-material';
 import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, useMediaQuery } from '@mui/material';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Match, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getAllData, hideMatch, selectMatch, unhideMatch, useAppDispatch, useAppSelector } from '../../state';
@@ -23,10 +23,18 @@ function MatchPage() {
 	const _hideMatch = (match: Match) => dispatch(hideMatch(match));
 	const _unhideMatch = (match: Match) => dispatch(unhideMatch(match));
 	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
+	const lastUpdated: string = useAppSelector(state => state.matches.lastUpdated);
 	const loadStatus: LoadStatus = useAppSelector(state => state.matches.loadStatus);
 	const matches: Match[] = useAppSelector(state => state.matches.data);
 	const selectedMatch: Match = useAppSelector(state => state.matches.selectedMatch);
 	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
+
+	const formattedUpdateTime: string = useMemo(() => {
+		return Intl.DateTimeFormat('fr', {
+			dateStyle: undefined,
+			timeStyle: 'short'
+		}).format(new Date(lastUpdated));
+	}, [lastUpdated]);
 
 	useEffect(
 		() => {
@@ -110,7 +118,7 @@ function MatchPage() {
 					<div className="title-and-reload">
 						<div className="title-and-updated">
 							<h2 className="title">{ translate('MATCHES') }</h2>
-							<span className="last-updated">Last updated at &lt;time&gt;</span>
+							<span className="last-updated">Last updated at { formattedUpdateTime }</span>
 						</div>
 						<IconButton className="reload-button" size="small">
 							<RefreshRounded />

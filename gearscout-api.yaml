@@ -292,6 +292,43 @@ paths:
           description: Empty response body
         default:
           $ref: '#/components/responses/GeneralError'
+  /v2/schedule/gameYear/{gameYear}/event/{eventCode}:
+    parameters:
+      - $ref: '#/components/parameters/gameYearPathParam'
+      - $ref: '#/components/parameters/eventCodePathParam'
+    get:
+      summary: Fetch qualification match schedule for an event
+      description: The event code must match the official 4-5 character FIRST
+        event code, which can be found on FIRST's website. For example, the Midwest
+        regional's event code is ILCH. If the event code contains a hyphen, only
+        the characters before the hyphen will be considered when querying for match
+        schedule. Foe example, event codes ILCH and ILCH-2 will both fetch match
+        schedules for the Midwest regional.
+      responses:
+        '200':
+          description: A match schedule in JSON format
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MatchScheduleBody'
+  /v2/schedule/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}:
+    parameters:
+      - $ref: '#/components/parameters/teamNumberPathParam'
+      - $ref: '#/components/parameters/gameYearPathParam'
+      - $ref: '#/components/parameters/eventCodePathParam'
+    get:
+      summary: Fetch qualification match schedule for one team at an event.
+      responses:
+        '200':
+          description: A match schedule in JSON format
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MatchScheduleBody'
 
 components:
   parameters:
@@ -371,6 +408,12 @@ components:
       format: int32
       minimum: 0
       description: Team number that owns the data
+      example: 2338
+    teamNumberSchedule:
+      type: integer
+      format: int32
+      minimum: 0
+      description: Team number in this match
       example: 2338
     gameYear:
       type: integer
@@ -676,6 +719,17 @@ components:
           $ref: '#/components/schemas/creator'
         timeCreated:
           $ref: '#/components/schemas/unixTimestamp'
+    MatchScheduleBody:
+      type: object
+      properties:
+        matchNumber: '#/components/schemas/matchNumber'
+        red1: '#/components/schemas/teamNumberSchedule'
+        red2: '#/components/schemas/teamNumberSchedule'
+        red3: '#/components/schemas/teamNumberSchedule'
+        blue1: '#/components/schemas/teamNumberSchedule'
+        blue2: '#/components/schemas/teamNumberSchedule'
+        blue3: '#/components/schemas/teamNumberSchedule'
+
     ErrorModel:
       type: string
 

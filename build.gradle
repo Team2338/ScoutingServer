@@ -15,7 +15,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group 'team.gif'
-version '3.3.0'
+version '3.4.0'
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_21
@@ -35,6 +35,7 @@ dependencies {
 	implementation group: 'org.flywaydb', name: 'flyway-database-postgresql'
 
 	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.24.3'
+	implementation group: 'org.json', name: 'json', version: '20250107'
 
 	runtimeOnly group: 'org.postgresql', name: 'postgresql'
 }

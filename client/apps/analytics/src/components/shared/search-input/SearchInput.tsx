@@ -1,5 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslator } from '../../../service/TranslateService';
 import { useDebounce } from '../../../state';
 import SearchIcon from '@mui/icons-material/Search';
@@ -24,19 +24,21 @@ export default function SearchInput({ onSearch, size }: IProps) {
 	return (
 		<TextField
 			id="search-input"
-			// label={translate('SEARCH')}
-			placeholder={translate('SEARCH')}
+			// label={ translate('SEARCH') }
+			placeholder={ translate('SEARCH') }
 			name="search"
 			type="search"
 			margin="none"
 			variant="outlined"
-			size={size}
-			fullWidth={true}
-			value={searchTerm}
-			onChange={(event) => setSearchTerm(event.target.value)}
+			size={ size }
+			fullWidth={ true }
+			value={ searchTerm }
+			onChange={ (event: ChangeEvent<HTMLInputElement>) => setSearchTerm(event.target.value) }
 			autoComplete="off"
-			InputProps={{
-				startAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>
+			slotProps={{
+				input: {
+					startAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>
+				}
 			}}
 		/>
 	);

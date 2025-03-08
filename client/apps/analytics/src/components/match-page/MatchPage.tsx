@@ -1,4 +1,5 @@
-import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, Typography, useMediaQuery } from '@mui/material';
+import { RefreshRounded } from '@mui/icons-material';
+import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { Match, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
@@ -35,12 +36,12 @@ function MatchPage() {
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
-		return <main className="page manage-page">{ translate('LOADING') }</main>;
+		return <main className="page match-page">{ translate('LOADING') }</main>;
 	}
 
 	if (loadStatus === LoadStatus.failed) {
 		return (
-			<main className="page manage-page manage-page-failed">
+			<main className="page match-page match-page-failed">
 				<DataFailure messageKey="FAILED_TO_LOAD_MATCHES"/>
 			</main>
 		);
@@ -103,17 +104,18 @@ function MatchPage() {
 	}
 
 	return (
-		<main className="page manage-page">
+		<main className="page match-page">
 			<div className="match-list-wrapper">
 				<div className="match-list-wrapper__header">
-					<Typography
-						variant="h6"
-						sx={{
-							marginBottom: '4px'
-						}}
-					>
-						{ translate('MATCHES') }
-					</Typography>
+					<div className="title-and-reload">
+						<div className="title-and-updated">
+							<h2 className="title">{ translate('MATCHES') }</h2>
+							<span className="last-updated">Last updated at &lt;time&gt;</span>
+						</div>
+						<IconButton className="reload-button" size="small">
+							<RefreshRounded />
+						</IconButton>
+					</div>
 					<SearchInput onSearch={ setSearchTerm } size="small"/>
 				</div>
 				<Divider variant="fullWidth"/>

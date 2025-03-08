@@ -1,15 +1,15 @@
+import { LoadStatus } from '@gearscout/models';
 import { RefreshRounded } from '@mui/icons-material';
 import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { Match, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { getAllData, hideMatch, selectMatch, unhideMatch, useAppDispatch, useAppSelector } from '../../state';
+import DataFailure from '../shared/data-failure/DataFailure';
 import SearchInput from '../shared/search-input/SearchInput';
 import './MatchPage.scss';
 import MatchDetail from './match-detail/MatchDetail';
 import MatchList from './match-list/MatchList';
-import DataFailure from '../shared/data-failure/DataFailure';
-import { LoadStatus } from '@gearscout/models';
 
 const Transition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="left" ref={ ref } { ...props }>{ props.children }</Slide>;
@@ -19,9 +19,6 @@ function MatchPage() {
 
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
-	const _selectMatch = (match: Match) => dispatch(selectMatch(match));
-	const _hideMatch = (match: Match) => dispatch(hideMatch(match));
-	const _unhideMatch = (match: Match) => dispatch(unhideMatch(match));
 	const isMobile: boolean = useMediaQuery('(max-width: 700px)');
 	const lastUpdated: string = useAppSelector(state => state.matches.lastUpdated);
 	const loadStatus: LoadStatus = useAppSelector(state => state.matches.loadStatus);
@@ -35,6 +32,17 @@ function MatchPage() {
 			timeStyle: 'short'
 		}).format(new Date(lastUpdated));
 	}, [lastUpdated]);
+
+	const _selectMatch = (match: Match) => dispatch(selectMatch(match));
+	const _hideMatch = (match: Match) => dispatch(hideMatch(match));
+	const _unhideMatch = (match: Match) => dispatch(unhideMatch(match));
+	const _reloadMatches = () => {
+		if (loadStatus === LoadStatus.loadingWithPriorSuccess)  {
+			return;
+		}
+
+		dispatch(getAllData());
+	};
 
 	useEffect(
 		() => {
@@ -118,9 +126,17 @@ function MatchPage() {
 					<div className="title-and-reload">
 						<div className="title-and-updated">
 							<h2 className="title">{ translate('MATCHES') }</h2>
-							<span className="last-updated">Last updated at { formattedUpdateTime }</span>
+							<span className="last-updated">{
+								translate('LAST_UPDATED_AT').replace('{TIME}', formattedUpdateTime)
+							}</span>
 						</div>
-						<IconButton className="reload-button" size="small">
+						<IconButton
+							className="reload-button"
+							size="small"
+							aria-label={ translate('REFRESH_DATA') }
+							disabled={ loadStatus === LoadStatus.loadingWithPriorSuccess }
+							onClick={ _reloadMatches }
+						>
 							<RefreshRounded />
 						</IconButton>
 					</div>

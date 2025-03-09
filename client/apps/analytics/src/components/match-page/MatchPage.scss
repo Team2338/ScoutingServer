@@ -13,34 +13,6 @@
 			flex-direction: column;
 			padding: 16px;
 		}
-
-		.title-and-reload {
-			display: flex;
-			flex-direction: row;
-			margin-bottom: 8px;
-		}
-
-		.title {
-			display: flex;
-			margin: 0;
-			font-weight: 600;
-			font-size: 24px;
-			line-height: 28px;
-			letter-spacing: 0.0075em;
-		}
-
-		.last-updated {
-			display: flex;
-			font-size: 12px;
-			line-height: 16px;
-			color: #444;
-		}
-
-		.reload-button {
-			width: fit-content;
-			height: fit-content;
-			margin-left: auto;
-		}
 	}
 }
 
@@ -57,6 +29,34 @@
 
 	.match-list-wrapper__header {
 		padding: 16px 12px;
+	}
+}
+
+.match-title-and-refresh {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 8px;
+
+	.title {
+		display: flex;
+		margin: 0;
+		font-weight: 600;
+		font-size: 24px;
+		line-height: 28px;
+		letter-spacing: 0.0075em;
+	}
+
+	.last-updated {
+		display: flex;
+		font-size: 12px;
+		line-height: 16px;
+		color: #444;
+	}
+
+	.reload-button {
+		width: fit-content;
+		height: fit-content;
+		margin-left: auto;
 	}
 }
 

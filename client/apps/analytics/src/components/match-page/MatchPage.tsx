@@ -27,6 +27,8 @@ function MatchPage() {
 	const [searchTerm, setSearchTerm]: Statelet<string> = useState<string>('');
 
 	const formattedUpdateTime: string = useMemo(() => {
+		if (!lastUpdated) return '';
+
 		return Intl.DateTimeFormat('fr', {
 			dateStyle: undefined,
 			timeStyle: 'short'
@@ -46,9 +48,11 @@ function MatchPage() {
 
 	useEffect(
 		() => {
-			dispatch(getAllData());
+			if (loadStatus === LoadStatus.none) {
+				dispatch(getAllData());
+			}
 		},
-		[dispatch]
+		[dispatch, loadStatus]
 	);
 
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
@@ -67,6 +71,12 @@ function MatchPage() {
 		return (
 			<main className="page match-page-mobile">
 				<div className="match-list-wrapper__header">
+					<MatchTitleAndRefresh
+						className="title-and-reload"
+						loadStatus={ loadStatus }
+						lastUpdateTime={ formattedUpdateTime }
+						handleReloadMatches={ _reloadMatches }
+					/>
 					<SearchInput onSearch={ setSearchTerm } size="medium"/>
 				</div>
 				<Divider/>
@@ -123,23 +133,12 @@ function MatchPage() {
 		<main className="page match-page">
 			<div className="match-list-wrapper">
 				<div className="match-list-wrapper__header">
-					<div className="title-and-reload">
-						<div className="title-and-updated">
-							<h2 className="title">{ translate('MATCHES') }</h2>
-							<span className="last-updated">{
-								translate('LAST_UPDATED_AT').replace('{TIME}', formattedUpdateTime)
-							}</span>
-						</div>
-						<IconButton
-							className="reload-button"
-							size="small"
-							aria-label={ translate('REFRESH_DATA') }
-							disabled={ loadStatus === LoadStatus.loadingWithPriorSuccess }
-							onClick={ _reloadMatches }
-						>
-							<RefreshRounded />
-						</IconButton>
-					</div>
+					<MatchTitleAndRefresh
+						className="title-and-reload"
+						loadStatus={ loadStatus }
+						lastUpdateTime={ formattedUpdateTime }
+						handleReloadMatches={ _reloadMatches }
+					/>
 					<SearchInput onSearch={ setSearchTerm } size="small"/>
 				</div>
 				<Divider variant="fullWidth"/>
@@ -161,6 +160,35 @@ function MatchPage() {
 				}}
 			/>
 		</main>
+	);
+}
+
+function MatchTitleAndRefresh(props: {
+	className?: string;
+	loadStatus: LoadStatus,
+	lastUpdateTime: string,
+	handleReloadMatches: () => void,
+}) {
+	const translate = useTranslator();
+
+	return (
+		<div className={ props.className + ' match-title-and-refresh' }>
+			<div className="title-and-updated">
+				<h2 className="title">{ translate('MATCHES') }</h2>
+				<span className="last-updated">{
+					translate('LAST_UPDATED_AT').replace('{TIME}', props.lastUpdateTime)
+				}</span>
+			</div>
+			<IconButton
+				className="reload-button"
+				size="small"
+				aria-label={ translate('REFRESH_DATA') }
+				disabled={ props.loadStatus === LoadStatus.loadingWithPriorSuccess }
+				onClick={ props.handleReloadMatches }
+			>
+				<RefreshRounded />
+			</IconButton>
+		</div>
 	);
 }
 

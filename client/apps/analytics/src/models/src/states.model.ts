@@ -43,6 +43,7 @@ export interface AppState {
 	};
 	events: IEventState,
 	matches: {
+		lastUpdated: string;
 		loadStatus: LoadStatus;
 		raw: MatchResponse[];
 		data: Match[];

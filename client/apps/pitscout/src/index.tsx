@@ -7,7 +7,7 @@ import {
 	store
 } from './state';
 import './index.scss';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import { register } from './ServiceWorkerRegistration';
 
 const container = document.getElementById('root');

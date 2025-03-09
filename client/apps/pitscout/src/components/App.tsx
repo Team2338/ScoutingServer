@@ -5,7 +5,7 @@ import Header from './header/Header';
 import MainPage from './main-page/MainPage';
 import LoginPage from './login-page/LoginPage';
 import EventPage from './event-page/EventPage';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router';
 import { IEventInfo } from '@gearscout/models';
 
 function App() {

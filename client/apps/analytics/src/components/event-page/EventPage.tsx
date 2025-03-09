@@ -3,7 +3,7 @@ import React, {
 	useEffect
 } from 'react';
 import './EventPage.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import { EventSelectorForm, EventSelectorList } from '@gearscout/components';

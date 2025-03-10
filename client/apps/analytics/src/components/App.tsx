@@ -7,7 +7,7 @@ import { AppDispatch, initApp } from '../state';
 import './App.scss';
 import Header from './header/Header';
 import LoginPage from './login-page/LoginPage';
-import ManagePage from './manage-page/ManagePage';
+import MatchPage from './match-page/MatchPage';
 import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
@@ -60,7 +60,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 		const isAdmin: boolean = this.props.userRole === UserRole.superAdmin || this.props.userRole === UserRole.admin;
 
 		const eventPage = <EventPage />;
-		const managePage = <ManagePage />;
+		const managePage = <MatchPage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
 		const planningPage = <PlanningPage />;

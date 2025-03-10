@@ -28,6 +28,7 @@ const INITIAL_STATE: AppState = {
 		selectedEvent: null,
 	},
 	matches: {
+		lastUpdated: '',
 		loadStatus: LoadStatus.none,
 		raw: [],
 		data: [],
@@ -233,6 +234,7 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 			return {
 				...state,
 				matches: {
+					lastUpdated: (new Date()).toISOString(),
 					loadStatus: LoadStatus.success,
 					data: action.payload.matchModels,
 					raw: action.payload.raw,

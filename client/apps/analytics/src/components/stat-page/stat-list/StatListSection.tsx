@@ -81,7 +81,7 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 
 	return (
 		<React.Fragment>
-			<ListSubheader sx={{ top: '52px' }}>{ translate(gamemode) }</ListSubheader>
+			<ListSubheader style={{ top: 'var(--stat-header-height)' }}>{ translate(gamemode) }</ListSubheader>
 			{ items }
 		</React.Fragment>
 	);

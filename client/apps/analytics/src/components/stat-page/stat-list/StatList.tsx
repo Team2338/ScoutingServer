@@ -6,11 +6,12 @@ import StatListSection from './StatListSection';
 import { addSelectedStat, clearSelectedStats, removeSelectedStat, selectStat, useAppDispatch } from '../../../state';
 
 interface IProps {
+	className?: string;
 	stats: GlobalObjectiveStats[];
 	selectedStats: ObjectiveDescriptor[];
 }
 
-export default function StatList({ stats, selectedStats }: IProps) {
+export default function StatList({ className, stats, selectedStats }: IProps) {
 
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ export default function StatList({ stats, selectedStats }: IProps) {
 	});
 
 	return (
-		<React.Fragment>
+		<div className={ `_stat-list ${ className ?? '' }` }>
 			<div className="stat-list-header">
 				<h1 className="page-title">{ translate('STATS') }</h1>
 				{
@@ -65,6 +66,6 @@ export default function StatList({ stats, selectedStats }: IProps) {
 			>
 				{ listItems }
 			</List>
-		</React.Fragment>
+		</div>
 	);
 }

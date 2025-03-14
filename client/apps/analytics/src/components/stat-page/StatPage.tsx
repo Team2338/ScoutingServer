@@ -102,12 +102,11 @@ function StatPage() {
 	return (
 		<Fragment>
 			<main className="page stat-page">
-				<div className="stat-list-wrapper">
-					<StatList
-						stats={ stats }
-						selectedStats={ selectedStats }
-					/>
-				</div>
+				<StatList
+					className="stat-list-wrapper"
+					stats={ stats }
+					selectedStats={ selectedStats }
+				/>
 				{ content }
 			</main>
 			<TeamDetailModal

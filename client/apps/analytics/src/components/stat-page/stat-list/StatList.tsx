@@ -11,6 +11,12 @@ interface IProps {
 	selectedStats: ObjectiveDescriptor[];
 }
 
+const ORDERING: Record<string, string> = {
+	'AUTO': '0',
+	'TELEOP': '1',
+	'SUPERSCOUT': '99'
+};
+
 export default function StatList({ className, stats, selectedStats }: IProps) {
 
 	const translate = useTranslator();
@@ -29,20 +35,23 @@ export default function StatList({ className, stats, selectedStats }: IProps) {
 		statsGroupedByGamemode.get(stat.gamemode).push(stat);
 	}
 
-	const listItems = [];
-	statsGroupedByGamemode.forEach((objectives: GlobalObjectiveStats[], gamemode: string) => {
-		listItems.push(
-			<StatListSection
-				key={ gamemode }
-				gamemode={ gamemode }
-				stats={ objectives }
-				selectedStats={ selectedStats }
-				selectStat={(objective: string) => _setSelectedStat(gamemode, objective)}
-				addSelectedStat={ (objective: string) => _addSelectedStat(gamemode, objective) }
-				removeSelectedStat={ (objective: string) => _removeSelectedStat(gamemode, objective) }
-			/>
-		);
-	});
+	const listItems = statsGroupedByGamemode.keys()
+		.toArray()
+		.toSorted((a: string, b: string) => (ORDERING[a] ?? a).localeCompare(ORDERING[b] ?? b))
+		.map((gamemode: string) => {
+			const objectives: GlobalObjectiveStats[] = statsGroupedByGamemode.get(gamemode);
+			return (
+				<StatListSection
+					key={ gamemode }
+					gamemode={ gamemode }
+					stats={ objectives }
+					selectedStats={ selectedStats }
+					selectStat={(objective: string) => _setSelectedStat(gamemode, objective)}
+					addSelectedStat={ (objective: string) => _addSelectedStat(gamemode, objective) }
+					removeSelectedStat={ (objective: string) => _removeSelectedStat(gamemode, objective) }
+				/>
+			);
+		});
 
 	return (
 		<div className={ `_stat-list ${ className ?? '' }` }>
@@ -59,11 +68,7 @@ export default function StatList({ className, stats, selectedStats }: IProps) {
 					</Button>
 				}
 			</div>
-			<List
-				sx={{
-					paddingTop: 0
-				}}
-			>
+			<List sx={{ paddingTop: 0 }}>
 				{ listItems }
 			</List>
 		</div>

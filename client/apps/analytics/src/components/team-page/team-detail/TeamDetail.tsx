@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Statelet, Team, TeamObjectiveStats } from '../../../models';
+import {
+	GAMEMODE_ORDERING,
+	Statelet,
+	Team,
+	TeamObjectiveStats
+} from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
@@ -24,15 +29,28 @@ export default function TeamDetail(props: IProps) {
 
 	let gamemodeElements: any = [];
 	if (team?.stats) {
-		team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
-			gamemodeElements.push(
-				<Gamemode
-					key={ gamemode }
-					name={ gamemode }
-					objectives={ objectives }
-				/>
-			);
-		});
+		gamemodeElements = team.stats.keys()
+			.toArray()
+			.toSorted((a: string, b: string) => (GAMEMODE_ORDERING[a] ?? a).localeCompare((GAMEMODE_ORDERING[b] ?? b)))
+			.map((gamemode: string) => {
+				const objectives = team.stats.get(gamemode);
+				return (
+					<Gamemode
+						key={ gamemode }
+						name={ gamemode }
+						objectives={ objectives }
+					/>
+				);
+			});
+		// team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
+		// 	gamemodeElements.push(
+		// 		<Gamemode
+		// 			key={ gamemode }
+		// 			name={ gamemode }
+		// 			objectives={ objectives }
+		// 		/>
+		// 	);
+		// });
 	} else {
 		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>;
 	}

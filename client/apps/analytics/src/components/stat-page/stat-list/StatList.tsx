@@ -1,6 +1,10 @@
 import React from 'react';
 import { Button, List } from '@mui/material';
-import { GlobalObjectiveStats, ObjectiveDescriptor } from '../../../models';
+import {
+	GAMEMODE_ORDERING,
+	GlobalObjectiveStats,
+	ObjectiveDescriptor
+} from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import StatListSection from './StatListSection';
 import { addSelectedStat, clearSelectedStats, removeSelectedStat, selectStat, useAppDispatch } from '../../../state';
@@ -10,12 +14,6 @@ interface IProps {
 	stats: GlobalObjectiveStats[];
 	selectedStats: ObjectiveDescriptor[];
 }
-
-const ORDERING: Record<string, string> = {
-	'AUTO': '0',
-	'TELEOP': '1',
-	'SUPERSCOUT': '99'
-};
 
 export default function StatList({ className, stats, selectedStats }: IProps) {
 
@@ -37,7 +35,7 @@ export default function StatList({ className, stats, selectedStats }: IProps) {
 
 	const listItems = statsGroupedByGamemode.keys()
 		.toArray()
-		.toSorted((a: string, b: string) => (ORDERING[a] ?? a).localeCompare(ORDERING[b] ?? b))
+		.toSorted((a: string, b: string) => (GAMEMODE_ORDERING[a] ?? a).localeCompare(GAMEMODE_ORDERING[b] ?? b))
 		.map((gamemode: string) => {
 			const objectives: GlobalObjectiveStats[] = statsGroupedByGamemode.get(gamemode);
 			return (

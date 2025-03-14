@@ -1,9 +1,13 @@
 
 .stat-list-header {
+	position: sticky;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	top: 0;
 	padding: 16px 16px 0 16px;
+	background-color: #fff;
+	z-index: 999;
 
 	.page-title {
 		font-weight: 500;

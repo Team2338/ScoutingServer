@@ -56,7 +56,7 @@ public class MatchScheduleEntry implements Comparable<MatchScheduleEntry> {
 	}
 
 	private static ArrayList<Integer> getTeamNumbers(JSONArray teamKeys) {
-		ArrayList<Integer> result = new ArrayList();
+		ArrayList<Integer> result = new ArrayList<>();
 		for (int i = 0; i < teamKeys.length(); ++i) {
 			String val = teamKeys.optString(i, "frc0").substring(3);
 			result.add(Integer.parseInt(val));

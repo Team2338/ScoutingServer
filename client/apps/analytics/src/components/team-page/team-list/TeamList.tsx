@@ -84,14 +84,7 @@ export default function TeamList({ teams }: IProps) {
 	return (
 		<React.Fragment>
 			<div className="team-list__header">
-				<Typography
-					variant="h6"
-					sx={{
-						marginBottom: '4px'
-					}}
-				>
-					{ translate('TEAMS') }
-				</Typography>
+				<h2 className="page-title">{ translate('TEAMS') }</h2>
 				<SearchInput onSearch={ setSearchTerm } size="small"/>
 			</div>
 			<Divider variant="fullWidth"/>

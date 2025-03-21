@@ -16,8 +16,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Tooltip,
-	Typography
+	Tooltip
 } from '@mui/material';
 import InspectionTableConfigDrawer from './inspection-table-config-drawer/InspectionTableConfigDrawer';
 import DataFailure from '../shared/data-failure/DataFailure';
@@ -93,7 +92,7 @@ export default function InspectionPage() {
 	return (
 		<main className="page inspection-page">
 			<div className="controls-area">
-				<Typography variant="h6">{ translate('INSPECTIONS') }</Typography>
+				<h2 className="page-title">{ translate('INSPECTIONS') }</h2>
 				<div className="controls">
 					<Tooltip title={ translate('REFRESH_DATA') }>
 						<IconButton onClick={ _loadInspections }>

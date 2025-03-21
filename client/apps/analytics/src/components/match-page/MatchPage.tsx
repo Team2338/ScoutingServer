@@ -174,7 +174,7 @@ function MatchTitleAndRefresh(props: {
 	return (
 		<div className={ props.className + ' match-title-and-refresh' }>
 			<div className="title-and-updated">
-				<h2 className="title">{ translate('MATCHES') }</h2>
+				<h2 className="page-title">{ translate('MATCHES') }</h2>
 				<span className="last-updated">{
 					translate('LAST_UPDATED_AT').replace('{TIME}', props.lastUpdateTime)
 				}</span>

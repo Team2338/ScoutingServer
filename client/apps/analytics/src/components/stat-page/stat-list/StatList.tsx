@@ -54,7 +54,7 @@ export default function StatList({ className, stats, selectedStats }: IProps) {
 	return (
 		<div className={ `_stat-list ${ className ?? '' }` }>
 			<div className="stat-list-header">
-				<h1 className="page-title">{ translate('STATS') }</h1>
+				<h2 className="page-title">{ translate('STATS') }</h2>
 				{
 					selectedStats.length > 0 &&
 					<Button

@@ -37,7 +37,7 @@ div {
 	box-sizing: border-box;
 }
 
-h2, h3 {
+h1, h2, h3, h4, h5, h6 {
 	display: flex;
 	margin-inline: 0;
 	margin-block: 0;

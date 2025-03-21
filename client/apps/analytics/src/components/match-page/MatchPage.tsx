@@ -92,7 +92,7 @@ function MatchPage() {
 					open={ !!selectedMatch }
 					onClose={ () => _selectMatch(null) }
 					aria-labelledby="match-detail-dialog__title"
-					TransitionComponent={ Transition }
+					slotProps={{ transition: Transition }}
 				>
 					<div className="match-detail-dialog__header">
 						<IconButton

@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { Divider, Icon, List, ListItemButton, Skeleton, Typography } from '@mui/material';
+import React, {
+	Fragment,
+	useState
+} from 'react';
+import { Divider, Icon, List, ListItemButton, Skeleton } from '@mui/material';
 import { ImageState, Statelet, Team } from '../../../models';
 import './TeamList.scss';
 import { useTranslator } from '../../../service/TranslateService';
@@ -74,15 +77,15 @@ export default function TeamList({ teams }: IProps) {
 			}
 
 			return (
-				<React.Fragment key={ team.id }>
+				<Fragment key={ team.id }>
 					<Divider variant="fullWidth" component="li"/>
 					{ listItem }
-				</React.Fragment>
+				</Fragment>
 			);
 		});
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			<div className="team-list__header">
 				<h2 className="page-title">{ translate('TEAMS') }</h2>
 				<SearchInput onSearch={ setSearchTerm } size="small"/>
@@ -91,7 +94,7 @@ export default function TeamList({ teams }: IProps) {
 			<List>
 				{ listItems }
 			</List>
-		</React.Fragment>
+		</Fragment>
 	);
 
 }

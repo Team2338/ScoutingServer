@@ -25,7 +25,7 @@ export default function CommentSection(props: IProps) {
 	if (loadStatus === LoadStatus.none || loadStatus === LoadStatus.loading) {
 		return (
 			<div className="comment-section">
-				<h2>{ translate('COMMENTS') }</h2>
+				<h3 className="comment-section-title">{ translate('COMMENTS') }</h3>
 				<div>{ translate('LOADING') }</div>
 			</div>
 		);
@@ -34,7 +34,7 @@ export default function CommentSection(props: IProps) {
 	if (loadStatus === LoadStatus.failed) {
 		return (
 			<div className="comment-section">
-				<h2>{ translate('COMMENTS') }</h2>
+				<h3 className="comment-section-title">{ translate('COMMENTS') }</h3>
 				<div>FAILED</div>
 			</div>
 		);
@@ -51,7 +51,7 @@ export default function CommentSection(props: IProps) {
 
 	return (
 		<div className="comment-section" ref={ commentScrollRef }>
-			<h2 className="comment-section-title">{ translate('COMMENTS') }</h2>
+			<h3 className="comment-section-title">{ translate('COMMENTS') }</h3>
 			<FormControl id="topic-filter-control">
 				<InputLabel id="topic-filter-label">
 					{ translate('TOPIC') }

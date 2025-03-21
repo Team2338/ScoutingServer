@@ -1,5 +1,14 @@
 
 #appBar {
+	.application-title {
+		font-weight: 500;
+		font-size: 1.5rem;
+		line-height: 1.334;
+		letter-spacing: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
 	.download-button {
 		margin-left: 4px;
@@ -14,7 +23,6 @@
 	.menu-button {
 		margin-right: 16px;
 	}
-
 }
 
 #account-menu {

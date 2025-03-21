@@ -68,7 +68,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 		const userManagementPage = <UserManagementPage />;
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<Header />
 				<Routes>
 					<Route path="/" element={ managePage } />
@@ -83,7 +83,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 					{ /* Default: redirect to home page */ }
 					<Route path="*" element={ <Navigate to="/" /> } />
 				</Routes>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 

@@ -1,10 +1,16 @@
 import './LoginPage.scss';
 import React from 'react';
-import { Button, InputAdornment, TextField, Typography } from '@mui/material';
-import { connect } from 'react-redux';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import {
+	connect,
+	ConnectedProps
+} from 'react-redux';
 import { AppState, LoginPageVariant } from '../../models';
 import { translate } from '../../service/TranslateService';
-import { login } from '../../state';
+import {
+	AppDispatch,
+	login
+} from '../../state';
 import CreateUser from './create-user/CreateUser';
 import MemberLoginForm from './member-login-form/MemberLoginForm';
 
@@ -16,13 +22,13 @@ const inputs = (state: AppState) => ({
 	initialUsername: state.loginV2.user?.username ?? ''
 });
 
-const outputs = (dispatch) => ({
+const outputs = (dispatch: AppDispatch) => ({
 	login: (
-		gameYear,
-		teamNumber,
-		username,
-		eventCode,
-		secretCode
+		gameYear: number,
+		teamNumber: number,
+		username: string,
+		eventCode: string,
+		secretCode: string
 	) => dispatch(login({
 		gameYear,
 		teamNumber,
@@ -32,7 +38,10 @@ const outputs = (dispatch) => ({
 	}))
 });
 
-class ConnectedLoginPage extends React.Component<any, any> {
+const connector = connect(inputs, outputs);
+type IProps = ConnectedProps<typeof connector> & { translate: (key: string) => string };
+
+class ConnectedLoginPage extends React.Component<IProps, any> {
 
 	constructor(props) {
 		super(props);
@@ -105,9 +114,18 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		return (
 			<main className="login-page">
 				<div className="content-wrapper">
-					<form className="login-page-form" onSubmit={ this.handleSubmit }>
+					<form
+						className="login-page-form"
+						aria-labelledby="guest-login-form__title"
+						onSubmit={ this.handleSubmit }
+					>
 						<div className="login-page-title-row">
-							<Typography variant="h4">{ this.props.translate('GUEST') }</Typography>
+							<h2
+								id="guest-login-form__title"
+								className="title"
+							>
+								{ this.props.translate('GUEST') }
+							</h2>
 							<TextField
 								id="game-year-input"
 								label={ this.props.translate('GAME_YEAR') }
@@ -219,5 +237,5 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	}
 }
 
-const LoginPage = translate(connect(inputs, outputs)(ConnectedLoginPage));
+const LoginPage = translate(connector(ConnectedLoginPage));
 export default LoginPage;

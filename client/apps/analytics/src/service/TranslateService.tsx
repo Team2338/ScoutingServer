@@ -28,7 +28,7 @@ export const translate = (Component) => {
 
 type Translator = (key: string) => string;
 export const useTranslator = (): Translator => {
-	const language: string = useAppSelector((state: AppState) => state.language);
+	const language: Language = useAppSelector((state: AppState) => state.language);
 
 	return (key: string) => translateKey(language, key);
 };

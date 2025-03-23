@@ -43,10 +43,15 @@ export default function CreateUser(props: IProps) {
 	return (
 		<form
 			className="create-user-form"
-			aria-labelledby="title"
+			aria-labelledby="create-user-form__title"
 			onSubmit={ handleSubmit }
 		>
-			<h1 className="title" id="title">{ translate('CREATE_ACCOUNT') }</h1>
+			<h2
+				id="create-user-form__title"
+				className="title"
+			>
+				{ translate('CREATE_ACCOUNT') }
+			</h2>
 			<TextField
 				id="email"
 				label={ translate('EMAIL') }

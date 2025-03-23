@@ -85,7 +85,8 @@ export default function CreateUser(props: IProps) {
 				id="team-number"
 				label={ translate('TEAM_NUMBER') }
 				name="teamNumber"
-				type="number"
+				type="text"
+				inputMode="numeric"
 				margin="dense"
 				variant="outlined"
 				value={ teamNumber }
@@ -95,8 +96,9 @@ export default function CreateUser(props: IProps) {
 						startAdornment: <InputAdornment position="start">#</InputAdornment>
 					},
 					htmlInput: {
-						min: 0,
-						max: 10_999
+						minLength: 1,
+						maxLength: 5,
+						pattern: '[0-9]*',
 					}
 				}}
 				autoComplete="off"

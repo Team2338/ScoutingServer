@@ -149,7 +149,8 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 							id="team-number-input"
 							label={ this.props.translate('YOUR_TEAM_NUMBER') }
 							name="teamNumber"
-							type="number"
+							type="text"
+							inputMode="numeric"
 							margin="dense"
 							variant="outlined"
 							value={ this.state.teamNumber }
@@ -159,8 +160,9 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 									startAdornment: <InputAdornment position="start">#</InputAdornment>
 								},
 								htmlInput: {
-									min: 0,
-									max: 10_999
+									minLength: 1,
+									maxLength: 5,
+									pattern: '[0-9]*',
 								}
 							}}
 							autoComplete="off"

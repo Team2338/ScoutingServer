@@ -59,9 +59,11 @@ export default function MemberLoginForm(props: IProps) {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={ {
-					maxLength: 32
-				} }
+				slotProps={{
+					htmlInput: {
+						maxLength: 32
+					}
+				}}
 			/>
 			<Button
 				className="member-login-form-submit"

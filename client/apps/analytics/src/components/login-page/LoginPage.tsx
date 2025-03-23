@@ -136,9 +136,11 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 								variant="outlined"
 								value={ this.state.gameYear }
 								onChange={ this.handleChange }
-								inputProps={{
-									min: 1995,
-									max: 2099
+								slotProps={{
+									htmlInput: {
+										min: 1995,
+										max: 2099
+									}
 								}}
 								autoComplete="off"
 							/>
@@ -152,12 +154,14 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 							variant="outlined"
 							value={ this.state.teamNumber }
 							onChange={ this.handleChange }
-							InputProps={{
-								startAdornment: <InputAdornment position="start">#</InputAdornment>
-							}}
-							inputProps={{
-								min: 0,
-								max: 9999
+							slotProps={{
+								input: {
+									startAdornment: <InputAdornment position="start">#</InputAdornment>
+								},
+								htmlInput: {
+									min: 0,
+									max: 10_999
+								}
 							}}
 							autoComplete="off"
 							autoFocus={ true }
@@ -171,8 +175,10 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 							variant="outlined"
 							value={ this.state.username }
 							onChange={ this.handleChange }
-							inputProps={{
-								maxLength: 32
+							slotProps={{
+								htmlInput: {
+									maxLength: 32
+								}
 							}}
 							autoComplete="section-login username"
 						/>
@@ -185,8 +191,10 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 							variant="outlined"
 							value={ this.state.eventCode }
 							onChange={ this.handleChange }
-							inputProps={{
-								maxLength: 32
+							slotProps={{
+								htmlInput: {
+									maxLength: 32
+								}
 							}}
 							autoComplete="off"
 						/>
@@ -199,8 +207,10 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 							variant="outlined"
 							value={ this.state.secretCode }
 							onChange={ this.handleChange }
-							inputProps={{
-								maxLength: 32
+							slotProps={{
+								htmlInput: {
+									maxLength: 32
+								}
 							}}
 							autoComplete="off"
 						/>

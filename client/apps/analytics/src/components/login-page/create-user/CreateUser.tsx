@@ -73,10 +73,12 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={ {
-					maxLength: 32,
-					minLength: 8
-				} }
+				slotProps={{
+					htmlInput: {
+						maxLength: 32,
+						minLength: 8
+					}
+				}}
 				autoComplete="off"
 			/>
 			<TextField
@@ -88,13 +90,15 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ teamNumber }
 				onChange={ (event) => setTeamNumber(event.target.value) }
-				InputProps={ {
-					startAdornment: <InputAdornment position="start">#</InputAdornment>
-				} }
-				inputProps={ {
-					min: 0,
-					max: 9999
-				} }
+				slotProps={{
+					input: {
+						startAdornment: <InputAdornment position="start">#</InputAdornment>
+					},
+					htmlInput: {
+						min: 0,
+						max: 10_999
+					}
+				}}
 				autoComplete="off"
 			/>
 			<TextField
@@ -106,9 +110,11 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ username }
 				onChange={ (event) => setUsername(event.target.value) }
-				inputProps={ {
-					maxLength: 32
-				} }
+				slotProps={{
+					htmlInput: {
+						maxLength: 32
+					}
+				}}
 			/>
 			<Button
 				className="create-user-form-submit"

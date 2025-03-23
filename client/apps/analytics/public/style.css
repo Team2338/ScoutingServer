@@ -33,6 +33,10 @@ main {
 	box-sizing: border-box;
 }
 
+section {
+	box-sizing: border-box;
+}
+
 div {
 	box-sizing: border-box;
 }

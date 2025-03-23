@@ -227,20 +227,18 @@ class ConnectedLoginPage extends React.Component<IProps, any> {
 							{ this.props.translate('SIGN_IN') }
 						</Button>
 						<section className="link-section">
-							<span
+							<button
 								className="login-page__variant-link"
-								color="secondary"
 								onClick={ () => this.handlePageRedirect(LoginPageVariant.loginPage) }
 							>
 								{ this.props.translate('MEMBER_LOGIN') } &gt;
-							</span>
-							<span
+							</button>
+							<button
 								className="login-page__variant-link"
-								color="secondary"
 								onClick={ () => this.handlePageRedirect(LoginPageVariant.createUserPage) }
 							>
 								{ this.props.translate('CREATE_ACCOUNT') } &gt;
-							</span>
+							</button>
 						</section>
 					</form>
 				</div>

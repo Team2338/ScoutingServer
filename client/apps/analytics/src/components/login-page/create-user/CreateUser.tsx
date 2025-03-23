@@ -129,18 +129,18 @@ export default function CreateUser(props: IProps) {
 				{ translate('CREATE_ACCOUNT') }
 			</Button>
 			<section className="link-section">
-				<span
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
 				>
 					{ translate('GUEST_LOGIN') } &gt;
-				</span>
-				<span
+				</button>
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.loginPage) }
 				>
 					{ translate('MEMBER_LOGIN') } &gt;
-				</span>
+				</button>
 			</section>
 		</form>
 	);

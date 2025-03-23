@@ -76,18 +76,18 @@ export default function MemberLoginForm(props: IProps) {
 				{ translate('SIGN_IN') }
 			</Button>
 			<section className="link-section">
-				<span
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
 				>
 					{ translate('GUEST_LOGIN') } &gt;
-				</span>
-				<span
+				</button>
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.createUserPage) }
 				>
 					{ translate('CREATE_ACCOUNT') } &gt;
-				</span>
+				</button>
 			</section>
 		</form>
 	);

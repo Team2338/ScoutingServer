@@ -23,7 +23,7 @@ export default function Topic(props: IProps) {
 
 	return (
 		<div className="topic">
-			<h3 className="topic-name">{ translate(props.topic) }</h3>
+			<h4 className="topic-name">{ translate(props.topic) }</h4>
 			{
 				props.comments.length === 0
 					? <div className="topic-no-comments">{ translate('NO_COMMENTS_FOR_TOPIC') }</div>

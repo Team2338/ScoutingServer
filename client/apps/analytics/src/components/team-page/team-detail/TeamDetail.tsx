@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+	Fragment,
+	useState
+} from 'react';
 import {
 	GAMEMODE_ORDERING,
 	Statelet,
@@ -42,15 +45,6 @@ export default function TeamDetail(props: IProps) {
 					/>
 				);
 			});
-		// team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
-		// 	gamemodeElements.push(
-		// 		<Gamemode
-		// 			key={ gamemode }
-		// 			name={ gamemode }
-		// 			objectives={ objectives }
-		// 		/>
-		// 	);
-		// });
 	} else {
 		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>;
 	}
@@ -88,7 +82,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 
 	return (
 		<div className="gamemode">
-			<h2 className="gamemode-title">{ translate(props.name) }</h2>
+			<h3 className="gamemode-title">{ translate(props.name) }</h3>
 			<div className="gamemode-stats-wrapper">
 				{ objectiveElements }
 			</div>
@@ -104,12 +98,12 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	let sumListElement = null;
 	if (props.stats.sumList) {
 		sumListElement = (
-			<React.Fragment>
+			<Fragment>
 				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
 				<div className="mean-list-wrapper">
 					<GridScore list={ props.stats.sumList }/>
 				</div>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 

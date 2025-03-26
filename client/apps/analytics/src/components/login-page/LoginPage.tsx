@@ -1,10 +1,16 @@
 import './LoginPage.scss';
 import React from 'react';
-import { Button, InputAdornment, TextField, Typography } from '@mui/material';
-import { connect } from 'react-redux';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import {
+	connect,
+	ConnectedProps
+} from 'react-redux';
 import { AppState, LoginPageVariant } from '../../models';
 import { translate } from '../../service/TranslateService';
-import { login } from '../../state';
+import {
+	AppDispatch,
+	login
+} from '../../state';
 import CreateUser from './create-user/CreateUser';
 import MemberLoginForm from './member-login-form/MemberLoginForm';
 
@@ -16,13 +22,13 @@ const inputs = (state: AppState) => ({
 	initialUsername: state.loginV2.user?.username ?? ''
 });
 
-const outputs = (dispatch) => ({
+const outputs = (dispatch: AppDispatch) => ({
 	login: (
-		gameYear,
-		teamNumber,
-		username,
-		eventCode,
-		secretCode
+		gameYear: number,
+		teamNumber: number,
+		username: string,
+		eventCode: string,
+		secretCode: string
 	) => dispatch(login({
 		gameYear,
 		teamNumber,
@@ -32,7 +38,10 @@ const outputs = (dispatch) => ({
 	}))
 });
 
-class ConnectedLoginPage extends React.Component<any, any> {
+const connector = connect(inputs, outputs);
+type IProps = ConnectedProps<typeof connector> & { translate: (key: string) => string };
+
+class ConnectedLoginPage extends React.Component<IProps, any> {
 
 	constructor(props) {
 		super(props);
@@ -105,9 +114,18 @@ class ConnectedLoginPage extends React.Component<any, any> {
 		return (
 			<main className="login-page">
 				<div className="content-wrapper">
-					<form className="login-page-form" onSubmit={ this.handleSubmit }>
+					<form
+						className="login-page-form"
+						aria-labelledby="guest-login-form__title"
+						onSubmit={ this.handleSubmit }
+					>
 						<div className="login-page-title-row">
-							<Typography variant="h4">{ this.props.translate('GUEST') }</Typography>
+							<h2
+								id="guest-login-form__title"
+								className="title"
+							>
+								{ this.props.translate('GUEST') }
+							</h2>
 							<TextField
 								id="game-year-input"
 								label={ this.props.translate('GAME_YEAR') }
@@ -118,9 +136,11 @@ class ConnectedLoginPage extends React.Component<any, any> {
 								variant="outlined"
 								value={ this.state.gameYear }
 								onChange={ this.handleChange }
-								inputProps={{
-									min: 1995,
-									max: 2099
+								slotProps={{
+									htmlInput: {
+										min: 1995,
+										max: 2099
+									}
 								}}
 								autoComplete="off"
 							/>
@@ -129,17 +149,21 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							id="team-number-input"
 							label={ this.props.translate('YOUR_TEAM_NUMBER') }
 							name="teamNumber"
-							type="number"
+							type="text"
+							inputMode="numeric"
 							margin="dense"
 							variant="outlined"
 							value={ this.state.teamNumber }
 							onChange={ this.handleChange }
-							InputProps={{
-								startAdornment: <InputAdornment position="start">#</InputAdornment>
-							}}
-							inputProps={{
-								min: 0,
-								max: 9999
+							slotProps={{
+								input: {
+									startAdornment: <InputAdornment position="start">#</InputAdornment>
+								},
+								htmlInput: {
+									minLength: 1,
+									maxLength: 5,
+									pattern: '[0-9]*',
+								}
 							}}
 							autoComplete="off"
 							autoFocus={ true }
@@ -153,8 +177,10 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							variant="outlined"
 							value={ this.state.username }
 							onChange={ this.handleChange }
-							inputProps={{
-								maxLength: 32
+							slotProps={{
+								htmlInput: {
+									maxLength: 32
+								}
 							}}
 							autoComplete="section-login username"
 						/>
@@ -167,8 +193,10 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							variant="outlined"
 							value={ this.state.eventCode }
 							onChange={ this.handleChange }
-							inputProps={{
-								maxLength: 32
+							slotProps={{
+								htmlInput: {
+									maxLength: 32
+								}
 							}}
 							autoComplete="off"
 						/>
@@ -181,8 +209,10 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							variant="outlined"
 							value={ this.state.secretCode }
 							onChange={ this.handleChange }
-							inputProps={{
-								maxLength: 32
+							slotProps={{
+								htmlInput: {
+									maxLength: 32
+								}
 							}}
 							autoComplete="off"
 						/>
@@ -197,20 +227,18 @@ class ConnectedLoginPage extends React.Component<any, any> {
 							{ this.props.translate('SIGN_IN') }
 						</Button>
 						<section className="link-section">
-							<span
+							<button
 								className="login-page__variant-link"
-								color="secondary"
 								onClick={ () => this.handlePageRedirect(LoginPageVariant.loginPage) }
 							>
 								{ this.props.translate('MEMBER_LOGIN') } &gt;
-							</span>
-							<span
+							</button>
+							<button
 								className="login-page__variant-link"
-								color="secondary"
 								onClick={ () => this.handlePageRedirect(LoginPageVariant.createUserPage) }
 							>
 								{ this.props.translate('CREATE_ACCOUNT') } &gt;
-							</span>
+							</button>
 						</section>
 					</form>
 				</div>
@@ -219,5 +247,5 @@ class ConnectedLoginPage extends React.Component<any, any> {
 	}
 }
 
-const LoginPage = translate(connect(inputs, outputs)(ConnectedLoginPage));
+const LoginPage = translate(connector(ConnectedLoginPage));
 export default LoginPage;

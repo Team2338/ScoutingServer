@@ -2,6 +2,10 @@
 	display: flex;
 	flex-direction: column;
 	padding: 16px;
+
+	.page-title {
+		margin-bottom: 4px;
+	}
 }
 
 .team-list-item {

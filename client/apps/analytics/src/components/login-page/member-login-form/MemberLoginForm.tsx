@@ -29,10 +29,15 @@ export default function MemberLoginForm(props: IProps) {
 	return (
 		<form
 			className="member-login-form"
-			aria-labelledby="title"
+			aria-labelledby="member-login-form__title"
 			onSubmit={ handleSubmit }
 		>
-			<h1 className="title" id="title">{ translate('SIGN_IN') }</h1>
+			<h2
+				id="member-login-form__title"
+				className="title"
+			>
+				{ translate('SIGN_IN') }
+			</h2>
 			<TextField
 				id="email"
 				label={ translate('EMAIL') }
@@ -54,9 +59,11 @@ export default function MemberLoginForm(props: IProps) {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={ {
-					maxLength: 32
-				} }
+				slotProps={{
+					htmlInput: {
+						maxLength: 32
+					}
+				}}
 			/>
 			<Button
 				className="member-login-form-submit"
@@ -69,18 +76,18 @@ export default function MemberLoginForm(props: IProps) {
 				{ translate('SIGN_IN') }
 			</Button>
 			<section className="link-section">
-				<span
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
 				>
 					{ translate('GUEST_LOGIN') } &gt;
-				</span>
-				<span
+				</button>
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.createUserPage) }
 				>
 					{ translate('CREATE_ACCOUNT') } &gt;
-				</span>
+				</button>
 			</section>
 		</form>
 	);

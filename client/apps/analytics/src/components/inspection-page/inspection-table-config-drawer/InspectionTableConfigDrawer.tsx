@@ -8,7 +8,7 @@ import {
 	useAppSelector
 } from '../../../state';
 import { useTranslator } from '../../../service/TranslateService';
-import { Checkbox, Drawer, FormControlLabel, Typography } from '@mui/material';
+import { Checkbox, Drawer, FormControlLabel } from '@mui/material';
 
 interface IProps {
 	isOpen: boolean;
@@ -58,7 +58,7 @@ export default function InspectionTableConfigDrawer(props: IProps) {
 			onClose={ props.handleClose }
 		>
 			<div className="inspection-table-config-drawer__header">
-				<Typography variant="h6">{ translate('SHOW_COLUMNS') }</Typography>
+				<h2 className="title">{ translate('SHOW_COLUMNS') }</h2>
 			</div>
 			<div className="inspection-table-config-drawer__body">
 				<FormControlLabel

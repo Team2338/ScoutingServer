@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Divider, Skeleton } from '@mui/material';
 import './MatchListSkeleton.scss';
 
@@ -8,17 +8,17 @@ export default function MatchListSkeleton() {
 	loaders.push(<MatchListSkeletonItem key={0} />);
 	for (let i = 1; i < 16; i++) {
 		loaders.push(
-			<React.Fragment key={i}>
+			<Fragment key={i}>
 				<Divider/>
 				<MatchListSkeletonItem/>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			{ loaders }
-		</React.Fragment>
+		</Fragment>
 	);
 }
 

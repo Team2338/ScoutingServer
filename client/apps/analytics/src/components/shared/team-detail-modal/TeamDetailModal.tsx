@@ -30,7 +30,7 @@ export default function TeamDetailModal(props: IProps) {
 			open={ props.isOpen }
 			onClose={ props.handleClose }
 			aria-labelledby="team-detail-dialog__title"
-			TransitionComponent={ transitionComponent }
+			slotProps={{ transition: transitionComponent }}
 			onTransitionExited={ props.afterClose }
 		>
 			<div className="team-detail-dialog__header">

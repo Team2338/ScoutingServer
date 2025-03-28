@@ -32,8 +32,8 @@ export default function TeamDetail(props: IProps) {
 
 	let gamemodeElements: any = [];
 	if (team?.stats) {
-		gamemodeElements = team.stats.keys()
-			.toArray()
+		gamemodeElements = Array.from(team.stats.keys())
+			// .toArray() // Not yet implemented in Safari...
 			.toSorted((a: string, b: string) => (GAMEMODE_ORDERING[a] ?? a).localeCompare((GAMEMODE_ORDERING[b] ?? b)))
 			.map((gamemode: string) => {
 				const objectives = team.stats.get(gamemode);

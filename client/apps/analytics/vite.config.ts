@@ -16,6 +16,9 @@ export default defineConfig({
 		port: 4300,
 		host: 'localhost'
 	},
+	resolve: { // Added for @mui
+		conditions: ['mui-modern', 'module', 'browser', 'development|production']
+	},
 	plugins: [
 		react(),
 		nxViteTsPaths(),

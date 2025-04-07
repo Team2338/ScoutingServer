@@ -1,13 +1,13 @@
 import { UserRole } from '@gearscout/models';
 import React, { Fragment } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router';
 import { AppState, LoginStatus } from '../models';
 import { AppDispatch, initApp } from '../state';
 import './App.scss';
 import Header from './header/Header';
 import LoginPage from './login-page/LoginPage';
-import ManagePage from './manage-page/ManagePage';
+import MatchPage from './match-page/MatchPage';
 import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
@@ -60,7 +60,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 		const isAdmin: boolean = this.props.userRole === UserRole.superAdmin || this.props.userRole === UserRole.admin;
 
 		const eventPage = <EventPage />;
-		const managePage = <ManagePage />;
+		const managePage = <MatchPage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
 		const planningPage = <PlanningPage />;
@@ -68,7 +68,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 		const userManagementPage = <UserManagementPage />;
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<Header />
 				<Routes>
 					<Route path="/" element={ managePage } />
@@ -83,7 +83,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 					{ /* Default: redirect to home page */ }
 					<Route path="*" element={ <Navigate to="/" /> } />
 				</Routes>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 

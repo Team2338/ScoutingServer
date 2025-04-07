@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { Statelet, Team, TeamObjectiveStats } from '../../../models';
+import React, {
+	Fragment,
+	useState
+} from 'react';
+import {
+	GAMEMODE_ORDERING,
+	Statelet,
+	Team,
+	TeamObjectiveStats
+} from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
@@ -24,15 +32,19 @@ export default function TeamDetail(props: IProps) {
 
 	let gamemodeElements: any = [];
 	if (team?.stats) {
-		team.stats.forEach((objectives: Map<string, TeamObjectiveStats>, gamemode: string) => {
-			gamemodeElements.push(
-				<Gamemode
-					key={ gamemode }
-					name={ gamemode }
-					objectives={ objectives }
-				/>
-			);
-		});
+		gamemodeElements = Array.from(team.stats.keys())
+			// .toArray() // Not yet implemented in Safari...
+			.toSorted((a: string, b: string) => (GAMEMODE_ORDERING[a] ?? a).localeCompare((GAMEMODE_ORDERING[b] ?? b)))
+			.map((gamemode: string) => {
+				const objectives = team.stats.get(gamemode);
+				return (
+					<Gamemode
+						key={ gamemode }
+						name={ gamemode }
+						objectives={ objectives }
+					/>
+				);
+			});
 	} else {
 		gamemodeElements = <div>{ translate('NO_QUANTITATIVE_DATA') }</div>;
 	}
@@ -70,7 +82,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 
 	return (
 		<div className="gamemode">
-			<h2 className="gamemode-title">{ translate(props.name) }</h2>
+			<h3 className="gamemode-title">{ translate(props.name) }</h3>
 			<div className="gamemode-stats-wrapper">
 				{ objectiveElements }
 			</div>
@@ -86,12 +98,12 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	let sumListElement = null;
 	if (props.stats.sumList) {
 		sumListElement = (
-			<React.Fragment>
+			<Fragment>
 				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
 				<div className="mean-list-wrapper">
 					<GridScore list={ props.stats.sumList }/>
 				</div>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 

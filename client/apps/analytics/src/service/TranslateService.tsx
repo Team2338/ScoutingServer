@@ -13,6 +13,7 @@ const translateKey = (language: string, key: string): string => {
 		return mapping[key];
 	}
 
+	console.warn(`Translation key "${key}" not found!`);
 	return key;
 };
 
@@ -27,7 +28,7 @@ export const translate = (Component) => {
 
 type Translator = (key: string) => string;
 export const useTranslator = (): Translator => {
-	const language: string = useAppSelector((state: AppState) => state.language);
+	const language: Language = useAppSelector((state: AppState) => state.language);
 
 	return (key: string) => translateKey(language, key);
 };
@@ -122,6 +123,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_MATCHES': 'Failed to load matches',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Failed to load inspections',
 		'FAILED_TO_LOAD_USERS': 'Failed to load users',
+		'LAST_UPDATED_AT': 'Last updated at {TIME}',
 		'DRIVETRAIN': 'Drivetrain',
 		'PROGRAMMING_LANGUAGE': 'Programming language',
 		'GAMEPIECE_PREF': 'Gamepiece preference',
@@ -264,6 +266,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_MATCHES': 'Error al cargar los partidos',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Error al cargar las inspecciones',
 		'FAILED_TO_LOAD_USERS': 'Error al cargar los usuarios',
+		'LAST_UPDATED_AT': 'Última actualización a las {TIME}',
 		'DRIVETRAIN': 'Transmisión',
 		'PROGRAMMING_LANGUAGE': 'Lenguaje de programación',
 		'GAMEPIECE_PREF': 'Preferencia de piezas de juego',
@@ -406,6 +409,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_MATCHES': 'Échec du chargement des matchs',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Échec du chargement des inspections',
 		'FAILED_TO_LOAD_USERS': 'Échec du chargement des utilisateurs',
+		'LAST_UPDATED_AT': 'Dernière mise à jour à {TIME}',
 		'DRIVETRAIN': 'Transmission',
 		'PROGRAMMING_LANGUAGE': 'Langage de programmation',
 		'GAMEPIECE_PREF': 'Préférence de pièce de jeu',
@@ -548,6 +552,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_MATCHES': 'Maçlar yüklenemedi',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Muayeneler yüklenemedi',
 		'FAILED_TO_LOAD_USERS': 'Kullanıcılar yüklenemedi',
+		'LAST_UPDATED_AT': 'Son güncelleme: {TIME}',
 		'DRIVETRAIN': 'Aktarma organları',
 		'PROGRAMMING_LANGUAGE': 'Programlama dili',
 		'GAMEPIECE_PREF': 'Oyun parçası tercihi',
@@ -690,6 +695,7 @@ const languages: ILanguageTranslation = {
 		'FAILED_TO_LOAD_MATCHES': 'Zápasy se nepodařilo načíst',
 		'FAILED_TO_LOAD_INSPECTIONS': 'Prohlídky se nepodařilo načíst',
 		'FAILED_TO_LOAD_USERS': 'Uživatelů se nepodařilo načíst',
+		'LAST_UPDATED_AT': 'Naposledy aktualizováno ve {TIME}',
 		'DRIVETRAIN': 'Hnací ústrojí',
 		'PROGRAMMING_LANGUAGE': 'Programovací jazyk',
 		'GAMEPIECE_PREF': 'Preferovaný herní kus',

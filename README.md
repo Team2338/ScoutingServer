@@ -64,10 +64,10 @@ A qualitative scouting app. Users make 'comments' about a robot's match performa
 [API documentation](gearscout-api.yaml)
 
 
-## Deployment
+# Deployment
 More detailed information coming soon, but here's a brief summary:
 
-### Deploy Server
+## Deploy Server
 If you wish to run your own instance of the server, we assume you have some
 amount of experience with an SQL database. Otherwise, please read the documentation
 on setting up a [Postgres database](https://www.postgresql.org/).
@@ -77,17 +77,81 @@ on setting up a [Postgres database](https://www.postgresql.org/).
     to generate an "uber-jar" that bundles all dependencies.
 3. Set up an instance of PostgreSQL
    1. Install Postgres on the host machine
+   2. [Set a password for PostgreSQL].
    2. Once Postgres is running, log into it with `psql`
    3. Create a new database
 4. Run `java -jar <path to jarfile>`. The server should fail to start, but will
-    create a configuration file.
+    create a configuration file named `application.yaml`.
 5. Modify the configuration file to contain the following lines:
-   TODO: document
+
+```yaml
+server:
+  port: 25575
+
+spring:
+  database:
+    # sample application.yaml has a few fields here, leave them alone
+  jpa:
+    # sample application.yaml has a few fields here, leave them alone
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/<dbname> # TODO: replace <dbname>
+    username: postgres
+    password: verysecurepassword # TODO
+
+auth:
+  url: # TODO
+
+jwt:
+  header: Authorization
+  secret: supersecretauthkey # TODO
+
+tba:
+  key: ApiKeyjYsTn4CgRDyd5L8Ph6MEQ7 # TODO
+```
+
 6. Repeat step 4 - this time, the server should start successfully!
 
-### Deploy Analytics or PitScout
+### Troubleshooting
+
+```
+Failed to configure a DataSource: 'url' attribute is not specified and no
+embedded datasource could be configured.
+```
+
+This error means that you haven't set the `spring.datasource.url` field
+correctly in your `application.yaml`. Refer to step 5
+[in the instructions above](#deploy-server).
+
+```
+Message    : The server requested SCRAM-based authentication, but no password was provided.
+```
+
+This error means that you haven't set a PostgreSQL password in your
+`application.yaml`. Refer to step 5
+[in the instructions above](#deploy-server).
+
+```
+Message    : FATAL: password authentication failed for user "postgres"
+```
+
+This error means that the PostgreSQL password in your `application.yaml` is
+incorrect. Or, you haven't set a PostgreSQL password.
+
+```
+org.springframework.beans.factory.UnsatisfiedDependencyException
+```
+
+This error means that one or more fields are missing from your
+`application.yaml`. Make sure that you aren't missing the `jwt:` and `tba:`
+fields shown in step 5 [of the instructions above](#deploy-server).
+
+
+## Deploy Analytics or PitScout
 1. Navigate to `<project root>/client`.
 2. Run `npm install` to install project dependencies.
 3. Run `npm run analytics:build` or `npm run pitscout:build`.
 4. Copy the build files to the host machine.
 5. Configure a web server like [nginx](https://nginx.org/) to serve the files.
+
+[Set a password for PostgreSQL]: https://stackoverflow.com/questions/12720967/how-can-i-change-a-postgresql-user-password

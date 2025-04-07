@@ -12,11 +12,14 @@ import {
 	MenuItem,
 	Toolbar,
 	Tooltip,
-	Typography,
 	useMediaQuery
 } from '@mui/material';
-import React, { ReactElement, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {
+	Fragment,
+	ReactElement,
+	useState
+} from 'react';
+import { NavLink } from 'react-router';
 import { Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
@@ -77,15 +80,13 @@ export default function Header() {
 	};
 
 	const title = (
-		<Typography
-			variant="h5"
-			color="inherit"
+		<h1
+			className="application-title"
 			lang="en"
 			translate="no"
-			noWrap
 		>
 			GearScout
-		</Typography>
+		</h1>
 	);
 
 	if (!isLoggedIn) {
@@ -248,7 +249,7 @@ export default function Header() {
 	);
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			<AppBar id="appBar" position="sticky" color="primary">
 				<Toolbar>
 					<IconButton
@@ -268,7 +269,7 @@ export default function Header() {
 				</Toolbar>
 			</AppBar>
 			{ drawer }
-		</React.Fragment>
+		</Fragment>
 	);
 }
 
@@ -343,7 +344,7 @@ function LanguageSelector() {
 		));
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			<Tooltip title={ translate('CHANGE_LANGUAGE') }>
 				<Button
 					className="language-button"
@@ -368,6 +369,6 @@ function LanguageSelector() {
 			>
 				{ languageOptions }
 			</Menu>
-		</React.Fragment>
+		</Fragment>
 	);
 }

@@ -1,5 +1,8 @@
 import './StatList.scss';
-import React, { useMemo } from 'react';
+import React, {
+	Fragment,
+	useMemo
+} from 'react';
 import { Checkbox, Divider, ListItemButton, ListSubheader } from '@mui/material';
 import { GlobalObjectiveStats, ObjectiveDescriptor, STAT_GRAPH_COLORS } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
@@ -43,7 +46,7 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 		};
 
 		return (
-			<React.Fragment key={ stat.name }>
+			<Fragment key={ stat.name }>
 				<ListItemButton
 					selected={ isSelected }
 					onClick={ () => selectStat(stat.name) }
@@ -75,14 +78,14 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 					/>
 				</ListItemButton>
 				<Divider variant="fullWidth" component="li"/>
-			</React.Fragment>
+			</Fragment>
 		);
 	});
 
 	return (
-		<React.Fragment>
-			<ListSubheader>{ translate(gamemode) }</ListSubheader>
+		<Fragment>
+			<ListSubheader style={{ top: 'var(--stat-header-height)' }}>{ translate(gamemode) }</ListSubheader>
 			{ items }
-		</React.Fragment>
+		</Fragment>
 	);
 }

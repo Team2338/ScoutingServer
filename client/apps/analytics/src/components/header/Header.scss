@@ -1,5 +1,18 @@
 
+@mixin app-title {
+	font-weight: 500;
+	font-size: 1.5rem;
+	line-height: 1.334;
+	letter-spacing: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 #appBar {
+	.application-title {
+		@include app-title;
+	}
 
 	.download-button {
 		margin-left: 4px;
@@ -14,7 +27,6 @@
 	.menu-button {
 		margin-right: 16px;
 	}
-
 }
 
 #account-menu {
@@ -25,6 +37,10 @@
 }
 
 .nav-drawer {
+
+	.application-title {
+		@include app-title;
+	}
 
 	&-content {
 		height: 100%;

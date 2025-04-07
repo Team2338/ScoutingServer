@@ -23,3 +23,9 @@ export const STAT_GRAPH_COLORS: string[] = [
 	'#884099',
 	'#44ac88'
 ];
+
+export const GAMEMODE_ORDERING: Record<string, string> = {
+	'AUTO': '0',
+	'TELEOP': '1',
+	'SUPERSCOUT': '99'
+};

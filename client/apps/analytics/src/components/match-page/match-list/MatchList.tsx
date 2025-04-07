@@ -1,5 +1,5 @@
 import { Divider, List, ListItemButton } from '@mui/material';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Match } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import MatchListItem from '../match-list-item/MatchListItem';
@@ -47,10 +47,10 @@ export default function MatchList({ matches, selectMatch, selectedMatch, searchT
 		}
 
 		return (
-			<React.Fragment key={ match.id }>
+			<Fragment key={ match.id }>
 				<Divider variant="fullWidth" component="li" />
 				{ listItem }
-			</React.Fragment>
+			</Fragment>
 		);
 	});
 

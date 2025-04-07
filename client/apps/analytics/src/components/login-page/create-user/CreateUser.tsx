@@ -43,10 +43,15 @@ export default function CreateUser(props: IProps) {
 	return (
 		<form
 			className="create-user-form"
-			aria-labelledby="title"
+			aria-labelledby="create-user-form__title"
 			onSubmit={ handleSubmit }
 		>
-			<h1 className="title" id="title">{ translate('CREATE_ACCOUNT') }</h1>
+			<h2
+				id="create-user-form__title"
+				className="title"
+			>
+				{ translate('CREATE_ACCOUNT') }
+			</h2>
 			<TextField
 				id="email"
 				label={ translate('EMAIL') }
@@ -68,28 +73,34 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ password }
 				onChange={ (event) => setPassword(event.target.value) }
-				inputProps={ {
-					maxLength: 32,
-					minLength: 8
-				} }
+				slotProps={{
+					htmlInput: {
+						maxLength: 32,
+						minLength: 8
+					}
+				}}
 				autoComplete="off"
 			/>
 			<TextField
 				id="team-number"
 				label={ translate('TEAM_NUMBER') }
 				name="teamNumber"
-				type="number"
+				type="text"
+				inputMode="numeric"
 				margin="dense"
 				variant="outlined"
 				value={ teamNumber }
 				onChange={ (event) => setTeamNumber(event.target.value) }
-				InputProps={ {
-					startAdornment: <InputAdornment position="start">#</InputAdornment>
-				} }
-				inputProps={ {
-					min: 0,
-					max: 9999
-				} }
+				slotProps={{
+					input: {
+						startAdornment: <InputAdornment position="start">#</InputAdornment>
+					},
+					htmlInput: {
+						minLength: 1,
+						maxLength: 5,
+						pattern: '[0-9]*',
+					}
+				}}
 				autoComplete="off"
 			/>
 			<TextField
@@ -101,9 +112,11 @@ export default function CreateUser(props: IProps) {
 				variant="outlined"
 				value={ username }
 				onChange={ (event) => setUsername(event.target.value) }
-				inputProps={ {
-					maxLength: 32
-				} }
+				slotProps={{
+					htmlInput: {
+						maxLength: 32
+					}
+				}}
 			/>
 			<Button
 				className="create-user-form-submit"
@@ -116,18 +129,18 @@ export default function CreateUser(props: IProps) {
 				{ translate('CREATE_ACCOUNT') }
 			</Button>
 			<section className="link-section">
-				<span
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.guestPage) }
 				>
 					{ translate('GUEST_LOGIN') } &gt;
-				</span>
-				<span
+				</button>
+				<button
 					className="login-page__variant-link"
 					onClick={ () => props.handlePageRedirect(LoginPageVariant.loginPage) }
 				>
 					{ translate('MEMBER_LOGIN') } &gt;
-				</span>
+				</button>
 			</section>
 		</form>
 	);

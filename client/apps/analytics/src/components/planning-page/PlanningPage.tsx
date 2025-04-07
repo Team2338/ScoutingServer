@@ -1,4 +1,12 @@
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+	Button,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow
+} from '@mui/material';
 import React, { ReactElement } from 'react';
 import { Plan, Team, TeamObjectiveStats } from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
@@ -51,7 +59,7 @@ function PlanningPage() {
 
 	return (
 		<main className="page planning-page">
-			<Typography variant="h6">{ translate('PLAN') }</Typography>
+			<h2 className="page-title">{ translate('PLAN') }</h2>
 			<div className="team-selectors">
 				<TeamSelector
 					teams={ teams }

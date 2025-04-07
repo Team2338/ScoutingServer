@@ -33,11 +33,15 @@ main {
 	box-sizing: border-box;
 }
 
+section {
+	box-sizing: border-box;
+}
+
 div {
 	box-sizing: border-box;
 }
 
-h2, h3 {
+h1, h2, h3, h4, h5, h6 {
 	display: flex;
 	margin-inline: 0;
 	margin-block: 0;
@@ -48,4 +52,11 @@ h2, h3 {
 	width: 100vw;
 	overflow-x: clip;
 	overflow-y: auto;
+}
+
+.page-title {
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 28px;
+	letter-spacing: 0.0075em;
 }

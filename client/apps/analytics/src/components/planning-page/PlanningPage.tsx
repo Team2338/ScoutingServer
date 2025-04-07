@@ -173,24 +173,24 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 						<TableRow>
 							<TableCell align="left">{ translate('MEAN') }</TableCell>
 							{
-								stats.map((teamStat: TeamObjectiveStats) => (
-									<TableCell key={teamStat.teamNumber}>{ teamStat ? teamStat.mean.toFixed(2) : '-' }</TableCell>
+								stats.map((teamStat: TeamObjectiveStats | null) => (
+									<TableCell key={teamStat?.teamNumber}>{ teamStat ? teamStat.mean.toFixed(2) : '-' }</TableCell>
 								))
 							}
 						</TableRow>
 						<TableRow>
 							<TableCell align="left">{ translate('MEDIAN') }</TableCell>
 							{
-								stats.map((teamStat: TeamObjectiveStats) => (
-									<TableCell key={teamStat.teamNumber}>{ teamStat ? roundToDecimal(teamStat.median) : '-' }</TableCell>
+								stats.map((teamStat: TeamObjectiveStats | null) => (
+									<TableCell key={teamStat?.teamNumber}>{ teamStat ? roundToDecimal(teamStat.median) : '-' }</TableCell>
 								))
 							}
 						</TableRow>
 						<TableRow>
 							<TableCell align="left">{ translate('MAX') }</TableCell>
 							{
-								stats.map((teamStat: TeamObjectiveStats) => (
-									<TableCell key={teamStat.teamNumber}>{ teamStat ? roundToDecimal(Math.max(...teamStat.scores)) : '-' }</TableCell>
+								stats.map((teamStat: TeamObjectiveStats | null) => (
+									<TableCell key={teamStat?.teamNumber}>{ teamStat ? roundToDecimal(Math.max(...teamStat.scores)) : '-' }</TableCell>
 								))
 							}
 						</TableRow>

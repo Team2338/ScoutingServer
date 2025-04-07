@@ -5,17 +5,16 @@ import {
     Link,
 } from '@mui/material';
 import React, { ReactElement } from 'react';
-import { Team } from 'apps/analytics/src/models';
 import statboticsIcon from '/logos/32-statbotics-icon.png';
 import tbaIcon from '/logos/32-tba-icon.png';
 import './ExternalLink.scss';
 
-function getTbaLinkForTeam(team: Team): string {
-    return `https://thebluealliance.com/team/${team.id}`;
+function getTbaLinkForTeam(robotNumber: number): string {
+    return `https://thebluealliance.com/team/${robotNumber}`;
 }
 
-function getStatboticsLinkForTeam(team: Team): string {
-    return `https://statbotics.io/team/${team.id}`;
+function getStatboticsLinkForTeam(robotNumber: number): string {
+    return `https://statbotics.io/team/${robotNumber}`;
 }
 
 export enum ExternalLinkType {
@@ -25,10 +24,10 @@ export enum ExternalLinkType {
 
 interface IExternalLink {
     type: ExternalLinkType,
-    team: Team
+    robotNumber: number
 }
 
-export function ExternalLink({ type, team }: IExternalLink) {
+export function ExternalLink({ type, robotNumber }: IExternalLink) {
     const linkProducer = type == ExternalLinkType.STATBOTICS
         ? getStatboticsLinkForTeam
         : getTbaLinkForTeam;
@@ -38,13 +37,13 @@ export function ExternalLink({ type, team }: IExternalLink) {
         : tbaIcon;
 
     return (
-        <Link href={ linkProducer(team) }
+        <Link href={ linkProducer(robotNumber) }
             target="_blank" 
             rel="noreferrer"
             underline="hover"
             className="link"
         >
-            { team.id }
+            { robotNumber }
             <img src={ icon }/>
         </Link>
     )

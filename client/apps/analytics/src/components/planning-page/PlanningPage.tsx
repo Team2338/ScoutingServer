@@ -117,7 +117,7 @@ function LinkSet({ type, teams }: ILinkSet) {
 		<div className="link-set">
 			{
 				teams.map((team) => (
-					<ExternalLink type={type} team={team}/>
+					<ExternalLink type={type} robotNumber={team.id}/>
 				))
 			}
 		</div>

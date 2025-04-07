@@ -15,6 +15,7 @@ import './TeamDetail.scss';
 import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import { Button, Icon } from '@mui/material';
+import { ExternalLink, ExternalLinkType } from '../../shared/external-link/ExternalLink';
 
 interface IProps {
 	robotNumber: number;
@@ -66,6 +67,10 @@ export default function TeamDetail(props: IProps) {
 				isDrawerOpen={ isInspectionDrawerOpen }
 				closeDrawer={ () => setInspectionDrawerOpen(false) }
 			/>
+			<div className="external-links">
+				<ExternalLink type={ExternalLinkType.STATBOTICS} robotNumber={props.robotNumber}/>
+				<ExternalLink type={ExternalLinkType.TBA} robotNumber={props.robotNumber}/>
+			</div>
 			<section className="gamemode-list">{ gamemodeElements }</section>
 		</div>
 	);

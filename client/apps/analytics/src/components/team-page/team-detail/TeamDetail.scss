@@ -17,6 +17,12 @@
 		margin-left: 16px;
 	}
 
+	.external-links {
+		display: flex;
+		flex-direction: row;
+		gap: 24px;
+	}
+
 	.gamemode-list {
 		display: flex;
 		flex-direction: column;

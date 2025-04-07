@@ -26,7 +26,7 @@ import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
 import { LoadStatus } from '@gearscout/models';
-
+import { ExternalLink, ExternalLinkType } from '../shared/external-link/ExternalLink';
 
 function PlanningPage() {
 	useDataInitializer();
@@ -94,6 +94,10 @@ function PlanningPage() {
 					</Button>
 				</div>
 			</div>
+			<div className="external-links">
+				{ plan ? <LinkSet teams={ plan.teams } type={ExternalLinkType.TBA}/> : null }
+				{ plan ? <LinkSet teams={ plan.teams } type={ExternalLinkType.STATBOTICS}/> : null }
+			</div>
 			<div className="plan">
 				{ plan ? <PlanDisplay plan={ plan } /> : null }
 			</div>
@@ -103,6 +107,22 @@ function PlanningPage() {
 
 export default PlanningPage;
 
+interface ILinkSet {
+	type: ExternalLinkType,
+	teams: Team[]
+}
+
+function LinkSet({ type, teams }: ILinkSet) {
+	return (
+		<div className="link-set">
+			{
+				teams.map((team) => (
+					<ExternalLink type={type} team={team}/>
+				))
+			}
+		</div>
+	);
+}
 
 interface IPlanDisplay {
 	plan: Plan;

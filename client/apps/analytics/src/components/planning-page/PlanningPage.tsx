@@ -8,7 +8,11 @@ import {
 	TableRow
 } from '@mui/material';
 import React, { ReactElement } from 'react';
-import { Plan, Team, TeamObjectiveStats } from '../../models';
+import {
+	Plan,
+	Team,
+	TeamObjectiveStats
+} from '../../models';
 import { roundToDecimal } from '../../service/DisplayUtility';
 import { useTranslator } from '../../service/TranslateService';
 import {
@@ -26,7 +30,10 @@ import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
 import { LoadStatus } from '@gearscout/models';
-import { ExternalLink, ExternalLinkType } from '../shared/external-link/ExternalLink';
+import {
+	ExternalLink,
+	ExternalLinkType
+} from '../shared/external-link/ExternalLink';
 
 function PlanningPage() {
 	useDataInitializer();
@@ -95,8 +102,8 @@ function PlanningPage() {
 				</div>
 			</div>
 			<div className="external-links">
-				{ plan ? <LinkSet teams={ plan.teams } type={ExternalLinkType.TBA}/> : null }
-				{ plan ? <LinkSet teams={ plan.teams } type={ExternalLinkType.STATBOTICS}/> : null }
+				{ plan ? <LinkSet teams={ plan.teams } type={ ExternalLinkType.TBA } /> : null }
+				{ plan ? <LinkSet teams={ plan.teams } type={ ExternalLinkType.STATBOTICS } /> : null }
 			</div>
 			<div className="plan">
 				{ plan ? <PlanDisplay plan={ plan } /> : null }
@@ -117,7 +124,7 @@ function LinkSet({ type, teams }: ILinkSet) {
 		<div className="link-set">
 			{
 				teams.map((team) => (
-					<ExternalLink type={type} robotNumber={team.id}/>
+					<ExternalLink type={ type } robotNumber={ team.id } />
 				))
 			}
 		</div>
@@ -192,7 +199,7 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 							<TableCell>{ translate('STATS') }</TableCell>
 							{
 								teams.map((team: Team) => (
-									<TableCell key={team.id}>{ team.id }</TableCell>
+									<TableCell key={ team.id }>{ team.id }</TableCell>
 								))
 							}
 						</TableRow>
@@ -202,7 +209,7 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 							<TableCell align="left">{ translate('MEAN') }</TableCell>
 							{
 								stats.map((teamStat: TeamObjectiveStats | null) => (
-									<TableCell key={teamStat?.teamNumber}>{ teamStat ? teamStat.mean.toFixed(2) : '-' }</TableCell>
+									<TableCell key={ teamStat?.teamNumber }>{ teamStat ? teamStat.mean.toFixed(2) : '-' }</TableCell>
 								))
 							}
 						</TableRow>
@@ -210,7 +217,7 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 							<TableCell align="left">{ translate('MEDIAN') }</TableCell>
 							{
 								stats.map((teamStat: TeamObjectiveStats | null) => (
-									<TableCell key={teamStat?.teamNumber}>{ teamStat ? roundToDecimal(teamStat.median) : '-' }</TableCell>
+									<TableCell key={ teamStat?.teamNumber }>{ teamStat ? roundToDecimal(teamStat.median) : '-' }</TableCell>
 								))
 							}
 						</TableRow>
@@ -218,7 +225,7 @@ function PlanComparison({ teams, stats }: IPlanComparisonProps) {
 							<TableCell align="left">{ translate('MAX') }</TableCell>
 							{
 								stats.map((teamStat: TeamObjectiveStats | null) => (
-									<TableCell key={teamStat?.teamNumber}>{ teamStat ? roundToDecimal(Math.max(...teamStat.scores)) : '-' }</TableCell>
+									<TableCell key={ teamStat?.teamNumber }>{ teamStat ? roundToDecimal(Math.max(...teamStat.scores)) : '-' }</TableCell>
 								))
 							}
 						</TableRow>

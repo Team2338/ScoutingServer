@@ -1,9 +1,11 @@
-.link {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    img {
-        width: 24px;
-        height: 24px;
-    }
+.external-link {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	column-gap: 4px;
+
+	img {
+		width: 24px;
+		height: 24px;
+	}
 }

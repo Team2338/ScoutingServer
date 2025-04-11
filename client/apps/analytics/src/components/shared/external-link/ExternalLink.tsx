@@ -1,50 +1,51 @@
-import {
-    Button,
-    Icon,
-	IconButton,
-    Link,
-} from '@mui/material';
-import React, { ReactElement } from 'react';
-import statboticsIcon from '/logos/32-statbotics-icon.png';
-import tbaIcon from '/logos/32-tba-icon.png';
+import { Link } from '@mui/material';
+import React from 'react';
 import './ExternalLink.scss';
 
-function getTbaLinkForTeam(robotNumber: number): string {
-    return `https://thebluealliance.com/team/${robotNumber}`;
-}
+const STATBOTICS_ICON = '/logos/32-statbotics-icon.png';
+const TBA_ICON = '/logos/32-tba-icon.png';
 
-function getStatboticsLinkForTeam(robotNumber: number): string {
-    return `https://statbotics.io/team/${robotNumber}`;
-}
+const getTbaLinkForTeam = (robotNumber: number): string => {
+	return `https://thebluealliance.com/team/${ robotNumber }`;
+};
+
+const getStatboticsLinkForTeam = (robotNumber: number): string => {
+	return `https://statbotics.io/team/${ robotNumber }`;
+};
 
 export enum ExternalLinkType {
-    STATBOTICS = 'statbotics',
-    TBA = 'tba'
+	STATBOTICS = 'statbotics',
+	TBA = 'tba'
 }
 
 interface IExternalLink {
-    type: ExternalLinkType,
-    robotNumber: number
+	type: ExternalLinkType,
+	robotNumber: number
 }
 
 export function ExternalLink({ type, robotNumber }: IExternalLink) {
-    const linkProducer = type == ExternalLinkType.STATBOTICS
-        ? getStatboticsLinkForTeam
-        : getTbaLinkForTeam;
+	const linkProducer = type === ExternalLinkType.STATBOTICS
+		? getStatboticsLinkForTeam
+		: getTbaLinkForTeam;
 
-    const icon = type == ExternalLinkType.STATBOTICS
-        ? statboticsIcon
-        : tbaIcon;
+	const icon = type === ExternalLinkType.STATBOTICS
+		? STATBOTICS_ICON
+		: TBA_ICON;
 
-    return (
-        <Link href={ linkProducer(robotNumber) }
-            target="_blank" 
-            rel="noreferrer"
-            underline="hover"
-            className="link"
-        >
-            { robotNumber }
-            <img src={ icon }/>
-        </Link>
-    )
+	const altText = type === ExternalLinkType.STATBOTICS
+		? 'Statbotics'
+		: 'The Blue Alliance';
+
+	return (
+		<Link
+			href={ linkProducer(robotNumber) }
+			target="_blank"
+			rel="noreferrer"
+			underline="hover"
+			className="external-link"
+		>
+			{ robotNumber }
+			<img src={ icon } alt={ altText } />
+		</Link>
+	);
 }

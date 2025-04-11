@@ -289,7 +289,7 @@ export const getAllData = () => async (dispatch: AppDispatch, getState: GetState
 	dispatch(getMatchesStart());
 	dispatch(calculateTeamStatsStart());
 	dispatch(calculateGlobalStatsStart());
-	// dispatch(getCsvData());
+	dispatch(getCsvData());
 
 	try {
 		const response = await gearscoutService.getMatches(

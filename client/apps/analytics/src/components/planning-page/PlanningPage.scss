@@ -24,6 +24,21 @@
 		}
 	}
 
+	.external-links {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding-bottom: 24px;
+		max-width: 480px;
+
+		.link-set {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-evenly;
+			gap: 24px;
+		}
+	}
+
 	.gamemodes {
 		display: flex;
 		flex-direction: column;

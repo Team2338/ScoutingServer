@@ -14,14 +14,20 @@ import { GridScore } from '../../shared/GridScore';
 import './TeamDetail.scss';
 import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
-import { Button, Icon } from '@mui/material';
+import {
+	Button,
+	Icon
+} from '@mui/material';
+import {
+	ExternalLink,
+	ExternalLinkType
+} from '../../shared/external-link/ExternalLink';
 
 interface IProps {
 	robotNumber: number;
 }
 
 export default function TeamDetail(props: IProps) {
-
 	const translate = useTranslator();
 	const team: Team = useAppSelector(state => state.teams.data.find((team: Team) => team.id === props.robotNumber));
 	const [isInspectionDrawerOpen, setInspectionDrawerOpen]: Statelet<boolean> = useState(false);
@@ -61,6 +67,10 @@ export default function TeamDetail(props: IProps) {
 					{ translate('INSPECTION') }&nbsp;&gt;
 				</Button>
 			</div>
+			<div className="external-links">
+				<ExternalLink type={ ExternalLinkType.STATBOTICS } robotNumber={ props.robotNumber } />
+				<ExternalLink type={ ExternalLinkType.TBA } robotNumber={ props.robotNumber } />
+			</div>
 			<InspectionSection
 				robotNumber={ props.robotNumber }
 				isDrawerOpen={ isInspectionDrawerOpen }
@@ -77,7 +87,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 
 	const objectiveElements = [];
 	props.objectives.forEach((stats: TeamObjectiveStats, name: string) => {
-		objectiveElements.push(<ObjectiveStats key={ name } name={ name } stats={ stats }/>);
+		objectiveElements.push(<ObjectiveStats key={ name } name={ name } stats={ stats } />);
 	});
 
 	return (
@@ -91,7 +101,6 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 }
 
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
-
 	const translate = useTranslator();
 	const scores = props.stats.scores.map(roundToDecimal);
 
@@ -101,7 +110,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 			<Fragment>
 				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
 				<div className="mean-list-wrapper">
-					<GridScore list={ props.stats.sumList }/>
+					<GridScore list={ props.stats.sumList } />
 				</div>
 			</Fragment>
 		);

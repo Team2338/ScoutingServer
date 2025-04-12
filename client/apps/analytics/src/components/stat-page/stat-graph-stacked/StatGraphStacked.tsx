@@ -6,10 +6,12 @@ import { Tooltip } from '@mui/material';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 
 type MetricType = 'mean' | 'median' | 'mode';
+type Height = 'full' | 'reduced';
 interface IProps {
 	robots: Team[];
 	selectedObjectives: ObjectiveDescriptor[];
 	metric: MetricType;
+	height: Height;
 	selectRobot: (robotNumber: number) => void;
 }
 
@@ -35,8 +37,7 @@ const compareByObjectiveSum = (
 };
 
 
-export default function StatGraphStacked({ robots, selectedObjectives, metric, selectRobot }: IProps) {
-
+export default function StatGraphStacked({ robots, selectedObjectives, metric, height, selectRobot }: IProps) {
 	const translate = useTranslator();
 
 	const sortedRobots: Team[] = robots.slice()
@@ -48,7 +49,7 @@ export default function StatGraphStacked({ robots, selectedObjectives, metric, s
 		.map((robot: Team) => createStackedBars(robot, selectedObjectives, metric, maxScore, translate, selectRobot));
 
 	return (
-		<div className="stat-graph-stacked">
+		<div className={ 'stat-graph-stacked ' + height + '-height' }>
 			<div className="content">{ teamBars }</div>
 			<div className="team-number-wrapper">{ teamLabels}</div>
 		</div>

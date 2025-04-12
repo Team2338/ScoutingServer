@@ -2,9 +2,17 @@
 .stat-graph-stacked {
 	display: flex;
 	flex-direction: column;
-	min-height: min(63%, 420px);
+	//min-height: min(63%, 420px);
 	overflow-x: auto;
 	padding: 0 32px 16px 32px;
+
+	&.reduced-height {
+		min-height: min(63%, 420px);
+	}
+
+	&.full-height {
+		height: 100%;
+	}
 
 	.content {
 		display: flex;

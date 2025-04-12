@@ -96,24 +96,28 @@ function StatPage() {
 
 		content = (
 			<div className="stat-content">
-				<h2 className="stat-content-title">{ contentTitleText }</h2>
-				{/*TODO: Translate below*/}
-				<ToggleButtonGroup
-					exclusive={ true }
-					value={ viewType }
-					onChange={ (_, next: ViewType) => setViewType(next) }
-					aria-label="Page layout"
-				>
-					<ToggleButton value={ ViewType.barGraph } aria-label="Bar graph only">
-						<StackedBarChart />
-					</ToggleButton>
-					<ToggleButton value={ ViewType.table } aria-label="Table only">
-						<TableRows />
-					</ToggleButton>
-					<ToggleButton value={ ViewType.barGraphTable } aria-label="Bar graph and table">
-						<TableChart />
-					</ToggleButton>
-				</ToggleButtonGroup>
+				<div className="stat-content-top-row">
+					<h2 className="stat-content-title">{ contentTitleText }</h2>
+					{/*TODO: Translate below*/}
+					<ToggleButtonGroup
+						size="small"
+						exclusive={ true }
+						value={ viewType }
+						onChange={ (_, next: ViewType) => setViewType(next) }
+						aria-label="Page layout"
+						sx={{ marginBottom: '8px' }}
+					>
+						<ToggleButton value={ ViewType.barGraph } aria-label="Bar graph only">
+							<StackedBarChart />
+						</ToggleButton>
+						<ToggleButton value={ ViewType.table } aria-label="Table only">
+							<TableRows />
+						</ToggleButton>
+						<ToggleButton value={ ViewType.barGraphTable } aria-label="Bar graph and table">
+							<TableChart />
+						</ToggleButton>
+					</ToggleButtonGroup>
+				</div>
 				{ (viewType === ViewType.barGraph || viewType === ViewType.barGraphTable) && (
 					<StatGraphStacked
 						robots={ teamData }

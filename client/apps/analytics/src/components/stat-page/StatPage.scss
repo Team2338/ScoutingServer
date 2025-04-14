@@ -1,6 +1,6 @@
 
 .stat-page {
-	$side-padding: 32px;
+	$side-padding: 24px;
 	display: flex;
 	flex-direction: row;
 
@@ -16,8 +16,14 @@
 		width: calc(100% - var(--stat-sidenav-width));
 		overflow-y: auto;
 
-		.stat-content-title {
+		.stat-content-top-row {
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
 			padding: 16px $side-padding 0 $side-padding;
+		}
+
+		.stat-content-title {
 			font-weight: 500;
 			font-size: 1.25rem;
 			line-height: 1.6;
@@ -26,7 +32,7 @@
 
 		.stat-table-wrapper {
 			display: flex;
-			margin: 16px $side-padding 32px $side-padding;
+			margin: 0 $side-padding 16px $side-padding;
 			border: 1px solid var(--border-color);
 			border-radius: 4px;
 		}

@@ -1,6 +1,14 @@
 import { useMediaQuery } from '@mui/material';
-import React, { useEffect, useMemo } from 'react';
-import { CommentsForEvent, ImageState, Inspection, Team } from '../../models';
+import React, {
+	useEffect,
+	useMemo
+} from 'react';
+import {
+	CommentsForEvent,
+	ImageState,
+	Inspection,
+	Team
+} from '../../models';
 import {
 	getAllImageInfoForEvent,
 	getComments,

@@ -33,8 +33,8 @@ export default function StatList({ className, stats, selectedStats }: IProps) {
 		statsGroupedByGamemode.get(stat.gamemode).push(stat);
 	}
 
-	const listItems = statsGroupedByGamemode.keys()
-		.toArray()
+	const listItems = Array.from(statsGroupedByGamemode.keys())
+		// .toArray() // Not yet implemented in Safari...
 		.toSorted((a: string, b: string) => (GAMEMODE_ORDERING[a] ?? a).localeCompare(GAMEMODE_ORDERING[b] ?? b))
 		.map((gamemode: string) => {
 			const objectives: GlobalObjectiveStats[] = statsGroupedByGamemode.get(gamemode);

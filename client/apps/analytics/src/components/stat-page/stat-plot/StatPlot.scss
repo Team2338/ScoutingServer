@@ -4,6 +4,14 @@
 	flex-grow: 1;
 	border: 1px solid #dbdedf;
 	margin: 8px 24px 24px 24px;
+	padding: 16px;
+
+	&-inner {
+		position: relative;
+		display: flex;
+		height: 100%;
+		width: 100%;
+	}
 
 	&-point {
 		position: absolute;
@@ -12,6 +20,6 @@
 		background-color: #254999aa;
 		border: 1px solid #254999;
 		border-radius: 8px;
-		transform: translate(-50%, 50%);
+		transform: translate(-50%, -50%);
 	}
 }

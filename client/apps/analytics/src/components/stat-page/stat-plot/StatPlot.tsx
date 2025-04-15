@@ -73,7 +73,9 @@ export default function StatPlot(props: IProps) {
 
 	return (
 		<div className="stat-plot">
-			{ points }
+			<div className="stat-plot-inner">
+				{ points }
+			</div>
 		</div>
 	);
 }

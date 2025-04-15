@@ -92,20 +92,17 @@ export default function StatListSection(props: IProps) {
 						onChange={ handleCheckboxClick }
 						onClick={ (event) => event.stopPropagation() }
 						style={{
-							opacity: props.selectedStats.length > 0 ? 1 : 0,
+							opacity: (props.selectedStats.length > 0 || props.variant === 'double') ? 1 : 0,
 							transition: 'opacity 150ms ease-in-out'
 						}}
 					/>
 					{ (props.variant === 'double') && (
 						<Checkbox
 							className="stat-list-checkbox"
+							color="secondary"
 							checked={ isSecondarySelected }
 							onChange={ handleSecondaryCheckboxClick }
 							onClick={ (event) => event.stopPropagation() }
-							style={{
-								opacity: props.selectedStats.length > 0 ? 1 : 0,
-								transition: 'opacity 150ms ease-in-out'
-							}}
 						/>
 					)}
 				</ListItemButton>

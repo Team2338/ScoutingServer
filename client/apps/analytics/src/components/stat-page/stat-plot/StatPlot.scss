@@ -1,0 +1,17 @@
+.stat-plot {
+	position: relative;
+	display: flex;
+	flex-grow: 1;
+	border: 1px solid #dbdedf;
+	margin: 8px 24px 24px 24px;
+
+	&-point {
+		position: absolute;
+		width: 8px;
+		height: 8px;
+		background-color: #254999aa;
+		border: 1px solid #254999;
+		border-radius: 8px;
+		transform: translate(-50%, 50%);
+	}
+}

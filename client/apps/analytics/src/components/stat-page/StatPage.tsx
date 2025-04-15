@@ -9,6 +9,7 @@ import {
 import { useTranslator } from '../../service/TranslateService';
 import { getComments, getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
+import StatPlot from './stat-plot/StatPlot';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
@@ -21,6 +22,7 @@ import {
 	ToggleButtonGroup
 } from '@mui/material';
 import {
+	ScatterPlot,
 	StackedBarChart,
 	TableChart,
 	TableRows
@@ -29,7 +31,8 @@ import {
 enum ViewType {
 	barGraph = 'barGraph',
 	table = 'table',
-	barGraphTable = 'barGraphTable'
+	barGraphTable = 'barGraphTable',
+	scatterPlot = 'scatterPlot',
 }
 
 function StatPage() {
@@ -116,6 +119,9 @@ function StatPage() {
 						<ToggleButton value={ ViewType.barGraphTable } aria-label="Bar graph and table">
 							<TableChart />
 						</ToggleButton>
+						<ToggleButton value={ ViewType.scatterPlot } aria-label="Scatter plot">
+							<ScatterPlot />
+						</ToggleButton>
 					</ToggleButtonGroup>
 				</div>
 				{ (viewType === ViewType.barGraph || viewType === ViewType.barGraphTable) && (
@@ -135,6 +141,15 @@ function StatPage() {
 								: <StatTable data={ teamStats }/>
 						}
 					</div>
+				)}
+				{ (viewType === ViewType.scatterPlot) && (
+					<StatPlot
+						robots={ teamData }
+						horizontalObjectives={ selectedStats }
+						verticalObjectives={ selectedStats }
+						metric="mean"
+						selectRobot={ selectRobot }
+					/>
 				)}
 			</div>
 		);

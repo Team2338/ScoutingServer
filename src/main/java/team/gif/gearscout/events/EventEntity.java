@@ -1,0 +1,92 @@
+package team.gif.gearscout.events;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "events")
+public class EventEntity {
+
+	@Id
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "events_seq"
+	)
+	@SequenceGenerator(
+		name = "events_seq",
+		allocationSize = 1
+	)
+	private Long id;
+
+	@Column(nullable = false)
+	private Integer gameYear;
+
+	@Column(nullable = false)
+
+	private Integer teamNumber;
+
+	@Column(nullable = false)
+	@Size(min = 1, max = 32)
+	private String eventCode;
+
+	@Column(nullable = false)
+	@Size(min = 1, max = 32)
+	private String secretCode;
+
+
+	public EventEntity() {}
+
+	public EventEntity(
+		Integer gameYear,
+		Integer teamNumber,
+		String eventCode,
+		String secretCode
+	) {
+		this.gameYear = gameYear;
+		this.teamNumber = teamNumber;
+		this.eventCode = eventCode;
+		this.secretCode = secretCode;
+	}
+
+	public Integer getGameYear() {
+		return gameYear;
+	}
+
+	public Integer getTeamNumber() {
+		return teamNumber;
+	}
+
+	public String getEventCode() {
+		return eventCode;
+	}
+
+	public String getSecretCode() {
+		return secretCode;
+	}
+
+	public void setGameYear(Integer gameYear) {
+		this.gameYear = gameYear;
+	}
+
+	public void setTeamNumber(Integer teamNumber) {
+		this.teamNumber = teamNumber;
+	}
+
+	public void setEventCode(String eventCode) {
+		this.eventCode = eventCode;
+	}
+
+	public void setSecretCode(String secretCode) {
+		this.secretCode = secretCode;
+	}
+
+
+}

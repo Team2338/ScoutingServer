@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
@@ -32,18 +33,20 @@ public class MatchEntity {
 	private Long id;
 
 	@Column(nullable = false)
+	@Min(value = 1995)
 	private Integer gameYear;
 	
 	@Column(nullable = false)
 	private Integer teamNumber; // Team num of data collector
-	
-	@Column(nullable = false)
-	private String secretCode; // For restricting access to team's data
-	
+
 	@Column(nullable = false)
 	@Size(min = 1, max = 32)
 	private String eventCode;
-	
+
+	@Column(nullable = false)
+	@Size(min = 1, max = 32)
+	private String secretCode; // For restricting access to team's data
+
 	@Column(nullable = false)
 	private Integer matchNumber;
 	

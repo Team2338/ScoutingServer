@@ -58,6 +58,7 @@ export interface AppState {
 		loadStatus: LoadStatus;
 		data: GlobalObjectiveStats[];
 		selectedStats: ObjectiveDescriptor[];
+		secondarySelectedStats: ObjectiveDescriptor[];
 	};
 	planning: {
 		loadStatus: LoadStatus;

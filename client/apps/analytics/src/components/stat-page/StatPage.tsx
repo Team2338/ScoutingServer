@@ -58,6 +58,7 @@ function StatPage() {
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
+	const secondarySelectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.secondarySelectedStats);
 
 	const selectRobot = (robotNumber: number) => {
 		setSelectedRobotNumber(robotNumber);
@@ -146,7 +147,7 @@ function StatPage() {
 					<StatPlot
 						robots={ teamData }
 						horizontalObjectives={ selectedStats }
-						verticalObjectives={ selectedStats }
+						verticalObjectives={ secondarySelectedStats }
 						metric="mean"
 						selectRobot={ selectRobot }
 					/>
@@ -160,8 +161,10 @@ function StatPage() {
 			<main className="page stat-page">
 				<StatList
 					className="stat-list-wrapper"
+					variant={ viewType === ViewType.scatterPlot ? 'double' : 'single' }
 					stats={ stats }
 					selectedStats={ selectedStats }
+					secondarySelectedStats={ secondarySelectedStats }
 				/>
 				{ content }
 			</main>

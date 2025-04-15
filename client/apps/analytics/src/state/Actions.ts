@@ -48,6 +48,8 @@ export enum Actions {
 	SELECT_STAT = '[STATS] Select stat',
 	ADD_SELECTED_STAT = '[STATS] Add selection',
 	REMOVE_SELECTED_STAT = '[STATS] Remove selection',
+	ADD_SECONDARY_SELECTED_STAT = '[STATS] Add 2ary selection',
+	REMOVE_SECONDARY_SELECTED_STAT = '[STATS] Remove 2ary selection',
 	CLEAR_SELECTED_STATS = '[STATS] Clear selection',
 	SELECT_FIRST_TEAM_FOR_PLANNING = '[PLAN] Select first team',
 	SELECT_SECOND_TEAM_FOR_PLANNING = '[PLAN] Select second team',
@@ -223,6 +225,22 @@ export const addSelectedStat = (gamemode: string, objective: string): Action => 
 
 export const removeSelectedStat = (gamemode: string, objective: string): Action => ({
 	type: Actions.REMOVE_SELECTED_STAT,
+	payload: {
+		gamemode: gamemode,
+		objective: objective
+	}
+});
+
+export const addSecondarySelectedStat = (gamemode: string, objective: string): Action => ({
+	type: Actions.ADD_SECONDARY_SELECTED_STAT,
+	payload: {
+		gamemode: gamemode,
+		objective: objective
+	}
+});
+
+export const removeSecondarySelectedStat = (gamemode: string, objective: string): Action => ({
+	type: Actions.REMOVE_SECONDARY_SELECTED_STAT,
 	payload: {
 		gamemode: gamemode,
 		objective: objective

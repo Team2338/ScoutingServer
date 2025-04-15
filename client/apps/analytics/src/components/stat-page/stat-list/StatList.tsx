@@ -7,21 +7,33 @@ import {
 } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import StatListSection from './StatListSection';
-import { addSelectedStat, clearSelectedStats, removeSelectedStat, selectStat, useAppDispatch } from '../../../state';
+import {
+	addSecondarySelectedStat,
+	addSelectedStat,
+	clearSelectedStats,
+	removeSecondarySelectedStat,
+	removeSelectedStat,
+	selectStat,
+	useAppDispatch
+} from '../../../state';
 
 interface IProps {
 	className?: string;
+	variant: 'single' | 'double';
 	stats: GlobalObjectiveStats[];
 	selectedStats: ObjectiveDescriptor[];
+	secondarySelectedStats: ObjectiveDescriptor[];
 }
 
-export default function StatList({ className, stats, selectedStats }: IProps) {
+export default function StatList({ className, variant, stats, selectedStats, secondarySelectedStats }: IProps) {
 
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const _setSelectedStat = (gamemode: string, objective: string) => dispatch(selectStat(gamemode, objective));
 	const _addSelectedStat = (gamemode: string, objective: string) => dispatch(addSelectedStat(gamemode, objective));
 	const _removeSelectedStat = (gamemode: string, objective: string) => dispatch(removeSelectedStat(gamemode, objective));
+	const _addSecondaryStat = (gamemode: string, objective: string) => dispatch(addSecondarySelectedStat(gamemode, objective));
+	const _removeSecondaryStat = (gamemode: string, objective: string) => dispatch(removeSecondarySelectedStat(gamemode, objective));
 	const _clearSelectedStats = () => dispatch(clearSelectedStats());
 
 	const statsGroupedByGamemode: Map<string, GlobalObjectiveStats[]> = new Map();
@@ -41,12 +53,16 @@ export default function StatList({ className, stats, selectedStats }: IProps) {
 			return (
 				<StatListSection
 					key={ gamemode }
+					variant={ variant }
 					gamemode={ gamemode }
 					stats={ objectives }
 					selectedStats={ selectedStats }
 					selectStat={(objective: string) => _setSelectedStat(gamemode, objective)}
 					addSelectedStat={ (objective: string) => _addSelectedStat(gamemode, objective) }
 					removeSelectedStat={ (objective: string) => _removeSelectedStat(gamemode, objective) }
+					secondarySelectedStats={ secondarySelectedStats }
+					addSecondarySelectedStat={ (objective: string) => _addSecondaryStat(gamemode, objective) }
+					removeSecondarySelectedStat={ (objective: string) => _removeSecondaryStat(gamemode, objective) }
 				/>
 			);
 		});

@@ -1,25 +1,46 @@
-.stat-plot {
-	position: relative;
-	display: flex;
+.stat-plot-wrapper {
+	display: grid;
 	flex-grow: 1;
-	border: 1px solid #dbdedf;
-	margin: 8px 24px 24px 24px;
-	padding: 16px;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr auto;
+	padding: 8px 24px 24px;
 
-	&-inner {
+	.stat-plot {
 		position: relative;
 		display: flex;
-		height: 100%;
-		width: 100%;
-	}
+		border: 1px solid #dbdedf;
+		padding: 16px;
 
-	&-point {
-		position: absolute;
-		width: 8px;
-		height: 8px;
-		background-color: #254999aa;
-		border: 1px solid #254999;
-		border-radius: 8px;
-		transform: translate(-50%, -50%);
+		&-horizontal-legend {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		&-vertical-legend {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			writing-mode: vertical-lr;
+			transform: rotate(180deg);
+		}
+
+		&-inner {
+			position: relative;
+			display: flex;
+			height: 100%;
+			width: 100%;
+		}
+
+		&-point {
+			position: absolute;
+			width: 8px;
+			height: 8px;
+			background-color: #254999aa;
+			border: 1px solid #254999;
+			border-radius: 8px;
+			transform: translate(-50%, -50%);
+		}
 	}
 }
+

@@ -72,10 +72,15 @@ export default function StatPlot(props: IProps) {
 	));
 
 	return (
-		<div className="stat-plot">
-			<div className="stat-plot-inner">
-				{ points }
+		<div className="stat-plot-wrapper">
+			<div className="stat-plot-vertical-legend">Objectives</div>
+			<div className="stat-plot">
+				<div className="stat-plot-inner">
+					{ points }
+				</div>
 			</div>
+			<span></span>
+			<div className="stat-plot-horizontal-legend">Objectives</div>
 		</div>
 	);
 }

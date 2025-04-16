@@ -57,7 +57,13 @@ export default function StatPlot(props: IProps) {
 
 	const points = props.robots.map(robot => (
 		<Tooltip
-			title={ robot.id }
+			title={(
+				<div>
+					<div>{ robot.id }</div>
+					<div>X:&nbsp;{ horizontalSums[robot.id].toFixed(2) }</div>
+					<div>Y:&nbsp;{ verticalSums[robot.id].toFixed(2) }</div>
+				</div>
+			)}
 			key={ robot.id }
 		>
 			<button

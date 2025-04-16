@@ -1,0 +1,84 @@
+.stat-plot-wrapper {
+	display: grid;
+	flex-grow: 1;
+	grid-template-areas:
+		"vleg plot"
+		". hleg";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr auto;
+	padding: 8px 24px 24px;
+
+	.stat-plot {
+		grid-area: plot;
+		position: relative;
+		display: flex;
+		border: 1px solid #dbdedf;
+		padding: 16px;
+
+		&-horizontal-legend {
+			grid-area: hleg;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 4px;
+
+			&:before {
+				content: '';
+				width: 8px;
+				height: 8px;
+				border-radius: 4px;
+				background-color: #254999;
+			}
+		}
+
+		&-vertical-legend {
+			grid-area: vleg;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			column-gap: 4px;
+			writing-mode: vertical-lr;
+			transform: rotate(180deg);
+
+			&:before {
+				content: '';
+				width: 8px;
+				height: 8px;
+				border-radius: 4px;
+				background-color: #ff9100;
+			}
+		}
+
+		&-inner {
+			position: relative;
+			display: flex;
+			height: 100%;
+			width: 100%;
+		}
+
+		&-point {
+			position: absolute;
+			box-sizing: border-box;
+			display: flex;
+			justify-content: center;
+			width: 8px;
+			height: 8px;
+			padding: 0;
+			background-color: #25499988;
+			border: 1px solid #254999;
+			border-radius: 8px;
+			transform: translate(-50%, -50%);
+			cursor: pointer;
+
+			&-label {
+				position: absolute;
+				font-size: 12px;
+				line-height: 16px;
+				color: #000;
+				top: 0;
+				transform: translateY(-100%);
+			}
+		}
+	}
+}
+

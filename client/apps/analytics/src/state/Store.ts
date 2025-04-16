@@ -42,7 +42,8 @@ const INITIAL_STATE: AppState = {
 	stats: {
 		loadStatus: LoadStatus.none,
 		data: [],
-		selectedStats: []
+		selectedStats: [],
+		secondarySelectedStats: []
 	},
 	planning: {
 		loadStatus: LoadStatus.none,
@@ -358,12 +359,31 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 					))
 				}
 			};
+		case Actions.ADD_SECONDARY_SELECTED_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					secondarySelectedStats: state.stats.secondarySelectedStats.concat(action.payload)
+				}
+			};
+		case Actions.REMOVE_SECONDARY_SELECTED_STAT:
+			return {
+				...state,
+				stats: {
+					...state.stats,
+					secondarySelectedStats: state.stats.secondarySelectedStats.filter((descriptor) => (
+						!(descriptor.gamemode === action.payload.gamemode && descriptor.objective === action.payload.objective)
+					))
+				}
+			};
 		case Actions.CLEAR_SELECTED_STATS:
 			return {
 				...state,
 				stats: {
 					...state.stats,
-					selectedStats: []
+					selectedStats: [],
+					secondarySelectedStats: []
 				}
 			};
 		case Actions.SELECT_FIRST_TEAM_FOR_PLANNING:

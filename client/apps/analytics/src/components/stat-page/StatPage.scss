@@ -9,6 +9,13 @@
 		min-width: var(--stat-sidenav-width);
 	}
 
+	.view-more-details-container {
+		display: flex;
+		justify-content: space-between;
+		padding: 16px;
+		width: 100%;
+	}
+
 	.stat-content {
 		display: flex;
 		flex-direction: column;

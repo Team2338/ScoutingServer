@@ -9,47 +9,67 @@ import { useTranslator } from '../../../service/TranslateService';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 
 interface IProps {
+	variant: 'single' | 'double';
 	gamemode: string;
 	stats: GlobalObjectiveStats[];
 	selectedStats: ObjectiveDescriptor[];
 	selectStat: (objective: string) => void;
 	addSelectedStat: (objective: string) => void;
 	removeSelectedStat: (objective: string) => void;
+	secondarySelectedStats: ObjectiveDescriptor[];
+	addSecondarySelectedStat: (objective: string) => void;
+	removeSecondarySelectedStat: (objective: string) => void;
 }
 
-export default function StatListSection({ gamemode, stats, selectedStats, selectStat, addSelectedStat, removeSelectedStat }: IProps) {
+export default function StatListSection(props: IProps) {
 	const translate = useTranslator();
 
 	const descriptorToColorMap: Map<string, string> = useMemo(() => {
 		const map: Map<string, string> = new Map();
-		selectedStats.forEach((descriptor, index: number) => {
+		props.selectedStats.forEach((descriptor, index: number) => {
 			const key: string = descriptor.gamemode + '\0' + descriptor.objective;
 			map.set(key, STAT_GRAPH_COLORS[index % STAT_GRAPH_COLORS.length]);
 		});
 		return map;
-	}, [selectedStats]);
+	}, [props.selectedStats]);
 
-	const items = stats.map((stat: GlobalObjectiveStats) => {
-		const isSelected: boolean = !!selectedStats.find((descriptor: ObjectiveDescriptor) => (
+	const items = props.stats.map((stat: GlobalObjectiveStats) => {
+		const isSelected: boolean = !!props.selectedStats.find((descriptor: ObjectiveDescriptor) => (
 			descriptor.gamemode === stat.gamemode && descriptor.objective === stat.name
 		));
+
+		const isSecondarySelected: boolean =
+			props.variant === 'double'
+			&& !!props.secondarySelectedStats.find((descriptor: ObjectiveDescriptor) => (
+				descriptor.gamemode === stat.gamemode && descriptor.objective === stat.name
+			));
 
 		const handleCheckboxClick = (event): void => {
 			event.stopPropagation();
 
 			if (event.target.checked) {
-				addSelectedStat(stat.name);
+				props.addSelectedStat(stat.name);
 				return;
 			}
 
-			removeSelectedStat(stat.name);
+			props.removeSelectedStat(stat.name);
+		};
+
+		const handleSecondaryCheckboxClick = (event): void => {
+			event.stopPropagation();
+			if (event.target.checked) {
+				props.addSecondarySelectedStat(stat.name);
+				return;
+			}
+
+			props.removeSecondarySelectedStat(stat.name);
 		};
 
 		return (
 			<Fragment key={ stat.name }>
 				<ListItemButton
-					selected={ isSelected }
-					onClick={ () => selectStat(stat.name) }
+					selected={ isSelected || isSecondarySelected }
+					onClick={ () => props.selectStat(stat.name) }
 				>
 					<div className="stat-list-item">
 						<div>{ translate(stat.name) }</div>
@@ -57,7 +77,7 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 						<div>{ translate('MEDIAN') }: { roundToDecimal(stat.stats.median) }</div>
 					</div>
 					{
-						descriptorToColorMap.has(stat.gamemode + '\0' + stat.name) &&
+						(props.variant === 'single' && descriptorToColorMap.has(stat.gamemode + '\0' + stat.name)) &&
 						<div
 							className="stat-list-color-legend"
 							style={{
@@ -72,10 +92,19 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 						onChange={ handleCheckboxClick }
 						onClick={ (event) => event.stopPropagation() }
 						style={{
-							opacity: selectedStats.length > 0 ? 1 : 0,
+							opacity: (props.selectedStats.length > 0 || props.variant === 'double') ? 1 : 0,
 							transition: 'opacity 150ms ease-in-out'
 						}}
 					/>
+					{ (props.variant === 'double') && (
+						<Checkbox
+							className="stat-list-checkbox"
+							color="secondary"
+							checked={ isSecondarySelected }
+							onChange={ handleSecondaryCheckboxClick }
+							onClick={ (event) => event.stopPropagation() }
+						/>
+					)}
 				</ListItemButton>
 				<Divider variant="fullWidth" component="li"/>
 			</Fragment>
@@ -84,7 +113,7 @@ export default function StatListSection({ gamemode, stats, selectedStats, select
 
 	return (
 		<Fragment>
-			<ListSubheader style={{ top: 'var(--stat-header-height)' }}>{ translate(gamemode) }</ListSubheader>
+			<ListSubheader style={{ top: 'var(--stat-header-height)' }}>{ translate(props.gamemode) }</ListSubheader>
 			{ items }
 		</Fragment>
 	);

@@ -9,6 +9,7 @@ import {
 import { useTranslator } from '../../service/TranslateService';
 import { getComments, getInspections, useAppDispatch, useAppSelector, useDataInitializer } from '../../state';
 import StatList from './stat-list/StatList';
+import StatPlot from './stat-plot/StatPlot';
 import StatTable from './stat-table/StatTable';
 import './StatPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
@@ -21,6 +22,7 @@ import {
 	ToggleButtonGroup
 } from '@mui/material';
 import {
+	ScatterPlot,
 	StackedBarChart,
 	TableChart,
 	TableRows
@@ -29,7 +31,8 @@ import {
 enum ViewType {
 	barGraph = 'barGraph',
 	table = 'table',
-	barGraphTable = 'barGraphTable'
+	barGraphTable = 'barGraphTable',
+	scatterPlot = 'scatterPlot',
 }
 
 function StatPage() {
@@ -55,6 +58,7 @@ function StatPage() {
 	const teamData: Team[] = useAppSelector(state => state.teams.data);
 	const stats: GlobalObjectiveStats[] = useAppSelector(state => state.stats.data);
 	const selectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.selectedStats);
+	const secondarySelectedStats: ObjectiveDescriptor[] = useAppSelector(state => state.stats.secondarySelectedStats);
 
 	const selectRobot = (robotNumber: number) => {
 		setSelectedRobotNumber(robotNumber);
@@ -77,7 +81,12 @@ function StatPage() {
 		);
 	}
 
-	let content = <div>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</div>;
+	let content = (
+		<div className="view-more-details-container">
+			<span>{ translate('SELECT_STAT_VIEW_MORE_DETAILS') }</span>
+			<ViewTypePicker viewType={ viewType } setViewType={ setViewType } />
+		</div>
+	);
 	if (selectedStats.length > 0) {
 		const teamStats: TeamObjectiveStats[] = teamData
 			.map((team: Team) => team.stats
@@ -98,25 +107,7 @@ function StatPage() {
 			<div className="stat-content">
 				<div className="stat-content-top-row">
 					<h2 className="stat-content-title">{ contentTitleText }</h2>
-					{/*TODO: Translate below*/}
-					<ToggleButtonGroup
-						size="small"
-						exclusive={ true }
-						value={ viewType }
-						onChange={ (_, next: ViewType) => setViewType(next) }
-						aria-label="Page layout"
-						sx={{ marginBottom: '8px' }}
-					>
-						<ToggleButton value={ ViewType.barGraph } aria-label="Bar graph only">
-							<StackedBarChart />
-						</ToggleButton>
-						<ToggleButton value={ ViewType.table } aria-label="Table only">
-							<TableRows />
-						</ToggleButton>
-						<ToggleButton value={ ViewType.barGraphTable } aria-label="Bar graph and table">
-							<TableChart />
-						</ToggleButton>
-					</ToggleButtonGroup>
+					<ViewTypePicker viewType={ viewType } setViewType={ setViewType } />
 				</div>
 				{ (viewType === ViewType.barGraph || viewType === ViewType.barGraphTable) && (
 					<StatGraphStacked
@@ -136,6 +127,15 @@ function StatPage() {
 						}
 					</div>
 				)}
+				{ (viewType === ViewType.scatterPlot) && (
+					<StatPlot
+						robots={ teamData }
+						horizontalObjectives={ selectedStats }
+						verticalObjectives={ secondarySelectedStats }
+						metric="mean"
+						selectRobot={ selectRobot }
+					/>
+				)}
 			</div>
 		);
 	}
@@ -145,8 +145,10 @@ function StatPage() {
 			<main className="page stat-page">
 				<StatList
 					className="stat-list-wrapper"
+					variant={ viewType === ViewType.scatterPlot ? 'double' : 'single' }
 					stats={ stats }
 					selectedStats={ selectedStats }
+					secondarySelectedStats={ secondarySelectedStats }
 				/>
 				{ content }
 			</main>
@@ -158,6 +160,33 @@ function StatPage() {
 				afterClose={ afterClose }
 			/>
 		</Fragment>
+	);
+}
+
+function ViewTypePicker(props: { viewType: ViewType, setViewType: (next: ViewType) => void }) {
+	/*TODO: Translate below*/
+	return (
+		<ToggleButtonGroup
+			size="small"
+			exclusive={ true }
+			value={ props.viewType }
+			onChange={ (_, next: ViewType) => props.setViewType(next) }
+			aria-label="Page layout"
+			sx={{ display: 'block', marginBottom: '8px' }}
+		>
+			<ToggleButton value={ ViewType.barGraph } aria-label="Bar graph only">
+				<StackedBarChart />
+			</ToggleButton>
+			<ToggleButton value={ ViewType.table } aria-label="Table only">
+				<TableRows />
+			</ToggleButton>
+			<ToggleButton value={ ViewType.barGraphTable } aria-label="Bar graph and table">
+				<TableChart />
+			</ToggleButton>
+			<ToggleButton value={ ViewType.scatterPlot } aria-label="Scatter plot">
+				<ScatterPlot />
+			</ToggleButton>
+		</ToggleButtonGroup>
 	);
 }
 

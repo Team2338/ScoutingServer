@@ -60,14 +60,16 @@ export default function StatPlot(props: IProps) {
 			title={ robot.id }
 			key={ robot.id }
 		>
-			<div
+			<button
 				className="stat-plot-point"
+				onClick={ () => props.selectRobot(robot.id) }
 				style={{
 					bottom: (verticalSums[robot.id] / maxVertical) * 100 + '%',
 					left: (horizontalSums[robot.id] / maxHorizontal) * 100 + '%',
 				}}
 			>
-			</div>
+				<span className="stat-plot-point-label">{ robot.id }</span>
+			</button>
 		</Tooltip>
 	));
 
@@ -79,7 +81,6 @@ export default function StatPlot(props: IProps) {
 					{ points }
 				</div>
 			</div>
-			<span></span>
 			<div className="stat-plot-horizontal-legend">Objectives</div>
 		</div>
 	);

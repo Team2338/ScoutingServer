@@ -37,8 +37,8 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 	SELECT new team.gif.gearscout.shared.EventInfo(
 		match.teamNumber,
 		match.gameYear,
-		match.secretCode,
 		match.eventCode,
+		match.secretCode,
 		COUNT(match.id)
 	)
 	FROM MatchEntity match

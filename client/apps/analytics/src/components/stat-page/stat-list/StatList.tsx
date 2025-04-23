@@ -19,7 +19,7 @@ import {
 
 interface IProps {
 	className?: string;
-	variant: 'single' | 'double';
+	variant: 'single' | 'single-nokey' | 'double';
 	stats: GlobalObjectiveStats[];
 	selectedStats: ObjectiveDescriptor[];
 	secondarySelectedStats: ObjectiveDescriptor[];

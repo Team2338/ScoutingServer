@@ -20,9 +20,26 @@ export const superchargeGridScoreConfig: GridScoreConfig = {
 export const STAT_GRAPH_COLORS: string[] = [
 	'#254999',
 	'#dd8850',
-	'#884099',
-	'#44ac88'
+	'#704099',
+	'#44ab52'
 ];
+
+export const STAT_GRAPH_COLOR_SCALE_1: string[] = [
+    '#ffe532',
+    '#d2da9a',
+    '#bbcbac',
+    '#a6bbb4',
+    '#93abb7',
+    '#829bb8',
+    '#718cb6',
+    '#607db3',
+    '#4f6daf',
+    '#3d5faa',
+    '#2750a4',
+	'#00429d',
+]
+
+export const STAT_GRAPH_COLOR_SCALE_UNKNOWN: string = '#aaaaaa';
 
 export const GAMEMODE_ORDERING: Record<string, string> = {
 	'AUTO': '0',

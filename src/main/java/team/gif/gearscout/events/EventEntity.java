@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -27,11 +28,12 @@ public class EventEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	private Integer gameYear;
+	@Min(value = 0)
+	private Integer teamNumber;
 
 	@Column(nullable = false)
-
-	private Integer teamNumber;
+	@Min(value = 1995)
+	private Integer gameYear;
 
 	@Column(nullable = false)
 	@Size(min = 1, max = 32)
@@ -45,23 +47,23 @@ public class EventEntity {
 	public EventEntity() {}
 
 	public EventEntity(
-		Integer gameYear,
 		Integer teamNumber,
+		Integer gameYear,
 		String eventCode,
 		String secretCode
 	) {
-		this.gameYear = gameYear;
 		this.teamNumber = teamNumber;
+		this.gameYear = gameYear;
 		this.eventCode = eventCode;
 		this.secretCode = secretCode;
 	}
 
-	public Integer getGameYear() {
-		return gameYear;
-	}
-
 	public Integer getTeamNumber() {
 		return teamNumber;
+	}
+
+	public Integer getGameYear() {
+		return gameYear;
 	}
 
 	public String getEventCode() {
@@ -72,12 +74,12 @@ public class EventEntity {
 		return secretCode;
 	}
 
-	public void setGameYear(Integer gameYear) {
-		this.gameYear = gameYear;
-	}
-
 	public void setTeamNumber(Integer teamNumber) {
 		this.teamNumber = teamNumber;
+	}
+
+	public void setGameYear(Integer gameYear) {
+		this.gameYear = gameYear;
 	}
 
 	public void setEventCode(String eventCode) {

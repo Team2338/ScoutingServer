@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.shared.UserRoles;
+import team.gif.gearscout.token.TokenModel;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.users.UserEntity;
 import team.gif.gearscout.users.UserService;
@@ -44,16 +46,12 @@ public class EventController {
 
 	@GetMapping(value = "")
 	public ResponseEntity<List<AggregateEventInfo>> getEvents(
-		@RequestHeader(value = "Authorization") String token
+		@RequestHeader(value = "Authorization") String tokenHeader
 	) {
 		logger.debug("Received getEvents request");
 
-		// Strip "bearer " from the beginning if it exists
-		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = bearerPattern.matcher(token);
-		token = matcher.replaceFirst("");
-
-		Long userId = tokenService.validateToken(token);
+		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
+		Long userId = token.getUserId();
 		UserEntity user = userService.findUserById(userId);
 
 		if (!user.getRole().equals(UserRoles.ADMIN) && !user.getRole().equals(UserRoles.SUPERADMIN)) {

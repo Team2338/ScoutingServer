@@ -36,6 +36,10 @@ CREATE SEQUENCE IF NOT EXISTS matches_seq
 CREATE TABLE IF NOT EXISTS matches (
 	id				bigint		NOT NULL,
 	event_id		bigint		NOT NULL,
+	team_number		integer		NOT NULL,
+	game_year		integer		NOT NULL,
+	event_code		varchar(32)	NOT NULL,
+	secret_code		varchar(32)	NOT NULL,
 	creator			varchar(32)	NOT NULL,
 	match_number	integer		NOT NULL,
 	robot_number	integer		NOT NULL,
@@ -94,6 +98,10 @@ CREATE SEQUENCE IF NOT EXISTS image_info_seq
 CREATE TABLE IF NOT EXISTS image_info (
 	id				bigint		NOT NULL,
 	event_id		bigint		NOT NULL,
+	team_number		integer		NOT NULL,
+	game_year		integer		NOT NULL,
+	event_code		varchar(32)	NOT NULL,
+	secret_code		varchar(32)	NOT NULL,
 	robot_number	integer		NOT NULL,
 	creator			varchar(32)	NOT NULL,
 	time_created	varchar(32)	NOT NULL,
@@ -128,6 +136,10 @@ CREATE SEQUENCE detail_notes_seq
 CREATE TABLE detail_notes (
 	id				bigint			NOT NULL,
 	event_id		bigint			NOT NULL,
+	team_number		integer			NOT NULL,
+	game_year		integer			NOT NULL,
+	event_code		varchar(32)		NOT NULL,
+	secret_code		varchar(32)		NOT NULL,
 	robot_number	integer			NOT NULL,
 	question		varchar(32)		NOT NULL,
 	answer			varchar(1024)	NOT NULL,
@@ -152,6 +164,10 @@ CREATE SEQUENCE comments_seq
 CREATE TABLE comments (
 	id				bigint		NOT NULL,
 	event_id		bigint		NOT NULL,
+	team_number		integer		NOT NULL,
+	game_year		integer		NOT NULL,
+	event_code		varchar(32)	NOT NULL,
+	secret_code		varchar(32)	NOT NULL,
 	robot_number	integer		NOT NULL,
 	match_number	integer		NOT NULL,
 	topic			varchar(32)	NOT NULL,

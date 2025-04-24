@@ -2,8 +2,7 @@
 -- 1. Create events table
 -- 2. Populate events table with existing event info from other entities
 -- 3. Point existing entities to inserted event IDs
--- 4. Remove redundant columns from existing entities
--- 5. Add indexes for event_id in entities
+-- 4. Add indexes for event_id in entities
 
 -------------------------
 -- Create events table --
@@ -112,43 +111,26 @@ ALTER TABLE events
 
 ------------------------------------------------------------------
 -- Add foreign key constraint on event_id for each entity table --
---     and drop redundant columns                               --
 ------------------------------------------------------------------
 ALTER TABLE matches
-	DROP COLUMN team_number,
-	DROP COLUMN game_year,
-	DROP COLUMN event_code,
-	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__matches__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE
 ;
 
 ALTER TABLE comments
-	DROP COLUMN team_number,
-	DROP COLUMN game_year,
-	DROP COLUMN event_code,
-	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__comments__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE
 ;
 
 ALTER TABLE image_info
-	DROP COLUMN team_number,
-	DROP COLUMN game_year,
-	DROP COLUMN event_code,
-	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__image_info__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE
 ;
 
 ALTER TABLE detail_notes
-	DROP COLUMN team_number,
-	DROP COLUMN game_year,
-	DROP COLUMN event_code,
-	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__inspections__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE

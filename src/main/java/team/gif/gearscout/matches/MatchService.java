@@ -2,6 +2,11 @@ package team.gif.gearscout.matches;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team.gif.gearscout.matches.model.MatchEntity;
+import team.gif.gearscout.matches.model.NewMatch;
+import team.gif.gearscout.matches.model.ObjectiveEntity;
+import team.gif.gearscout.matches.preprocessor.MatchPreprocessor;
+import team.gif.gearscout.matches.preprocessor.MatchProcessor2023;
 import team.gif.gearscout.shared.EventInfo;
 import team.gif.gearscout.shared.exception.MatchNotFoundException;
 

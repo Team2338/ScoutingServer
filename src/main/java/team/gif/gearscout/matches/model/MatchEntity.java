@@ -1,4 +1,4 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.matches.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

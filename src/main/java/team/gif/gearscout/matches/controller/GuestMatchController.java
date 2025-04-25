@@ -1,4 +1,4 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.matches.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,20 +14,23 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.gif.gearscout.events.EventService;
+import team.gif.gearscout.matches.model.MatchEntity;
+import team.gif.gearscout.matches.MatchService;
+import team.gif.gearscout.matches.model.NewMatch;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MatchController {
+public class GuestMatchController {
 
 	private final MatchService matchService;
 	private final EventService eventService;
-	private static final Logger logger = LogManager.getLogger(MatchController.class);
+	private static final Logger logger = LogManager.getLogger(GuestMatchController.class);
 	
 	
 	@Autowired
-	public MatchController(
+	public GuestMatchController(
 		MatchService matchService,
 		EventService eventService
 	) {

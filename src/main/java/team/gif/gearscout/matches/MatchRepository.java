@@ -3,6 +3,7 @@ package team.gif.gearscout.matches;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.shared.EventInfo;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.matches.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,32 +12,33 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.events.EventService;
+import team.gif.gearscout.matches.model.MatchEntity;
+import team.gif.gearscout.matches.MatchService;
 import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.token.TokenModel;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.users.UserEntity;
 import team.gif.gearscout.users.UserService;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @RestController
 @RequestMapping(value = "/api/v2", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MatchControllerV2 extends MatchController {
+public class MemberMatchController extends GuestMatchController {
 
-	private static final Logger logger = LogManager.getLogger(MatchControllerV2.class);
+	private static final Logger logger = LogManager.getLogger(MemberMatchController.class);
 	private final MatchService matchService;
 	private final TokenService tokenService;
 	private final UserService userService;
 
 
 	@Autowired
-	public MatchControllerV2(
+	public MemberMatchController(
 		MatchService matchService,
+		EventService eventService,
 		TokenService tokenService,
 		UserService userService
 	) {
-		super(matchService);
+		super(matchService, eventService);
 		this.matchService = matchService;
 		this.tokenService = tokenService;
 		this.userService = userService;

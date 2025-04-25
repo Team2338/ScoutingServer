@@ -35,6 +35,7 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 
 	@Query(value = """
 	SELECT new team.gif.gearscout.shared.EventInfo(
+		match.eventId,
 		match.teamNumber,
 		match.gameYear,
 		match.secretCode,
@@ -48,15 +49,4 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 	""")
 	List<EventInfo> getEventListForTeam(Integer teamNumber);
 
-	// TODO: Doesn't account for events with same code but different year
-	@Query(value = """
-	SELECT DISTINCT match.eventCode
-	FROM MatchEntity match
-	WHERE match.teamNumber = :teamNumber
-	""")
-	List<String> findDistinctEventCodesByTeamNumber(@Param("teamNumber") Integer teamNumber);
-	
-	@Query(value = "SELECT DISTINCT match.teamNumber FROM MatchEntity match")
-	List<Integer> findDistinctTeamNumbers();
-	
 }

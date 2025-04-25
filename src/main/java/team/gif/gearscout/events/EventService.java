@@ -9,20 +9,23 @@ import team.gif.gearscout.shared.EventInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
 
 	private final MatchRepository matchRepository;
 	private final InspectionRepository inspectionRepository;
+	private final EventRepository eventRepository;
 
 	@Autowired
 	public EventService(
 		MatchRepository matchRepository,
-		InspectionRepository inspectionRepository
-	) {
+		InspectionRepository inspectionRepository,
+		EventRepository eventRepository) {
 		this.matchRepository = matchRepository;
 		this.inspectionRepository = inspectionRepository;
+		this.eventRepository = eventRepository;
 	}
 
 	private static class EventMap {
@@ -72,6 +75,13 @@ public class EventService {
 		}
 	}
 
+	public EventEntity getEvent(Integer teamNumber, Integer gameYear, String eventCode, String secretCode) {
+		Optional<EventEntity> eventEntity = eventRepository.findByEventDescriptor(teamNumber, gameYear, eventCode, secretCode);
+		return eventEntity.orElse(
+			eventRepository.save(new EventEntity(teamNumber, gameYear, eventCode, secretCode))
+		);
+	}
+
 	public List<AggregateEventInfo> getEventList(Integer teamNumber) {
 		List<EventInfo> matchEvents = matchRepository.getEventListForTeam(teamNumber);
 		List<EventInfo> inspectionEvents = inspectionRepository.getEventListForTeam(teamNumber);
@@ -93,7 +103,7 @@ public class EventService {
 	}
 
 	private AggregateEventInfo generateEmptyEvent(EventInfo event) {
-		return new AggregateEventInfo(event.teamNumber(), event.gameYear(), event.eventCode(), event.secretCode());
+		return new AggregateEventInfo(event.eventId(), event.teamNumber(), event.gameYear(), event.eventCode(), event.secretCode());
 	}
 
 }

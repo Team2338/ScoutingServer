@@ -38,10 +38,10 @@ public class MatchService {
 		preprocessor.process(match);
 	}
 
-	public MatchEntity saveMatch(NewMatch match, Integer teamNumber, String secretCode) {
-		// Convert Match to MatchEntry
+	public MatchEntity saveMatch(Long eventId, NewMatch match, Integer teamNumber, String secretCode) {
+		// Convert Match to MatchEntity
 		String currentTime = Long.toString(System.currentTimeMillis());
-		MatchEntity matchEntity = new MatchEntity(match, teamNumber, secretCode, currentTime);
+		MatchEntity matchEntity = new MatchEntity(eventId, match, teamNumber, secretCode, currentTime);
 		
 		return matchRepository.save(matchEntity);
 	}
@@ -87,10 +87,6 @@ public class MatchService {
 		return matchRepository.getEventListForTeam(teamNumber);
 	}
 
-	public List<Integer> getDistinctTeamNumbers() {
-		return matchRepository.findDistinctTeamNumbers();
-	}
-	
 	public String getEventDataAsCsv(Integer teamNumber, Integer gameYear, String secretCode, String eventCode) {
 		List<MatchEntity> matches = matchRepository.findVisibleMatches(teamNumber, gameYear, secretCode, eventCode);
 		

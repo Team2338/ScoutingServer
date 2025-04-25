@@ -13,19 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team.gif.gearscout.events.EventService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MatchController {
-	
+
+	private final EventService eventService;
 	private final MatchService matchService;
 	private static final Logger logger = LogManager.getLogger(MatchController.class);
 	
 	
 	@Autowired
-	public MatchController(MatchService matchService) {
+	public MatchController(
+		EventService eventService,
+		MatchService matchService
+	) {
+		this.eventService = eventService;
 		this.matchService = matchService;
 	}
 	
@@ -37,9 +43,15 @@ public class MatchController {
 			@RequestBody NewMatch match
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
-		
+
+		Long eventId = eventService.getEvent(
+			teamNumber,
+			match.getGameYear(),
+			match.getEventCode(),
+			secretCode
+		).getId();
 		matchService.preprocessMatch(match);
-		matchService.saveMatch(match, teamNumber, secretCode);
+		matchService.saveMatch(eventId, match, teamNumber, secretCode);
 		
 		return ResponseEntity.accepted().build();
 	}
@@ -82,15 +94,7 @@ public class MatchController {
 		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, false);
 		return ResponseEntity.ok(result);
 	}
-	
-	
-	@GetMapping(value = "/distinct")
-	public ResponseEntity<List<Integer>> getDistinctTeamNumbers() {
-		logger.debug("Received getDistinctTeamNumbers request");
-		List<Integer> teamNumbers = matchService.getDistinctTeamNumbers();
-		return ResponseEntity.ok(teamNumbers);
-	}
-	
+
 	
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(

@@ -58,6 +58,10 @@ public class EventEntity {
 		this.secretCode = secretCode;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
@@ -72,6 +76,10 @@ public class EventEntity {
 
 	public String getSecretCode() {
 		return secretCode;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setTeamNumber(Integer teamNumber) {

@@ -33,6 +33,9 @@ public class MatchEntity {
 	private Long id;
 
 	@Column(nullable = false)
+	private Long eventId;
+
+	@Column(nullable = false)
 	@Min(value = 1995)
 	private Integer gameYear;
 	
@@ -76,11 +79,13 @@ public class MatchEntity {
 	public MatchEntity() {}
 	
 	public MatchEntity(
+		Long eventId,
 		NewMatch match,
 		Integer teamNumber,
 		String secretCode,
 		String timeCreated
 	) {
+		this.eventId = eventId;
 		this.gameYear = match.getGameYear();
 		this.teamNumber = teamNumber;
 		this.secretCode = secretCode;
@@ -97,6 +102,11 @@ public class MatchEntity {
 	
 	public Long getId() {
 		return id;
+	}
+
+
+	public Long getEventId() {
+		return eventId;
 	}
 
 
@@ -157,6 +167,11 @@ public class MatchEntity {
 	
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
 	}
 
 

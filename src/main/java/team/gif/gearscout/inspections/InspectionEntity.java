@@ -28,6 +28,9 @@ public class InspectionEntity {
 	)
 	private Long id;
 
+	@Column(name = "event_id", nullable = false)
+	private Long eventId;
+
 	@Column(name = "team_number", nullable = false)
 	@Min(0)
 	private Integer teamNumber;
@@ -71,6 +74,10 @@ public class InspectionEntity {
 		return id;
 	}
 
+	public Long getEventId() {
+		return eventId;
+	}
+
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
@@ -109,6 +116,10 @@ public class InspectionEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
 	}
 
 	public void setTeamNumber(Integer teamNumber) {

@@ -21,11 +21,13 @@ public class InspectionService {
 
 
 	public List<InspectionEntity> saveInspections(
+		Long eventId,
 		Integer teamNumber,
 		String secretCode,
 		CreateInspectionRequest form
 	) {
 		List<InspectionEntity> inspections = createInspectionsFromForm(
+			eventId,
 			teamNumber,
 			secretCode,
 			form
@@ -71,6 +73,7 @@ public class InspectionService {
 
 
 	private List<InspectionEntity> createInspectionsFromForm(
+		Long eventId,
 		Integer teamNumber,
 		String secretCode,
 		CreateInspectionRequest form
@@ -80,6 +83,7 @@ public class InspectionService {
 			.stream()
 			.map((question) -> {
 				InspectionEntity inspection = new InspectionEntity();
+				inspection.setEventId(eventId);
 				inspection.setTeamNumber(teamNumber);
 				inspection.setGameYear(form.getGameYear());
 				inspection.setEventCode(form.getEventCode());

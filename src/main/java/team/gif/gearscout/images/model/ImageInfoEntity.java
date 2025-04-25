@@ -69,7 +69,7 @@ public class ImageInfoEntity {
 		UUID imageId,
 		String timeCreated
 	) {
-		this.eventId = eventId
+		this.eventId = eventId;
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
 		this.eventCode = eventCode;

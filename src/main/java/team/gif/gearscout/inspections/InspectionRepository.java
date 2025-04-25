@@ -47,6 +47,7 @@ public interface InspectionRepository extends CrudRepository<InspectionEntity, L
 
 	@Query(value = """
 	SELECT new team.gif.gearscout.shared.EventInfo(
+		inspection.eventId,
 		inspection.teamNumber,
 		inspection.gameYear,
 		inspection.secretCode,

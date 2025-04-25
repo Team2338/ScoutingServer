@@ -1,4 +1,4 @@
-package team.gif.gearscout.images;
+package team.gif.gearscout.images.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,6 +27,9 @@ public class ImageInfoEntity {
 		allocationSize = 1
 	)
 	private Long id;
+
+	@Column(name = "event_id", nullable = false)
+	private Long eventId;
 	
 	@Column(name = "team_number", nullable = false)
 	private Integer teamNumber;
@@ -56,6 +59,7 @@ public class ImageInfoEntity {
 	public ImageInfoEntity() {}
 	
 	public ImageInfoEntity(
+		Long eventId,
 		Integer teamNumber,
 		Integer gameYear,
 		String eventCode,
@@ -65,6 +69,7 @@ public class ImageInfoEntity {
 		UUID imageId,
 		String timeCreated
 	) {
+		this.eventId = eventId
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
 		this.eventCode = eventCode;
@@ -78,7 +83,11 @@ public class ImageInfoEntity {
 	public Long getId() {
 		return id;
 	}
-	
+
+	public Long getEventId() {
+		return eventId;
+	}
+
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
@@ -114,7 +123,11 @@ public class ImageInfoEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
+	}
+
 	public void setTeamNumber(Integer teamNumber) {
 		this.teamNumber = teamNumber;
 	}

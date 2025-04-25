@@ -1,7 +1,6 @@
-package team.gif.gearscout.images;
+package team.gif.gearscout.images.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.SequenceGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.Column;

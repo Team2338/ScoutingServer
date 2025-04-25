@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import team.gif.gearscout.images.model.ImageContentEntity;
+import team.gif.gearscout.images.model.ImageInfoEntity;
+import team.gif.gearscout.images.repository.ImageContentRepository;
+import team.gif.gearscout.images.repository.ImageInfoRepository;
 import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 
@@ -62,6 +66,7 @@ public class ImageService {
 	
 	
 	public ImageInfoEntity saveImage(
+		Long eventId,
 		Integer teamNumber,
 		Integer gameYear,
 		Integer robotNumber,
@@ -88,6 +93,7 @@ public class ImageService {
 		);
 		
 		ImageInfoEntity createdImage = new ImageInfoEntity(
+			eventId,
 			teamNumber,
 			gameYear,
 			eventCode,

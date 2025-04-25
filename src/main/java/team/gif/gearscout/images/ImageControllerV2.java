@@ -9,9 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.events.EventService;
+import team.gif.gearscout.images.model.ImageContentEntity;
+import team.gif.gearscout.images.model.ImageInfoEntity;
 import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
+import team.gif.gearscout.token.TokenModel;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.users.UserEntity;
 import team.gif.gearscout.users.UserService;
@@ -20,8 +24,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "/api/v2/images", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,16 +33,18 @@ public class ImageControllerV2 {
 	private final ImageService imageService;
 	private final TokenService tokenService;
 	private final UserService userService;
+	private final EventService eventService;
 
 	@Autowired
 	public ImageControllerV2(
 		ImageService imageService,
 		TokenService tokenService,
-		UserService userService
-	) {
+		UserService userService,
+		EventService eventService) {
 		this.imageService = imageService;
 		this.tokenService = tokenService;
 		this.userService = userService;
+		this.eventService = eventService;
 	}
 
 
@@ -52,31 +56,37 @@ public class ImageControllerV2 {
 		@PathVariable Integer robotNumber,
 		@RequestHeader(value = "secretCode") String secretCode,
 		@RequestHeader(value = "timeCreated", defaultValue = "") String timeCreated,
-		@RequestHeader(value = "Authorization") String token,
+		@RequestHeader(value = "Authorization") String tokenHeader,
 		@RequestParam(value = "image") MultipartFile image
 	) throws IOException {
 		logger.debug("Received addImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
 
-		// Strip "bearer " from the beginning if it exists
-		Pattern bearerPattern = Pattern.compile("^bearer ", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = bearerPattern.matcher(token);
-		token = matcher.replaceFirst("");
-
-		Long userId = tokenService.validateToken(token);
+		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
+		Long userId = token.getUserId();
 		UserEntity user = userService.findUserById(userId);
 
-		List<String> allowedRoles = List.of(UserRoles.SUPERADMIN, UserRoles.ADMIN);
-		if (!allowedRoles.contains(user.getRole())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
-
-		// In the future, we will allow a user to belong to multiple teams (if not only for testing)
-		if (!Objects.equals(teamNumber, user.getTeamNumber())) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		switch (user.getRole()) {
+			case UserRoles.SUPERADMIN:
+				// Allow
+				break;
+			case UserRoles.ADMIN:
+				if (!Objects.equals(teamNumber, user.getTeamNumber())) {
+					throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+				}
+				break;
+			default:
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 
 		imageService.validateImage(image);
+		Long eventId = eventService.getEvent(
+			teamNumber,
+			gameYear,
+			eventCode,
+			secretCode
+		).getId();
 		imageService.saveImage(
+			eventId,
 			teamNumber,
 			gameYear,
 			robotNumber,

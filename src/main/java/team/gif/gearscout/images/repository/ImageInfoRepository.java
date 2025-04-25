@@ -1,7 +1,8 @@
-package team.gif.gearscout.images;
+package team.gif.gearscout.images.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.images.model.ImageInfoEntity;
 
 import java.util.List;
 import java.util.Optional;

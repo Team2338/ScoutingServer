@@ -21,18 +21,18 @@ import java.util.List;
 @RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MatchController {
 
-	private final EventService eventService;
 	private final MatchService matchService;
+	private final EventService eventService;
 	private static final Logger logger = LogManager.getLogger(MatchController.class);
 	
 	
 	@Autowired
 	public MatchController(
-		EventService eventService,
-		MatchService matchService
+		MatchService matchService,
+		EventService eventService
 	) {
-		this.eventService = eventService;
 		this.matchService = matchService;
+		this.eventService = eventService;
 	}
 	
 	

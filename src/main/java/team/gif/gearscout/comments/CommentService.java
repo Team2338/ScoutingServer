@@ -23,6 +23,7 @@ public class CommentService {
 
 
 	public Iterable<CommentEntity> saveComments(
+		Long eventId,
 		Integer teamNumber,
 		String secretCode,
 		CreateCommentBulkRequest form
@@ -35,6 +36,7 @@ public class CommentService {
 			.stream()
 			.map((singleCommentContent) -> {
 				CommentEntity comment = new CommentEntity();
+				comment.setEventId(eventId);
 				comment.setTeamNumber(teamNumber);
 				comment.setRobotNumber(form.getRobotNumber());
 				comment.setGameYear(form.getGameYear());

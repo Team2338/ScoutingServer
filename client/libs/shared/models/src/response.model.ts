@@ -1,6 +1,7 @@
 import { UserRole } from './auth.model';
 
 export interface IEventInfo {
+	eventId: number | null;
 	teamNumber: number;
 	gameYear: number;
 	eventCode: string;
@@ -24,6 +25,7 @@ export interface ILoginResponse {
 
 export interface IInspectionQuestionResponse {
 	id: number;
+	eventId: number;
 	teamNumber: number;
 	robotNumber: number;
 	gameYear: number;

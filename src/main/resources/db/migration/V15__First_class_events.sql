@@ -113,24 +113,32 @@ ALTER TABLE events
 -- Add foreign key constraint on event_id for each entity table --
 ------------------------------------------------------------------
 ALTER TABLE matches
+	DROP COLUMN event_code,
+	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__matches__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE
 ;
 
 ALTER TABLE comments
+	DROP COLUMN event_code,
+	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__comments__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE
 ;
 
 ALTER TABLE image_info
+	DROP COLUMN event_code,
+	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__image_info__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE
 ;
 
 ALTER TABLE detail_notes
+	DROP COLUMN event_code,
+	DROP COLUMN secret_code,
 	ADD CONSTRAINT fk__inspections__event_id FOREIGN KEY (event_id)
 	     REFERENCES events (id)
 	     ON DELETE CASCADE

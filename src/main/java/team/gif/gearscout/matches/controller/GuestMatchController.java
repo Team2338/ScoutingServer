@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team.gif.gearscout.events.EventEntity;
 import team.gif.gearscout.events.EventService;
 import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.matches.MatchService;
 import team.gif.gearscout.matches.model.NewMatch;
+import team.gif.gearscout.shared.exception.MatchNotFoundException;
 
 import java.util.List;
 
@@ -47,14 +49,11 @@ public class GuestMatchController {
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 
-		Long eventId = eventService.getEvent(
-			teamNumber,
-			match.getGameYear(),
-			match.getEventCode(),
-			secretCode
-		).getId();
+		Long eventId = eventService
+			.getEvent(teamNumber, match.getGameYear(), match.getEventCode(), secretCode)
+			.getId();
 		matchService.preprocessMatch(match);
-		matchService.saveMatch(eventId, match, teamNumber, secretCode);
+		matchService.saveMatch(eventId, teamNumber, match);
 		
 		return ResponseEntity.accepted().build();
 	}
@@ -68,8 +67,11 @@ public class GuestMatchController {
 			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
-		
-		List<MatchEntity> result = matchService.getAllMatchesForEvent(teamNumber, gameYear, secretCode, eventCode);
+
+		Long eventId = eventService
+			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
+		List<MatchEntity> result = matchService.getAllMatchesForEvent(eventId);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -82,7 +84,15 @@ public class GuestMatchController {
 			@PathVariable Long matchId
 	) {
 		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, true);
+
+		// Check if the user has the correct secret code
+		MatchEntity originalMatch = matchService.getMatch(matchId);
+		EventEntity event = eventService.getEvent(originalMatch.getEventId());
+		if (!event.getSecretCode().equals(secretCode)) {
+			throw new MatchNotFoundException(matchId);
+		}
+
+		MatchEntity result = matchService.setMatchHiddenStatus(matchId, true);
 		return ResponseEntity.ok(result);
 	}
 	
@@ -94,7 +104,15 @@ public class GuestMatchController {
 			@PathVariable Long matchId
 	) {
 		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
-		MatchEntity result = matchService.setMatchHiddenStatus(matchId, secretCode, false);
+
+		// Check if the user has the correct secret code
+		MatchEntity originalMatch = matchService.getMatch(matchId);
+		EventEntity event = eventService.getEvent(originalMatch.getEventId());
+		if (!event.getSecretCode().equals(secretCode)) {
+			throw new MatchNotFoundException(matchId);
+		}
+
+		MatchEntity result = matchService.setMatchHiddenStatus(matchId, false);
 		return ResponseEntity.ok(result);
 	}
 
@@ -107,8 +125,11 @@ public class GuestMatchController {
 			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
-		
-		String content = matchService.getEventDataAsCsv(teamNumber, gameYear, secretCode, eventCode);
+
+		Long eventId = eventService
+			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
+		String content = matchService.getEventDataAsCsv(eventId);
 		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);
 		
 		return ResponseEntity.ok()

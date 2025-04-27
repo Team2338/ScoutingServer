@@ -1,14 +1,16 @@
 package team.gif.gearscout.events;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.inspections.InspectionRepository;
 import team.gif.gearscout.matches.MatchRepository;
 import team.gif.gearscout.shared.EventInfo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,53 +30,6 @@ public class EventService {
 		this.eventRepository = eventRepository;
 	}
 
-	private static class EventMap {
-		// gameYear -> eventCode -> secretCode -> EventInfo
-		HashMap<Integer, HashMap<String, HashMap<String, AggregateEventInfo>>> gameYearMap = new HashMap<>();
-
-		void putIfAbsent(
-			Integer gameYear,
-			String eventCode,
-			String secretCode,
-			AggregateEventInfo value
-		) {
-			gameYearMap.putIfAbsent(gameYear, new HashMap<>());
-			HashMap<String, HashMap<String, AggregateEventInfo>> eventCodeMap = gameYearMap.get(gameYear);
-
-			eventCodeMap.putIfAbsent(eventCode, new HashMap<>());
-			HashMap<String, AggregateEventInfo> secretCodeMap = eventCodeMap.get(eventCode);
-
-			secretCodeMap.putIfAbsent(secretCode, value);
-		}
-
-		AggregateEventInfo getCorrespondingAggregate(EventInfo event) {
-			return get(event.gameYear(), event.eventCode(), event.secretCode());
-		}
-
-		AggregateEventInfo get(Integer gameYear, String eventCode, String secretCode) {
-			HashMap<String, HashMap<String, AggregateEventInfo>> eventCodeMap = gameYearMap.get(gameYear);
-			if (eventCodeMap == null) return null;
-
-			HashMap<String, AggregateEventInfo> secretCodeMap = eventCodeMap.get(eventCode);
-			if (secretCodeMap == null) return null;
-
-			return secretCodeMap.get(secretCode);
-		}
-
-		List<AggregateEventInfo> flatten() {
-			List<AggregateEventInfo> events = new ArrayList<>();
-			gameYearMap.forEach((gameYear, eventMap) ->
-				eventMap.forEach((eventCode, secretCodeMap) ->
-					secretCodeMap.forEach((secretCode, aggregateEventInfo) ->
-						events.add(aggregateEventInfo)
-					)
-				)
-			);
-
-			return events;
-		}
-	}
-
 	public EventEntity getEvent(Integer teamNumber, Integer gameYear, String eventCode, String secretCode) {
 		Optional<EventEntity> eventEntity = eventRepository.findByEventDescriptor(teamNumber, gameYear, eventCode, secretCode);
 		return eventEntity.orElse(
@@ -82,28 +37,48 @@ public class EventService {
 		);
 	}
 
-	public List<AggregateEventInfo> getEventList(Integer teamNumber) {
-		List<EventInfo> matchEvents = matchRepository.getEventListForTeam(teamNumber);
-		List<EventInfo> inspectionEvents = inspectionRepository.getInspectionCountPerEvent(List.of());
-
-		EventMap eventMap = new EventMap();
-		for (EventInfo event : matchEvents) {
-			eventMap.putIfAbsent(event.gameYear(), event.eventCode(), event.secretCode(), generateEmptyEvent(event));
-			AggregateEventInfo aggregate = eventMap.getCorrespondingAggregate(event);
-			aggregate.setMatchCount(event.matchCount());
-		}
-
-		for (EventInfo event : inspectionEvents) {
-			eventMap.putIfAbsent(event.gameYear(), event.eventCode(), event.secretCode(), generateEmptyEvent(event));
-			AggregateEventInfo aggregate = eventMap.getCorrespondingAggregate(event);
-			aggregate.setInspectionCount(event.matchCount());
-		}
-
-		return eventMap.flatten();
+	public EventEntity getEvent(Long eventId) {
+		return eventRepository
+			.findById(eventId)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	private AggregateEventInfo generateEmptyEvent(EventInfo event) {
-		return new AggregateEventInfo(event.eventId(), event.teamNumber(), event.gameYear(), event.eventCode(), event.secretCode());
+	public List<AggregateEventInfo> getEventList(Integer teamNumber) {
+		List<EventEntity> events = eventRepository.getEventEntitiesByTeamNumber(teamNumber);
+		List<Long> eventIds = events.stream()
+			.map(EventEntity::getId)
+			.toList();
+
+		List<EventInfo> matchCounts = matchRepository.getMatchCountPerEvent(eventIds);
+		Map<Long, Long> matchCountMap = convertCountsToMap(matchCounts);
+
+		List<EventInfo> inspectionCounts = inspectionRepository.getInspectionCountPerEvent(eventIds);
+		Map<Long, Long> inspectionCountMap = convertCountsToMap(inspectionCounts);
+
+		return events.stream()
+			.map(event -> {
+				AggregateEventInfo info = new AggregateEventInfo(
+					event.getId(),
+					event.getTeamNumber(),
+					event.getGameYear(),
+					event.getEventCode(),
+					event.getSecretCode()
+				);
+				info.setMatchCount(matchCountMap.getOrDefault(event.getId(), 0L));
+				info.setInspectionCount(inspectionCountMap.getOrDefault(event.getId(), 0L));
+
+				return info;
+			})
+			.toList();
+	}
+
+	private Map<Long, Long> convertCountsToMap(List<EventInfo> counts) {
+		Map<Long, Long> map = new HashMap<>();
+		for (EventInfo event : counts) {
+			map.put(event.eventId(), event.matchCount());
+		}
+
+		return map;
 	}
 
 }

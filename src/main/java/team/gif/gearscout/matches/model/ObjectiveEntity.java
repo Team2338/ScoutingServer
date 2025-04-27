@@ -33,7 +33,7 @@ public class ObjectiveEntity {
 	@ManyToOne
 	private MatchEntity match;
 	
-	@Column
+	@Column(nullable = false)
 	@Size(min = 1, max = 64)
 	private String gamemode;
 	
@@ -44,7 +44,6 @@ public class ObjectiveEntity {
 	@Column(nullable = false)
 	private Integer count;
 
-	// TODO: Set a maximum list length here
 	@Column(columnDefinition = "int[]", nullable = true)
 	@JdbcTypeCode(SqlTypes.ARRAY)
 	@Size(max = 128, message = "Objective.list may not contain more than 128 scores")
@@ -74,6 +73,7 @@ public class ObjectiveEntity {
 	public Integer[] getList() {
 		return list;
 	}
+
 	
 	public void setId(Long id) {
 		this.id = id;

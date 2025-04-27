@@ -34,10 +34,6 @@ public interface InspectionRepository extends CrudRepository<InspectionEntity, L
 	@Query(value = """
 	SELECT new team.gif.gearscout.shared.EventInfo(
 		inspection.eventId,
-		null,
-		null,
-		null,
-		null,
 		COUNT(DISTINCT inspection.robotNumber)
 	)
 	FROM InspectionEntity inspection

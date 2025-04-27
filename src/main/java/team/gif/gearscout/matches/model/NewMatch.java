@@ -11,7 +11,6 @@ public class NewMatch {
 	private Integer robotNumber;
 	private String creator;
 	private String allianceColor;
-	
 	private List<ObjectiveEntity> objectives;
 	
 	public NewMatch() {}
@@ -44,6 +43,7 @@ public class NewMatch {
 	public List<ObjectiveEntity> getObjectives() {
 		return this.objectives;
 	}
+
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;

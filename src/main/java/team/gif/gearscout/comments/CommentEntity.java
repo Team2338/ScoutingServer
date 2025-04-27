@@ -44,14 +44,6 @@ public class CommentEntity {
 	@Min(1995)
 	private Integer gameYear;
 
-	@Column(name = "event_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String eventCode;
-
-	@Column(name = "secret_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String secretCode;
-
 	@Column(name = "match_number", nullable = false)
 	@Min(0)
 	private Integer matchNumber;
@@ -70,6 +62,7 @@ public class CommentEntity {
 
 	@Column(name = "time_created", nullable = false)
 	private OffsetDateTime timeCreated;
+
 
 	public CommentEntity() {}
 
@@ -93,14 +86,6 @@ public class CommentEntity {
 		return gameYear;
 	}
 
-	public String getEventCode() {
-		return eventCode;
-	}
-
-	public String getSecretCode() {
-		return secretCode;
-	}
-
 	public Integer getMatchNumber() {
 		return matchNumber;
 	}
@@ -121,6 +106,7 @@ public class CommentEntity {
 		return timeCreated;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -139,14 +125,6 @@ public class CommentEntity {
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
-	}
-
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 
 	public void setMatchNumber(Integer matchNumber) {

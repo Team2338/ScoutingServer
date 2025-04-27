@@ -48,7 +48,7 @@ public class CommentController {
 			form.getEventCode(),
 			secretCode
 		).getId();
-		Iterable<CommentEntity> comments = commentService.saveComments(eventId, teamNumber, secretCode, form);
+		Iterable<CommentEntity> comments = commentService.saveComments(eventId, teamNumber, form);
 
 		return ResponseEntity.ok(comments);
 	}
@@ -62,8 +62,13 @@ public class CommentController {
 	) {
 		logger.debug("Received getCommentsForEvent");
 
-		List<CommentEntity> comments = commentService
-			.getCommentsForEvent(teamNumber, gameYear, eventCode, secretCode);
+		Long eventId = eventService.getEvent(
+			teamNumber,
+			gameYear,
+			eventCode,
+			secretCode
+		).getId();
+		List<CommentEntity> comments = commentService.getCommentsForEvent(eventId);
 
 		return ResponseEntity.ok(comments);
 	}

@@ -25,7 +25,6 @@ public class CommentService {
 	public Iterable<CommentEntity> saveComments(
 		Long eventId,
 		Integer teamNumber,
-		String secretCode,
 		CreateCommentBulkRequest form
 	) {
 		OffsetDateTime currentTime = Instant.now()
@@ -40,8 +39,6 @@ public class CommentService {
 				comment.setTeamNumber(teamNumber);
 				comment.setRobotNumber(form.getRobotNumber());
 				comment.setGameYear(form.getGameYear());
-				comment.setEventCode(form.getEventCode());
-				comment.setSecretCode(secretCode);
 				comment.setMatchNumber(form.getMatchNumber());
 				comment.setTopic(singleCommentContent.getTopic());
 				comment.setContent(singleCommentContent.getContent());
@@ -56,18 +53,8 @@ public class CommentService {
 	}
 
 
-	public List<CommentEntity> getCommentsForEvent(
-		Integer teamNumber,
-		Integer gameYear,
-		String eventCode,
-		String secretCode
-	) {
-		return commentRepository.findCommentsForEvent(
-			teamNumber,
-			gameYear,
-			eventCode,
-			secretCode
-		);
+	public List<CommentEntity> getCommentsForEvent(Long eventId) {
+		return commentRepository.findCommentsByEventId(eventId);
 	}
 
 }

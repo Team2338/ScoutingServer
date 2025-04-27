@@ -12,36 +12,22 @@ public interface ImageInfoRepository extends CrudRepository<ImageInfoEntity, Lon
 	@Query(value = """
 	SELECT image
 	FROM ImageInfoEntity image
-	WHERE image.teamNumber = :teamNumber
-		AND image.gameYear = :gameYear
-		AND image.eventCode = :eventCode
-		AND image.secretCode = :secretCode
+	WHERE image.eventId = :eventId
 	ORDER BY image.robotNumber ASC
 	""")
-	List<ImageInfoEntity> findImagesForEvent(
-		Integer teamNumber,
-		Integer gameYear,
-		String eventCode,
-		String secretCode
-	);
+	List<ImageInfoEntity> findImagesForEvent(Long eventId);
 	
 	// LIMIT keyword doesn't exist in HQL
 	@Query(value = """
 	SELECT image
 	FROM ImageInfoEntity image
-	WHERE image.teamNumber = :teamNumber
+	WHERE image.eventId = :eventId
 		AND image.robotNumber = :robotNumber
-		AND image.gameYear = :gameYear
-		AND image.eventCode = :eventCode
-		AND image.secretCode = :secretCode
 	ORDER BY image.timeCreated ASC
 	""")
 	Optional<ImageInfoEntity> findImageForRobot(
-		Integer teamNumber,
-		Integer gameYear,
-		Integer robotNumber,
-		String eventCode,
-		String secretCode
+		Long eventId,
+		Integer robotNumber
 	);
 	
 }

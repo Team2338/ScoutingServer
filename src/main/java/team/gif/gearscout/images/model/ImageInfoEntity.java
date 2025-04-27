@@ -37,12 +37,6 @@ public class ImageInfoEntity {
 	@Column(name = "game_year", nullable = false)
 	private Integer gameYear;
 	
-	@Column(name = "event_code", nullable = false)
-	private String eventCode;
-	
-	@Column(name = "secret_code", nullable = false)
-	private String secretCode;
-	
 	@Column(name = "robot_number", nullable = false)
 	private Integer robotNumber;
 	
@@ -62,8 +56,6 @@ public class ImageInfoEntity {
 		Long eventId,
 		Integer teamNumber,
 		Integer gameYear,
-		String eventCode,
-		String secretCode,
 		Integer robotNumber,
 		String creator,
 		UUID imageId,
@@ -72,14 +64,13 @@ public class ImageInfoEntity {
 		this.eventId = eventId;
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
-		this.eventCode = eventCode;
-		this.secretCode = secretCode;
 		this.robotNumber = robotNumber;
 		this.creator = creator;
 		this.imageId = imageId;
 		this.timeCreated = timeCreated;
 	}
-	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -94,14 +85,6 @@ public class ImageInfoEntity {
 	
 	public Integer getGameYear() {
 		return gameYear;
-	}
-	
-	public String getEventCode() {
-		return eventCode;
-	}
-	
-	public String getSecretCode() {
-		return secretCode;
 	}
 	
 	public Integer getRobotNumber() {
@@ -119,6 +102,7 @@ public class ImageInfoEntity {
 	public String getTimeCreated() {
 		return timeCreated;
 	}
+
 	
 	public void setId(Long id) {
 		this.id = id;
@@ -134,14 +118,6 @@ public class ImageInfoEntity {
 	
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
-	}
-	
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-	
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 	
 	public void setRobotNumber(Integer robotNumber) {

@@ -23,8 +23,6 @@ public interface ImageContentRepository extends CrudRepository<ImageContentEntit
 	FROM ImageContentEntity image
 	WHERE image.id = :imageId
 	""")
-	Optional<ImageContentEntity> findImageContentForRobot(
-		UUID imageId
-	);
+	Optional<ImageContentEntity> findImageContentForRobot(UUID imageId);
 	
 }

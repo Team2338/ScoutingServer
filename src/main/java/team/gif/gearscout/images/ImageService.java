@@ -70,23 +70,16 @@ public class ImageService {
 		Integer teamNumber,
 		Integer gameYear,
 		Integer robotNumber,
-		String eventCode,
-		String secretCode,
 		String creator,
 		String timeCreated,
 		byte[] content,
 		String contentType
 	) {
-		imageInfoRepository.findImageForRobot(
-			teamNumber,
-			gameYear,
-			robotNumber,
-			eventCode,
-			secretCode
-		).ifPresent(imageInfo -> {
-			imageInfoRepository.delete(imageInfo);
-			imageContentRepository.deleteImageContentById(imageInfo.getImageId());
-		});
+		imageInfoRepository.findImageForRobot(eventId, robotNumber)
+			.ifPresent(imageInfo -> {
+				imageInfoRepository.delete(imageInfo);
+				imageContentRepository.deleteImageContentById(imageInfo.getImageId());
+			});
 		
 		ImageContentEntity imageContentEntity = imageContentRepository.save(
 			new ImageContentEntity(content, contentType)
@@ -96,8 +89,6 @@ public class ImageService {
 			eventId,
 			teamNumber,
 			gameYear,
-			eventCode,
-			secretCode,
 			robotNumber,
 			creator,
 			imageContentEntity.getId(),
@@ -109,20 +100,11 @@ public class ImageService {
 	
 	
 	public ImageInfoEntity getImageInfo(
-		Integer teamNumber,
-		Integer gameYear,
-		Integer robotNumber,
-		String eventCode,
-		String secretCode
+		Long eventId,
+		Integer robotNumber
 	) {
 		Optional<ImageInfoEntity> optionalInfo = imageInfoRepository
-			.findImageForRobot(
-				teamNumber,
-				gameYear,
-				robotNumber,
-				eventCode,
-				secretCode
-			);
+			.findImageForRobot(eventId, robotNumber);
 
 		return optionalInfo.orElse(new ImageInfoEntity());
 	}
@@ -134,18 +116,8 @@ public class ImageService {
 	}
 	
 	
-	public List<ImageInfoEntity> getImageInfoForEvent(
-		Integer teamNumber,
-		Integer gameYear,
-		String eventCode,
-		String secretCode
-	) {
-		return imageInfoRepository.findImagesForEvent(
-			teamNumber,
-			gameYear,
-			eventCode,
-			secretCode
-		);
+	public List<ImageInfoEntity> getImageInfoForEvent(Long eventId) {
+		return imageInfoRepository.findImagesForEvent(eventId);
 	}
 	
 }

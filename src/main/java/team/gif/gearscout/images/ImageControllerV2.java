@@ -40,7 +40,8 @@ public class ImageControllerV2 {
 		ImageService imageService,
 		TokenService tokenService,
 		UserService userService,
-		EventService eventService) {
+		EventService eventService
+	) {
 		this.imageService = imageService;
 		this.tokenService = tokenService;
 		this.userService = userService;
@@ -79,19 +80,14 @@ public class ImageControllerV2 {
 		}
 
 		imageService.validateImage(image);
-		Long eventId = eventService.getEvent(
-			teamNumber,
-			gameYear,
-			eventCode,
-			secretCode
-		).getId();
+		Long eventId = eventService
+			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
 		imageService.saveImage(
 			eventId,
 			teamNumber,
 			gameYear,
 			robotNumber,
-			eventCode,
-			secretCode,
 			user.getUsername(),
 			timeCreated,
 			image.getBytes(),
@@ -110,14 +106,11 @@ public class ImageControllerV2 {
 		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
 	) {
 		logger.debug("Received getImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
+		Long eventId = eventService
+			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
 		return ResponseEntity.ok(
-			imageService.getImageInfo(
-				teamNumber,
-				gameYear,
-				robotNumber,
-				eventCode,
-				secretCode
-			)
+			imageService.getImageInfo(eventId, robotNumber)
 		);
 	}
 
@@ -130,13 +123,11 @@ public class ImageControllerV2 {
 		@RequestHeader(value = "secretCode") String secretCode
 	) {
 		logger.debug("Received getAllImageInfoForEvent request");
+		Long eventId = eventService
+			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
 		return ResponseEntity.ok(
-			imageService.getImageInfoForEvent(
-				teamNumber,
-				gameYear,
-				eventCode,
-				secretCode
-			)
+			imageService.getImageInfoForEvent(eventId)
 		);
 	}
 

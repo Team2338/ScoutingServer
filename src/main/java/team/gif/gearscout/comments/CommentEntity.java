@@ -29,6 +29,7 @@ public class CommentEntity {
 	)
 	private Long id;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@Column(name = "event_id", nullable = false)
 	private Long eventId;
 

@@ -32,6 +32,7 @@ public class MatchEntity {
 	)
 	private Long id;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@Column(nullable = false)
 	private Long eventId;
 

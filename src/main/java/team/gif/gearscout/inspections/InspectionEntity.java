@@ -43,14 +43,6 @@ public class InspectionEntity {
 	@Min(1995)
 	private Integer gameYear;
 
-	@Column(name = "event_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String eventCode;
-
-	@Column(name = "secret_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String secretCode;
-
 	@Column(name = "question", nullable = false)
 	@Size(min = 1, max = 32)
 	private String question;
@@ -90,14 +82,6 @@ public class InspectionEntity {
 		return gameYear;
 	}
 
-	public String getEventCode() {
-		return eventCode;
-	}
-
-	public String getSecretCode() {
-		return secretCode;
-	}
-
 	public String getQuestion() {
 		return question;
 	}
@@ -113,6 +97,7 @@ public class InspectionEntity {
 	public String getTimeCreated() {
 		return timeCreated;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
@@ -132,14 +117,6 @@ public class InspectionEntity {
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
-	}
-
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 
 	public void setQuestion(String question) {

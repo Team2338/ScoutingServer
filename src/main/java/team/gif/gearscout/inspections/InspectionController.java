@@ -44,13 +44,10 @@ public class InspectionController {
 	) {
 		logger.debug("Received addInspection request");
 
-		Long eventId = eventService.getEvent(
-			teamNumber,
-			form.getGameYear(),
-			form.getEventCode(),
-			secretCode
-		).getId();
-		inspectionService.saveInspections(eventId, teamNumber, secretCode, form);
+		Long eventId = eventService
+			.getEvent(teamNumber, form.getGameYear(), form.getEventCode(), secretCode)
+			.getId();
+		inspectionService.saveInspections(eventId, teamNumber, form);
 
 		return ResponseEntity.ok().build();
 	}
@@ -64,8 +61,11 @@ public class InspectionController {
 	) {
 		logger.debug("Received getInspectionsForEvent request");
 
+		Long eventId = eventService
+			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
 		List<InspectionEntity> inspections = inspectionService
-			.getInspectionsForEvent(teamNumber, gameYear, eventCode, secretCode);
+			.getInspectionsForEvent(eventId);
 
 		return ResponseEntity.ok(inspections);
 	}

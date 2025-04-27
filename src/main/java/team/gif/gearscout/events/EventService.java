@@ -84,7 +84,7 @@ public class EventService {
 
 	public List<AggregateEventInfo> getEventList(Integer teamNumber) {
 		List<EventInfo> matchEvents = matchRepository.getEventListForTeam(teamNumber);
-		List<EventInfo> inspectionEvents = inspectionRepository.getEventListForTeam(teamNumber);
+		List<EventInfo> inspectionEvents = inspectionRepository.getInspectionCountPerEvent(List.of());
 
 		EventMap eventMap = new EventMap();
 		for (EventInfo event : matchEvents) {

@@ -16,7 +16,14 @@ import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import {
 	Button,
-	Icon
+	Icon,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow
 } from '@mui/material';
 import {
 	ExternalLink,
@@ -36,6 +43,17 @@ export default function TeamDetail(props: IProps) {
 		return <div>{ translate('SELECT_TEAM_VIEW_MORE_DETAILS') }</div>;
 	}
 
+	let matchNumbers: number[] = [];
+	if (team?.stats) {
+		const uniqueMatchNumbers = new Set(team?.stats.values().flatMap(
+			(objectives) => objectives.values().flatMap(
+				(stats) => stats.matchNumbers
+			)
+		));
+
+		matchNumbers = Array.from(uniqueMatchNumbers).toSorted((a, b) => a - b);
+	}
+
 	let gamemodeElements: any = [];
 	if (team?.stats) {
 		gamemodeElements = Array.from(team.stats.keys())
@@ -48,6 +66,7 @@ export default function TeamDetail(props: IProps) {
 						key={ gamemode }
 						name={ gamemode }
 						objectives={ objectives }
+						matchNumbers={ matchNumbers }
 					/>
 				);
 			});
@@ -81,50 +100,83 @@ export default function TeamDetail(props: IProps) {
 	);
 }
 
-function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveStats> }) {
+interface IGamemodeProps {
+	name: string;
+	matchNumbers: number[];
+	objectives: Map<string, TeamObjectiveStats>;
+}
+
+function Gamemode(props: IGamemodeProps) {
 
 	const translate = useTranslator();
 
-	const objectiveElements = [];
-	props.objectives.forEach((stats: TeamObjectiveStats, name: string) => {
-		objectiveElements.push(<ObjectiveStats key={ name } name={ name } stats={ stats } />);
-	});
+	const sortedObjectiveNames = Array.from(props.objectives.keys());
 
 	return (
-		<div className="gamemode">
-			<h3 className="gamemode-title">{ translate(props.name) }</h3>
-			<div className="gamemode-stats-wrapper">
-				{ objectiveElements }
-			</div>
-		</div>
+		<TableContainer component={Paper}>
+			<Table size="small">
+				<TableHead>
+					<TableRow sx={{ backgroundColor: '#eee' }}>
+						<TableCell>{ translate(props.name) }</TableCell>
+						<TableCell>25%</TableCell>
+						<TableCell>{ translate('MEAN') }</TableCell>
+						<TableCell>75%</TableCell>
+						{ props.matchNumbers.map((match) => <TableCell>{ match }</TableCell>) }
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{ sortedObjectiveNames.map((objectiveName) => {
+						const objective = props.objectives.get(objectiveName);
+						return (
+							<TableRow>
+								<TableCell variant="head">{ translate(objectiveName) }</TableCell>
+								<TableCell variant="head">
+									{ objective.lowerQuartile.toFixed(1) }
+								</TableCell>
+								<TableCell variant="head">
+									{ objective.mean.toFixed(1) }
+								</TableCell>
+								<TableCell variant="head">
+									{ objective.upperQuartile.toFixed(1) }
+								</TableCell>
+								{ props.matchNumbers.map((matchNumber) => (
+									<ObjectiveStatCell
+										objective={ objective }
+										matchNumber={ matchNumber }
+									/>
+								))}
+							</TableRow>
+						);
+					})}
+				</TableBody>
+			</Table>
+		</TableContainer>
+
 	);
 }
 
-function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
-	const translate = useTranslator();
-	const scores = props.stats.scores.map(roundToDecimal);
+interface IObjectiveStatCellProps {
+	objective: TeamObjectiveStats,
+	matchNumber: number
+}
 
-	let sumListElement = null;
-	if (props.stats.sumList) {
-		sumListElement = (
-			<Fragment>
-				<div className="objective-stat">{ translate('SUM_LIST') }:</div>
-				<div className="mean-list-wrapper">
-					<GridScore list={ props.stats.sumList } />
-				</div>
-			</Fragment>
-		);
+function ObjectiveStatCell(props: IObjectiveStatCellProps) {
+	const index = props.objective.matchNumbers.indexOf(props.matchNumber);
+	if (index == -1) {
+		return (<TableCell></TableCell>);
 	}
 
-	return (
-		<div className="stats">
-			<div className="objective-name">{ translate(props.name) }:</div>
-			<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
-			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
-			<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
-			<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
-			{ sumListElement }
-		</div>
-	);
+	const stat = props.objective.scores[index];
+	console.log(stat);
 
+	const formattedStat =
+		stat == null ? "-" :
+		Number.isInteger(stat) ? stat :
+		stat.toFixed(1);
+
+	return (
+		<TableCell>
+			{ formattedStat }
+		</TableCell>
+	)
 }

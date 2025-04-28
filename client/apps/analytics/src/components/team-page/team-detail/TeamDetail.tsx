@@ -113,11 +113,16 @@ function Gamemode(props: IGamemodeProps) {
 	const sortedObjectiveNames = Array.from(props.objectives.keys());
 
 	return (
-		<TableContainer component={Paper}>
+		<TableContainer sx={{ borderRadius: '8px' }}>
 			<Table size="small">
 				<TableHead>
 					<TableRow sx={{ backgroundColor: '#eee' }}>
-						<TableCell>{ translate(props.name) }</TableCell>
+						<TableCell>{translate(props.name)}</TableCell>
+						<TableCell align="center" colSpan={3}></TableCell>
+						<TableCell align="center" colSpan={props.matchNumbers.length}>{ translate('MATCHES') }</TableCell>
+					</TableRow>
+					<TableRow sx={{ backgroundColor: '#eee' }}>
+						<TableCell></TableCell>
 						<TableCell>25%</TableCell>
 						<TableCell>{ translate('MEAN') }</TableCell>
 						<TableCell>75%</TableCell>
@@ -151,7 +156,6 @@ function Gamemode(props: IGamemodeProps) {
 				</TableBody>
 			</Table>
 		</TableContainer>
-
 	);
 }
 

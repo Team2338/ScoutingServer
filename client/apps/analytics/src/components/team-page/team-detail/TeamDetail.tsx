@@ -107,57 +107,90 @@ interface IGamemodeProps {
 }
 
 function Gamemode(props: IGamemodeProps) {
-
 	const translate = useTranslator();
 
-	const sortedObjectiveNames = Array.from(props.objectives.keys());
+	const gamemodeName = translate(props.name);
+	const nStats = 3; // 25%, mean, 75%
+	const nMatches = props.matchNumbers.length;
 
 	return (
 		<TableContainer sx={{ borderRadius: '8px' }}>
 			<Table size="small">
 				<TableHead>
 					<TableRow sx={{ backgroundColor: '#eee' }}>
-						<TableCell>{translate(props.name)}</TableCell>
-						<TableCell align="center" colSpan={3}></TableCell>
-						<TableCell align="center" colSpan={props.matchNumbers.length}>{ translate('MATCHES') }</TableCell>
+						<TableCell>{ gamemodeName }</TableCell>
+						<TableCell align="center" colSpan={ nStats }/>
+						<TableCell align="center" colSpan={ nMatches }>
+							{ translate('MATCHES') }
+						</TableCell>
 					</TableRow>
 					<TableRow sx={{ backgroundColor: '#eee' }}>
 						<TableCell></TableCell>
 						<TableCell>25%</TableCell>
 						<TableCell>{ translate('MEAN') }</TableCell>
 						<TableCell>75%</TableCell>
-						{ props.matchNumbers.map((match) => <TableCell>{ match }</TableCell>) }
+						{ props.matchNumbers.map((match) => <TableCell aria-label={translate('MATCH') + "  " }>{ match }</TableCell>) }
 					</TableRow>
 				</TableHead>
-				<TableBody>
-					{ sortedObjectiveNames.map((objectiveName) => {
-						const objective = props.objectives.get(objectiveName);
-						return (
-							<TableRow>
-								<TableCell variant="head">{ translate(objectiveName) }</TableCell>
-								<TableCell variant="head">
-									{ objective.lowerQuartile.toFixed(1) }
-								</TableCell>
-								<TableCell variant="head">
-									{ objective.mean.toFixed(1) }
-								</TableCell>
-								<TableCell variant="head">
-									{ objective.upperQuartile.toFixed(1) }
-								</TableCell>
-								{ props.matchNumbers.map((matchNumber) => (
-									<ObjectiveStatCell
-										objective={ objective }
-										matchNumber={ matchNumber }
-									/>
-								))}
-							</TableRow>
-						);
-					})}
-				</TableBody>
+				<GamemodeTableBody
+					matchNumbers={ props.matchNumbers }
+					objectives={ props.objectives }
+				/>
 			</Table>
 		</TableContainer>
 	);
 }
+
+interface IGamemodeTableBodyProps {
+	matchNumbers: number[];
+	objectives: Map<string, TeamObjectiveStats>;
+}
+
+function GamemodeTableBody(props: IGamemodeTableBodyProps) {
+	const translate = useTranslator();
+
+	return (
+		<TableBody>
+			{ props.objectives.keys().map((objectiveName) => (
+				<GamemodeTableRow
+					name={ translate(objectiveName) }
+					objective={ props.objectives.get(objectiveName) }
+					matchNumbers={ props.matchNumbers }
+				/>
+			))}
+		</TableBody>
+	);
+}
+
+interface IGamemodeTableRowProps {
+	name: string,
+	objective: TeamObjectiveStats,
+	matchNumbers: number[]
+}
+
+function GamemodeTableRow({ name, objective, matchNumbers }: IGamemodeTableRowProps) {
+	return (
+		<TableRow>
+			<TableCell variant="head">{ name }</TableCell>
+			<TableCell variant="head">
+				{ objective.lowerQuartile.toFixed(1) }
+			</TableCell>
+			<TableCell variant="head">
+				{ objective.mean.toFixed(1) }
+			</TableCell>
+			<TableCell variant="head">
+				{ objective.upperQuartile.toFixed(1) }
+			</TableCell>
+			{ matchNumbers.map((matchNumber) => (
+				<ObjectiveStatCell
+					objective={ objective }
+					matchNumber={ matchNumber }
+				/>
+			))}
+		</TableRow>
+	);
+}
+
 
 interface IObjectiveStatCellProps {
 	objective: TeamObjectiveStats,

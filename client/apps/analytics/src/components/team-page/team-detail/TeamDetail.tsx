@@ -114,21 +114,21 @@ function Gamemode(props: IGamemodeProps) {
 	const nMatches = props.matchNumbers.length;
 
 	return (
-		<TableContainer sx={{ borderRadius: '8px' }}>
+		<TableContainer className="gamemode">
 			<Table size="small">
 				<TableHead>
-					<TableRow sx={{ backgroundColor: '#eee' }}>
+					<TableRow className="header-row">
 						<TableCell>{ gamemodeName }</TableCell>
 						<TableCell align="center" colSpan={ nStats }/>
 						<TableCell align="center" colSpan={ nMatches }>
 							{ translate('MATCHES') }
 						</TableCell>
 					</TableRow>
-					<TableRow sx={{ backgroundColor: '#eee' }}>
+					<TableRow className="header-row">
 						<TableCell></TableCell>
-						<TableCell>25%</TableCell>
+						<TableCell className="start-stats">25%</TableCell>
 						<TableCell>{ translate('MEAN') }</TableCell>
-						<TableCell>75%</TableCell>
+						<TableCell className="end-stats">75%</TableCell>
 						{ props.matchNumbers.map((match) => <TableCell aria-label={translate('MATCH') + "  " }>{ match }</TableCell>) }
 					</TableRow>
 				</TableHead>
@@ -172,13 +172,13 @@ function GamemodeTableRow({ name, objective, matchNumbers }: IGamemodeTableRowPr
 	return (
 		<TableRow>
 			<TableCell variant="head">{ name }</TableCell>
-			<TableCell variant="head">
+			<TableCell variant="head" className="start-stats">
 				{ objective.lowerQuartile.toFixed(1) }
 			</TableCell>
 			<TableCell variant="head">
 				{ objective.mean.toFixed(1) }
 			</TableCell>
-			<TableCell variant="head">
+			<TableCell variant="head" className="end-stats">
 				{ objective.upperQuartile.toFixed(1) }
 			</TableCell>
 			{ matchNumbers.map((matchNumber) => (

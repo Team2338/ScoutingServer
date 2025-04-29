@@ -117,14 +117,14 @@ function Gamemode(props: IGamemodeProps) {
 		<TableContainer className="gamemode">
 			<Table size="small">
 				<TableHead>
-					<TableRow className="header-row">
+					<TableRow className="header-row-1">
 						<TableCell>{ gamemodeName }</TableCell>
 						<TableCell align="center" colSpan={ nStats }/>
 						<TableCell align="center" colSpan={ nMatches }>
 							{ translate('MATCHES') }
 						</TableCell>
 					</TableRow>
-					<TableRow className="header-row">
+					<TableRow className="header-row-2">
 						<TableCell></TableCell>
 						<TableCell className="start-stats">25%</TableCell>
 						<TableCell>{ translate('MEAN') }</TableCell>
@@ -138,6 +138,7 @@ function Gamemode(props: IGamemodeProps) {
 				/>
 			</Table>
 		</TableContainer>
+
 	);
 }
 
@@ -171,14 +172,16 @@ interface IGamemodeTableRowProps {
 function GamemodeTableRow({ name, objective, matchNumbers }: IGamemodeTableRowProps) {
 	return (
 		<TableRow>
-			<TableCell variant="head">{ name }</TableCell>
-			<TableCell variant="head" className="start-stats">
+			<TableCell className="objective-name">
+				{ name }
+			</TableCell>
+			<TableCell className="start-stats">
 				{ objective.lowerQuartile.toFixed(1) }
 			</TableCell>
-			<TableCell variant="head">
+			<TableCell>
 				{ objective.mean.toFixed(1) }
 			</TableCell>
-			<TableCell variant="head" className="end-stats">
+			<TableCell className="end-stats">
 				{ objective.upperQuartile.toFixed(1) }
 			</TableCell>
 			{ matchNumbers.map((matchNumber) => (
@@ -200,19 +203,16 @@ interface IObjectiveStatCellProps {
 function ObjectiveStatCell(props: IObjectiveStatCellProps) {
 	const index = props.objective.matchNumbers.indexOf(props.matchNumber);
 	if (index == -1) {
-		return (<TableCell></TableCell>);
+		return (<TableCell/>);
 	}
 
 	const stat = props.objective.scores[index];
 	console.log(stat);
 
-	const formattedStat =
-		stat == null ? "-" :
-		Number.isInteger(stat) ? stat :
-		stat.toFixed(1);
+	const formattedStat = stat == null ? '' : stat.toFixed(1);
 
 	return (
-		<TableCell>
+		<TableCell className="stat-cell">
 			{ formattedStat }
 		</TableCell>
 	)

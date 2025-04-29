@@ -34,8 +34,24 @@
 			border: 1px solid var(--border-color);
 			border-radius: 4px;
 
-			.header-row {
+			td {
+				text-align: right;
+			}
+
+			.header-row-1 {
 				background-color: #eee;
+			}
+
+			.header-row-2 {
+				background-color: #eee;
+				th {
+					text-align: right;
+				}
+			}
+
+			.objective-name {
+				font-weight: 500;
+				text-align: left;
 			}
 
 			.start-stats {

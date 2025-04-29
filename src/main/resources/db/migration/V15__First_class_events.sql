@@ -31,7 +31,7 @@ CREATE INDEX IF NOT EXISTS idx__events__info
 -- Populate events table with event info from existing entities --
 ------------------------------------------------------------------
 INSERT INTO events (eid, team_number, game_year, event_code, secret_code)
-	SELECT nextval(events_seq), team_number, game_year, event_code, secret_code FROM (
+	SELECT nextval('events_seq'), team_number, game_year, event_code, secret_code FROM (
 		SELECT team_number, game_year, event_code, secret_code FROM matches
 		UNION DISTINCT
 		SELECT team_number, game_year, event_code, secret_code FROM comments

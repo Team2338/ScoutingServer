@@ -81,7 +81,7 @@ public class ImageControllerV2 {
 
 		imageService.validateImage(image);
 		Long eventId = eventService
-			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
 			.getId();
 		imageService.saveImage(
 			eventId,
@@ -107,7 +107,7 @@ public class ImageControllerV2 {
 	) {
 		logger.debug("Received getImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
 		Long eventId = eventService
-			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
 			.getId();
 		return ResponseEntity.ok(
 			imageService.getImageInfo(eventId, robotNumber)
@@ -124,7 +124,7 @@ public class ImageControllerV2 {
 	) {
 		logger.debug("Received getAllImageInfoForEvent request");
 		Long eventId = eventService
-			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
 			.getId();
 		return ResponseEntity.ok(
 			imageService.getImageInfoForEvent(eventId)

@@ -45,7 +45,7 @@ public class InspectionController {
 		logger.debug("Received addInspection request");
 
 		Long eventId = eventService
-			.getEvent(teamNumber, form.getGameYear(), form.getEventCode(), secretCode)
+			.getOrCreateEvent(teamNumber, form.getGameYear(), form.getEventCode(), secretCode)
 			.getId();
 		inspectionService.saveInspections(eventId, teamNumber, form);
 
@@ -62,7 +62,7 @@ public class InspectionController {
 		logger.debug("Received getInspectionsForEvent request");
 
 		Long eventId = eventService
-			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
 			.getId();
 		List<InspectionEntity> inspections = inspectionService
 			.getInspectionsForEvent(eventId);

@@ -30,10 +30,10 @@ public class EventService {
 		this.eventRepository = eventRepository;
 	}
 
-	public EventEntity getEvent(Integer teamNumber, Integer gameYear, String eventCode, String secretCode) {
+	public EventEntity getOrCreateEvent(Integer teamNumber, Integer gameYear, String eventCode, String secretCode) {
 		Optional<EventEntity> eventEntity = eventRepository.findByEventDescriptor(teamNumber, gameYear, eventCode, secretCode);
-		return eventEntity.orElse(
-			eventRepository.save(new EventEntity(teamNumber, gameYear, eventCode, secretCode))
+		return eventEntity.orElseGet(
+			() -> eventRepository.save(new EventEntity(teamNumber, gameYear, eventCode, secretCode))
 		);
 	}
 

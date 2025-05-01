@@ -50,7 +50,7 @@ public class GuestMatchController {
 		logger.debug("Received addMatch request: {}", teamNumber);
 
 		Long eventId = eventService
-			.getEvent(teamNumber, match.getGameYear(), match.getEventCode(), secretCode)
+			.getOrCreateEvent(teamNumber, match.getGameYear(), match.getEventCode(), secretCode)
 			.getId();
 		matchService.preprocessMatch(match);
 		matchService.saveMatch(eventId, teamNumber, match);
@@ -69,7 +69,7 @@ public class GuestMatchController {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
 
 		Long eventId = eventService
-			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
 			.getId();
 		List<MatchEntity> result = matchService.getAllMatchesForEvent(eventId);
 		
@@ -127,7 +127,7 @@ public class GuestMatchController {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
 
 		Long eventId = eventService
-			.getEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
 			.getId();
 		String content = matchService.getEventDataAsCsv(eventId);
 		String filename = "%d_%s.csv".formatted(teamNumber, eventCode);

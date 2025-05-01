@@ -42,7 +42,7 @@ public class CommentController {
 	) {
 		logger.debug("Received addComment request");
 
-		Long eventId = eventService.getEvent(
+		Long eventId = eventService.getOrCreateEvent(
 			teamNumber,
 			form.getGameYear(),
 			form.getEventCode(),
@@ -62,7 +62,7 @@ public class CommentController {
 	) {
 		logger.debug("Received getCommentsForEvent");
 
-		Long eventId = eventService.getEvent(
+		Long eventId = eventService.getOrCreateEvent(
 			teamNumber,
 			gameYear,
 			eventCode,

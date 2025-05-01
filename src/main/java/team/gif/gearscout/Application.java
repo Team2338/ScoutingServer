@@ -35,7 +35,7 @@ public class Application {
 					.allowedHeaders("*")
 					.allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE")
 					.exposedHeaders("*")
-					.maxAge(60);
+					.maxAge(1800);
 			}
 		};
 	}

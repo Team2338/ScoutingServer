@@ -55,48 +55,60 @@ ALTER TABLE detail_notes	ADD COLUMN event_id bigint;
 ----------------------------------------------------------
 -- Update event_id column for each row in entity tables --
 ----------------------------------------------------------
-UPDATE matches
-	SET event_id = event_and_match.eid
-	FROM (
-		matches INNER JOIN events
-			ON matches.team_number = events.team_number
-			AND matches.game_year = events.game_year
-			AND matches.event_code = events.event_code
-			AND matches.secret_code = events.secret_code
-	) event_and_match
+MERGE INTO matches M
+	USING (
+		SELECT eid, team_number, game_year, event_code, secret_code
+			FROM events
+	) E
+	ON M.team_number = E.team_number
+		AND M.game_year = E.game_year
+		AND M.event_code = E.event_code
+		AND M.secret_code = E.secret_code
+	WHEN MATCHED THEN
+		UPDATE
+			SET event_id = E.eid
 ;
 
-UPDATE comments
-	SET event_id = event_and_comment.eid
-	FROM (
-		comments INNER JOIN events
-			ON comments.team_number = events.team_number
-			AND comments.game_year = events.game_year
-			AND comments.event_code = events.event_code
-			AND comments.secret_code = events.secret_code
-	) event_and_comment
+MERGE INTO comments M
+	USING (
+		SELECT eid, team_number, game_year, event_code, secret_code
+		FROM events
+	) E
+	ON M.team_number = E.team_number
+		AND M.game_year = E.game_year
+		AND M.event_code = E.event_code
+		AND M.secret_code = E.secret_code
+	WHEN MATCHED THEN
+		UPDATE
+			SET event_id = E.eid
 ;
 
-UPDATE image_info
-	SET event_id = event_and_image_info.eid
-	FROM (
-		image_info INNER JOIN events
-			ON image_info.team_number = events.team_number
-			AND image_info.game_year = events.game_year
-			AND image_info.event_code = events.event_code
-			AND image_info.secret_code = events.secret_code
-	) event_and_image_info
+MERGE INTO image_info M
+	USING (
+		SELECT eid, team_number, game_year, event_code, secret_code
+		FROM events
+	) E
+	ON M.team_number = E.team_number
+		AND M.game_year = E.game_year
+		AND M.event_code = E.event_code
+		AND M.secret_code = E.secret_code
+	WHEN MATCHED THEN
+		UPDATE
+			SET event_id = E.eid
 ;
 
-UPDATE detail_notes
-	SET event_id = event_and_inspection.eid
-	FROM (
-		detail_notes INNER JOIN events
-			ON detail_notes.team_number = events.team_number
-			AND detail_notes.game_year = events.game_year
-			AND detail_notes.event_code = events.event_code
-			AND detail_notes.secret_code = events.secret_code
-	) event_and_inspection
+MERGE INTO detail_notes M
+	USING (
+		SELECT eid, team_number, game_year, event_code, secret_code
+		FROM events
+	) E
+	ON M.team_number = E.team_number
+		AND M.game_year = E.game_year
+		AND M.event_code = E.event_code
+		AND M.secret_code = E.secret_code
+	WHEN MATCHED THEN
+		UPDATE
+			SET event_id = E.eid
 ;
 
 
@@ -115,33 +127,37 @@ ALTER TABLE events
 ALTER TABLE matches
 	DROP COLUMN event_code,
 	DROP COLUMN secret_code,
+	ALTER COLUMN event_id SET NOT NULL,
 	ADD CONSTRAINT fk__matches__event_id FOREIGN KEY (event_id)
-	     REFERENCES events (id)
-	     ON DELETE CASCADE
+		REFERENCES events (id)
+		ON DELETE CASCADE
 ;
 
 ALTER TABLE comments
 	DROP COLUMN event_code,
 	DROP COLUMN secret_code,
+	ALTER COLUMN event_id SET NOT NULL,
 	ADD CONSTRAINT fk__comments__event_id FOREIGN KEY (event_id)
-	     REFERENCES events (id)
-	     ON DELETE CASCADE
+		REFERENCES events (id)
+		ON DELETE CASCADE
 ;
 
 ALTER TABLE image_info
 	DROP COLUMN event_code,
 	DROP COLUMN secret_code,
+	ALTER COLUMN event_id SET NOT NULL,
 	ADD CONSTRAINT fk__image_info__event_id FOREIGN KEY (event_id)
-	     REFERENCES events (id)
-	     ON DELETE CASCADE
+		REFERENCES events (id)
+		ON DELETE CASCADE
 ;
 
 ALTER TABLE detail_notes
 	DROP COLUMN event_code,
 	DROP COLUMN secret_code,
+	ALTER COLUMN event_id SET NOT NULL,
 	ADD CONSTRAINT fk__inspections__event_id FOREIGN KEY (event_id)
-	     REFERENCES events (id)
-	     ON DELETE CASCADE
+		REFERENCES events (id)
+		ON DELETE CASCADE
 ;
 
 

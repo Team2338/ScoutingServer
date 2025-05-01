@@ -1,6 +1,7 @@
 import BoltIcon from '@mui/icons-material/Bolt';
 import React from 'react';
 import { GridScoreConfig } from './display.model';
+import { alpha, Theme } from '@mui/material/styles';
 
 export const superchargeGridScoreConfig: GridScoreConfig = {
 	0: {
@@ -29,3 +30,8 @@ export const GAMEMODE_ORDERING: Record<string, string> = {
 	'TELEOP': '1',
 	'SUPERSCOUT': '99'
 };
+
+export const getLowContrastTextColor = (theme: Theme, backgroundColor: string) => {
+	const contrastText = theme.palette.getContrastText(backgroundColor);
+	return alpha(contrastText, 0.65);
+}

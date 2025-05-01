@@ -7,25 +7,13 @@ import { store } from './state';
 import { myRegister, unregister } from './serviceWorkerRegistration';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { orange } from '@mui/material/colors';
-
-const myBlue = {
-	900: '#254999',
-	800: '#2f67b9',
-	700: '#3478cb',
-	600: '#3b8ade',
-	500: '#4198eb',
-	400: '#55a7ef',
-	300: '#70b6f1',
-	200: '#96cbf6',
-	100: '#bedff9',
-	50: '#e4f2fc'
-}
+import { BLUE, BLUE_PALETTE } from './models';
 
 const theme = createTheme({
 	colorSchemes: {
 		dark: {
 			palette: {
-				primary: myBlue,
+				primary: BLUE_PALETTE,
 				secondary: orange,
 				background: {
 					default: '#18191b'
@@ -34,10 +22,7 @@ const theme = createTheme({
 		}
 	},
 	palette: {
-		primary: {
-			main: myBlue[900],
-			light: myBlue[500]
-		},
+		primary: BLUE_PALETTE,
 		secondary: orange
 	}
 });

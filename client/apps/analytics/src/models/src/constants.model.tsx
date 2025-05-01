@@ -25,6 +25,21 @@ export const STAT_GRAPH_COLORS: string[] = [
 	'#44ac88'
 ];
 
+export const BLUE_PALETTE = {
+	900: '#254999',
+	800: '#2f67b9',
+	700: '#3478cb',
+	600: '#3b8ade',
+	500: '#4198eb',
+	400: '#55a7ef',
+	300: '#70b6f1',
+	200: '#96cbf6',
+	100: '#bedff9',
+	50: '#e4f2fc'
+};
+
+export const BLUE = BLUE_PALETTE[900];
+
 export const GAMEMODE_ORDERING: Record<string, string> = {
 	'AUTO': '0',
 	'TELEOP': '1',

@@ -1,5 +1,5 @@
 import './StatPlot.scss';
-import { Tooltip } from '@mui/material';
+import { Tooltip, useTheme } from '@mui/material';
 import { useMemo } from 'react';
 import { ObjectiveDescriptor, Team, TeamObjectiveStats } from '../../../models';
 
@@ -28,6 +28,8 @@ const reduceToMax = (prev: number, current: number) => Math.max(prev, current);
 
 
 export default function StatPlot(props: IProps) {
+	const theme = useTheme();
+
 	const horizontalSums: Record<number, number> = useMemo(() => {
 		const result = {};
 		for (const robot of props.robots) {
@@ -72,9 +74,16 @@ export default function StatPlot(props: IProps) {
 				style={{
 					bottom: (verticalSums[robot.id] / maxVertical) * 100 + '%',
 					left: (horizontalSums[robot.id] / maxHorizontal) * 100 + '%',
+					backgroundColor: theme.palette.primary.main,
+					borderColor: theme.palette.primary.main,
 				}}
 			>
-				<span className="stat-plot-point-label">{ robot.id }</span>
+				<span
+					className="stat-plot-point-label"
+					style={{ color: theme.palette.text.primary }}
+				>
+					{ robot.id }
+				</span>
 			</button>
 		</Tooltip>
 	));

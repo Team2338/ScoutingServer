@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, List } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import {
 	GAMEMODE_ORDERING,
 	GlobalObjectiveStats,
@@ -35,6 +36,12 @@ export default function StatList({ className, variant, stats, selectedStats, sec
 	const _addSecondaryStat = (gamemode: string, objective: string) => dispatch(addSecondarySelectedStat(gamemode, objective));
 	const _removeSecondaryStat = (gamemode: string, objective: string) => dispatch(removeSecondarySelectedStat(gamemode, objective));
 	const _clearSelectedStats = () => dispatch(clearSelectedStats());
+	const theme = useTheme();
+
+	console.log(theme.palette.primary.main);
+	console.log();
+
+	// getTheme
 
 	const statsGroupedByGamemode: Map<string, GlobalObjectiveStats[]> = new Map();
 	for (const stat of stats) {
@@ -69,7 +76,7 @@ export default function StatList({ className, variant, stats, selectedStats, sec
 
 	return (
 		<div className={ `_stat-list ${ className ?? '' }` }>
-			<div className="stat-list-header">
+			<div className="stat-list-header" style={{ backgroundColor: theme.palette.background.default }}>
 				<h2 className="page-title">{ translate('STATS') }</h2>
 				{
 					selectedStats.length > 0 &&

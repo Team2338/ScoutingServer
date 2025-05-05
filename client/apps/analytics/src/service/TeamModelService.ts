@@ -1,5 +1,5 @@
 import { MatchResponse, Objective, ObjectiveStats, Team, TeamObjectiveStats } from '../models';
-import { getMean, getMeanList, getMedian, getMode, getSumList } from './Stats';
+import { getMean, getMeanList, getMedian, getMode, getQuantile, getSumList } from './Stats';
 
 interface AggregateObjective extends Objective {
 	numMatchesToAverage: number;
@@ -10,6 +10,7 @@ interface ObjectiveSums {
 	objective: string;
 	scores: number[];
 	lists: number[][];
+	matchNumbers: number[];
 }
 
 class TeamModelService {
@@ -52,6 +53,7 @@ class TeamModelService {
 	createTeam = (matches: MatchResponse[]): Team => {
 		const teamNumber = matches[0].robotNumber;
 		const reducedMatches = this.mergeDuplicateMatches(matches); // Merge duplicates
+		reducedMatches.sort((a, b) => a.matchNumber - b.matchNumber);
 		const stats = this.getStats(teamNumber, reducedMatches);
 
 		return {
@@ -164,11 +166,13 @@ class TeamModelService {
 						gamemode: objective.gamemode,
 						objective: objective.objective,
 						scores: [],
-						lists: []
+						lists: [],
+						matchNumbers: []
 					});
 				}
 
 				scores.get(key).scores.push(objective.count);
+				scores.get(key).matchNumbers.push(match.matchNumber);
 
 				if (objective.list && objective.list.length > 0) {
 					scores.get(key).lists.push(objective.list);
@@ -186,6 +190,7 @@ class TeamModelService {
 			stats.get(objective.gamemode)
 				.set(objective.objective, {
 					teamNumber: teamNumber,
+					matchNumbers: objective.matchNumbers,
 					scores: objective.scores,
 					lists: objective.lists.length > 0 ? objective.lists : null,
 					sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,
@@ -193,7 +198,8 @@ class TeamModelService {
 					mean: getMean(objective.scores),
 					median: getMedian(objective.scores),
 					mode: getMode(objective.scores),
-					variance: 0
+					upperQuartile: getQuantile(objective.scores, 0.75),
+					lowerQuartile: getQuantile(objective.scores, 0.25)
 				});
 		});
 

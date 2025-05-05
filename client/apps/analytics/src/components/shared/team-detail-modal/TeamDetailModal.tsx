@@ -32,6 +32,7 @@ export default function TeamDetailModal(props: IProps) {
 			aria-labelledby="team-detail-dialog__title"
 			slotProps={{ transition: transitionComponent }}
 			onTransitionExited={ props.afterClose }
+			maxWidth="lg"
 		>
 			<div className="team-detail-dialog__header">
 				<IconButton

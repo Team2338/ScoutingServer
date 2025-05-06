@@ -3,7 +3,7 @@ import React, {
 	Fragment,
 	useMemo
 } from 'react';
-import { Checkbox, Divider, ListItemButton, ListSubheader } from '@mui/material';
+import { Checkbox, Divider, ListItemButton, ListSubheader, useTheme } from '@mui/material';
 import { GlobalObjectiveStats, ObjectiveDescriptor, STAT_GRAPH_COLORS } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { roundToDecimal } from '../../../service/DisplayUtility';
@@ -23,6 +23,7 @@ interface IProps {
 
 export default function StatListSection(props: IProps) {
 	const translate = useTranslator();
+	const theme = useTheme();
 
 	const descriptorToColorMap: Map<string, string> = useMemo(() => {
 		const map: Map<string, string> = new Map();
@@ -113,7 +114,14 @@ export default function StatListSection(props: IProps) {
 
 	return (
 		<Fragment>
-			<ListSubheader style={{ top: 'var(--stat-header-height)' }}>{ translate(props.gamemode) }</ListSubheader>
+			<ListSubheader
+				style={{
+					top: 'var(--stat-header-height)',
+					backgroundColor: theme.palette.background.default
+				}}
+			>
+				{ translate(props.gamemode) }
+			</ListSubheader>
 			{ items }
 		</Fragment>
 	);

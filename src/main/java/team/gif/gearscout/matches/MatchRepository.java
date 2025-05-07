@@ -9,13 +9,8 @@ import java.util.List;
 
 public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 
-	@Query(value = """
-	SELECT match
-	FROM MatchEntity match
-	WHERE match.eventId = :eventId
-	ORDER BY match.matchNumber, match.robotNumber, match.creator ASC
-	""")
-	List<MatchEntity> getMatchesForEvent(Long eventId);
+	// For some reason, this is _WAY FASTER_ than manually creating the HQL query
+	List<MatchEntity> findMatchEntitiesByEventIdOrderByMatchNumberAscRobotNumberAscCreatorAsc(Long eventId);
 
 	@Query(value = """
 	SELECT match

@@ -24,7 +24,8 @@ public class EventService {
 	public EventService(
 		MatchRepository matchRepository,
 		InspectionRepository inspectionRepository,
-		EventRepository eventRepository) {
+		EventRepository eventRepository
+	) {
 		this.matchRepository = matchRepository;
 		this.inspectionRepository = inspectionRepository;
 		this.eventRepository = eventRepository;

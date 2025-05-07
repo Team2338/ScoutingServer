@@ -39,6 +39,7 @@ public class CreateInspectionRequest {
 		return questions;
 	}
 
+
 	public void setRobotNumber(Integer robotNumber) {
 		this.robotNumber = robotNumber;
 	}

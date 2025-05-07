@@ -60,6 +60,7 @@ public class CreateCommentBulkRequest {
 		return comments;
 	}
 
+
 	public void setRobotNumber(Integer robotNumber) {
 		this.robotNumber = robotNumber;
 	}

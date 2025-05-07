@@ -2,7 +2,11 @@ package team.gif.gearscout.matches;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team.gif.gearscout.shared.EventInfo;
+import team.gif.gearscout.matches.model.MatchEntity;
+import team.gif.gearscout.matches.model.NewMatch;
+import team.gif.gearscout.matches.model.ObjectiveEntity;
+import team.gif.gearscout.matches.preprocessor.MatchPreprocessor;
+import team.gif.gearscout.matches.preprocessor.MatchProcessor2023;
 import team.gif.gearscout.shared.exception.MatchNotFoundException;
 
 import jakarta.transaction.Transactional;
@@ -38,40 +42,24 @@ public class MatchService {
 		preprocessor.process(match);
 	}
 
-	public MatchEntity saveMatch(NewMatch match, Integer teamNumber, String secretCode) {
-		// Convert Match to MatchEntry
+	public MatchEntity saveMatch(Long eventId, Integer teamNumber, NewMatch match) {
+		// Convert Match to MatchEntity
 		String currentTime = Long.toString(System.currentTimeMillis());
-		MatchEntity matchEntity = new MatchEntity(match, teamNumber, secretCode, currentTime);
+		MatchEntity matchEntity = new MatchEntity(eventId, match, teamNumber, currentTime);
 		
 		return matchRepository.save(matchEntity);
 	}
 	
-	public List<MatchEntity> getAllMatchesForEvent(Integer teamNumber, Integer gameYear, String secretCode, String eventCode) {
-		return matchRepository.findMatchEntriesByTeamNumberAndSecretCodeAndEventCodeAndGameYearOrderByMatchNumberAscRobotNumberAscCreatorAsc(teamNumber, secretCode, eventCode, gameYear);
+	public List<MatchEntity> getAllMatchesForEvent(Long eventId) {
+		return matchRepository.findMatchEntitiesByEventIdOrderByMatchNumberAscRobotNumberAscCreatorAsc(eventId);
+	}
+
+	public MatchEntity getMatch(Long matchId) {
+		return matchRepository
+			.findById(matchId)
+			.orElseThrow(() -> new MatchNotFoundException(matchId));
 	}
 	
-	public MatchEntity setMatchHiddenStatus(Long matchId, String secretCode, boolean isHidden) {
-		MatchEntity match = matchRepository
-				.findMatchEntryByIdAndSecretCode(matchId, secretCode)
-				.orElseThrow(() -> new MatchNotFoundException(matchId));
-		
-		match.setIsHidden(isHidden);
-		match = matchRepository.save(match);
-		
-		return match;
-	}
-
-	public MatchEntity setMatchHiddenStatus(Integer teamNumber, Long matchId, boolean isHidden) {
-		MatchEntity match = matchRepository
-			.findMatchEntryByIdAndTeamNumber(matchId, teamNumber)
-			.orElseThrow(() -> new MatchNotFoundException(matchId));
-
-		match.setIsHidden(isHidden);
-		match = matchRepository.save(match);
-
-		return match;
-	}
-
 	public MatchEntity setMatchHiddenStatus(Long matchId, boolean isHidden) {
 		MatchEntity match = matchRepository
 			.findById(matchId)
@@ -83,16 +71,8 @@ public class MatchService {
 		return match;
 	}
 
-	public List<EventInfo> getEventList(Integer teamNumber) {
-		return matchRepository.getEventListForTeam(teamNumber);
-	}
-
-	public List<Integer> getDistinctTeamNumbers() {
-		return matchRepository.findDistinctTeamNumbers();
-	}
-	
-	public String getEventDataAsCsv(Integer teamNumber, Integer gameYear, String secretCode, String eventCode) {
-		List<MatchEntity> matches = matchRepository.findVisibleMatches(teamNumber, gameYear, secretCode, eventCode);
+	public String getEventDataAsCsv(Long eventId) {
+		List<MatchEntity> matches = matchRepository.findVisibleMatches(eventId);
 		
 		HashSet<String> scoreNames = getUniqueScoreNames(matches); // Collect names of all objectives
 		String[] sortedScoreNames = getSortedScoreNames(scoreNames); // Sort score names
@@ -110,8 +90,8 @@ public class MatchService {
 		
 		return sb.toString();
 	}
-	
-	
+
+
 	/**
 	 * Gets the set of unique identifiers for each objective present in the match
 	 * history. An objective identifier is defined as "{gamemode}_{objective}".

@@ -22,7 +22,6 @@ class MatchModelService {
 		return {
 			id: match.id,
 			teamNumber: match.teamNumber,
-			eventCode: match.eventCode,
 			matchNumber: match.matchNumber,
 			robotNumber: match.robotNumber,
 			creator: match.creator,

@@ -1,4 +1,4 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.matches.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
@@ -31,19 +32,17 @@ public class MatchEntity {
 	)
 	private Long id;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@Column(nullable = false)
+	private Long eventId;
+
+	@Column(nullable = false)
+	@Min(value = 1995)
 	private Integer gameYear;
 	
 	@Column(nullable = false)
 	private Integer teamNumber; // Team num of data collector
-	
-	@Column(nullable = false)
-	private String secretCode; // For restricting access to team's data
-	
-	@Column(nullable = false)
-	@Size(min = 1, max = 32)
-	private String eventCode;
-	
+
 	@Column(nullable = false)
 	private Integer matchNumber;
 	
@@ -73,15 +72,14 @@ public class MatchEntity {
 	public MatchEntity() {}
 	
 	public MatchEntity(
+		Long eventId,
 		NewMatch match,
 		Integer teamNumber,
-		String secretCode,
 		String timeCreated
 	) {
+		this.eventId = eventId;
 		this.gameYear = match.getGameYear();
 		this.teamNumber = teamNumber;
-		this.secretCode = secretCode;
-		this.eventCode = match.getEventCode();
 		this.matchNumber = match.getMatchNumber();
 		this.robotNumber = match.getRobotNumber();
 		this.creator = match.getCreator();
@@ -96,56 +94,41 @@ public class MatchEntity {
 		return id;
 	}
 
+	public Long getEventId() {
+		return eventId;
+	}
 
 	public Integer getGameYear() {
 		return gameYear;
 	}
 
-	
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
-	
-	
-	public String getSecretCode() {
-		return secretCode;
-	}
-	
-	
-	public String getEventCode() {
-		return eventCode;
-	}
-	
 	
 	public Integer getMatchNumber() {
 		return matchNumber;
 	}
 	
-	
 	public Integer getRobotNumber() {
 		return robotNumber;
 	}
-	
 	
 	public String getCreator() {
 		return creator;
 	}
 	
-	
 	public String getAllianceColor() {
 		return allianceColor;
 	}
-	
 	
 	public String getTimeCreated() {
 		return timeCreated;
 	}
 	
-	
 	public boolean getIsHidden() {
 		return isHidden;
 	}
-	
 	
 	public List<ObjectiveEntity> getObjectives() {
 		return objectives;
@@ -156,57 +139,42 @@ public class MatchEntity {
 		this.id = id;
 	}
 
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
+	}
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
 	}
 	
-	
 	public void setTeamNumber(Integer teamNumber) {
 		this.teamNumber = teamNumber;
 	}
 	
-	
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
-	}
-	
-	
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-	
-	
 	public void setMatchNumber(Integer matchNumber) {
 		this.matchNumber = matchNumber;
 	}
-	
-	
+
 	public void setRobotNumber(Integer robotNumber) {
 		this.robotNumber = robotNumber;
 	}
-	
-	
+
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	
-	
+
 	public void setAllianceColor(String color) {
 		this.allianceColor = color;
 	}
-	
-	
+
 	public void setTimeCreated(String timeCreated) {
 		this.timeCreated = timeCreated;
 	}
 	
-	
 	public void setIsHidden(boolean isHidden) {
 		this.isHidden = isHidden;
 	}
-	
-	
+
 	public void setObjectives(List<ObjectiveEntity> objectives) {
 		this.objectives = objectives;
 	}

@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import team.gif.gearscout.images.model.ImageContentEntity;
+import team.gif.gearscout.images.model.ImageInfoEntity;
+import team.gif.gearscout.images.repository.ImageContentRepository;
+import team.gif.gearscout.images.repository.ImageInfoRepository;
 import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 
@@ -62,36 +66,29 @@ public class ImageService {
 	
 	
 	public ImageInfoEntity saveImage(
+		Long eventId,
 		Integer teamNumber,
 		Integer gameYear,
 		Integer robotNumber,
-		String eventCode,
-		String secretCode,
 		String creator,
 		String timeCreated,
 		byte[] content,
 		String contentType
 	) {
-		imageInfoRepository.findImageForRobot(
-			teamNumber,
-			gameYear,
-			robotNumber,
-			eventCode,
-			secretCode
-		).ifPresent(imageInfo -> {
-			imageInfoRepository.delete(imageInfo);
-			imageContentRepository.deleteImageContentById(imageInfo.getImageId());
-		});
+		imageInfoRepository.findImageForRobot(eventId, robotNumber)
+			.ifPresent(imageInfo -> {
+				imageInfoRepository.delete(imageInfo);
+				imageContentRepository.deleteImageContentById(imageInfo.getImageId());
+			});
 		
 		ImageContentEntity imageContentEntity = imageContentRepository.save(
 			new ImageContentEntity(content, contentType)
 		);
 		
 		ImageInfoEntity createdImage = new ImageInfoEntity(
+			eventId,
 			teamNumber,
 			gameYear,
-			eventCode,
-			secretCode,
 			robotNumber,
 			creator,
 			imageContentEntity.getId(),
@@ -103,20 +100,11 @@ public class ImageService {
 	
 	
 	public ImageInfoEntity getImageInfo(
-		Integer teamNumber,
-		Integer gameYear,
-		Integer robotNumber,
-		String eventCode,
-		String secretCode
+		Long eventId,
+		Integer robotNumber
 	) {
 		Optional<ImageInfoEntity> optionalInfo = imageInfoRepository
-			.findImageForRobot(
-				teamNumber,
-				gameYear,
-				robotNumber,
-				eventCode,
-				secretCode
-			);
+			.findImageForRobot(eventId, robotNumber);
 
 		return optionalInfo.orElse(new ImageInfoEntity());
 	}
@@ -128,18 +116,8 @@ public class ImageService {
 	}
 	
 	
-	public List<ImageInfoEntity> getImageInfoForEvent(
-		Integer teamNumber,
-		Integer gameYear,
-		String eventCode,
-		String secretCode
-	) {
-		return imageInfoRepository.findImagesForEvent(
-			teamNumber,
-			gameYear,
-			eventCode,
-			secretCode
-		);
+	public List<ImageInfoEntity> getImageInfoForEvent(Long eventId) {
+		return imageInfoRepository.findImagesForEvent(eventId);
 	}
 	
 }

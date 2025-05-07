@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import team.gif.gearscout.events.EventService;
+
 import java.util.List;
 
 
@@ -22,9 +24,14 @@ public class CommentController {
 
 	private static final Logger logger = LogManager.getLogger(CommentController.class);
 	private final CommentService commentService;
+	private final EventService eventService;
 
-	public CommentController(CommentService commentService) {
+	public CommentController(
+		CommentService commentService,
+		EventService eventService
+	) {
 		this.commentService = commentService;
+		this.eventService = eventService;
 	}
 
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +42,13 @@ public class CommentController {
 	) {
 		logger.debug("Received addComment request");
 
-		Iterable<CommentEntity> comments = commentService.saveComments(teamNumber, secretCode, form);
+		Long eventId = eventService.getOrCreateEvent(
+			teamNumber,
+			form.getGameYear(),
+			form.getEventCode(),
+			secretCode
+		).getId();
+		Iterable<CommentEntity> comments = commentService.saveComments(eventId, teamNumber, form);
 
 		return ResponseEntity.ok(comments);
 	}
@@ -49,8 +62,13 @@ public class CommentController {
 	) {
 		logger.debug("Received getCommentsForEvent");
 
-		List<CommentEntity> comments = commentService
-			.getCommentsForEvent(teamNumber, gameYear, eventCode, secretCode);
+		Long eventId = eventService.getOrCreateEvent(
+			teamNumber,
+			gameYear,
+			eventCode,
+			secretCode
+		).getId();
+		List<CommentEntity> comments = commentService.getCommentsForEvent(eventId);
 
 		return ResponseEntity.ok(comments);
 	}

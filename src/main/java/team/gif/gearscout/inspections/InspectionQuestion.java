@@ -29,6 +29,7 @@ public class InspectionQuestion {
 		return creator;
 	}
 
+
 	public void setQuestion(String question) {
 		this.question = question;
 	}

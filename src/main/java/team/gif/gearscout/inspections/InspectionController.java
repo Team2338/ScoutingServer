@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import team.gif.gearscout.events.EventService;
+
 import java.util.List;
 
 // TODO: Start accepting tokens and not secret codes
@@ -23,11 +25,14 @@ public class InspectionController {
 
 	private static final Logger logger = LogManager.getLogger(InspectionController.class);
 	private final InspectionService inspectionService;
+	private final EventService eventService;
 
 	public InspectionController(
-		InspectionService inspectionService
+		InspectionService inspectionService,
+		EventService eventService
 	) {
 		this.inspectionService = inspectionService;
+		this.eventService = eventService;
 	}
 
 
@@ -39,7 +44,10 @@ public class InspectionController {
 	) {
 		logger.debug("Received addInspection request");
 
-		inspectionService.saveInspections(teamNumber, secretCode, form);
+		Long eventId = eventService
+			.getOrCreateEvent(teamNumber, form.getGameYear(), form.getEventCode(), secretCode)
+			.getId();
+		inspectionService.saveInspections(eventId, teamNumber, form);
 
 		return ResponseEntity.ok().build();
 	}
@@ -53,8 +61,11 @@ public class InspectionController {
 	) {
 		logger.debug("Received getInspectionsForEvent request");
 
+		Long eventId = eventService
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
+			.getId();
 		List<InspectionEntity> inspections = inspectionService
-			.getInspectionsForEvent(teamNumber, gameYear, eventCode, secretCode);
+			.getInspectionsForEvent(eventId);
 
 		return ResponseEntity.ok(inspections);
 	}

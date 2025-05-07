@@ -21,31 +21,27 @@ public class InspectionService {
 
 
 	public List<InspectionEntity> saveInspections(
+		Long eventId,
 		Integer teamNumber,
-		String secretCode,
 		CreateInspectionRequest form
 	) {
 		List<InspectionEntity> inspections = createInspectionsFromForm(
+			eventId,
 			teamNumber,
-			secretCode,
 			form
 		);
 
 		removeDuplicateQuestions(form);
 		List<String> questionNames = getQuestionNames(form);
-		inspectionRepository.removeInspectionsByQuestion( // Remove any duplicate questions
-			teamNumber,
-			form.getGameYear(),
+		inspectionRepository.removeInspectionsByQuestion( // Remove any duplicate questions from DB
+			eventId,
 			form.getRobotNumber(),
-			form.getEventCode(),
-			secretCode,
 			questionNames
 		);
 
 		Iterable<InspectionEntity> dbResponse = inspectionRepository.saveAll(inspections);
 		List<InspectionEntity> results = new LinkedList<>();
 		dbResponse.forEach(results::add);
-
 
 		return results;
 	}
@@ -71,8 +67,8 @@ public class InspectionService {
 
 
 	private List<InspectionEntity> createInspectionsFromForm(
+		Long eventId,
 		Integer teamNumber,
-		String secretCode,
 		CreateInspectionRequest form
 	) {
 		String currentTime = Long.toString(System.currentTimeMillis());
@@ -80,10 +76,9 @@ public class InspectionService {
 			.stream()
 			.map((question) -> {
 				InspectionEntity inspection = new InspectionEntity();
+				inspection.setEventId(eventId);
 				inspection.setTeamNumber(teamNumber);
 				inspection.setGameYear(form.getGameYear());
-				inspection.setEventCode(form.getEventCode());
-				inspection.setSecretCode(secretCode);
 				inspection.setRobotNumber(form.getRobotNumber());
 				inspection.setCreator(question.getCreator());
 				inspection.setQuestion(question.getQuestion());
@@ -96,18 +91,8 @@ public class InspectionService {
 	}
 
 
-	public List<InspectionEntity> getInspectionsForEvent(
-		Integer teamNumber,
-		Integer gameYear,
-		String eventCode,
-		String secretCode
-	) {
-		return inspectionRepository.findInspectionsForEvent(
-			teamNumber,
-			gameYear,
-			eventCode,
-			secretCode
-		);
+	public List<InspectionEntity> getInspectionsForEvent(Long eventId) {
+		return inspectionRepository.findInspectionsForEvent(eventId);
 	}
 
 }

@@ -2,6 +2,7 @@ package team.gif.gearscout.events;
 
 public class AggregateEventInfo {
 
+	public final Long eventId;
 	public final Integer teamNumber;
 	public final Integer gameYear;
 	public final String eventCode;
@@ -10,11 +11,13 @@ public class AggregateEventInfo {
 	private Long inspectionCount;
 
 	AggregateEventInfo(
+		Long eventId,
 		Integer teamNumber,
 		Integer gameYear,
 		String eventCode,
 		String secretCode
 	) {
+		this.eventId = eventId;
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
 		this.eventCode = eventCode;

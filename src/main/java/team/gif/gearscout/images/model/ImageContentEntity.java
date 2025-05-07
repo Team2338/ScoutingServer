@@ -1,7 +1,6 @@
-package team.gif.gearscout.images;
+package team.gif.gearscout.images.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.SequenceGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.Column;
@@ -38,6 +37,7 @@ public class ImageContentEntity {
 		this.content = content;
 		this.contentType = contentType;
 	}
+
 	
 	public UUID getId() {
 		return id;
@@ -50,6 +50,7 @@ public class ImageContentEntity {
 	public String getContentType() {
 		return contentType;
 	}
+
 	
 	public void setId(UUID id) {
 		this.id = id;

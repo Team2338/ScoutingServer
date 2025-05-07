@@ -28,6 +28,10 @@ public class InspectionEntity {
 	)
 	private Long id;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@Column(name = "event_id", nullable = false)
+	private Long eventId;
+
 	@Column(name = "team_number", nullable = false)
 	@Min(0)
 	private Integer teamNumber;
@@ -39,14 +43,6 @@ public class InspectionEntity {
 	@Column(name = "game_year", nullable = false)
 	@Min(1995)
 	private Integer gameYear;
-
-	@Column(name = "event_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String eventCode;
-
-	@Column(name = "secret_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String secretCode;
 
 	@Column(name = "question", nullable = false)
 	@Size(min = 1, max = 32)
@@ -71,6 +67,10 @@ public class InspectionEntity {
 		return id;
 	}
 
+	public Long getEventId() {
+		return eventId;
+	}
+
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
@@ -81,14 +81,6 @@ public class InspectionEntity {
 
 	public Integer getGameYear() {
 		return gameYear;
-	}
-
-	public String getEventCode() {
-		return eventCode;
-	}
-
-	public String getSecretCode() {
-		return secretCode;
 	}
 
 	public String getQuestion() {
@@ -107,8 +99,13 @@ public class InspectionEntity {
 		return timeCreated;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
 	}
 
 	public void setTeamNumber(Integer teamNumber) {
@@ -121,14 +118,6 @@ public class InspectionEntity {
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
-	}
-
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 
 	public void setQuestion(String question) {

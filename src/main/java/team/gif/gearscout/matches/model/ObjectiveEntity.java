@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import org.hibernate.type.SqlTypes;
@@ -29,9 +28,6 @@ public class ObjectiveEntity {
 		allocationSize = 1
 	)
 	private Long id;
-	
-	@ManyToOne
-	private MatchEntity match;
 	
 	@Column(nullable = false)
 	@Size(min = 1, max = 64)
@@ -54,10 +50,6 @@ public class ObjectiveEntity {
 		return id;
 	}
 	
-	public MatchEntity getMatch() {
-		return match;
-	}
-	
 	public String getGamemode() {
 		return gamemode;
 	}
@@ -77,10 +69,6 @@ public class ObjectiveEntity {
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public void setMatch(MatchEntity match) {
-		this.match = match;
 	}
 	
 	public void setGamemode(String gamemode) {

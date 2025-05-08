@@ -42,7 +42,6 @@ public class MatchProcessor2023 implements MatchPreprocessor {
 		Integer[] scoreList = Arrays.copyOf(objective.getList(), 27);
 		normalized.setObjective("NORMALIZED_GRID_2023");
 		normalized.setGamemode(objective.getGamemode());
-		normalized.setMatch(objective.getMatch());
 		normalized.setCount(objective.getCount());
 		normalized.setList(scoreList);
 		

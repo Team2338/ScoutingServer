@@ -75,7 +75,7 @@ public class GuestMatchController {
 		
 		return ResponseEntity.ok(result);
 	}
-	
+
 	
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
 	public ResponseEntity<MatchEntity> hideMatch(

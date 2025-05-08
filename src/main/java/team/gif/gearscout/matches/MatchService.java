@@ -51,7 +51,7 @@ public class MatchService {
 	}
 	
 	public List<MatchEntity> getAllMatchesForEvent(Long eventId) {
-		return matchRepository.findMatchEntitiesByEventIdOrderByMatchNumberAscRobotNumberAscCreatorAsc(eventId);
+		return matchRepository.findMatchesByEventId(eventId);
 	}
 
 	public MatchEntity getMatch(Long matchId) {

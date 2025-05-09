@@ -1,5 +1,6 @@
 package team.gif.gearscout.matches.controller;
 
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.matches.MatchService;
 import team.gif.gearscout.matches.model.NewMatch;
 import team.gif.gearscout.shared.exception.MatchNotFoundException;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.SecretCodeConstraint;
 
 import java.util.List;
 
@@ -44,8 +47,8 @@ public class GuestMatchController {
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> addMatch(
 			@PathVariable Integer teamNumber,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
-			@RequestBody NewMatch match
+			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
+			@RequestBody @Valid NewMatch match
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 
@@ -63,8 +66,8 @@ public class GuestMatchController {
 	public ResponseEntity<List<MatchEntity>> getAllMatchesForEvent(
 			@PathVariable Integer teamNumber,
 			@PathVariable Integer gameYear,
-			@PathVariable String eventCode,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+			@PathVariable @EventCodeConstraint String eventCode,
+			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
 
@@ -80,7 +83,7 @@ public class GuestMatchController {
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/hide")
 	public ResponseEntity<MatchEntity> hideMatch(
 			@PathVariable Integer teamNumber,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
 			@PathVariable Long matchId
 	) {
 		logger.debug("Received hideMatch request: {}, {}", teamNumber, matchId);
@@ -100,7 +103,7 @@ public class GuestMatchController {
 	@PutMapping(value = "/team/{teamNumber}/match/{matchId}/unhide")
 	public ResponseEntity<MatchEntity> unhideMatch(
 			@PathVariable Integer teamNumber,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
 			@PathVariable Long matchId
 	) {
 		logger.debug("Received unhideMatch request: {}, {}", teamNumber, matchId);
@@ -121,8 +124,8 @@ public class GuestMatchController {
 	public ResponseEntity<String> getCsvForEvent(
 			@PathVariable Integer teamNumber,
 			@PathVariable Integer gameYear,
-			@PathVariable String eventCode,
-			@RequestHeader(value = "secretCode", defaultValue = "") String secretCode
+			@PathVariable @EventCodeConstraint String eventCode,
+			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {
 		logger.debug("Received getCsvForEvent request: {}, {}", teamNumber, eventCode);
 

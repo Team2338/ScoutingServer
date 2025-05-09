@@ -1,8 +1,9 @@
-package team.gif.gearscout.inspections;
+package team.gif.gearscout.inspections.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+
 import java.util.List;
 
 public class CreateInspectionRequest {
@@ -13,7 +14,7 @@ public class CreateInspectionRequest {
 	@Min(1995)
 	private Integer gameYear;
 
-	@Size(min = 1, max = 32)
+	@EventCodeConstraint
 	private String eventCode;
 
 	@NotEmpty

@@ -3,6 +3,7 @@ package team.gif.gearscout.inspections;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.inspections.model.InspectionEntity;
 import team.gif.gearscout.shared.EventInfo;
 
 import java.util.List;

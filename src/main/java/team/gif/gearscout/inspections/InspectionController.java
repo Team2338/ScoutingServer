@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import team.gif.gearscout.events.EventService;
+import team.gif.gearscout.inspections.model.CreateInspectionRequest;
+import team.gif.gearscout.inspections.model.InspectionEntity;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.SecretCodeConstraint;
 
 import java.util.List;
 
@@ -39,7 +43,7 @@ public class InspectionController {
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> addInspection(
 		@PathVariable Integer teamNumber,
-		@RequestHeader(value = "secretCode", defaultValue = "") String secretCode,
+		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
 		@RequestBody @Valid CreateInspectionRequest form
 	) {
 		logger.debug("Received addInspection request");
@@ -56,8 +60,8 @@ public class InspectionController {
 	public ResponseEntity<List<InspectionEntity>> getAllInspectionsForEvent(
 		@PathVariable Integer teamNumber,
 		@PathVariable Integer gameYear,
-		@PathVariable String eventCode,
-		@RequestHeader(value = "secretCode") String secretCode
+		@PathVariable @EventCodeConstraint String eventCode,
+		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {
 		logger.debug("Received getInspectionsForEvent request");
 

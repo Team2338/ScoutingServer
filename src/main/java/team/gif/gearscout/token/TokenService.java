@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.token.model.TokenEntity;
+import team.gif.gearscout.token.model.TokenModel;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

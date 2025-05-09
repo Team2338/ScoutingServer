@@ -1,10 +1,12 @@
-package team.gif.gearscout.comments;
+package team.gif.gearscout.comments.model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+
 import java.util.List;
 
 public class CreateCommentBulkRequest {
@@ -18,7 +20,7 @@ public class CreateCommentBulkRequest {
 	private Integer gameYear;
 
 	@NotNull(message = "Field 'eventCode' must not be null")
-	@Size(min = 1, max = 32, message = "Field 'eventCode' must have length between 1 - 32")
+	@EventCodeConstraint
 	private String eventCode;
 
 	@NotNull(message = "Field 'matchNumber' must not be null")

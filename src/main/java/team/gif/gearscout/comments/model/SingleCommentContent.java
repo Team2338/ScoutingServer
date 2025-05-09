@@ -1,4 +1,4 @@
-package team.gif.gearscout.comments;
+package team.gif.gearscout.comments.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

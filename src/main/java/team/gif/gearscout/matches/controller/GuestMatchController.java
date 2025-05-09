@@ -18,7 +18,7 @@ import team.gif.gearscout.events.EventEntity;
 import team.gif.gearscout.events.EventService;
 import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.matches.MatchService;
-import team.gif.gearscout.matches.model.NewMatch;
+import team.gif.gearscout.matches.model.CreateMatchRequest;
 import team.gif.gearscout.shared.exception.MatchNotFoundException;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
@@ -49,7 +49,7 @@ public class GuestMatchController {
 	public ResponseEntity<Void> addMatch(
 			@PathVariable Integer teamNumber,
 			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
-			@RequestBody @Valid NewMatch match
+			@RequestBody @Valid CreateMatchRequest match
 	) {
 		logger.debug("Received addMatch request: {}", teamNumber);
 

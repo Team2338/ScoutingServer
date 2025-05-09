@@ -5,7 +5,7 @@ import team.gif.gearscout.shared.validation.GameYearConstraint;
 
 import java.util.List;
 
-public class NewMatch {
+public class CreateMatchRequest {
 
 	// TODO: Shouldn't we be performing property validation here???
 
@@ -21,7 +21,7 @@ public class NewMatch {
 	private String allianceColor;
 	private List<ObjectiveEntity> objectives;
 	
-	public NewMatch() {}
+	public CreateMatchRequest() {}
 	
 
 	public Integer getGameYear() {

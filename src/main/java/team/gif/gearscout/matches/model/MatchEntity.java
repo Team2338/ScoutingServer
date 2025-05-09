@@ -73,7 +73,7 @@ public class MatchEntity {
 	
 	public MatchEntity(
 		Long eventId,
-		NewMatch match,
+		CreateMatchRequest match,
 		Integer teamNumber,
 		String timeCreated
 	) {

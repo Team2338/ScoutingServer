@@ -3,6 +3,7 @@ package team.gif.gearscout.inspections.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class CreateInspectionRequest {
 	@Min(0)
 	private Integer robotNumber;
 
-	@Min(1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@EventCodeConstraint

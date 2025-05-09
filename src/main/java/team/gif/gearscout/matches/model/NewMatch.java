@@ -1,12 +1,15 @@
 package team.gif.gearscout.matches.model;
 
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 
 import java.util.List;
 
 public class NewMatch {
 
 	// TODO: Shouldn't we be performing property validation here???
+
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@EventCodeConstraint

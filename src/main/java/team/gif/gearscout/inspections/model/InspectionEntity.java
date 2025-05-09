@@ -11,6 +11,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 
 @Entity
 @Table(name = "detail_notes")
@@ -41,7 +42,7 @@ public class InspectionEntity {
 	private Integer robotNumber;
 
 	@Column(name = "game_year", nullable = false)
-	@Min(1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@Column(name = "question", nullable = false)

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 import team.gif.gearscout.tba.MatchScheduleEntry;
 import team.gif.gearscout.tba.TbaService;
 
@@ -30,7 +31,7 @@ public class ScheduleController {
 
 	@GetMapping(value = "/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<MatchScheduleEntry>> getScheduleForEvent(
-		@PathVariable Integer gameYear,
+		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable String eventCode
 	) {
 		logger.debug("Received getScheduleForEvent request: {}, {}", gameYear, eventCode);
@@ -43,7 +44,7 @@ public class ScheduleController {
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<MatchScheduleEntry>> getScheduleForTeam(
 		@PathVariable Integer teamNumber,
-		@PathVariable Integer gameYear,
+		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable String eventCode
 	) {
 		logger.debug("Received getScheduleForTeam request: {}, {}, {}", teamNumber, gameYear, eventCode);

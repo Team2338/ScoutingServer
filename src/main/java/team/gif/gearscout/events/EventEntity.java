@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 import team.gif.gearscout.shared.validation.SecretCodeConstraint;
 
 @Entity
@@ -34,7 +35,7 @@ public class EventEntity {
 	private Integer teamNumber;
 
 	@Column(nullable = false)
-	@Min(value = 1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@Column(nullable = false)

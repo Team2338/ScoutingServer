@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 
 import java.util.List;
 
@@ -15,8 +16,7 @@ public class CreateCommentBulkRequest {
 	@Min(value = 0, message = "Field 'robotNumber' must be > 0")
 	private Integer robotNumber;
 
-	@NotNull(message = "Field 'gameYear' must not be null")
-	@Min(value = 1995, message = "Field 'gameYear' must be > 1995")
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@NotNull(message = "Field 'eventCode' must not be null")

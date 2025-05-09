@@ -17,6 +17,7 @@ import team.gif.gearscout.events.EventService;
 import team.gif.gearscout.inspections.model.CreateInspectionRequest;
 import team.gif.gearscout.inspections.model.InspectionEntity;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 import team.gif.gearscout.shared.validation.SecretCodeConstraint;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class InspectionController {
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<InspectionEntity>> getAllInspectionsForEvent(
 		@PathVariable Integer teamNumber,
-		@PathVariable Integer gameYear,
+		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable @EventCodeConstraint String eventCode,
 		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {

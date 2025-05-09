@@ -21,6 +21,7 @@ import team.gif.gearscout.matches.MatchService;
 import team.gif.gearscout.matches.model.NewMatch;
 import team.gif.gearscout.shared.exception.MatchNotFoundException;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
 import team.gif.gearscout.shared.validation.SecretCodeConstraint;
 
 import java.util.List;
@@ -65,7 +66,7 @@ public class GuestMatchController {
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<MatchEntity>> getAllMatchesForEvent(
 			@PathVariable Integer teamNumber,
-			@PathVariable Integer gameYear,
+			@PathVariable @GameYearConstraint Integer gameYear,
 			@PathVariable @EventCodeConstraint String eventCode,
 			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {
@@ -123,7 +124,7 @@ public class GuestMatchController {
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/download", produces = "text/csv")
 	public ResponseEntity<String> getCsvForEvent(
 			@PathVariable Integer teamNumber,
-			@PathVariable Integer gameYear,
+			@PathVariable @GameYearConstraint Integer gameYear,
 			@PathVariable @EventCodeConstraint String eventCode,
 			@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {

@@ -17,7 +17,9 @@ import team.gif.gearscout.shared.exception.EmptyFileNotAllowedException;
 import team.gif.gearscout.shared.exception.ImageTypeInvalidException;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
 import team.gif.gearscout.shared.validation.SecretCodeConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
 import team.gif.gearscout.token.model.TokenModel;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.users.UserEntity;
@@ -54,10 +56,10 @@ public class ImageControllerV2 {
 
 	@PostMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/robot/{robotNumber}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<Void> addImage(
-		@PathVariable Integer teamNumber,
-		@PathVariable Integer gameYear,
+		@PathVariable @TeamNumberConstraint Integer teamNumber,
+		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable @EventCodeConstraint String eventCode,
-		@PathVariable Integer robotNumber,
+		@PathVariable @RobotNumberConstraint Integer robotNumber,
 		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
 		@RequestHeader(value = "timeCreated", defaultValue = "") String timeCreated,
 		@RequestHeader(value = "Authorization") String tokenHeader,
@@ -102,10 +104,10 @@ public class ImageControllerV2 {
 
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}/robot/{robotNumber}")
 	public ResponseEntity<ImageInfoEntity> getImageInfo(
-		@PathVariable Integer teamNumber,
+		@PathVariable @TeamNumberConstraint Integer teamNumber,
 		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable @EventCodeConstraint String eventCode,
-		@PathVariable Integer robotNumber,
+		@PathVariable @RobotNumberConstraint Integer robotNumber,
 		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode
 	) {
 		logger.debug("Received getImage request: {}, {}, {}", teamNumber, gameYear, robotNumber);
@@ -120,7 +122,7 @@ public class ImageControllerV2 {
 
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<ImageInfoEntity>> getAllImageInfoForEvent(
-		@PathVariable Integer teamNumber,
+		@PathVariable @TeamNumberConstraint Integer teamNumber,
 		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable @EventCodeConstraint String eventCode,
 		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode

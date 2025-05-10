@@ -12,13 +12,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@NotNull(message = "Field 'secretCode' must not be null")
-@Size(min = 1, max = 32, message = "Field 'secretCode' must have length between {min} - {max}")
+@NotNull(message = "Field 'password' must not be null")
+@Size(min = 8, max = 32, message = "Field 'password' must have length between {min} - {max}")
 @Constraint(validatedBy = {})
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SecretCodeConstraint {
-	String message() default "Invalid secret code";
+public @interface PasswordConstraint {
+	String message() default "Malformed password";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

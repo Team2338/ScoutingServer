@@ -2,12 +2,12 @@ package team.gif.gearscout.matches.model;
 
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
 
 import java.util.List;
 
 public class CreateMatchRequest {
-
-	// TODO: Shouldn't we be performing property validation here???
 
 	@GameYearConstraint
 	private Integer gameYear;
@@ -16,8 +16,13 @@ public class CreateMatchRequest {
 	private String eventCode;
 
 	private Integer matchNumber;
+
+	@RobotNumberConstraint
 	private Integer robotNumber;
+
+	@UsernameConstraint
 	private String creator;
+
 	private String allianceColor;
 	private List<ObjectiveEntity> objectives;
 	

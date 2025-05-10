@@ -7,19 +7,19 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
 
 import java.util.List;
 
 public class CreateCommentBulkRequest {
 
-	@NotNull(message = "Field 'robotNumber' must not be null")
-	@Min(value = 0, message = "Field 'robotNumber' must be > 0")
+	@RobotNumberConstraint
 	private Integer robotNumber;
 
 	@GameYearConstraint
 	private Integer gameYear;
 
-	@NotNull(message = "Field 'eventCode' must not be null")
 	@EventCodeConstraint
 	private String eventCode;
 
@@ -27,8 +27,7 @@ public class CreateCommentBulkRequest {
 	@Min(value = 0, message = "Field 'matchNumber' must be > 0")
 	private Integer matchNumber;
 
-	@NotNull(message = "Field 'creator' must not be null")
-	@Size(min = 1, max = 32, message = "Field 'creator' must have length between 1 - 32")
+	@UsernameConstraint
 	private String creator;
 
 	@NotNull(message = "Field 'comments' must not be null")

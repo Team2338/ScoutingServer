@@ -19,6 +19,7 @@ import team.gif.gearscout.events.EventService;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
 import team.gif.gearscout.shared.validation.SecretCodeConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class CommentController {
 
 	@PostMapping(value = "/team/{teamNumber}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Iterable<CommentEntity>> addComment(
-		@PathVariable Integer teamNumber,
+		@PathVariable @TeamNumberConstraint Integer teamNumber,
 		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode,
 		@RequestBody @Valid CreateCommentBulkRequest form
 	) {
@@ -60,7 +61,7 @@ public class CommentController {
 
 	@GetMapping(value = "/team/{teamNumber}/gameYear/{gameYear}/event/{eventCode}")
 	public ResponseEntity<List<CommentEntity>> getAllCommentsForEvent(
-		@PathVariable Integer teamNumber,
+		@PathVariable @TeamNumberConstraint Integer teamNumber,
 		@PathVariable @GameYearConstraint Integer gameYear,
 		@PathVariable @EventCodeConstraint String eventCode,
 		@RequestHeader(value = "secretCode") @SecretCodeConstraint String secretCode

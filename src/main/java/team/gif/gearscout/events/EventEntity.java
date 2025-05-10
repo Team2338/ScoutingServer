@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Size;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
 import team.gif.gearscout.shared.validation.SecretCodeConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
 
 @Entity
 @Table(name = "events")
@@ -31,7 +32,7 @@ public class EventEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	@Min(value = 0)
+	@TeamNumberConstraint
 	private Integer teamNumber;
 
 	@Column(nullable = false)

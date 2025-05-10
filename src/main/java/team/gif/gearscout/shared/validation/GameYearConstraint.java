@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GameYearConstraint {
-	String message() default "Invalid event code";
+	String message() default "Invalid game year";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

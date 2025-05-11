@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.MatchNumberConstraint;
 import team.gif.gearscout.shared.validation.TeamNumberConstraint;
 import team.gif.gearscout.shared.validation.UsernameConstraint;
 
@@ -49,6 +50,7 @@ public class MatchEntity {
 	private Integer teamNumber; // Team num of data collector
 
 	@Column(nullable = false)
+	@MatchNumberConstraint
 	private Integer matchNumber;
 	
 	@Column(nullable = false)

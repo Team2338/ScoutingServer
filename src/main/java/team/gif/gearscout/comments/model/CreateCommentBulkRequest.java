@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import team.gif.gearscout.shared.validation.EventCodeConstraint;
 import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.MatchNumberConstraint;
 import team.gif.gearscout.shared.validation.RobotNumberConstraint;
 import team.gif.gearscout.shared.validation.UsernameConstraint;
 
@@ -23,8 +24,7 @@ public class CreateCommentBulkRequest {
 	@EventCodeConstraint
 	private String eventCode;
 
-	@NotNull(message = "Field 'matchNumber' must not be null")
-	@Min(value = 0, message = "Field 'matchNumber' must be > 0")
+	@MatchNumberConstraint
 	private Integer matchNumber;
 
 	@UsernameConstraint

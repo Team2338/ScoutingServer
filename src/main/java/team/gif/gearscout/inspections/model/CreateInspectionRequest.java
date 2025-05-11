@@ -19,7 +19,7 @@ public class CreateInspectionRequest {
 	@EventCodeConstraint
 	private String eventCode;
 
-	@NotEmpty
+	@NotEmpty(message = "Questions list must not be empty")
 	private List<InspectionQuestion> questions;
 
 

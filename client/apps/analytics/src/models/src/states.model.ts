@@ -34,6 +34,20 @@ export enum LoginStatus {
 	logInFailed = 'logInFailed',
 }
 
+export enum StatsFilterType {
+	none = 'none',
+	inspection = 'inspection',
+	comments = 'comments',
+	stats = 'stats',
+}
+
+export enum ViewType {
+	barGraph = 'barGraph',
+	table = 'table',
+	barGraphTable = 'barGraphTable',
+	scatterPlot = 'scatterPlot',
+}
+
 export interface AppState {
 	language: Language;
 	loginV2: LoginV2State;
@@ -109,4 +123,22 @@ export interface CommentState {
 export interface IUserManagementState {
 	loadStatus: LoadStatus;
 	users: IUserInfo[];
+}
+
+export interface StatsFilter {
+	filterType: StatsFilterType,
+	topic: string,
+	query: string
+}
+
+export interface BarAttributes {
+	color: string;
+	label: string;
+}
+
+export interface GraphColoring {
+	// map of teams to bar properties
+	attributes: {[k: string]: BarAttributes};
+	// map of attributes to colors
+	legend: {[k: string]: string};
 }

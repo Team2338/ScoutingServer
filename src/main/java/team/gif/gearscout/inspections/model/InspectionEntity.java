@@ -1,4 +1,4 @@
-package team.gif.gearscout.inspections;
+package team.gif.gearscout.inspections.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,6 +11,10 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
 
 @Entity
 @Table(name = "detail_notes")
@@ -33,15 +37,15 @@ public class InspectionEntity {
 	private Long eventId;
 
 	@Column(name = "team_number", nullable = false)
-	@Min(0)
+	@TeamNumberConstraint
 	private Integer teamNumber;
 
 	@Column(name = "robot_number", nullable = false)
-	@Min(0)
+	@RobotNumberConstraint
 	private Integer robotNumber;
 
 	@Column(name = "game_year", nullable = false)
-	@Min(1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@Column(name = "question", nullable = false)
@@ -53,7 +57,7 @@ public class InspectionEntity {
 	private String answer;
 
 	@Column(name = "creator", nullable = false)
-	@Size(min = 1, max = 32)
+	@UsernameConstraint
 	private String creator;
 
 	@Column(name = "time_created", nullable = false)

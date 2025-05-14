@@ -10,6 +10,10 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.SecretCodeConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
 
 @Entity
 @Table(name = "events")
@@ -28,19 +32,19 @@ public class EventEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	@Min(value = 0)
+	@TeamNumberConstraint
 	private Integer teamNumber;
 
 	@Column(nullable = false)
-	@Min(value = 1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@Column(nullable = false)
-	@Size(min = 1, max = 32)
+	@EventCodeConstraint
 	private String eventCode;
 
 	@Column(nullable = false)
-	@Size(min = 1, max = 32)
+	@SecretCodeConstraint
 	private String secretCode;
 
 

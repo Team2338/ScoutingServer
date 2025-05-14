@@ -2,6 +2,7 @@ package team.gif.gearscout.token;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.token.model.CredentialEntityV2;
 
 import java.util.Optional;
 

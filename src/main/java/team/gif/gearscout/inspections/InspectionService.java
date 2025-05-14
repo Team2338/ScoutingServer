@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import team.gif.gearscout.inspections.model.CreateInspectionRequest;
+import team.gif.gearscout.inspections.model.InspectionEntity;
+import team.gif.gearscout.inspections.model.InspectionQuestion;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

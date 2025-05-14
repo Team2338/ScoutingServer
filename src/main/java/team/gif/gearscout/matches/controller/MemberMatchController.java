@@ -17,7 +17,7 @@ import team.gif.gearscout.events.EventService;
 import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.matches.MatchService;
 import team.gif.gearscout.shared.UserRoles;
-import team.gif.gearscout.token.TokenModel;
+import team.gif.gearscout.token.model.TokenModel;
 import team.gif.gearscout.token.TokenService;
 import team.gif.gearscout.users.UserEntity;
 import team.gif.gearscout.users.UserService;

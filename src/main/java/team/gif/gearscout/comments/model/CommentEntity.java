@@ -1,4 +1,4 @@
-package team.gif.gearscout.comments;
+package team.gif.gearscout.comments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,6 +11,8 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+
 import java.time.OffsetDateTime;
 
 @Entity
@@ -42,7 +44,7 @@ public class CommentEntity {
 	private Integer robotNumber;
 
 	@Column(name = "game_year", nullable = false)
-	@Min(1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
 	@Column(name = "match_number", nullable = false)

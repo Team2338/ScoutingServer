@@ -3,7 +3,7 @@ package team.gif.gearscout.matches.preprocessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import team.gif.gearscout.matches.model.NewMatch;
+import team.gif.gearscout.matches.model.CreateMatchRequest;
 import team.gif.gearscout.matches.model.ObjectiveEntity;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ public class MatchProcessor2023 implements MatchPreprocessor {
 	
 	private static final Logger logger = LogManager.getLogger(MatchProcessor2023.class);
 	
-	public void process(NewMatch match) {
+	public void process(CreateMatchRequest match) {
 		String color = match.getAllianceColor().toUpperCase();
 		List<ObjectiveEntity> objectives = match.getObjectives()
 			.stream()

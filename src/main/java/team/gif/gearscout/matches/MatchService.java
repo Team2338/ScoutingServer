@@ -3,7 +3,7 @@ package team.gif.gearscout.matches;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.gif.gearscout.matches.model.MatchEntity;
-import team.gif.gearscout.matches.model.NewMatch;
+import team.gif.gearscout.matches.model.CreateMatchRequest;
 import team.gif.gearscout.matches.model.ObjectiveEntity;
 import team.gif.gearscout.matches.preprocessor.MatchPreprocessor;
 import team.gif.gearscout.matches.preprocessor.MatchProcessor2023;
@@ -31,18 +31,18 @@ public class MatchService {
 	) {
 		this.matchRepository = matchRepository;
 		this.preprocessors = new HashMap<>();
-		this.dummyPreprocessor = (NewMatch match) -> {};
+		this.dummyPreprocessor = (CreateMatchRequest match) -> {};
 
 		preprocessors.put(2023, matchProcessor2023);
 	}
 
-	public void preprocessMatch(NewMatch match) {
+	public void preprocessMatch(CreateMatchRequest match) {
 		int gameYear = match.getGameYear();
 		MatchPreprocessor preprocessor = preprocessors.getOrDefault(gameYear, dummyPreprocessor);
 		preprocessor.process(match);
 	}
 
-	public MatchEntity saveMatch(Long eventId, Integer teamNumber, NewMatch match) {
+	public MatchEntity saveMatch(Long eventId, Integer teamNumber, CreateMatchRequest match) {
 		// Convert Match to MatchEntity
 		String currentTime = Long.toString(System.currentTimeMillis());
 		MatchEntity matchEntity = new MatchEntity(eventId, match, teamNumber, currentTime);

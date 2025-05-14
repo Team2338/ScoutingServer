@@ -14,6 +14,11 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.MatchNumberConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
+
 import java.util.List;
 
 @Entity
@@ -37,20 +42,23 @@ public class MatchEntity {
 	private Long eventId;
 
 	@Column(nullable = false)
-	@Min(value = 1995)
+	@GameYearConstraint
 	private Integer gameYear;
 	
 	@Column(nullable = false)
+	@TeamNumberConstraint
 	private Integer teamNumber; // Team num of data collector
 
 	@Column(nullable = false)
+	@MatchNumberConstraint
 	private Integer matchNumber;
 	
 	@Column(nullable = false)
+	@TeamNumberConstraint
 	private Integer robotNumber; // Team num of robot being scouted
 	
 	@Column(nullable = false)
-	@Size(min = 1, max = 32)
+	@UsernameConstraint
 	private String creator; // Username of the scouter that created this entry
 	
 //	@Column(nullable = false) // TODO: make this non-null
@@ -73,7 +81,7 @@ public class MatchEntity {
 	
 	public MatchEntity(
 		Long eventId,
-		NewMatch match,
+		CreateMatchRequest match,
 		Integer teamNumber,
 		String timeCreated
 	) {

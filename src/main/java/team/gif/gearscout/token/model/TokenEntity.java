@@ -1,4 +1,4 @@
-package team.gif.gearscout.token;
+package team.gif.gearscout.token.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;

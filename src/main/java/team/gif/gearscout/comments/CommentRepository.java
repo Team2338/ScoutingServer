@@ -2,6 +2,7 @@ package team.gif.gearscout.comments;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.comments.model.CommentEntity;
 
 import java.util.List;
 

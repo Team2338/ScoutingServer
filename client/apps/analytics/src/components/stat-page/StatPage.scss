@@ -28,6 +28,12 @@
 			align-items: flex-end;
 			justify-content: space-between;
 			padding: 16px $side-padding 0 $side-padding;
+
+			.view-picker {
+				display: flex;
+				flex-direction: row;
+				gap: 8px;
+			}
 		}
 
 		.stat-content-title {

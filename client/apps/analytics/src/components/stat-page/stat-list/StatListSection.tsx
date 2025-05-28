@@ -9,7 +9,7 @@ import { useTranslator } from '../../../service/TranslateService';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 
 interface IProps {
-	variant: 'single' | 'double';
+	variant: 'single' | 'single-nokey' | 'double';
 	gamemode: string;
 	stats: GlobalObjectiveStats[];
 	selectedStats: ObjectiveDescriptor[];

@@ -1,8 +1,8 @@
 
 export interface MatchResponse {
 	id: number;
+	eventId: number;
 	teamNumber: number;
-	eventCode: string;
 	matchNumber: number;
 	robotNumber: number;
 	creator: string;
@@ -27,7 +27,6 @@ export interface ObjectiveDescriptor {
 export interface Match {
 	id: number;
 	teamNumber: number;
-	eventCode: string;
 	matchNumber: number;
 	robotNumber: number;
 	creator: string;
@@ -87,6 +86,7 @@ export interface Plan {
 
 export interface ImageInfoResponse {
 	id: number;
+	eventId: number;
 	teamNumber: number;
 	gameYear: number;
 	robotNumber: number;
@@ -97,11 +97,10 @@ export interface ImageInfoResponse {
 
 export interface CommentResponse {
 	id: number;
+	eventId: number;
 	teamNumber: number;
 	robotNumber: number;
 	gameYear: number;
-	eventCode: string;
-	secretCode: string;
 	matchNumber: number;
 	topic: string;
 	content: string;

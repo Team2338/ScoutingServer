@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.token.CredentialServiceV2;
-import team.gif.gearscout.token.LoginResponse;
-import team.gif.gearscout.token.TokenModel;
+import team.gif.gearscout.token.model.LoginResponse;
+import team.gif.gearscout.token.model.TokenModel;
 import team.gif.gearscout.token.TokenService;
 
 import java.util.List;

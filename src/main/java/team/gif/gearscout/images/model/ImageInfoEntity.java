@@ -1,4 +1,4 @@
-package team.gif.gearscout.images;
+package team.gif.gearscout.images.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,18 +27,16 @@ public class ImageInfoEntity {
 		allocationSize = 1
 	)
 	private Long id;
+
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@Column(name = "event_id", nullable = false)
+	private Long eventId;
 	
 	@Column(name = "team_number", nullable = false)
 	private Integer teamNumber;
 	
 	@Column(name = "game_year", nullable = false)
 	private Integer gameYear;
-	
-	@Column(name = "event_code", nullable = false)
-	private String eventCode;
-	
-	@Column(name = "secret_code", nullable = false)
-	private String secretCode;
 	
 	@Column(name = "robot_number", nullable = false)
 	private Integer robotNumber;
@@ -56,43 +54,38 @@ public class ImageInfoEntity {
 	public ImageInfoEntity() {}
 	
 	public ImageInfoEntity(
+		Long eventId,
 		Integer teamNumber,
 		Integer gameYear,
-		String eventCode,
-		String secretCode,
 		Integer robotNumber,
 		String creator,
 		UUID imageId,
 		String timeCreated
 	) {
+		this.eventId = eventId;
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
-		this.eventCode = eventCode;
-		this.secretCode = secretCode;
 		this.robotNumber = robotNumber;
 		this.creator = creator;
 		this.imageId = imageId;
 		this.timeCreated = timeCreated;
 	}
-	
+
+
 	public Long getId() {
 		return id;
 	}
-	
+
+	public Long getEventId() {
+		return eventId;
+	}
+
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
 	
 	public Integer getGameYear() {
 		return gameYear;
-	}
-	
-	public String getEventCode() {
-		return eventCode;
-	}
-	
-	public String getSecretCode() {
-		return secretCode;
 	}
 	
 	public Integer getRobotNumber() {
@@ -110,25 +103,22 @@ public class ImageInfoEntity {
 	public String getTimeCreated() {
 		return timeCreated;
 	}
+
 	
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
+	}
+
 	public void setTeamNumber(Integer teamNumber) {
 		this.teamNumber = teamNumber;
 	}
 	
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
-	}
-	
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-	
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 	
 	public void setRobotNumber(Integer robotNumber) {

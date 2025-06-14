@@ -1,32 +1,33 @@
-package team.gif.gearscout.comments;
+package team.gif.gearscout.comments.model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.MatchNumberConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
+
 import java.util.List;
 
 public class CreateCommentBulkRequest {
 
-	@NotNull(message = "Field 'robotNumber' must not be null")
-	@Min(value = 0, message = "Field 'robotNumber' must be > 0")
+	@RobotNumberConstraint
 	private Integer robotNumber;
 
-	@NotNull(message = "Field 'gameYear' must not be null")
-	@Min(value = 1995, message = "Field 'gameYear' must be > 1995")
+	@GameYearConstraint
 	private Integer gameYear;
 
-	@NotNull(message = "Field 'eventCode' must not be null")
-	@Size(min = 1, max = 32, message = "Field 'eventCode' must have length between 1 - 32")
+	@EventCodeConstraint
 	private String eventCode;
 
-	@NotNull(message = "Field 'matchNumber' must not be null")
-	@Min(value = 0, message = "Field 'matchNumber' must be > 0")
+	@MatchNumberConstraint
 	private Integer matchNumber;
 
-	@NotNull(message = "Field 'creator' must not be null")
-	@Size(min = 1, max = 32, message = "Field 'creator' must have length between 1 - 32")
+	@UsernameConstraint
 	private String creator;
 
 	@NotNull(message = "Field 'comments' must not be null")
@@ -59,6 +60,7 @@ public class CreateCommentBulkRequest {
 	public List<SingleCommentContent> getComments() {
 		return comments;
 	}
+
 
 	public void setRobotNumber(Integer robotNumber) {
 		this.robotNumber = robotNumber;

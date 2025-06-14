@@ -65,7 +65,7 @@ const ActualList = (props: IProps) => {
 				{
 					groupedEvents[year].map((event: IEventInfo) => (
 						<li
-							key={ event.gameYear + '\0' + event.eventCode + '\0' + event.secretCode }
+							key={ event.eventId }
 							className={ styles.eventListItem }
 						>
 							<button onClick={ () => props.handleEventSelected(event) }>

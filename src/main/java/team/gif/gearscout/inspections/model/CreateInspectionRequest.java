@@ -1,22 +1,25 @@
-package team.gif.gearscout.inspections;
+package team.gif.gearscout.inspections.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+
 import java.util.List;
 
 public class CreateInspectionRequest {
 
-	@Min(0)
+	@RobotNumberConstraint
 	private Integer robotNumber;
 
-	@Min(1995)
+	@GameYearConstraint
 	private Integer gameYear;
 
-	@Size(min = 1, max = 32)
+	@EventCodeConstraint
 	private String eventCode;
 
-	@NotEmpty
+	@NotEmpty(message = "Questions list must not be empty")
 	private List<InspectionQuestion> questions;
 
 
@@ -38,6 +41,7 @@ public class CreateInspectionRequest {
 	public List<InspectionQuestion> getQuestions() {
 		return questions;
 	}
+
 
 	public void setRobotNumber(Integer robotNumber) {
 		this.robotNumber = robotNumber;

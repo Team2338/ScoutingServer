@@ -35,6 +35,7 @@ export const EventSelectorForm = (props: IProps) => {
 		}
 
 		props.selectEvent({
+			eventId: null,
 			teamNumber: props.teamNumber,
 			gameYear: Number(gameYear),
 			eventCode: eventCode,

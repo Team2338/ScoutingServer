@@ -1,4 +1,4 @@
-package team.gif.gearscout.comments;
+package team.gif.gearscout.comments.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -13,6 +13,7 @@ public class SingleCommentContent {
 	@Size(min = 1, max = 1024, message = "Field 'content' must have length between 1 - 1024")
 	private String content;
 
+
 	public String getTopic() {
 		return topic;
 	}
@@ -20,6 +21,7 @@ public class SingleCommentContent {
 	public String getContent() {
 		return content;
 	}
+
 
 	public void setTopic(String topic) {
 		this.topic = topic;

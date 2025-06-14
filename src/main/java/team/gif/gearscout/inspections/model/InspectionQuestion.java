@@ -1,4 +1,4 @@
-package team.gif.gearscout.inspections;
+package team.gif.gearscout.inspections.model;
 
 import jakarta.validation.constraints.Size;
 
@@ -28,6 +28,7 @@ public class InspectionQuestion {
 	public String getCreator() {
 		return creator;
 	}
+
 
 	public void setQuestion(String question) {
 		this.question = question;

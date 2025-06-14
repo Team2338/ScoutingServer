@@ -3,6 +3,7 @@ package team.gif.gearscout.inspections;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.inspections.model.InspectionEntity;
 import team.gif.gearscout.shared.EventInfo;
 
 import java.util.List;
@@ -12,52 +13,34 @@ public interface InspectionRepository extends CrudRepository<InspectionEntity, L
 	@Query(value = """
 	SELECT inspection
 	FROM InspectionEntity inspection
-	WHERE inspection.teamNumber = :teamNumber
-		AND inspection.gameYear = :gameYear
-		AND inspection.eventCode = :eventCode
-		AND inspection.secretCode = :secretCode
+	WHERE inspection.eventId = :eventId
 	ORDER BY inspection.robotNumber, inspection.question ASC
 	""")
-	List<InspectionEntity> findInspectionsForEvent(
-		Integer teamNumber,
-		Integer gameYear,
-		String eventCode,
-		String secretCode
-	);
+	List<InspectionEntity> findInspectionsForEvent(Long eventId);
 
 	@Modifying
 	@Query(value = """
 	DELETE
 	FROM InspectionEntity inspection
-	WHERE inspection.teamNumber = :teamNumber
-		AND inspection.gameYear = :gameYear
+	WHERE inspection.eventId = :eventId
 		AND inspection.robotNumber = :robotNumber
-		AND inspection.eventCode = :eventCode
-		AND inspection.secretCode = :secretCode
 		AND inspection.question IN :questions
 	""")
 	void removeInspectionsByQuestion(
-		Integer teamNumber,
-		Integer gameYear,
+		Long eventId,
 		Integer robotNumber,
-		String eventCode,
-		String secretCode,
 		List<String> questions
 	);
 
 	@Query(value = """
 	SELECT new team.gif.gearscout.shared.EventInfo(
-		inspection.teamNumber,
-		inspection.gameYear,
-		inspection.secretCode,
-		inspection.eventCode,
+		inspection.eventId,
 		COUNT(DISTINCT inspection.robotNumber)
 	)
 	FROM InspectionEntity inspection
-	WHERE inspection.teamNumber = :teamNumber
-	GROUP BY inspection.teamNumber, inspection.gameYear, inspection.eventCode, inspection.secretCode
-	ORDER BY inspection.gameYear DESC
+	WHERE inspection.eventId IN :eventIds
+	GROUP BY inspection.eventId
 	""")
-	List<EventInfo> getEventListForTeam(Integer teamNumber);
+	List<EventInfo> getInspectionCountPerEvent(List<Long> eventIds);
 
 }

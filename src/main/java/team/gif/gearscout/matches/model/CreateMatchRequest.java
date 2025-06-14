@@ -1,20 +1,37 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.matches.model;
+
+import jakarta.validation.constraints.NotEmpty;
+import team.gif.gearscout.shared.validation.EventCodeConstraint;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.MatchNumberConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
 
 import java.util.List;
 
-public class NewMatch {
+public class CreateMatchRequest {
 
-	// TODO: Shouldn't we be performing property validation here???
+	@GameYearConstraint
 	private Integer gameYear;
+
+	@EventCodeConstraint
 	private String eventCode;
+
+	@MatchNumberConstraint
 	private Integer matchNumber;
+
+	@RobotNumberConstraint
 	private Integer robotNumber;
+
+	@UsernameConstraint
 	private String creator;
+
 	private String allianceColor;
-	
+
+	@NotEmpty(message = "Objectives list must not be empty")
 	private List<ObjectiveEntity> objectives;
 	
-	public NewMatch() {}
+	public CreateMatchRequest() {}
 	
 
 	public Integer getGameYear() {
@@ -44,6 +61,7 @@ public class NewMatch {
 	public List<ObjectiveEntity> getObjectives() {
 		return this.objectives;
 	}
+
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;

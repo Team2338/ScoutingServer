@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
 
 @Entity
 @Table(name = "users")
@@ -34,11 +36,11 @@ public class UserEntity {
 	private String email;
 
 	@Column(name = "team_number", nullable = false)
-	@Min(0)
+	@TeamNumberConstraint
 	private Integer teamNumber;
 
 	@Column(name = "username", nullable = false)
-	@Size(min = 1, max = 32)
+	@UsernameConstraint
 	private String username;
 
 	@Column(name = "role", nullable = false)

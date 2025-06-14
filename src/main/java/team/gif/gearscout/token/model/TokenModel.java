@@ -1,4 +1,4 @@
-package team.gif.gearscout.token;
+package team.gif.gearscout.token.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package team.gif.gearscout.matches;
+package team.gif.gearscout.matches.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.SequenceGenerator;
@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import org.hibernate.type.SqlTypes;
@@ -30,10 +29,7 @@ public class ObjectiveEntity {
 	)
 	private Long id;
 	
-	@ManyToOne
-	private MatchEntity match;
-	
-	@Column
+	@Column(nullable = false)
 	@Size(min = 1, max = 64)
 	private String gamemode;
 	
@@ -44,7 +40,6 @@ public class ObjectiveEntity {
 	@Column(nullable = false)
 	private Integer count;
 
-	// TODO: Set a maximum list length here
 	@Column(columnDefinition = "int[]", nullable = true)
 	@JdbcTypeCode(SqlTypes.ARRAY)
 	@Size(max = 128, message = "Objective.list may not contain more than 128 scores")
@@ -53,10 +48,6 @@ public class ObjectiveEntity {
 	
 	public Long getId() {
 		return id;
-	}
-	
-	public MatchEntity getMatch() {
-		return match;
 	}
 	
 	public String getGamemode() {
@@ -74,13 +65,10 @@ public class ObjectiveEntity {
 	public Integer[] getList() {
 		return list;
 	}
+
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public void setMatch(MatchEntity match) {
-		this.match = match;
 	}
 	
 	public void setGamemode(String gamemode) {

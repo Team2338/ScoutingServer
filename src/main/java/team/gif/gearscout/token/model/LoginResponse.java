@@ -1,4 +1,4 @@
-package team.gif.gearscout.token;
+package team.gif.gearscout.token.model;
 
 import team.gif.gearscout.users.UserEntity;
 

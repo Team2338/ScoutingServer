@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.token.model.LoginRequestV2;
+import team.gif.gearscout.token.model.LoginResponse;
 import team.gif.gearscout.users.UserEntity;
 import team.gif.gearscout.users.UserService;
 

@@ -1,4 +1,4 @@
-package team.gif.gearscout.inspections;
+package team.gif.gearscout.inspections.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,6 +11,10 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import team.gif.gearscout.shared.validation.GameYearConstraint;
+import team.gif.gearscout.shared.validation.RobotNumberConstraint;
+import team.gif.gearscout.shared.validation.TeamNumberConstraint;
+import team.gif.gearscout.shared.validation.UsernameConstraint;
 
 @Entity
 @Table(name = "detail_notes")
@@ -28,25 +32,21 @@ public class InspectionEntity {
 	)
 	private Long id;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@Column(name = "event_id", nullable = false)
+	private Long eventId;
+
 	@Column(name = "team_number", nullable = false)
-	@Min(0)
+	@TeamNumberConstraint
 	private Integer teamNumber;
 
 	@Column(name = "robot_number", nullable = false)
-	@Min(0)
+	@RobotNumberConstraint
 	private Integer robotNumber;
 
 	@Column(name = "game_year", nullable = false)
-	@Min(1995)
+	@GameYearConstraint
 	private Integer gameYear;
-
-	@Column(name = "event_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String eventCode;
-
-	@Column(name = "secret_code", nullable = false)
-	@Size(min = 1, max = 32)
-	private String secretCode;
 
 	@Column(name = "question", nullable = false)
 	@Size(min = 1, max = 32)
@@ -57,7 +57,7 @@ public class InspectionEntity {
 	private String answer;
 
 	@Column(name = "creator", nullable = false)
-	@Size(min = 1, max = 32)
+	@UsernameConstraint
 	private String creator;
 
 	@Column(name = "time_created", nullable = false)
@@ -71,6 +71,10 @@ public class InspectionEntity {
 		return id;
 	}
 
+	public Long getEventId() {
+		return eventId;
+	}
+
 	public Integer getTeamNumber() {
 		return teamNumber;
 	}
@@ -81,14 +85,6 @@ public class InspectionEntity {
 
 	public Integer getGameYear() {
 		return gameYear;
-	}
-
-	public String getEventCode() {
-		return eventCode;
-	}
-
-	public String getSecretCode() {
-		return secretCode;
 	}
 
 	public String getQuestion() {
@@ -107,8 +103,13 @@ public class InspectionEntity {
 		return timeCreated;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setEventId(Long eventId) {
+		this.eventId = eventId;
 	}
 
 	public void setTeamNumber(Integer teamNumber) {
@@ -121,14 +122,6 @@ public class InspectionEntity {
 
 	public void setGameYear(Integer gameYear) {
 		this.gameYear = gameYear;
-	}
-
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
-	}
-
-	public void setSecretCode(String secretCode) {
-		this.secretCode = secretCode;
 	}
 
 	public void setQuestion(String question) {

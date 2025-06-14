@@ -1,13 +1,14 @@
-package team.gif.gearscout.images;
+package team.gif.gearscout.images.repository;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import team.gif.gearscout.images.model.ImageContentEntity;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ImageContentRepository extends CrudRepository<ImageContentEntity, Long> {
+public interface ImageContentRepository extends CrudRepository<ImageContentEntity, UUID> {
 
 	@Modifying
 	@Query(value = """
@@ -22,8 +23,6 @@ public interface ImageContentRepository extends CrudRepository<ImageContentEntit
 	FROM ImageContentEntity image
 	WHERE image.id = :imageId
 	""")
-	Optional<ImageContentEntity> findImageContentForRobot(
-		UUID imageId
-	);
+	Optional<ImageContentEntity> findImageContentForRobot(UUID imageId);
 	
 }

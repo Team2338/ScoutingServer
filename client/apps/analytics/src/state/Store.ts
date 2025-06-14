@@ -98,6 +98,7 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 				events: {
 					...state.events,
 					selectedEvent: {
+						eventId: null,
 						teamNumber: action.payload.teamNumber,
 						gameYear: action.payload.gameYear,
 						eventCode: action.payload.eventCode,

@@ -60,10 +60,10 @@ export const getMode = (scores: number[]): number => {
 	return mode;
 };
 
-export const getQuantile = (scores: number[], probablility: number): number => {
+export const getQuantile = (scores: number[], probability: number): number => {
 	const sorted = scores.slice().sort((a: number, b: number) => a - b);
 
-	const rank = (scores.length - 1) * probablility;
+	const rank = (scores.length - 1) * probability;
 	if (Number.isInteger(rank)) {
 		return sorted[rank];
 	}
@@ -77,4 +77,4 @@ export const getQuantile = (scores: number[], probablility: number): number => {
 	const weight0 = rank1 - rank;
 
 	return (sorted[rank0] * weight0) + (sorted[rank1] * weight1);
-}
+};

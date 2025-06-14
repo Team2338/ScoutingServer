@@ -59,3 +59,22 @@ export const getMode = (scores: number[]): number => {
 
 	return mode;
 };
+
+export const getQuantile = (scores: number[], probability: number): number => {
+	const sorted = scores.slice().sort((a: number, b: number) => a - b);
+
+	const rank = (scores.length - 1) * probability;
+	if (Number.isInteger(rank)) {
+		return sorted[rank];
+	}
+
+	// rank is between two entries - do a weighted mean
+	const rank0 = Math.trunc(rank);
+	const rank1 = rank0 + 1;
+
+	// this looks flipped - it is not
+	const weight1 = rank - rank0;
+	const weight0 = rank1 - rank;
+
+	return (sorted[rank0] * weight0) + (sorted[rank1] * weight1);
+};

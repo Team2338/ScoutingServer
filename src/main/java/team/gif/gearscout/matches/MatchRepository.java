@@ -13,10 +13,10 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 	SELECT match
 	FROM MatchEntity match
 	JOIN FETCH match.objectives
-	WHERE match.eventId = :eventId
+	WHERE match.eventId IN :eventIds
 	ORDER BY match.matchNumber, match.robotNumber, match.timeCreated ASC
 	""")
-	List<MatchEntity> findMatchesByEventId(Long eventId);
+	List<MatchEntity> findMatchesByEventIds(List<Long> eventIds);
 
 	@Query(value = """
 	SELECT match

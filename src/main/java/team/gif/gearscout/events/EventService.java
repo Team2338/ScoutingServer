@@ -1,5 +1,7 @@
 package team.gif.gearscout.events;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import team.gif.gearscout.shared.EventInfo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,9 +36,29 @@ public class EventService {
 
 	public EventEntity getOrCreateEvent(Integer teamNumber, Integer gameYear, String eventCode, String secretCode) {
 		Optional<EventEntity> eventEntity = eventRepository.findByEventDescriptor(teamNumber, gameYear, eventCode, secretCode);
-		return eventEntity.orElseGet(
-			() -> eventRepository.save(new EventEntity(teamNumber, gameYear, eventCode, secretCode))
-		);
+
+		if (eventEntity.isPresent()) {
+			return eventEntity.get();
+		}
+
+		try {
+			return eventRepository.save(new EventEntity(teamNumber, gameYear, eventCode, secretCode));
+		} catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+			ConstraintViolationException constraintViolation = ex instanceof ConstraintViolationException
+				? (ConstraintViolationException) ex
+				: (ConstraintViolationException) ex.getCause();
+
+			/* If this failed due to a race condition with another call to this function
+			 * (ie we checked for the event and didn't find it, then another thread creates it before we try to)
+			 * then try searching for the event again
+			 */
+			if (Objects.equals(constraintViolation.getConstraintName(), "uk__events__descriptor")) {
+				return eventRepository.findByEventDescriptor(teamNumber, gameYear, eventCode, secretCode)
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cannot get or create event"));
+			}
+
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, null, ex);
+		}
 	}
 
 	public EventEntity getEvent(Long eventId) {

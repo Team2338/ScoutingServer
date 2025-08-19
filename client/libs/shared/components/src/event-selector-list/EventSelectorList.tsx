@@ -9,7 +9,8 @@ import {
 import styles from './EventSelectorList.module.scss';
 import {
 	Button,
-	Skeleton
+	Skeleton,
+	useTheme
 } from '@mui/material';
 
 interface IProps {
@@ -58,6 +59,8 @@ const ActualList = (props: IProps) => {
 		[props.events]
 	);
 
+	const theme = useTheme();
+
 	return years.map(year => (
 		<Fragment key={ year }>
 			<h3 className={ styles.year }>{ year }</h3>
@@ -68,7 +71,12 @@ const ActualList = (props: IProps) => {
 							key={ event.eventId }
 							className={ styles.eventListItem }
 						>
-							<button onClick={ () => props.handleEventSelected(event) }>
+							<button
+								onClick={ () => props.handleEventSelected(event) }
+								style={{
+									color: theme.palette.text.primary
+								}}
+							>
 								<span className={ styles.eventCodeLabel }>{ event.eventCode }</span>
 								<span className={ styles.inspectionCount }>{ event.inspectionCount ?? 0 } { props.translate('INSPECTIONS') }</span>
 								<span className={ styles.secretCodeLabel }>{ event.secretCode }</span>

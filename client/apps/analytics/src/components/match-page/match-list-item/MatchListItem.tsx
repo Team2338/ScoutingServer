@@ -1,7 +1,7 @@
 import './MatchListItem.scss';
-import { Icon } from '@mui/material';
+import { Icon, useTheme } from '@mui/material';
 import React from 'react';
-import { Match } from '../../../models';
+import { getLowContrastTextColor, Match } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 
 interface IProps {
@@ -11,6 +11,8 @@ interface IProps {
 
 export default function MatchListItem(props: IProps) {
 	const translate = useTranslator();
+	const theme = useTheme();
+	const lightTextColor = getLowContrastTextColor(theme, theme.palette.background.default);
 
 	const chevron = (props.isMobile)
 		? (
@@ -30,7 +32,7 @@ export default function MatchListItem(props: IProps) {
 				<div className="match-number">{ translate('MATCH') } { props.match.matchNumber }</div>
 				<div className="robot-number">{ translate('TEAM') } { props.match.robotNumber }</div>
 			</div>
-			<div className="creator">{ props.match.creator }</div>
+			<div className="creator" style={{ color: lightTextColor }}>{ props.match.creator }</div>
 			{ chevron }
 		</div>
 	);

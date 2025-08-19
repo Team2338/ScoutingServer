@@ -1,6 +1,6 @@
-import { Icon, IconButton, Tooltip } from '@mui/material';
+import { Icon, IconButton, Tooltip, useTheme } from '@mui/material';
 import React from 'react';
-import { Match, Objective, superchargeGridScoreConfig } from '../../../models';
+import { getLowContrastTextColor, Match, Objective, superchargeGridScoreConfig } from '../../../models';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
 import './MatchDetail.scss';
@@ -16,6 +16,8 @@ interface IProps {
 export default function MatchDetail(props: IProps) {
 
 	const translate = useTranslator();
+	const theme = useTheme();
+	const lightTextColor = getLowContrastTextColor(theme, theme.palette.background.default);
 
 	if (!props.match) {
 		return <div>{ translate('SELECT_MATCH_VIEW_MORE_DETAILS') }</div>;
@@ -58,7 +60,9 @@ export default function MatchDetail(props: IProps) {
 					{ hiddenLabel }
 				</div>
 				<div className="team-number">{ translate('TEAM') } { props.match.robotNumber }</div>
-				<div className="creator">{ props.match.creator }</div>
+				<div className="creator" style={{ color: lightTextColor }}>
+					{ props.match.creator }
+				</div>
 				<div className="objectives">
 					{ gamemodeElements }
 				</div>
@@ -76,6 +80,8 @@ export default function MatchDetail(props: IProps) {
 
 function Gamemode(props: { name: string, objectives: Objective[] }) {
 	const translate = useTranslator();
+	const theme = useTheme();
+	const lightTextColor = getLowContrastTextColor(theme, theme.palette.background.default);
 
 	const getObjectiveElement = (objective: Objective) => {
 		if (objective.list !== null && objective.list !== undefined) {
@@ -89,7 +95,9 @@ function Gamemode(props: { name: string, objectives: Objective[] }) {
 
 	return (
 		<div className="gamemode">
-			<div className="gamemode-title">{ translate(props.name) }</div>
+			<div className="gamemode-title" style={{ color: lightTextColor }}>
+				{ translate(props.name) }
+			</div>
 			{ objectiveElements }
 		</div>
 	);

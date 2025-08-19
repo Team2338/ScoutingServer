@@ -73,11 +73,16 @@ public class GuestMatchController {
 	) {
 		logger.debug("Received getAllMatchesForEvent request: {}, {}", teamNumber, eventCode);
 
-		Long eventId = eventService
-			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode)
-			.getId();
-		List<MatchEntity> result = matchService.getAllMatchesForEvent(eventId);
-		
+		EventEntity event = eventService
+			.getOrCreateEvent(teamNumber, gameYear, eventCode, secretCode);
+
+		// You don't get to benefit from shared data if you aren't sharing your own data
+		List<Long> eventIds = event.isShared()
+			? eventService.getSharedEvents(event).stream().map(EventEntity::getId).toList()
+			: List.of(event.getId());
+
+		List<MatchEntity> result = matchService.getAllMatchesForEvents(eventIds);
+
 		return ResponseEntity.ok(result);
 	}
 

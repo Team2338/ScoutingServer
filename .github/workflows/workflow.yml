@@ -1,0 +1,19 @@
+name: Pre-merge Checklist
+on: pull_request
+
+jobs:
+  Client-Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This job was automatically triggered by a ${{ github.event_name }} event"
+      - run: echo "Current branch = ${{ github.ref }}"
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint all projects
+        run: npx nx run-many -t lint
+      - run: echo "This job's status is ${{ job.status }}"

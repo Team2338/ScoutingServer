@@ -7,12 +7,13 @@ jobs:
     steps:
       - run: echo "This job was automatically triggered by a ${{ github.event_name }} event"
       - run: echo "Current branch = ${{ github.ref }}"
-      - run: cd client
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
+      - name: Navigate to client directory
+        run: cd client
       - name: Install dependencies
         run: npm ci
       - name: Lint all projects

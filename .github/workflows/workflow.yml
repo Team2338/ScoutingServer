@@ -14,6 +14,7 @@ jobs:
           node-version: '22.x'
       - name: Navigate to client directory
         run: cd client
+      - run: pwd
       - name: Install dependencies
         run: npm ci
       - name: Lint all projects

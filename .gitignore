@@ -4,3 +4,10 @@
 **/node_modules/
 .DS_Store
 **/build
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

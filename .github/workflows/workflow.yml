@@ -21,7 +21,16 @@ jobs:
         run: npm ci
         working-directory: client/
       - name: Lint all projects
-        run: npx nx run-many -t lint typecheck test build
+        run: npx nx run-many -t lint
 #        run: npx nx affected -t lint typecheck test build
+        working-directory: client/
+      - name: Typecheck all projects
+        run: npx nx run-many -t typecheck
+        working-directory: client/
+      - name: Test all projects
+        run: npx nx run-many -t test --passWithNoTests true
+        working-directory: client/
+      - name: Build all projects
+        run: npx nx run-many -t build
         working-directory: client/
       - run: echo "This job's status is '${{ job.status }}'"

@@ -19,10 +19,9 @@ export default function CheckboxGroup(props: IProps) {
 
 	const handleSelection = (event, option: string): void => {
 		if (event.target.checked && !props.values.includes(option)) {
-			const nextValues = props.values
-				.filter((value: string) => value !== NONE)
-				.concat(option);
-			props.onChange(nextValues);
+			const nextValueSet = new Set(props.values).add(option);
+			const nextValuesOrdered = props.options.filter((val: string) => nextValueSet.has(val));
+			props.onChange(nextValuesOrdered);
 			return;
 		}
 

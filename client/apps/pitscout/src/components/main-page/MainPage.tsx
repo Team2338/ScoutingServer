@@ -86,7 +86,9 @@ export default function MainPage() {
 				autoHideDuration={ 6000 }
 				open={ !!snackbar.isOpen }
 				onClose={ _closeSnackbar }
-				TransitionComponent={ SlideTransition }
+				slots={{
+					transition: SlideTransition
+				}}
 				anchorOrigin={{
 					horizontal: 'center',
 					vertical: 'top'

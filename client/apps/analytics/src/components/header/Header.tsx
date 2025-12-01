@@ -169,11 +169,17 @@ export default function Header() {
 	}
 
 	const routes: IRoute[] = [
+		// {
+		// 	path: '/events',
+		// 	name: 'EVENTS',
+		// 	icon: 'event',
+		// 	roles: [UserRole.unverifiedMember, UserRole.verifiedMember, UserRole.admin, UserRole.superAdmin]
+		// },
 		{
-			path: '/events',
+			path: '/manage-events',
 			name: 'EVENTS',
 			icon: 'event',
-			roles: [UserRole.unverifiedMember, UserRole.verifiedMember, UserRole.admin, UserRole.superAdmin]
+			roles: [UserRole.admin, UserRole.superAdmin]
 		},
 		{
 			path: '/matches',

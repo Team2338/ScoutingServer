@@ -175,7 +175,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Unverified Member',
 		'CAN_MODIFY_DATA': 'Can modify data',
 		'CAN_SEE_EVENT_LIST': 'Can see event list',
-		'NO_PRIVILEGES': 'No privileges'
+		'NO_PRIVILEGES': 'No privileges',
+		'ACTIONS': 'Actions'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -318,7 +319,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Miembro no Verificado',
 		'CAN_MODIFY_DATA': 'Puede modificar datos',
 		'CAN_SEE_EVENT_LIST': 'Puede ver la lista de eventos',
-		'NO_PRIVILEGES': 'Sin privilegios'
+		'NO_PRIVILEGES': 'Sin privilegios',
+		'ACTIONS': 'Comportamiento'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -461,7 +463,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Membre non Vérifié',
 		'CAN_MODIFY_DATA': 'Peut modifier les données',
 		'CAN_SEE_EVENT_LIST': 'Peut voir la liste des événements',
-		'NO_PRIVILEGES': 'Aucun privilège'
+		'NO_PRIVILEGES': 'Aucun privilège',
+		'ACTIONS': 'Actes'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -604,7 +607,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Doğrulanmamış Üye',
 		'CAN_MODIFY_DATA': 'Verileri değiştirebilir',
 		'CAN_SEE_EVENT_LIST': 'Etkinlik listesini görebilirsiniz',
-		'NO_PRIVILEGES': 'Hiçbir ayrıcalık yok'
+		'NO_PRIVILEGES': 'Hiçbir ayrıcalık yok',
+		'ACTIONS': 'Eylemler'
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -746,6 +750,7 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Neověřený Člen',
 		'CAN_MODIFY_DATA': 'Může upravovat data',
 		'CAN_SEE_EVENT_LIST': 'Lze zobrazit seznam událostí',
-		'NO_PRIVILEGES': 'Žádná privilegia'
+		'NO_PRIVILEGES': 'Žádná privilegia',
+		'ACTIONS': 'Akce'
 	}
 };

@@ -63,7 +63,7 @@ export default function EventManagementPage() {
 							<TableCell align="center">
 								{ translate('GAME_YEAR') }
 							</TableCell>
-							<TableCell align="right">
+							<TableCell id="action-header" align="right">
 								{ translate('ACTIONS') }
 							</TableCell>
 						</TableRow>
@@ -76,7 +76,7 @@ export default function EventManagementPage() {
 									<TableCell>{ event.secretCode }</TableCell>
 									<TableCell align="center">{ event.gameYear }</TableCell>
 									<TableCell align="right">
-										<IconButton className="action-button" size="small">
+										<IconButton className="action-button" size="small" aria-labelledby="action-header">
 											<MoreVert/>
 										</IconButton>
 									</TableCell>

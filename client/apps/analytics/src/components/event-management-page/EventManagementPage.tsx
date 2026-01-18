@@ -4,6 +4,7 @@ import { useAppSelector } from '../../state';
 import { IEventInfo, LoadStatus } from '@gearscout/models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
+	IconButton,
 	styled,
 	Table,
 	TableBody,
@@ -13,6 +14,7 @@ import {
 	TableRow
 } from '@mui/material';
 import { useCallback } from 'react';
+import { MoreVert } from '@mui/icons-material';
 
 const StyledRow = styled(TableRow)(({ theme }) => ({
 	['&.selected']: {
@@ -61,6 +63,9 @@ export default function EventManagementPage() {
 							<TableCell align="center">
 								{ translate('GAME_YEAR') }
 							</TableCell>
+							<TableCell align="right">
+								{ translate('ACTIONS') }
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -70,6 +75,11 @@ export default function EventManagementPage() {
 									<TableCell>{ event.eventCode }</TableCell>
 									<TableCell>{ event.secretCode }</TableCell>
 									<TableCell align="center">{ event.gameYear }</TableCell>
+									<TableCell align="right">
+										<IconButton className="action-button" size="small">
+											<MoreVert/>
+										</IconButton>
+									</TableCell>
 								</StyledRow>
 							))
 						}

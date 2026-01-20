@@ -1,10 +1,12 @@
 import './EventManagementPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { useAppSelector } from '../../state';
+import { getEvents, useAppDispatch, useAppSelector } from '../../state';
 import { IEventInfo, LoadStatus } from '@gearscout/models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
-	IconButton, Menu, MenuItem,
+	IconButton,
+	Menu,
+	MenuItem,
 	styled,
 	Table,
 	TableBody,
@@ -13,7 +15,7 @@ import {
 	TableHead,
 	TableRow
 } from '@mui/material';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { MoreVert } from '@mui/icons-material';
 
 const StyledRow = styled(TableRow)(({ theme }) => ({
@@ -25,6 +27,7 @@ const StyledRow = styled(TableRow)(({ theme }) => ({
 
 export default function EventManagementPage() {
 	const translate = useTranslator();
+	const dispatch = useAppDispatch();
 
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
@@ -33,6 +36,15 @@ export default function EventManagementPage() {
 	const isRowSelected = useCallback(
 		(event: IEventInfo) => event.eventId === selectedEvent.eventId,
 		[selectedEvent]
+	);
+
+	useEffect(
+		() => {
+			if (eventLoadStatus === LoadStatus.none) {
+				dispatch(getEvents());
+			}
+		},
+		[dispatch, eventLoadStatus]
 	);
 
 	if (eventLoadStatus === LoadStatus.none || eventLoadStatus === LoadStatus.loading) {

@@ -4,7 +4,7 @@ import { useAppSelector } from '../../state';
 import { IEventInfo, LoadStatus } from '@gearscout/models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
-	IconButton,
+	IconButton, Menu, MenuItem,
 	styled,
 	Table,
 	TableBody,
@@ -13,7 +13,7 @@ import {
 	TableHead,
 	TableRow
 } from '@mui/material';
-import { useCallback } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import { MoreVert } from '@mui/icons-material';
 
 const StyledRow = styled(TableRow)(({ theme }) => ({
@@ -76,9 +76,7 @@ export default function EventManagementPage() {
 									<TableCell>{ event.secretCode }</TableCell>
 									<TableCell align="center">{ event.gameYear }</TableCell>
 									<TableCell align="right">
-										<IconButton className="action-button" size="small" aria-labelledby="action-header">
-											<MoreVert/>
-										</IconButton>
+										<ActionButton event={ event } />
 									</TableCell>
 								</StyledRow>
 							))
@@ -89,3 +87,42 @@ export default function EventManagementPage() {
 		</main>
 	);
 }
+
+const ActionButton = ({ event }: { event: IEventInfo}) => {
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const isOpen = Boolean(anchorEl);
+	const translate = useTranslator();
+
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	return (
+		<Fragment>
+			<IconButton
+				id={ `action-button-${event.eventId}` }
+				className="action-button"
+				size="small"
+				aria-controls={ isOpen ? 'basic-menu' : undefined }
+				aria-haspopup="true"
+				aria-expanded={ isOpen ? 'true' : undefined }
+				aria-labelledby="action-header"
+				onClick={ handleClick }
+			>
+				<MoreVert/>
+			</IconButton>
+			<Menu
+				id={ `action-menu-${event.eventId}` }
+				anchorEl={ anchorEl }
+				open={ isOpen }
+				onClose={ handleClose }
+			>
+				<MenuItem>{ translate('SWITCH_EVENTS') }</MenuItem>
+			</Menu>
+		</Fragment>
+	);
+};

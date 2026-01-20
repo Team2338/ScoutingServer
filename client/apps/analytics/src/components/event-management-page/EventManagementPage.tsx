@@ -75,6 +75,12 @@ export default function EventManagementPage() {
 							<TableCell align="center">
 								{ translate('GAME_YEAR') }
 							</TableCell>
+							<TableCell align="right">
+								{ translate('INSPECTIONS') }
+							</TableCell>
+							<TableCell align="right">
+								{ translate('MATCHES') }
+							</TableCell>
 							<TableCell id="action-header" align="right">
 								{ translate('ACTIONS') }
 							</TableCell>
@@ -87,6 +93,8 @@ export default function EventManagementPage() {
 									<TableCell>{ event.eventCode }</TableCell>
 									<TableCell>{ event.secretCode }</TableCell>
 									<TableCell align="center">{ event.gameYear }</TableCell>
+									<TableCell align="right">{ event.inspectionCount }</TableCell>
+									<TableCell align="right">{ event.matchCount }</TableCell>
 									<TableCell align="right">
 										<ActionButton event={ event } />
 									</TableCell>
@@ -140,7 +148,7 @@ const ActionButton = ({ event }: { event: IEventInfo}) => {
 				onClose={ handleClose }
 			>
 				<MenuItem onClick={ handleEventSelection }>
-					{ translate('SWITCH_EVENTS') }
+					{ translate('SWITCH_TO_EVENT') }
 				</MenuItem>
 			</Menu>
 		</Fragment>

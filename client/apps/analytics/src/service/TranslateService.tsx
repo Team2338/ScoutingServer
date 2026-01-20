@@ -161,6 +161,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Password',
 		'EVENTS': 'Events',
 		'SWITCH_EVENTS': 'Switch events',
+		'SWITCH_TO_EVENT': 'Switch to event',
 		'RETRY': 'Retry',
 		'INTAKE_LOCATIONS_CORAL': 'Coral intake locations',
 		'INTAKE_LOCATIONS_ALGAE': 'Algae intake locations',
@@ -305,6 +306,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Contraseña',
 		'EVENTS': 'Eventos',
 		'SWITCH_EVENTS': 'Cambiar el evento',
+		'SWITCH_TO_EVENT': 'Cambiar a evento',
 		'RETRY': 'Rever',
 		'INTAKE_LOCATIONS_CORAL': 'Lugares de captación de corales',
 		'INTAKE_LOCATIONS_ALGAE': 'Lugares de captación de algas',
@@ -449,6 +451,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Mot de passe',
 		'EVENTS': 'Événements',
 		'SWITCH_EVENTS': 'Changer l\'événement',
+		'SWITCH_TO_EVENT': 'Changer à l\'événement',
 		'RETRY': 'Réessayer',
 		'INTAKE_LOCATIONS_CORAL': 'Emplacements des prises d\'eau de corail',
 		'INTAKE_LOCATIONS_ALGAE': 'Emplacements de captage des algues',
@@ -593,6 +596,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Şifre',
 		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
 		'SWITCH_EVENTS': 'Etkinliği değiştir',
+		'SWITCH_TO_EVENT': 'Etkinliği değiştir',
 		'RETRY': 'Tekrar dene',
 		'INTAKE_LOCATIONS_CORAL': 'Mercan giriş yerleri',
 		'INTAKE_LOCATIONS_ALGAE': 'Alg giriş yerleri',
@@ -736,6 +740,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Heslo', // TODO verify
 		'EVENTS': 'Události', // TODO verify
 		'SWITCH_EVENTS': 'Přepněte událost', // TODO: verify
+		'SWITCH_TO_EVENT': 'Změnit na událost',
 		'RETRY': 'Zkuste to znovu',
 		'INTAKE_LOCATIONS_CORAL': 'Místa příjmu korálů', // TODO: verify
 		'INTAKE_LOCATIONS_ALGAE': 'Místa příjmu řas', // TODO: verify

@@ -12,8 +12,9 @@ import PlanningPage from './planning-page/PlanningPage';
 import StatPage from './stat-page/StatPage';
 import TeamPage from './team-page/TeamPage';
 import InspectionPage from './inspection-page/InspectionPage';
-import EventPage from './event-page/EventPage';
+import EventSelectionPage from './event-selection-page/EventSelectionPage';
 import UserManagementPage from './user-management-page/UserManagementPage';
+import EventManagementPage from './event-management-page/EventManagementPage';
 
 
 const select = (state: AppState) => ({
@@ -51,7 +52,7 @@ class ConnectedApp extends React.Component<IProps, null> {
 			return (
 				<Fragment>
 					<Header />
-					<EventPage />
+					<EventSelectionPage />
 				</Fragment>
 			);
 		}
@@ -59,7 +60,8 @@ class ConnectedApp extends React.Component<IProps, null> {
 		const isNotGuest: boolean = this.props.loginStatus === LoginStatus.loggedIn;
 		const isAdmin: boolean = this.props.userRole === UserRole.superAdmin || this.props.userRole === UserRole.admin;
 
-		const eventPage = <EventPage />;
+		const eventSelectionPage = <EventSelectionPage />;
+		const eventManagementPage = <EventManagementPage />;
 		const managePage = <MatchPage />;
 		const teamPage = <TeamPage />;
 		const statPage = <StatPage />;
@@ -72,7 +74,8 @@ class ConnectedApp extends React.Component<IProps, null> {
 				<Header />
 				<Routes>
 					<Route path="/" element={ managePage } />
-					{ isNotGuest && <Route path="/events" element={ eventPage } /> }
+					{ isNotGuest && <Route path="/events" element={ eventSelectionPage } /> }
+					{ isAdmin && <Route path="/manage-events" element={ eventManagementPage } /> }
 					<Route path="/matches" element={ managePage } />
 					<Route path="/teams" element={ teamPage } />
 					<Route path="/stats" element={ statPage } />

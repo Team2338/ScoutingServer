@@ -1,0 +1,15 @@
+
+.event-management-page {
+	display: flex;
+	flex-direction: column;
+	row-gap: 8px;
+	padding: 16px;
+
+	td, th {
+		padding: 12px;
+	}
+
+	.action-button {
+		padding: 2px;
+	}
+}

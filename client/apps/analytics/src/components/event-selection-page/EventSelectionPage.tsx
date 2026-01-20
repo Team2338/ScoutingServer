@@ -2,7 +2,7 @@ import React, {
 	Fragment,
 	useEffect
 } from 'react';
-import './EventPage.scss';
+import './EventSelectionPage.scss';
 import { useNavigate } from 'react-router';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
@@ -13,7 +13,7 @@ import {
 	UserRole
 } from '@gearscout/models';
 
-export default function EventPage() {
+export default function EventSelectionPage() {
 
 	const translate = useTranslator();
 	const navigate = useNavigate();

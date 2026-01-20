@@ -161,6 +161,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Password',
 		'EVENTS': 'Events',
 		'SWITCH_EVENTS': 'Switch events',
+		'SWITCH_TO_EVENT': 'Switch to event',
 		'RETRY': 'Retry',
 		'INTAKE_LOCATIONS_CORAL': 'Coral intake locations',
 		'INTAKE_LOCATIONS_ALGAE': 'Algae intake locations',
@@ -175,7 +176,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Unverified Member',
 		'CAN_MODIFY_DATA': 'Can modify data',
 		'CAN_SEE_EVENT_LIST': 'Can see event list',
-		'NO_PRIVILEGES': 'No privileges'
+		'NO_PRIVILEGES': 'No privileges',
+		'ACTIONS': 'Actions'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',
@@ -304,6 +306,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Contraseña',
 		'EVENTS': 'Eventos',
 		'SWITCH_EVENTS': 'Cambiar el evento',
+		'SWITCH_TO_EVENT': 'Cambiar a evento',
 		'RETRY': 'Rever',
 		'INTAKE_LOCATIONS_CORAL': 'Lugares de captación de corales',
 		'INTAKE_LOCATIONS_ALGAE': 'Lugares de captación de algas',
@@ -318,7 +321,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Miembro no Verificado',
 		'CAN_MODIFY_DATA': 'Puede modificar datos',
 		'CAN_SEE_EVENT_LIST': 'Puede ver la lista de eventos',
-		'NO_PRIVILEGES': 'Sin privilegios'
+		'NO_PRIVILEGES': 'Sin privilegios',
+		'ACTIONS': 'Comportamiento'
 	},
 	[Language.FRENCH]: {
 		'SIGN_IN': 'Connexion',
@@ -447,6 +451,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Mot de passe',
 		'EVENTS': 'Événements',
 		'SWITCH_EVENTS': 'Changer l\'événement',
+		'SWITCH_TO_EVENT': 'Changer à l\'événement',
 		'RETRY': 'Réessayer',
 		'INTAKE_LOCATIONS_CORAL': 'Emplacements des prises d\'eau de corail',
 		'INTAKE_LOCATIONS_ALGAE': 'Emplacements de captage des algues',
@@ -461,7 +466,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Membre non Vérifié',
 		'CAN_MODIFY_DATA': 'Peut modifier les données',
 		'CAN_SEE_EVENT_LIST': 'Peut voir la liste des événements',
-		'NO_PRIVILEGES': 'Aucun privilège'
+		'NO_PRIVILEGES': 'Aucun privilège',
+		'ACTIONS': 'Actes'
 	},
 	[Language.TURKISH]: {
 		'SIGN_IN': 'Kayıt olmak',
@@ -590,6 +596,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Şifre',
 		'EVENTS': 'Etkinlikler', // TODO verify this or Olaylar
 		'SWITCH_EVENTS': 'Etkinliği değiştir',
+		'SWITCH_TO_EVENT': 'Etkinliği değiştir',
 		'RETRY': 'Tekrar dene',
 		'INTAKE_LOCATIONS_CORAL': 'Mercan giriş yerleri',
 		'INTAKE_LOCATIONS_ALGAE': 'Alg giriş yerleri',
@@ -604,7 +611,8 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Doğrulanmamış Üye',
 		'CAN_MODIFY_DATA': 'Verileri değiştirebilir',
 		'CAN_SEE_EVENT_LIST': 'Etkinlik listesini görebilirsiniz',
-		'NO_PRIVILEGES': 'Hiçbir ayrıcalık yok'
+		'NO_PRIVILEGES': 'Hiçbir ayrıcalık yok',
+		'ACTIONS': 'Eylemler'
 	},
 	[Language.CZECH]: {
 		'SIGN_IN': 'Přihlásit se',
@@ -732,6 +740,7 @@ const languages: ILanguageTranslation = {
 		'PASSWORD': 'Heslo', // TODO verify
 		'EVENTS': 'Události', // TODO verify
 		'SWITCH_EVENTS': 'Přepněte událost', // TODO: verify
+		'SWITCH_TO_EVENT': 'Změnit na událost',
 		'RETRY': 'Zkuste to znovu',
 		'INTAKE_LOCATIONS_CORAL': 'Místa příjmu korálů', // TODO: verify
 		'INTAKE_LOCATIONS_ALGAE': 'Místa příjmu řas', // TODO: verify
@@ -746,6 +755,7 @@ const languages: ILanguageTranslation = {
 		'UNVERIFIED_MEMBER': 'Neověřený Člen',
 		'CAN_MODIFY_DATA': 'Může upravovat data',
 		'CAN_SEE_EVENT_LIST': 'Lze zobrazit seznam událostí',
-		'NO_PRIVILEGES': 'Žádná privilegia'
+		'NO_PRIVILEGES': 'Žádná privilegia',
+		'ACTIONS': 'Akce'
 	}
 };

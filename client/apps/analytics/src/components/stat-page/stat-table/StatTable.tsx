@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { TeamObjectiveStats } from '../../../models';
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
@@ -23,8 +23,8 @@ interface IProps {
 export default function StatTable({ data }: IProps) {
 
 	const translate = useTranslator();
-	const [orderDirection, setOrderDirection] = React.useState(Order.DESCENDING);
-	const [orderProperty, setOrderProperty] = React.useState(Statistic.MEAN);
+	const [orderDirection, setOrderDirection] = useState(Order.DESCENDING);
+	const [orderProperty, setOrderProperty] = useState(Statistic.MEAN);
 
 	const sortedData = data.slice().sort((a: TeamObjectiveStats, b: TeamObjectiveStats) => {
 		const comparison = a[orderProperty] - (b[orderProperty]);

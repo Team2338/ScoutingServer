@@ -1,6 +1,6 @@
 import './EventManagementPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { getEvents, useAppDispatch, useAppSelector } from '../../state';
+import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import { IEventInfo, LoadStatus } from '@gearscout/models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
@@ -101,16 +101,22 @@ export default function EventManagementPage() {
 }
 
 const ActionButton = ({ event }: { event: IEventInfo}) => {
+	const translate = useTranslator();
+	const dispatch = useAppDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const isOpen = Boolean(anchorEl);
-	const translate = useTranslator();
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const handleEventSelection = () => {
+		dispatch(selectEvent(event));
+		handleClose();
 	};
 
 	return (
@@ -123,7 +129,7 @@ const ActionButton = ({ event }: { event: IEventInfo}) => {
 				aria-haspopup="true"
 				aria-expanded={ isOpen ? 'true' : undefined }
 				aria-labelledby="action-header"
-				onClick={ handleClick }
+				onClick={ handleButtonClick }
 			>
 				<MoreVert/>
 			</IconButton>
@@ -133,7 +139,9 @@ const ActionButton = ({ event }: { event: IEventInfo}) => {
 				open={ isOpen }
 				onClose={ handleClose }
 			>
-				<MenuItem>{ translate('SWITCH_EVENTS') }</MenuItem>
+				<MenuItem onClick={ handleEventSelection }>
+					{ translate('SWITCH_EVENTS') }
+				</MenuItem>
 			</Menu>
 		</Fragment>
 	);

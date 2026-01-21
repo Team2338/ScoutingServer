@@ -16,7 +16,12 @@ export enum FormQuestions {
 	robotNotes = 'ROBOT_NOTES',
 	coralIntakeLocations = 'INTAKE_LOCATIONS_CORAL',
 	algaeIntakeLocations = 'INTAKE_LOCATIONS_ALGAE',
-	removeAlgae = 'REMOVE_ALGAE'
+	removeAlgae = 'REMOVE_ALGAE',
+	canFeedHuman = 'CAN_FEED_HUMAN',
+	traversableDefenses = 'TRAVERSABLE_DEFENSES',
+	climbHeight = 'CLIMB_HEIGHT',
+	climbLocation = 'CLIMB_LOCATION',
+	canAutoClimb = 'CAN_AUTO_CLIMB',
 }
 
 export interface IForm {
@@ -69,7 +74,7 @@ export const INTAKE_LOCATIONS: string[] = [
 	'HP'
 ];
 
-export const SHOOTING_LOCATIONS: string[] = [
+export const SHOOTING_LOCATIONS_2024: string[] = [
 	'Subwoofer',
 	'Under stage',
 	'Podium',
@@ -104,4 +109,29 @@ export const SCORE_LOCATIONS_2025: string[] = [
 	'L4',
 	'Processor',
 	'Net'
+];
+
+export const TRAVERSABLE_DEFENSES: string[] = [
+	'Bump',
+	'Trench'
+];
+
+export const SHOOTING_LOCATIONS_2026: string[] = [
+	'Hub',
+	'Tower',
+	'Open'
+];
+
+export const CLIMB_HEIGHT_2026: string[] = [
+	'None',
+	'L1',
+	'L2',
+	'L3'
+];
+
+export const CLIMB_LOCATIONS_2026: string[] = [
+	'Left',
+	'Center',
+	'Back center',
+	'Right'
 ];

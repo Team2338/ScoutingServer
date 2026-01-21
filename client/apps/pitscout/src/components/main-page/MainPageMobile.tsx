@@ -33,7 +33,7 @@ import {
 	LoadStatus,
 	UserRole
 } from '@gearscout/models';
-import InspectionForm2025 from './inspection-form/2025/InspectionForm2025';
+import InspectionForm2026 from './inspection-form/2026/InspectionForm2026';
 
 const InspectionTransition = forwardRef(function Transition(props: any, ref) {
 	return <Slide direction="up" ref={ ref } { ...props }>{ props.children }</Slide>;
@@ -70,7 +70,9 @@ export default function MainPageMobile() {
 				autoHideDuration={ 6000 }
 				open={ !!snackbar.isOpen }
 				onClose={ _closeSnackbar }
-				TransitionComponent={ SnackbarTransition }
+				slots={{
+					transition: SnackbarTransition
+				}}
 				anchorOrigin={{
 					horizontal: 'center',
 					vertical: 'top'
@@ -118,7 +120,9 @@ export default function MainPageMobile() {
 				fullScreen={ true }
 				open={ !!selectedRobot }
 				aria-labelledby="inspection-form-dialog__title"
-				TransitionComponent={ InspectionTransition }
+				slots={{
+					transition: InspectionTransition
+				}}
 				onClose={ () => _selectRobot(null) }
 			>
 				<div className="inspection-form-dialog__header">
@@ -148,7 +152,7 @@ export default function MainPageMobile() {
 					{
 						selectedRobot &&
 						// <InspectionForm2024 robotNumber={ selectedRobot } shouldFloatSubmit={ true } />
-						<InspectionForm2025 robotNumber={ selectedRobot } />
+						<InspectionForm2026 robotNumber={ selectedRobot } />
 					}
 				</DialogContent>
 			</Dialog>

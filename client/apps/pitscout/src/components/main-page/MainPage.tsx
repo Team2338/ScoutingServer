@@ -24,7 +24,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
 import { LoadStatus, UserRole } from '@gearscout/models';
-import InspectionForm2025 from './inspection-form/2025/InspectionForm2025';
+import InspectionForm2026 from './inspection-form/2026/InspectionForm2026';
 
 function SlideTransition(props: SlideProps) {
 	return <Slide {...props} direction="down"/>;
@@ -75,7 +75,7 @@ export default function MainPage() {
 					<h1 className="title">Team { selectedRobot }</h1>
 					{ addImageButton }
 				</div>
-				<InspectionForm2025 robotNumber={ selectedRobot } />
+				<InspectionForm2026 robotNumber={ selectedRobot } />
 			</div>
 		)
 		: <div>Pick or add a robot number!</div>;

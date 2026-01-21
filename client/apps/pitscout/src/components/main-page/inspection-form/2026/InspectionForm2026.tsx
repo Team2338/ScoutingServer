@@ -5,13 +5,14 @@ import {
 	useAppSelector
 } from '../../../../state';
 import {
+	CLIMB_HEIGHT_2026, CLIMB_LOCATIONS_2026,
 	CLIMBING_CAPABILITIES_2025,
 	DRIVE_MOTOR_TYPES,
 	DRIVETRAIN_TYPES,
 	FormQuestions,
 	HUMAN_PLAYER_POSITIONS_2025,
-	IForm,
-	SCORE_LOCATIONS_2025,
+	IForm, INTAKE_LOCATIONS,
+	SCORE_LOCATIONS_2025, SHOOTING_LOCATIONS_2026, TRAVERSABLE_DEFENSES,
 	YES_AND_NO
 } from '../../../../models';
 import React, {
@@ -44,18 +45,20 @@ interface IProps {
 }
 
 /*
- * 2025 fields:
+ * 2026 fields:
  * Drivetrain type
  * Motor type (on drivetrain)
  * Robot weight
  * Vision capabilities
  *
- * Autos
+ * Autos (depot, HP, neutral zone)
+ * Traversable defenses (trench or bump)
  * Preferred HP position
- * Can remove algae (yes/no)
- * Scoring places (L1-4, net, processor)
+ * Can feed HP
  * Intake location (ground or HP)
- * Climbing capabilities (none or shallow/deep cage)
+ * Climb height (L1, L2, L3)
+ * Climb position (left, center, right, back center, other)
+ * Can climb in auto
  */
 
 export default function InspectionForm2025(props: IProps) {
@@ -64,32 +67,34 @@ export default function InspectionForm2025(props: IProps) {
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 
 	/* Form questions */
-	const [drivetrain, 					setDrivetrain]					= useState<string>('');
-	const [driveMotorType,			setDriveMotorType]			= useState<string>('');
-	const [weight,							setWeight]							= useState<string>('');
-	const [visionCapabilities,	setVisionCapabilities]	= useState<string>('');
-	const [autoPaths,						setAutoPaths]						= useState<string>('');
-	const [canRemoveAlgae,			setCanRemoveAlgae]			= useState<string>('');
-	const [humanPosition,				setHumanPosition]				= useState<string>('');
-	const [scoreLocations,			setScoreLocations]			= useState<string[]>([]);
-	const [coralIntakeLocations,	setCoralIntakeLocations]	= useState<string[]>([]);
-	const [algaeIntakeLocations,	setAlgaeIntakeLocations]	= useState<string[]>([]);
-	const [climbHeight,					setClimbHeight]					= useState<string>('');
-	const [robotNotes,					setRobotNotes]					= useState<string>('');
+	const [drivetrain, 				setDrivetrain]				= useState<string>('');
+	const [driveMotorType,		setDriveMotorType]		= useState<string>('');
+	const [weight,						setWeight]						= useState<string>('');
+	const [visionAbilities,		setVisionAbilities]		= useState<string>('');
+	const [autoPaths,					setAutoPaths]					= useState<string>('');
+	const [traversableDefenses,	setTraversableDefenses]	= useState<string[]>([]);
+	const [canFeedHuman,			setCanFeedHuman]			= useState<string>('');
+	const [intakeLocations,		setIntakeLocations]		= useState<string[]>([]);
+	const [shootingLocations,	setShootingLocations]	= useState<string[]>([]);
+	const [climbHeight,				setClimbHeight]				= useState<string>('');
+	const [climbLocation,			setClimbLocation]			= useState<string[]>([]);
+	const [canAutoClimb,			setCanAutoClimb]			= useState<string>('');
+	const [robotNotes,				setRobotNotes]				= useState<string>('');
 	/* End form questions */
 
 	useEffect(() => {
 		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
 		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
 		setWeight(savedForm.questions[FormQuestions.weight] ?? '');
-		setVisionCapabilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
+		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
-		setCanRemoveAlgae(savedForm.questions[FormQuestions.removeAlgae] ?? '');
-		setHumanPosition(savedForm.questions[FormQuestions.humanPosition] ?? '');
-		setScoreLocations(savedForm.questions[FormQuestions.scoreLocations]?.split(', ') ?? []);
-		setCoralIntakeLocations(savedForm.questions[FormQuestions.coralIntakeLocations]?.split(', ') ?? []);
-		setAlgaeIntakeLocations(savedForm.questions[FormQuestions.algaeIntakeLocations]?.split(', ') ?? []);
-		setClimbHeight(savedForm.questions[FormQuestions.climbCapabilities] ?? '');
+		setTraversableDefenses(savedForm.questions[FormQuestions.traversableDefenses]?.split(', ') ?? []);
+		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
+		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
+		setShootingLocations(savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []);
+		setClimbHeight(savedForm.questions[FormQuestions.climbHeight] ?? '');
+		setClimbLocation(savedForm.questions[FormQuestions.climbLocation]?.split(', ') ?? []);
+		setCanAutoClimb(savedForm.questions[FormQuestions.canAutoClimb] ?? '');
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
 
@@ -98,14 +103,15 @@ export default function InspectionForm2025(props: IProps) {
 			[FormQuestions.drivetrain]: drivetrain,
 			[FormQuestions.driveMotorType]: driveMotorType,
 			[FormQuestions.weight]: weight,
-			[FormQuestions.visionCapabilities]: visionCapabilities,
+			[FormQuestions.visionCapabilities]: visionAbilities,
 			[FormQuestions.autoPaths]: autoPaths,
-			[FormQuestions.removeAlgae]: canRemoveAlgae,
-			[FormQuestions.humanPosition]: humanPosition,
-			[FormQuestions.scoreLocations]: scoreLocations.join(', '),
-			[FormQuestions.coralIntakeLocations]: coralIntakeLocations.join(', '),
-			[FormQuestions.algaeIntakeLocations]: algaeIntakeLocations.join(', '),
+			[FormQuestions.traversableDefenses]: traversableDefenses.join(', '),
+			[FormQuestions.canFeedHuman]: canFeedHuman,
+			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
+			[FormQuestions.shootingLocations]: shootingLocations.join(', '),
 			[FormQuestions.climbCapabilities]: climbHeight,
+			[FormQuestions.climbLocation]: climbLocation.join(', '),
+			[FormQuestions.canAutoClimb]: canAutoClimb,
 			[FormQuestions.robotNotes]: robotNotes
 		}));
 	};
@@ -132,50 +138,55 @@ export default function InspectionForm2025(props: IProps) {
 			/>
 			<RobotWeightInput value={ weight } onChange={ setWeight } />
 			<AutoPathsInput value={ autoPaths } onChange={ setAutoPaths } />
-			<VisionCapabilitiesInput value={ visionCapabilities } onChange={ setVisionCapabilities } />
+			<VisionCapabilitiesInput value={ visionAbilities } onChange={ setVisionAbilities } />
 			<CheckboxGroup
-				title="Coral intake locations"
-				options={ ['HP', 'Floor'] }
-				values={ coralIntakeLocations }
+				title="Traversable defenses"
+				options={ TRAVERSABLE_DEFENSES }
+				values={ traversableDefenses }
 				includeNoneOption={ true }
-				onChange={ setCoralIntakeLocations }
-			/>
-			<CheckboxGroup
-				title="Algae intake locations"
-				options={ ['Reef', 'Floor'] }
-				values={ algaeIntakeLocations }
-				includeNoneOption={ true }
-				onChange={ setAlgaeIntakeLocations }
-			/>
-			<CheckboxGroup
-				title="Score locations"
-				options={ SCORE_LOCATIONS_2025 }
-				values={ scoreLocations }
-				includeNoneOption={ true }
-				onChange={ setScoreLocations }
+				onChange={ setTraversableDefenses }
 			/>
 			<Dropdown
-				id="remove-algae-selector"
-				title="Can remove algae"
+				id="can-feed-human"
+				title="Can feed human"
 				options={ YES_AND_NO }
-				value={ canRemoveAlgae }
-				onChange={ setCanRemoveAlgae }
+				value={ canFeedHuman }
+				onChange={ setCanFeedHuman }
 			/>
-			<Dropdown
-				id="human-position-selector"
-				title="HP location"
-				options={ HUMAN_PLAYER_POSITIONS_2025 }
-				value={ humanPosition }
-				onChange={ setHumanPosition }
-				icon={ <DirectionsRun className="selector-adornment" /> }
+			<CheckboxGroup
+				title="Intake locations"
+				options={ INTAKE_LOCATIONS }
+				values={ intakeLocations }
+				includeNoneOption={ true }
+				onChange={ setIntakeLocations }
+			/>
+			<CheckboxGroup
+				title="Shooting locations"
+				options={ SHOOTING_LOCATIONS_2026 }
+				values={ shootingLocations }
+				includeNoneOption={ true }
+				onChange={ setShootingLocations }
 			/>
 			<Dropdown
 				id="climb-height-selector"
 				title="Climb height"
-				options={ CLIMBING_CAPABILITIES_2025 }
+				options={ CLIMB_HEIGHT_2026 }
 				value={ climbHeight }
 				onChange={ setClimbHeight }
 				icon={ <Phishing className="selector-adornment" /> }
+			/>
+			<CheckboxGroup
+				title="Climb locations"
+				options={ CLIMB_LOCATIONS_2026 }
+				values={ climbLocation }
+				onChange={ setClimbLocation }
+			/>
+			<Dropdown
+				id="can-auto-climb"
+				title="Can climb in auto"
+				options={ YES_AND_NO }
+				value={ canAutoClimb }
+				onChange={ setCanAutoClimb }
 			/>
 			<RobotNotesInput value={ robotNotes } onChange={ setRobotNotes } />
 			<Button

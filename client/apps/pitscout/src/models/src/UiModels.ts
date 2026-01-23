@@ -22,6 +22,7 @@ export enum FormQuestions {
 	climbHeight = 'CLIMB_HEIGHT',
 	climbLocation = 'CLIMB_LOCATION',
 	canAutoClimb = 'CAN_AUTO_CLIMB',
+	fuelCapacity = 'FUEL_CAPACITY'
 }
 
 export interface IForm {
@@ -58,8 +59,7 @@ export const DRIVE_MOTOR_TYPES: string[] = [
 
 export const COLLECTOR_TYPES: string[] = [
 	'None',
-	'Over bumber',
-	'Under bumper',
+	'Over bumper',
 	'Frame cutout'
 ];
 
@@ -135,3 +135,4 @@ export const CLIMB_LOCATIONS_2026: string[] = [
 	'Back center',
 	'Right'
 ];
+

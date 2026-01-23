@@ -2,41 +2,30 @@ import {
 	AppDispatch,
 	uploadForm,
 	useAppDispatch,
-	useAppSelector
+	useAppSelector,
 } from '../../../../state';
 import {
-	CLIMB_HEIGHT_2026, CLIMB_LOCATIONS_2026,
-	CLIMBING_CAPABILITIES_2025,
+	CLIMB_HEIGHT_2026,
+	CLIMB_LOCATIONS_2026,
 	DRIVE_MOTOR_TYPES,
 	DRIVETRAIN_TYPES,
 	FormQuestions,
-	HUMAN_PLAYER_POSITIONS_2025,
-	IForm, INTAKE_LOCATIONS,
-	SCORE_LOCATIONS_2025, SHOOTING_LOCATIONS_2026, TRAVERSABLE_DEFENSES,
-	YES_AND_NO
+	IForm,
+	INTAKE_LOCATIONS,
+	SHOOTING_LOCATIONS_2026,
+	TRAVERSABLE_DEFENSES,
+	YES_AND_NO,
 } from '../../../../models';
-import React, {
-	useEffect,
-	useState
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from '../fields/Dropdown';
-import {
-	DrivetrainIcon,
-	MotorIcon
-} from '../../../../icons';
-import {
-	Button,
-	CircularProgress,
-} from '@mui/material';
+import { DrivetrainIcon, MotorIcon } from '../../../../icons';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { LoadStatus } from '@gearscout/models';
 import CheckboxGroup from '../fields/CheckboxGroup';
 import '../InspectionForm.scss';
 import RobotWeightInput from '../fields/RobotWeightInput';
 import RobotNotesInput from '../fields/RobotNotesInput';
-import {
-	DirectionsRun,
-	Phishing
-} from '@mui/icons-material';
+import { Phishing } from '@mui/icons-material';
 import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
 import AutoPathsInput from '../fields/AutoPathsInput';
 
@@ -55,31 +44,32 @@ interface IProps {
  * Traversable defenses (trench or bump)
  * Preferred HP position
  * Can feed HP
- * Intake location (ground or HP)
+ * Intake locations (ground or HP)
+ * Shooting locations
  * Climb height (L1, L2, L3)
- * Climb position (left, center, right, back center, other)
+ * Climb locations (left, center, right, back center, other)
  * Can climb in auto
  */
 
 export default function InspectionForm2025(props: IProps) {
-
 	const dispatch: AppDispatch = useAppDispatch();
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 
 	/* Form questions */
-	const [drivetrain, 				setDrivetrain]				= useState<string>('');
-	const [driveMotorType,		setDriveMotorType]		= useState<string>('');
-	const [weight,						setWeight]						= useState<string>('');
-	const [visionAbilities,		setVisionAbilities]		= useState<string>('');
-	const [autoPaths,					setAutoPaths]					= useState<string>('');
-	const [traversableDefenses,	setTraversableDefenses]	= useState<string[]>([]);
-	const [canFeedHuman,			setCanFeedHuman]			= useState<string>('');
-	const [intakeLocations,		setIntakeLocations]		= useState<string[]>([]);
-	const [shootingLocations,	setShootingLocations]	= useState<string[]>([]);
-	const [climbHeight,				setClimbHeight]				= useState<string>('');
-	const [climbLocation,			setClimbLocation]			= useState<string[]>([]);
-	const [canAutoClimb,			setCanAutoClimb]			= useState<string>('');
-	const [robotNotes,				setRobotNotes]				= useState<string>('');
+	const [drivetrain, setDrivetrain] = useState<string>('');
+	const [driveMotorType, setDriveMotorType] = useState<string>('');
+	const [weight, setWeight] = useState<string>('');
+	const [visionAbilities, setVisionAbilities] = useState<string>('');
+	const [autoPaths, setAutoPaths] = useState<string>('');
+	const [traversableDefenses, setTraversableDefenses] = useState<string[]>([]);
+	const [fuelCapacity, setFuelCapacity] = useState<string>('');
+	const [canFeedHuman, setCanFeedHuman] = useState<string>('');
+	const [intakeLocations, setIntakeLocations] = useState<string[]>([]);
+	const [shootingLocations, setShootingLocations] = useState<string[]>([]);
+	const [climbHeight, setClimbHeight] = useState<string>('');
+	const [climbLocation, setClimbLocation] = useState<string[]>([]);
+	const [canAutoClimb, setCanAutoClimb] = useState<string>('');
+	const [robotNotes, setRobotNotes] = useState<string>('');
 	/* End form questions */
 
 	useEffect(() => {
@@ -146,6 +136,23 @@ export default function InspectionForm2025(props: IProps) {
 				includeNoneOption={ true }
 				onChange={ setTraversableDefenses }
 			/>
+			<TextField
+				id="fuel-capacity-input"
+				label="Fuel capacity"
+				name="fuelCapacity"
+				type="number"
+				margin="normal"
+				variant="outlined"
+				value={ fuelCapacity }
+				onChange={ (event) => setFuelCapacity(event.target.value) }
+				slotProps={{
+					htmlInput: {
+						min: 0,
+						max: 99,
+					},
+				}}
+				autoComplete="off"
+			/>
 			<Dropdown
 				id="can-feed-human"
 				title="Can feed human"
@@ -196,15 +203,13 @@ export default function InspectionForm2025(props: IProps) {
 				disabled={ isUploading }
 			>
 				Submit
-				{
-					isUploading && (
-						<CircularProgress
-							id="submit-note__loader"
-							color="secondary"
-							size={ 24 }
-						/>
-					)
-				}
+				{ isUploading && (
+					<CircularProgress
+						id="submit-note__loader"
+						color="secondary"
+						size={ 24 }
+					/>
+				) }
 			</Button>
 		</form>
 	);

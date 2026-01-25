@@ -1,3 +1,4 @@
+import '../InspectionForm.scss';
 import {
 	AppDispatch,
 	uploadForm,
@@ -18,14 +19,12 @@ import {
 } from '../../../../models';
 import React, { useEffect, useState } from 'react';
 import Dropdown from '../fields/Dropdown';
-import { DrivetrainIcon, MotorIcon } from '../../../../icons';
+import { DrivetrainIcon, LadderIcon, MotorIcon } from '../../../../icons';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { LoadStatus } from '@gearscout/models';
 import CheckboxGroup from '../fields/CheckboxGroup';
-import '../InspectionForm.scss';
 import RobotWeightInput from '../fields/RobotWeightInput';
 import RobotNotesInput from '../fields/RobotNotesInput';
-import { Phishing } from '@mui/icons-material';
 import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
 import AutoPathsInput from '../fields/AutoPathsInput';
 
@@ -55,22 +54,22 @@ export default function InspectionForm2025(props: IProps) {
 	const dispatch: AppDispatch = useAppDispatch();
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 
-	/* Form questions */
-	const [drivetrain, setDrivetrain] = useState<string>('');
-	const [driveMotorType, setDriveMotorType] = useState<string>('');
-	const [weight, setWeight] = useState<string>('');
-	const [visionAbilities, setVisionAbilities] = useState<string>('');
-	const [autoPaths, setAutoPaths] = useState<string>('');
-	const [traversableDefenses, setTraversableDefenses] = useState<string[]>([]);
-	const [fuelCapacity, setFuelCapacity] = useState<string>('');
-	const [canFeedHuman, setCanFeedHuman] = useState<string>('');
-	const [intakeLocations, setIntakeLocations] = useState<string[]>([]);
-	const [shootingLocations, setShootingLocations] = useState<string[]>([]);
-	const [climbHeight, setClimbHeight] = useState<string>('');
-	const [climbLocation, setClimbLocation] = useState<string[]>([]);
-	const [canAutoClimb, setCanAutoClimb] = useState<string>('');
-	const [robotNotes, setRobotNotes] = useState<string>('');
-	/* End form questions */
+	/* Form questions @formatter:off */
+	const [drivetrain,					setDrivetrain]					= useState<string>('');
+	const [driveMotorType,			setDriveMotorType]			= useState<string>('');
+	const [weight,							setWeight]							= useState<string>('');
+	const [visionAbilities,			setVisionAbilities]			= useState<string>('');
+	const [autoPaths,						setAutoPaths]						= useState<string>('');
+	const [traversableDefenses,	setTraversableDefenses]	= useState<string[]>([]);
+	const [fuelCapacity,				setFuelCapacity]				= useState<string>('');
+	const [canFeedHuman,				setCanFeedHuman]				= useState<string>('');
+	const [intakeLocations,			setIntakeLocations]			= useState<string[]>([]);
+	const [shootingLocations,		setShootingLocations]		= useState<string[]>([]);
+	const [climbHeight,					setClimbHeight]					= useState<string>('');
+	const [climbLocation,				setClimbLocation]				= useState<string[]>([]);
+	const [canAutoClimb,				setCanAutoClimb]				= useState<string>('');
+	const [robotNotes,					setRobotNotes]					= useState<string>('');
+	/* End form questions @formatter:on */
 
 	useEffect(() => {
 		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
@@ -128,6 +127,13 @@ export default function InspectionForm2025(props: IProps) {
 			/>
 			<RobotWeightInput value={ weight } onChange={ setWeight } />
 			<AutoPathsInput value={ autoPaths } onChange={ setAutoPaths } />
+			<Dropdown
+				id="can-auto-climb"
+				title="Can climb in auto"
+				options={ YES_AND_NO }
+				value={ canAutoClimb }
+				onChange={ setCanAutoClimb }
+			/>
 			<VisionCapabilitiesInput value={ visionAbilities } onChange={ setVisionAbilities } />
 			<CheckboxGroup
 				title="Traversable defenses"
@@ -153,13 +159,6 @@ export default function InspectionForm2025(props: IProps) {
 				}}
 				autoComplete="off"
 			/>
-			<Dropdown
-				id="can-feed-human"
-				title="Can feed human"
-				options={ YES_AND_NO }
-				value={ canFeedHuman }
-				onChange={ setCanFeedHuman }
-			/>
 			<CheckboxGroup
 				title="Intake locations"
 				options={ INTAKE_LOCATIONS }
@@ -175,25 +174,25 @@ export default function InspectionForm2025(props: IProps) {
 				onChange={ setShootingLocations }
 			/>
 			<Dropdown
+				id="can-feed-human"
+				title="Can feed human"
+				options={ YES_AND_NO }
+				value={ canFeedHuman }
+				onChange={ setCanFeedHuman }
+			/>
+			<Dropdown
 				id="climb-height-selector"
 				title="Climb height"
 				options={ CLIMB_HEIGHT_2026 }
 				value={ climbHeight }
 				onChange={ setClimbHeight }
-				icon={ <Phishing className="selector-adornment" /> }
+				icon={ <LadderIcon className="selector-adornment" /> }
 			/>
 			<CheckboxGroup
 				title="Climb locations"
 				options={ CLIMB_LOCATIONS_2026 }
 				values={ climbLocation }
 				onChange={ setClimbLocation }
-			/>
-			<Dropdown
-				id="can-auto-climb"
-				title="Can climb in auto"
-				options={ YES_AND_NO }
-				value={ canAutoClimb }
-				onChange={ setCanAutoClimb }
 			/>
 			<RobotNotesInput value={ robotNotes } onChange={ setRobotNotes } />
 			<Button
@@ -209,7 +208,7 @@ export default function InspectionForm2025(props: IProps) {
 						color="secondary"
 						size={ 24 }
 					/>
-				) }
+				)}
 			</Button>
 		</form>
 	);

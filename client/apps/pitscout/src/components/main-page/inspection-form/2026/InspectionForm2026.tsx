@@ -19,8 +19,8 @@ import {
 } from '../../../../models';
 import React, { useEffect, useState } from 'react';
 import Dropdown from '../fields/Dropdown';
-import { DrivetrainIcon, LadderIcon, MotorIcon } from '../../../../icons';
-import { Button, CircularProgress, TextField } from '@mui/material';
+import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../../icons';
+import { Button, CircularProgress, InputAdornment, TextField } from '@mui/material';
 import { LoadStatus } from '@gearscout/models';
 import CheckboxGroup from '../fields/CheckboxGroup';
 import RobotWeightInput from '../fields/RobotWeightInput';
@@ -40,14 +40,16 @@ interface IProps {
  * Vision capabilities
  *
  * Autos (depot, HP, neutral zone)
+ * Can climb in auto
  * Traversable defenses (trench or bump)
- * Preferred HP position
- * Can feed HP
+ * Preferred terrain
+ * Fuel capacity
  * Intake locations (ground or HP)
+ * Fire rate
  * Shooting locations
+ * Can feed HP
  * Climb height (L1, L2, L3)
  * Climb locations (left, center, right, back center, other)
- * Can climb in auto
  */
 
 export default function InspectionForm2025(props: IProps) {
@@ -61,9 +63,11 @@ export default function InspectionForm2025(props: IProps) {
 	const [visionAbilities,			setVisionAbilities]			= useState<string>('');
 	const [autoPaths,						setAutoPaths]						= useState<string>('');
 	const [traversableDefenses,	setTraversableDefenses]	= useState<string[]>([]);
+	const [terrainPreference,		setTerrainPreference]		= useState<string>('');
 	const [fuelCapacity,				setFuelCapacity]				= useState<string>('');
 	const [canFeedHuman,				setCanFeedHuman]				= useState<string>('');
 	const [intakeLocations,			setIntakeLocations]			= useState<string[]>([]);
+	const [fireRate,						setFireRate]						= useState<string>('');
 	const [shootingLocations,		setShootingLocations]		= useState<string[]>([]);
 	const [climbHeight,					setClimbHeight]					= useState<string>('');
 	const [climbLocation,				setClimbLocation]				= useState<string[]>([]);
@@ -78,8 +82,10 @@ export default function InspectionForm2025(props: IProps) {
 		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
 		setTraversableDefenses(savedForm.questions[FormQuestions.traversableDefenses]?.split(', ') ?? []);
+		setTerrainPreference(savedForm.questions[FormQuestions.terrainPreference] ?? '');
 		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
 		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
+		setFireRate(savedForm.questions[FormQuestions.fireRate] ?? '');
 		setShootingLocations(savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []);
 		setClimbHeight(savedForm.questions[FormQuestions.climbHeight] ?? '');
 		setClimbLocation(savedForm.questions[FormQuestions.climbLocation]?.split(', ') ?? []);
@@ -92,21 +98,26 @@ export default function InspectionForm2025(props: IProps) {
 			[FormQuestions.drivetrain]: drivetrain,
 			[FormQuestions.driveMotorType]: driveMotorType,
 			[FormQuestions.weight]: weight,
-			[FormQuestions.visionCapabilities]: visionAbilities,
 			[FormQuestions.autoPaths]: autoPaths,
+			[FormQuestions.canAutoClimb]: canAutoClimb,
+			[FormQuestions.visionCapabilities]: visionAbilities,
 			[FormQuestions.traversableDefenses]: traversableDefenses.join(', '),
-			[FormQuestions.canFeedHuman]: canFeedHuman,
+			[FormQuestions.terrainPreference]: terrainPreference,
+			[FormQuestions.fuelCapacity]: fuelCapacity,
 			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
+			[FormQuestions.fireRate]: fireRate,
 			[FormQuestions.shootingLocations]: shootingLocations.join(', '),
+			[FormQuestions.canFeedHuman]: canFeedHuman,
 			[FormQuestions.climbCapabilities]: climbHeight,
 			[FormQuestions.climbLocation]: climbLocation.join(', '),
-			[FormQuestions.canAutoClimb]: canAutoClimb,
 			[FormQuestions.robotNotes]: robotNotes
 		}));
 	};
 
-	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
+	// Example GDrive link that will embed properly
+	// https://drive.google.com/thumbnail?id=1keGBJoyfB1DWbm7Ga1WBGvpQxIvycn0k&sz=w1024
 
+	const isUploading: boolean = savedForm.loadStatus === LoadStatus.loading;
 	return (
 		<form className="inspection-form">
 			<Dropdown
@@ -142,6 +153,13 @@ export default function InspectionForm2025(props: IProps) {
 				includeNoneOption={ true }
 				onChange={ setTraversableDefenses }
 			/>
+			<Dropdown
+				id="terrain-preference"
+				title="Terrain preference"
+				options={ TRAVERSABLE_DEFENSES }
+				value={ terrainPreference }
+				onChange={ setTerrainPreference }
+			/>
 			<TextField
 				id="fuel-capacity-input"
 				label="Fuel capacity"
@@ -165,6 +183,27 @@ export default function InspectionForm2025(props: IProps) {
 				values={ intakeLocations }
 				includeNoneOption={ true }
 				onChange={ setIntakeLocations }
+			/>
+			<TextField
+				id="fire-rate-input"
+				label="Fire rate"
+				name="fireRate"
+				type="number"
+				margin="normal"
+				variant="outlined"
+				value={ fireRate }
+				onChange={ (event) => setFireRate(event.target.value) }
+				slotProps={{
+					input: {
+						startAdornment: <InputAdornment position="start"><FireRateIcon /></InputAdornment>,
+						endAdornment: <InputAdornment position="end">fps</InputAdornment>
+					},
+					htmlInput: {
+						min: 0,
+						max: 99,
+					},
+				}}
+				autoComplete="off"
 			/>
 			<CheckboxGroup
 				title="Shooting locations"

@@ -13,7 +13,7 @@ import {
 	IForm,
 	INTAKE_LOCATIONS,
 	SCORE_LOCATIONS_2024,
-	SHOOTING_LOCATIONS,
+	SHOOTING_LOCATIONS_2024,
 	Statelet,
 	YES_AND_NO
 } from '../../../../models';
@@ -165,7 +165,7 @@ export default function InspectionForm2024(props: IProps) {
 				/>
 				<CheckboxGroup
 					title="Shooting locations"
-					options={ SHOOTING_LOCATIONS }
+					options={ SHOOTING_LOCATIONS_2024 }
 					values={ shootingLocations }
 					onChange={ setShootingLocations }
 				/>

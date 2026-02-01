@@ -9,7 +9,7 @@ import {
 describe('ProfileCard', () => {
 
 	const mockUser: IUserInfo = {
-		id: 0,
+		userId: 0,
 		username: 'Patrick',
 		teamNumber: 9999,
 		role: UserRole.verifiedMember,
@@ -17,6 +17,7 @@ describe('ProfileCard', () => {
 	};
 
 	const mockEvent: IEventInfo = {
+		eventId: 123456,
 		teamNumber: 9999,
 		gameYear: 2024,
 		eventCode: 'mock event code',

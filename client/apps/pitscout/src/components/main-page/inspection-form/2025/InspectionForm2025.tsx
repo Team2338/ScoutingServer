@@ -64,18 +64,18 @@ export default function InspectionForm2025(props: IProps) {
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 
 	/* Form questions */
-	const [drivetrain, 			setDrivetrain]			= useState<string>('');
-	const [driveMotorType,	setDriveMotorType]	= useState<string>('');
-	const [weight,					setWeight]					= useState<string>('');
-	const [visionCapabilities, setVisionCapabilities]	= useState<string>('');
-	const [autoPaths,				setAutoPaths]				= useState<string>('');
-	const [canRemoveAlgae,	setCanRemoveAlgae]	= useState<string>('');
-	const [humanPosition,		setHumanPosition]		= useState<string>('');
-	const [scoreLocations,	setScoreLocations]	= useState<string[]>([]);
+	const [drivetrain, 					setDrivetrain]					= useState<string>('');
+	const [driveMotorType,			setDriveMotorType]			= useState<string>('');
+	const [weight,							setWeight]							= useState<string>('');
+	const [visionCapabilities,	setVisionCapabilities]	= useState<string>('');
+	const [autoPaths,						setAutoPaths]						= useState<string>('');
+	const [canRemoveAlgae,			setCanRemoveAlgae]			= useState<string>('');
+	const [humanPosition,				setHumanPosition]				= useState<string>('');
+	const [scoreLocations,			setScoreLocations]			= useState<string[]>([]);
 	const [coralIntakeLocations,	setCoralIntakeLocations]	= useState<string[]>([]);
 	const [algaeIntakeLocations,	setAlgaeIntakeLocations]	= useState<string[]>([]);
-	const [climbHeight,			setClimbHeight]			= useState<string>('');
-	const [robotNotes,			setRobotNotes]			= useState<string>('');
+	const [climbHeight,					setClimbHeight]					= useState<string>('');
+	const [robotNotes,					setRobotNotes]					= useState<string>('');
 	/* End form questions */
 
 	useEffect(() => {

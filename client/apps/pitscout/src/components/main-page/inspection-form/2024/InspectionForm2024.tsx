@@ -32,7 +32,7 @@ import {
 	DrivetrainIcon,
 	MotorIcon
 } from '../../../../icons';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 import Dropdown from '../fields/Dropdown';
 import RobotWeightInput from '../fields/RobotWeightInput';
 import RobotNotesInput from '../fields/RobotNotesInput';

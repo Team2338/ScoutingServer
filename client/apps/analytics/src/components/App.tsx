@@ -1,4 +1,4 @@
-import { UserRole } from '@gearscout/models';
+import { UserRole } from '@gearscout/shared-models';
 import React, { Fragment } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router';

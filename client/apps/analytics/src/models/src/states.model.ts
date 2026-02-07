@@ -16,7 +16,7 @@ import {
 	LoadStatus,
 	LoginErrors,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 export type Statelet<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 

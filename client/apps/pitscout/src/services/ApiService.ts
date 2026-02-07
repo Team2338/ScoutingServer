@@ -7,7 +7,7 @@ import {
 	IEventInfo,
 	IInspectionQuestionResponse,
 	ILoginResponse
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 type GearscoutResponse<T> = Promise<AxiosResponse<T>>;
 

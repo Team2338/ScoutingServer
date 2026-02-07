@@ -4,7 +4,7 @@ import {
 	IUserInfo,
 	LoginErrors,
 	LoginStatus
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import {
 	createAction,
 	createReducer

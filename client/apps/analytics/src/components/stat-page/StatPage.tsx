@@ -16,7 +16,7 @@ import DataFailure from '../shared/data-failure/DataFailure';
 import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
 import StatGraphStacked from './stat-graph-stacked/StatGraphStacked';
 import MultiStatTable from './multi-stat-table/MultiStatTable';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 import {
 	ToggleButton,
 	ToggleButtonGroup

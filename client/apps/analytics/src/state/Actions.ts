@@ -12,7 +12,7 @@ import {
 	ITokenModel,
 	IUserInfo,
 	Language
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 export interface Action {
 	type: Actions;

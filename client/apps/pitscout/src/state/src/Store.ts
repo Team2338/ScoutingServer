@@ -10,11 +10,11 @@ import {
 	IEventInfo,
 	LoadStatus,
 	LoginStatus
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import {
 	loginSlice,
 	logoutSuccess
-} from '@gearscout/state';
+} from '@gearscout/shared-state';
 
 export const serviceWorkerInstalled = createAction<ServiceWorker>('serviceWorker/updated');
 

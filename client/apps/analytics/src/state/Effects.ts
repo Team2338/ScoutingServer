@@ -9,7 +9,7 @@ import {
 	GlobalObjectiveStats,
 	ImageInfoResponse
 } from '../models';
-import { authEngine } from '@gearscout/engines';
+import { authEngine } from '@gearscout/shared-engines';
 import commentService from '../service/CommentService';
 import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
@@ -62,7 +62,7 @@ import {
 	IUserInfo,
 	Language,
 	LanguageInfo, UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 type GetState = () => AppState;
 

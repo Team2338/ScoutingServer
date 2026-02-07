@@ -21,7 +21,7 @@ import React, { useEffect, useState } from 'react';
 import Dropdown from '../fields/Dropdown';
 import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../../icons';
 import { Button, CircularProgress, InputAdornment, TextField } from '@mui/material';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 import CheckboxGroup from '../fields/CheckboxGroup';
 import RobotWeightInput from '../fields/RobotWeightInput';
 import RobotNotesInput from '../fields/RobotNotesInput';

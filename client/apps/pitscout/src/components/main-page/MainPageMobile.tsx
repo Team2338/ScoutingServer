@@ -32,7 +32,7 @@ import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
 import {
 	LoadStatus,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import InspectionForm2026 from './inspection-form/2026/InspectionForm2026';
 
 const InspectionTransition = forwardRef(function Transition(props: any, ref) {

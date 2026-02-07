@@ -4,7 +4,7 @@ import { useAppSelector } from '../state';
 import {
 	ILanguageTranslation,
 	Language
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 const translateKey = (language: string, key: string): string => {
 	const mapping = languages[language];

@@ -27,7 +27,7 @@ import {
 	Button,
 	CircularProgress,
 } from '@mui/material';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 import CheckboxGroup from '../fields/CheckboxGroup';
 import '../InspectionForm.scss';
 import RobotWeightInput from '../fields/RobotWeightInput';

@@ -1,5 +1,5 @@
 import { Inspection, InspectionQuestion } from '../models';
-import { IInspectionQuestionResponse } from '@gearscout/models';
+import { IInspectionQuestionResponse } from '@gearscout/shared-models';
 
 class InspectionModelService {
 

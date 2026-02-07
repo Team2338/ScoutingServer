@@ -1,4 +1,4 @@
-import { Language, LoadStatus, UserRole } from '@gearscout/models';
+import { Language, LoadStatus, UserRole } from '@gearscout/shared-models';
 import { configureStore, UnknownAction } from '@reduxjs/toolkit';
 import { userManagementSlice } from './src/UserManagementSlice';
 import { AppState, ImageInfo, ImageState, LoginStatus, Match, MatchResponse, } from '../models';

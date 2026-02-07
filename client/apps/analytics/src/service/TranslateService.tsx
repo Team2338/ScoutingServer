@@ -6,7 +6,7 @@ import {
 	Language
 } from '@gearscout/shared-models';
 
-const translateKey = (language: string, key: string): string => {
+const translateKey = (language: Language, key: string): string => {
 	const mapping = languages[language];
 
 	if (Object.hasOwn(mapping, key)) {

@@ -153,6 +153,7 @@ class TeamModelService {
 
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
 		const scores: Map<string, ObjectiveSums> = new Map();
+		const matchNumbers: number[] = matches.map((match: MatchResponse) => match.matchNumber);
 
 		// Collect a list of counts for each objective
 		for (const match of matches) {
@@ -186,6 +187,7 @@ class TeamModelService {
 			stats.get(objective.gamemode)
 				.set(objective.objective, {
 					teamNumber: teamNumber,
+					matchNumbers: matchNumbers,
 					scores: objective.scores,
 					lists: objective.lists.length > 0 ? objective.lists : null,
 					sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,

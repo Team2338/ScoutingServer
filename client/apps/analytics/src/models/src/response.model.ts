@@ -44,10 +44,11 @@ export interface Team {
 
 export interface TeamObjectiveStats {
 	teamNumber: number;
+	matchNumbers: number[];
 	scores: number[];
-	lists: number[][];
-	sumList: number[]; // The sum of all lists
-	meanList: number[]; // The average of all lists
+	lists: number[][] | null;
+	sumList: number[] | null; // The sum of all lists
+	meanList: number[] | null; // The average of all lists
 	mean: number;
 	variance: number;
 	median: number;

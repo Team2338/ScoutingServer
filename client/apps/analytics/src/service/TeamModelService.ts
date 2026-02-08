@@ -9,6 +9,7 @@ interface ObjectiveSums {
 	gamemode: string;
 	objective: string;
 	scores: number[];
+	spacedScores: number[];
 	lists: number[][];
 }
 
@@ -154,22 +155,29 @@ class TeamModelService {
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
 		const scores: Map<string, ObjectiveSums> = new Map();
 		const matchNumbers: number[] = matches.map((match: MatchResponse) => match.matchNumber);
+		const matchNumberToIndexMap: Map<number, number> = new Map();
+
+		// Map each match number to its index in the list
+		matchNumbers.forEach((matchNumber: number, index: number) => matchNumberToIndexMap.set(matchNumber, index));
 
 		// Collect a list of counts for each objective
 		for (const match of matches) {
 			for (const objective of match.objectives) {
 				const key = objective.gamemode + objective.objective;
+				const matchIndex = matchNumberToIndexMap.get(match.matchNumber);
 
 				if (!scores.has(key)) {
 					scores.set(key, {
 						gamemode: objective.gamemode,
 						objective: objective.objective,
 						scores: [],
+						spacedScores: Array.from(Array(matchNumbers.length)).fill(undefined),
 						lists: []
 					});
 				}
 
 				scores.get(key).scores.push(objective.count);
+				scores.get(key).spacedScores[matchIndex] = objective.count;
 
 				if (objective.list && objective.list.length > 0) {
 					scores.get(key).lists.push(objective.list);
@@ -189,6 +197,7 @@ class TeamModelService {
 					teamNumber: teamNumber,
 					matchNumbers: matchNumbers,
 					scores: objective.scores,
+					spacedScores: objective.spacedScores,
 					lists: objective.lists.length > 0 ? objective.lists : null,
 					sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,
 					meanList: objective.lists.length > 0 ? getMeanList(objective.lists) : null,

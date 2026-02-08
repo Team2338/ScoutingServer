@@ -119,6 +119,9 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	const translate = useTranslator();
 	const scores = props.stats.scores.map(roundToDecimal);
+	const spacedScores = props.stats.spacedScores.map((score: number | undefined) =>
+		score === undefined ? undefined : roundToDecimal(score)
+	);
 
 	let sumListElement = null;
 	if (props.stats.sumList) {
@@ -137,7 +140,7 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 			<td>{ translate(props.name) }</td>
 			<td>{ props.stats.mean.toFixed(2) }</td>
 			<td>{ roundToDecimal(props.stats.median) }</td>
-			{ scores.map((score: number, index: number) => <td key={ index }>{ score }</td>) }
+			{ spacedScores.map((score: number | undefined, index: number) => <td key={ index }>{ score }</td>) }
 		</tr>
 	);
 

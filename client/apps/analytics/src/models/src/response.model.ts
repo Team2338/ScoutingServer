@@ -45,7 +45,8 @@ export interface Team {
 export interface TeamObjectiveStats {
 	teamNumber: number;
 	matchNumbers: number[];
-	scores: number[];
+	scores: number[]; // Excludes matches with no data
+	spacedScores: (number | undefined)[]; // Insert 'undefined' for matches with no data
 	lists: number[][] | null;
 	sumList: number[] | null; // The sum of all lists
 	meanList: number[] | null; // The average of all lists

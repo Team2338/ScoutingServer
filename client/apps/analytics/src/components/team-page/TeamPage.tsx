@@ -132,6 +132,7 @@ const getTeamsWithDataOrImagesOrCommentsOrInspections = (
 	uniqueTeamNumbersWithImagesOrCommentsOrInspections.forEach((teamNumber: number) => {
 		completeListOfTeams.push({
 			id: teamNumber,
+			matchNumbers: [],
 			stats: null
 		});
 	});

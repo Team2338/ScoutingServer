@@ -39,6 +39,7 @@ export type ObjectiveStats = Map<string, Map<string, TeamObjectiveStats>>; // ga
 
 export interface Team {
 	id: number;
+	matchNumbers: number[];
 	stats: ObjectiveStats;
 }
 

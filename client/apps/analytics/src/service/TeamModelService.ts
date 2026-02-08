@@ -53,10 +53,12 @@ class TeamModelService {
 	createTeam = (matches: MatchResponse[]): Team => {
 		const teamNumber = matches[0].robotNumber;
 		const reducedMatches = this.mergeDuplicateMatches(matches); // Merge duplicates
+		const matchNumbers = reducedMatches.map((match: MatchResponse) => match.matchNumber);
 		const stats = this.getStats(teamNumber, reducedMatches);
 
 		return {
 			id: teamNumber,
+			matchNumbers: matchNumbers,
 			stats: stats
 		};
 	};

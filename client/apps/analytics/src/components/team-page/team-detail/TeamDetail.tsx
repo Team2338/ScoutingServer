@@ -47,6 +47,7 @@ export default function TeamDetail(props: IProps) {
 					<Gamemode
 						key={ gamemode }
 						name={ gamemode }
+						matchNumbers={ team.matchNumbers }
 						objectives={ objectives }
 					/>
 				);
@@ -81,7 +82,7 @@ export default function TeamDetail(props: IProps) {
 	);
 }
 
-function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveStats> }) {
+function Gamemode(props: { name: string, matchNumbers: number[], objectives: Map<string, TeamObjectiveStats> }) {
 
 	const translate = useTranslator();
 
@@ -97,7 +98,7 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 					<th>{ translate(props.name) }</th>
 					<th>{ translate('MEAN') }</th>
 					<th>{ translate('MEDIAN') }</th>
-					{ [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => <th key={ i }>Score {i}</th>) }
+					{ props.matchNumbers.map((matchNumber: number) => <th key={ matchNumber }>{ matchNumber }</th>) }
 				</tr>
 			</thead>
 			<tbody>

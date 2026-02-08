@@ -91,13 +91,29 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 	});
 
 	return (
-		<div className="gamemode">
-			<h3 className="gamemode-title">{ translate(props.name) }</h3>
-			<div className="gamemode-stats-wrapper">
+		<table>
+			<thead>
+				<tr>
+					<th>{ translate(props.name) }</th>
+					<th>{ translate('MEAN') }</th>
+					<th>{ translate('MEDIAN') }</th>
+					{ [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => <th key={ i }>Score {i}</th>) }
+				</tr>
+			</thead>
+			<tbody>
 				{ objectiveElements }
-			</div>
-		</div>
+			</tbody>
+		</table>
 	);
+
+	// return (
+	// 	<div className="gamemode">
+	// 		<h3 className="gamemode-title">{ translate(props.name) }</h3>
+	// 		<div className="gamemode-stats-wrapper">
+	// 			{ objectiveElements }
+	// 		</div>
+	// 	</div>
+	// );
 }
 
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
@@ -117,14 +133,23 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	}
 
 	return (
-		<div className="stats">
-			<div className="objective-name">{ translate(props.name) }:</div>
-			<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
-			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
-			<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
-			<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
-			{ sumListElement }
-		</div>
+		<tr>
+			<td>{ translate(props.name) }</td>
+			<td>{ props.stats.mean.toFixed(2) }</td>
+			<td>{ roundToDecimal(props.stats.median) }</td>
+			{ scores.map((score: number, index: number) => <td key={ index }>{ score }</td>) }
+		</tr>
 	);
+
+	// return (
+	// 	<div className="stats">
+	// 		<div className="objective-name">{ translate(props.name) }:</div>
+	// 		<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
+	// 		<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
+	// 		<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
+	// 		<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
+	// 		{ sumListElement }
+	// 	</div>
+	// );
 
 }

@@ -12,7 +12,9 @@ import {
 	MenuItem,
 	Toolbar,
 	Tooltip,
-	useMediaQuery
+	useColorScheme,
+	useMediaQuery,
+	useTheme
 } from '@mui/material';
 import React, {
 	Fragment,
@@ -20,12 +22,13 @@ import React, {
 	useState
 } from 'react';
 import { NavLink } from 'react-router';
-import { Statelet } from '../../models';
+import { BLUE, Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
 import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
 import {
 	ExitToApp,
+	Palette,
 	Shuffle
 } from '@mui/icons-material';
 import {
@@ -40,6 +43,7 @@ import {
 import {
 	ProfileCard
 } from '@gearscout/components';
+import ColorSchemeButton from './color-scheme-button/ColorSchemeButton';
 
 
 interface IRoute {
@@ -91,10 +95,11 @@ export default function Header() {
 
 	if (!isLoggedIn) {
 		return (
-			<AppBar id="appBar" position="sticky" color="primary">
+			<AppBar id="appBar" position="sticky" sx={{ backgroundColor: BLUE }}>
 				<Toolbar>
 					{ title }
 					<LanguageSelector />
+					<ColorSchemeButton />
 				</Toolbar>
 			</AppBar>
 		);
@@ -157,10 +162,11 @@ export default function Header() {
 
 	if (!selectedEvent) {
 		return (
-			<AppBar id="appBar" position="sticky" color="primary">
+			<AppBar id="appBar" position="sticky" sx={{ backgroundColor: BLUE }}>
 				<Toolbar>
 					{ title }
 					<LanguageSelector />
+					<ColorSchemeButton />
 					{ accountButton }
 					{ accountMenu }
 				</Toolbar>
@@ -214,6 +220,8 @@ export default function Header() {
 		}
 	];
 
+	const theme = useTheme();
+
 	const routeComponents = routes
 		.filter((route: IRoute) => route.roles?.includes(user.role) ?? true) // Show by default
 		.map((route: IRoute) => (
@@ -226,14 +234,16 @@ export default function Header() {
 				<ListItemIcon>
 					<Icon>{ route.icon }</Icon>
 				</ListItemIcon>
-				<ListItemText primary={ translate(route.name) } />
+				<ListItemText
+					primary={ translate(route.name) }
+				/>
 			</ListItemButton>
 		));
 
 	const drawer = (
 		<Drawer className="nav-drawer" anchor="left" open={ isDrawerOpen } onClose={ toggleDrawer(false) }>
-			<div className="nav-drawer-content">
-				<div className="nav-drawer-header">
+			<div className="nav-drawer-content" style={{ color: theme.palette.text.primary }}>
+				<div className="nav-drawer-header" >
 					{ title }
 					<div>v{ import.meta.env.VITE_APP_VERSION }</div>
 				</div>
@@ -244,7 +254,9 @@ export default function Header() {
 						<ListItemIcon>
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
-						<ListItemText primary={ translate('LOGOUT') } />
+						<ListItemText 
+							primary={ translate('LOGOUT') }
+						/>
 					</ListItemButton>
 				</List>
 			</div>
@@ -256,7 +268,7 @@ export default function Header() {
 
 	return (
 		<Fragment>
-			<AppBar id="appBar" position="sticky" color="primary">
+			<AppBar id="appBar" position="sticky" sx={{ backgroundColor: BLUE }}>
 				<Toolbar>
 					<IconButton
 						className="menu-button"
@@ -270,6 +282,7 @@ export default function Header() {
 					{ title }
 					<LanguageSelector />
 					{ isMobile ? null : <DownloadButton /> }
+					<ColorSchemeButton />
 					{ accountButton }
 					{ accountMenu }
 				</Toolbar>
@@ -299,7 +312,7 @@ function DownloadButton() {
 			<span>
 				<Button
 					className="download-button"
-					color="primary"
+					sx={{ backgroundColor: '#0000', ":hover": { backgroundColor: "#0006" } }}
 					disableElevation={ true }
 					variant="contained"
 					aria-label={ translate('DOWNLOAD_DATA') }
@@ -354,7 +367,7 @@ function LanguageSelector() {
 			<Tooltip title={ translate('CHANGE_LANGUAGE') }>
 				<Button
 					className="language-button"
-					color="primary"
+					sx={{ backgroundColor: '#0000', ":hover": { backgroundColor: "#0006" } }}
 					variant="contained"
 					disableElevation={ true }
 					startIcon={ <Icon>language</Icon> }

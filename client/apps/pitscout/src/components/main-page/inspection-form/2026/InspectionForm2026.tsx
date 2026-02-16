@@ -231,6 +231,7 @@ export default function InspectionForm2025(props: IProps) {
 				title="Climb locations"
 				options={ CLIMB_LOCATIONS_2026 }
 				values={ climbLocation }
+				includeNoneOption={ true }
 				onChange={ setClimbLocation }
 			/>
 			<RobotNotesInput value={ robotNotes } onChange={ setRobotNotes } />

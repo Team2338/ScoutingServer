@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Isolation;
 import team.gif.gearscout.inspections.InspectionRepository;
 import team.gif.gearscout.matches.MatchRepository;
 import team.gif.gearscout.shared.EventInfo;
@@ -34,6 +36,7 @@ public class EventService {
 		this.eventRepository = eventRepository;
 	}
 
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public EventEntity getOrCreateEvent(Integer teamNumber, Integer gameYear, String eventCode, String secretCode) {
 		Optional<EventEntity> eventEntity = eventRepository.findByEventDescriptor(teamNumber, gameYear, eventCode, secretCode);
 
@@ -61,10 +64,23 @@ public class EventService {
 		}
 	}
 
+	public List<EventEntity> getSharedEvents(EventEntity eventEntity) {
+		return eventRepository.findSharedEvents(
+			eventEntity.getGameYear(),
+			eventEntity.getEventCode(),
+			eventEntity.getSecretCode()
+		);
+	}
+
 	public EventEntity getEvent(Long eventId) {
 		return eventRepository
 			.findById(eventId)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
+
+	public void setEventShared(EventEntity event, boolean shared) {
+		event.setShared(shared);
+		eventRepository.save(event);
 	}
 
 	public List<AggregateEventInfo> getEventList(Integer teamNumber) {

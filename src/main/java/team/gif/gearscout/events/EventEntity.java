@@ -47,6 +47,8 @@ public class EventEntity {
 	@SecretCodeConstraint
 	private String secretCode;
 
+	@Column(nullable = false)
+	private boolean shared;
 
 	public EventEntity() {}
 
@@ -82,6 +84,10 @@ public class EventEntity {
 		return secretCode;
 	}
 
+	public boolean isShared() {
+		return shared;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -102,5 +108,7 @@ public class EventEntity {
 		this.secretCode = secretCode;
 	}
 
-
+	public void setShared(boolean shared) {
+		this.shared = shared;
+	}
 }

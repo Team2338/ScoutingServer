@@ -1,0 +1,3 @@
+ALTER TABLE events
+	ADD COLUMN shared
+	BOOLEAN NOT NULL DEFAULT false;

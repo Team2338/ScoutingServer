@@ -31,4 +31,17 @@ public interface EventRepository extends CrudRepository<EventEntity, Long> {
 	""")
 	List<EventEntity> getEventEntitiesByTeamNumber(Integer teamNumber);
 
+	@Query(value = """
+	SELECT event
+	FROM EventEntity event
+	WHERE event.gameYear = :gameYear
+		AND event.eventCode = :eventCode
+		AND event.secretCode = :secretCode
+		AND event.shared = TRUE
+	""")
+	List<EventEntity> findSharedEvents(
+		Integer gameYear,
+		String eventCode,
+		String secretCode
+	);
 }

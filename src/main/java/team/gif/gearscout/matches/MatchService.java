@@ -2,6 +2,7 @@ package team.gif.gearscout.matches;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team.gif.gearscout.events.EventEntity;
 import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.matches.model.CreateMatchRequest;
 import team.gif.gearscout.matches.model.ObjectiveEntity;
@@ -46,12 +47,11 @@ public class MatchService {
 		// Convert Match to MatchEntity
 		String currentTime = Long.toString(System.currentTimeMillis());
 		MatchEntity matchEntity = new MatchEntity(eventId, match, teamNumber, currentTime);
-		
 		return matchRepository.save(matchEntity);
 	}
-	
-	public List<MatchEntity> getAllMatchesForEvent(Long eventId) {
-		return matchRepository.findMatchesByEventId(eventId);
+
+	public List<MatchEntity> getAllMatchesForEvents(List<Long> eventIds) {
+		return matchRepository.findMatchesByEventIds(eventIds);
 	}
 
 	public MatchEntity getMatch(Long matchId) {

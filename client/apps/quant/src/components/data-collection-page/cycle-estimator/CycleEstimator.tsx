@@ -48,6 +48,7 @@ export default function CycleEstimator(props: IProps) {
 				previousCycle && (
 					<div className="previous-cycle-wrapper">
 						<h3 className="objective-title">Previous { props.gamemode } Cycle</h3>
+						<div id={ lowercaseGamemode + '-cycle-previous-accuracy-label' } className="accuracy-label">Accuracy</div>
 						<ToggleButtonGroup
 							id={ lowercaseGamemode + '-cycle-previous-accuracy' }
 							className="toggle-button-group"
@@ -78,7 +79,7 @@ export default function CycleEstimator(props: IProps) {
 								labelId={ lowercaseGamemode + '-cycle-previous-size-label' }
 								label="Estimated size"
 								variant="outlined"
-								value={ size }
+								value={ previousCycle.size }
 								onChange={ (event) => setPreviousSize(event.target.value) }
 								sx={{ width: 'calc(10em + 28px)' }}
 							>
@@ -91,7 +92,7 @@ export default function CycleEstimator(props: IProps) {
 				)
 			}
 			<h3 className="objective-title">Current { props.gamemode } Cycle</h3>
-			<div id={ lowercaseGamemode + '-cycle-current-accuracy-label' }>Accuracy</div>
+			<div id={ lowercaseGamemode + '-cycle-current-accuracy-label' } className="accuracy-label">Accuracy</div>
 			<ToggleButtonGroup
 				id={ lowercaseGamemode + '-cycle-current-accuracy' }
 				className="toggle-button-group"
@@ -136,6 +137,7 @@ export default function CycleEstimator(props: IProps) {
 				color="primary"
 				onClick={ addCycle }
 				disabled={ !isValid }
+				className="add-cycle-button"
 			>
 				Add
 			</Button>

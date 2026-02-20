@@ -19,6 +19,22 @@
 	background-color: $blue;
 	padding: 16px;
 
+	.gamemode-title {
+		font-size: 40px;
+		line-height: 48px;
+		margin-top: 12px;
+		margin-bottom: 8px;
+		text-decoration: underline;
+	}
+
+	.objective-title {
+		font-size: 24px;
+		line-height: 32px;
+		color: $offwhite;
+		margin-top: 8px;
+		margin-bottom: 4px;
+	}
+
 	#robot-number, #match-number {
 		color: $offwhite;
 		width: 10em;

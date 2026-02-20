@@ -68,7 +68,7 @@ export default function DataCollectionPage(props: IProps) {
 				value={ autoClimb }
 				defaultValue={ ClimbLevel.none }
 				exclusive
-				onChange={ (event, newValue) => setAutoClimb(newValue) }
+				onChange={ (event, newValue) => setAutoClimb(newValue ?? autoClimb) }
 			>
 				<ToggleButton
 					className="toggle-button"
@@ -102,7 +102,7 @@ export default function DataCollectionPage(props: IProps) {
 				value={ teleopClimb }
 				defaultValue={ ClimbLevel.none }
 				exclusive
-				onChange={ (event, newValue) => setTeleopClimb(newValue) }
+				onChange={ (event, newValue) => setTeleopClimb(newValue ?? teleopClimb) }
 			>
 				<ToggleButton
 					className="toggle-button"

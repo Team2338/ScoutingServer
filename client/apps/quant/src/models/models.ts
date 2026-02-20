@@ -40,3 +40,35 @@ export enum CycleSize {
 	medium = 'medium',
 	large = 'large'
 }
+
+export interface IMatch {
+	gameYear: number;
+	eventCode: string;
+	matchNumber: string;
+	robotNumber: string;
+	creator: string;
+	allianceColor: string;
+	objectives: IObjective[];
+}
+
+export interface IObjective {
+	gamemode: Gamemode,
+	objective: string;
+	count: number;
+	list?: number[];
+}
+
+export enum Gamemode {
+	teleop = 'TELEOP',
+	auto = 'AUTO'
+}
+
+export interface IMatchUi2026 {
+	matchNumber: string;
+	robotNumber: string;
+	allianceColor: AllianceColor;
+	autoClimb: ClimbLevel;
+	autoCycles: ICycle[];
+	teleopClimb: ClimbLevel;
+	teleopCycles: ICycle[];
+}

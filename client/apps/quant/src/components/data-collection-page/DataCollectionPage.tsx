@@ -1,12 +1,15 @@
 import './DataCollectionPage.scss';
 import React, { useState } from 'react';
 import RobotInfo from './robot-info/RobotInfo';
-import { AllianceColor, ClimbLevel, ICycle } from '../../models/models';
+import { AllianceColor, ClimbLevel, ICredentials, ICycle, IMatch } from '../../models/models';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import CycleEstimator from './cycle-estimator/CycleEstimator';
+import { dataModelService } from '../../services/DataModelService';
 
 interface IProps {
 	className?: string;
+	credentials: ICredentials;
+	handleSubmit: (match: IMatch) => void;
 }
 
 export default function DataCollectionPage(props: IProps) {
@@ -22,6 +25,35 @@ export default function DataCollectionPage(props: IProps) {
 	// Teleop scores
 	const [teleopClimb, setTeleopClimb] = useState<ClimbLevel>(ClimbLevel.none);
 	const [teleopCycles, setTeleopCycles] = useState<ICycle[]>([]);
+
+	const isValid = Boolean(
+		matchNumber.trim()
+		&& robotNumber.trim()
+		&& allianceColor !== AllianceColor.unknown
+	);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		const match: IMatch = dataModelService.convertToRequestBody(props.credentials, {
+			matchNumber: matchNumber,
+			robotNumber: robotNumber,
+			allianceColor: allianceColor,
+			autoClimb: autoClimb,
+			autoCycles: autoCycles,
+			teleopClimb: teleopClimb,
+			teleopCycles: teleopCycles
+		});
+
+		setMatchNumber('');
+		setRobotNumber('');
+		setAllianceColor(AllianceColor.unknown);
+		setAutoClimb(ClimbLevel.none);
+		setAutoCycles([]);
+		setTeleopClimb(ClimbLevel.none);
+		setTeleopCycles([]);
+
+		props.handleSubmit(match);
+	};
 
 	return (
 		<main className="page data-collection-page">
@@ -137,6 +169,21 @@ export default function DataCollectionPage(props: IProps) {
 					L3
 				</ToggleButton>
 			</ToggleButtonGroup>
+			<div className="action-area">
+				<button
+					className="gif-button-primary-tertiary"
+					onClick={ () => window.location.href = '/' }
+				>
+					Back
+				</button>
+				<button
+					className="gif-button-primary"
+					onClick={ handleSubmit }
+					disabled={ !isValid }
+				>
+					Submit
+				</button>
+			</div>
 		</main>
 	);
 }

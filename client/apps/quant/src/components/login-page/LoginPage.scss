@@ -1,0 +1,22 @@
+.login-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #fe5000;
+	background-color: #02243e;
+	padding: 16px;
+
+	.login-form {
+		display: flex;
+		flex-direction: column;
+		margin-top: 64px;
+	}
+
+	.login-form__title {
+		margin-bottom: 16px;
+	}
+
+	.submit-button {
+		margin-top: 16px;
+	}
+}

@@ -8,7 +8,8 @@
     "analytics:start": "nx serve analytics",
     "pitscout:tc": "nx typecheck pitscout",
     "pitscout:build": "nx typecheck pitscout && nx build pitscout",
-    "pitscout:start": "nx serve pitscout"
+    "pitscout:start": "nx serve pitscout",
+    "quant:start": "nx serve quant"
   },
   "private": true,
   "dependencies": {
@@ -17,7 +18,7 @@
     "@mui/icons-material": "^7.3.1",
     "@mui/material": "^7.3.1",
     "@reduxjs/toolkit": "^2.8.2",
-    "axios": "^1.11.0",
+    "axios": "^1.13.5",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-redux": "^9.2.0",

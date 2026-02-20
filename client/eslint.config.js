@@ -8,7 +8,7 @@ export default [
 	{
 		ignores: ['**/dist'],
 		plugins: {
-			'import': importPlugin,
+			import: importPlugin,
 		},
 	},
 	{
@@ -22,22 +22,19 @@ export default [
 					depConstraints: [
 						{
 							sourceTag: '*',
-							onlyDependOnLibsWithTags: ['*']
-						}
-					]
-				}
-			]
-		}
+							onlyDependOnLibsWithTags: ['*'],
+						},
+					],
+				},
+			],
+		},
 	},
 	{
-		files: [
-			'**/*.ts',
-			'**/*.tsx'
-		],
+		files: ['**/*.ts', '**/*.tsx'],
 		languageOptions: {
 			parserOptions: {
 				projectService: true,
-				tsconfigRootDir: import.meta.dirname
+				tsconfigRootDir: import.meta.dirname,
 			},
 		},
 		rules: {
@@ -45,13 +42,13 @@ export default [
 				'off', // TODO: set this to error when fixed
 			],
 			'@typescript-eslint/consistent-type-imports': [
-				'warn',  // TODO: set this to error when fixed
+				'warn', // TODO: set this to error when fixed
 				{
 					fixStyle: 'inline-type-imports',
-					prefer: 'no-type-imports'
-				}
-			]
-		}
+					prefer: 'no-type-imports',
+				},
+			],
+		},
 	},
 	{
 		files: [
@@ -60,7 +57,7 @@ export default [
 			'**/*.js',
 			'**/*.jsx',
 			'**/*.cjs',
-			'**/*.mjs'
+			'**/*.mjs',
 		],
 		// Override or add rules here
 		rules: {
@@ -70,30 +67,28 @@ export default [
 			quotes: ['error', 'single'],
 			semi: ['error', 'always'],
 			'no-case-declarations': ['warn'],
-
 			'import/no-duplicates': ['warn', { 'prefer-inline': true }],
-
 			/* TypeScript rules */
-			'@typescript-eslint/array-type': [
-				'error',
-				{ default: 'array' }
-			],
+			'@typescript-eslint/array-type': ['error', { default: 'array' }],
 			'@typescript-eslint/consistent-generic-constructors': [
 				'warn',
-				'type-annotation' // Prefer putting generics on the left side
+				'type-annotation', // Prefer putting generics on the left side
 			],
 			'@typescript-eslint/consistent-type-assertions': [
 				'error',
 				{
 					assertionStyle: 'as',
-					objectLiteralTypeAssertions: 'allow'
-				}
+					objectLiteralTypeAssertions: 'allow',
+				},
 			],
 			'@typescript-eslint/no-inferrable-types': 'off',
 			'@typescript-eslint/no-explicit-any': 'warn',
 			'@typescript-eslint/no-unused-vars': 'warn',
 			'no-array-constructor': 'off', // Disable base rule - let TS plugin handle it
-			'@typescript-eslint/no-array-constructor': 'error'
-		}
-	}
+			'@typescript-eslint/no-array-constructor': 'error',
+		},
+	},
+	{
+		ignores: ['**/vite.config.*.timestamp*'],
+	},
 ];

@@ -9,6 +9,9 @@
 	$tHighlight: #F2F2F2;
 	$offBlack: #1D1C1B;
 
+	$redAllianceColor: #AA3333;
+	$blueAllianceColor: #2255CC;
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -38,7 +41,7 @@
 			background-color: transparent;
 
 			&.Mui-selected {
-				color: #fff;
+				color: #FFF;
 				background-color: $orange;
 				border: 0;
 			}
@@ -54,15 +57,15 @@
 			background-color: transparent;
 
 			&.Mui-selected {
-				color: #fff;
+				color: #FFF;
 				border: 0;
 
 				&.red {
-					background-color: #aa3333;
+					background-color: $redAllianceColor;
 				}
 
 				&.blue {
-					background-color: #2255cc;
+					background-color: $blueAllianceColor;
 				}
 			}
 		}

@@ -12,6 +12,14 @@ export enum AllianceColor {
 	unknown = 'UNKNOWN'
 }
 
+export enum ClimbLevel {
+	none = 0,
+	auto = 15,
+	one = 10,
+	two = 20,
+	three = 30
+}
+
 export interface IMatchLineup {
 	matchNumber: number;
 	red1: number;

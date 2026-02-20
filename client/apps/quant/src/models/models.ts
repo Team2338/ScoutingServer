@@ -29,3 +29,14 @@ export interface IMatchLineup {
 	blue2: number;
 	blue3: number;
 }
+
+export interface ICycle {
+	size: CycleSize;
+	accuracy: number;
+}
+
+export enum CycleSize {
+	small = 'small',
+	medium = 'medium',
+	large = 'large'
+}

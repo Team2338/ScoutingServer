@@ -40,6 +40,12 @@
 			border-color: $grey;
 			background-color: transparent;
 
+			&.round {
+				border-radius: 50%;
+				height: 72px;
+				min-width: 72px;
+			}
+
 			&.Mui-selected {
 				color: #FFF;
 				background-color: $orange;

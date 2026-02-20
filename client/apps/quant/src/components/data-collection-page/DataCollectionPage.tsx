@@ -1,8 +1,9 @@
 import './DataCollectionPage.scss';
 import React, { useState } from 'react';
 import RobotInfo from './robot-info/RobotInfo';
-import { AllianceColor, ClimbLevel } from '../../models/models';
+import { AllianceColor, ClimbLevel, ICycle } from '../../models/models';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import CycleEstimator from './cycle-estimator/CycleEstimator';
 
 interface IProps {
 	className?: string;
@@ -16,9 +17,11 @@ export default function DataCollectionPage(props: IProps) {
 
 	// Auto scores
 	const [autoClimb, setAutoClimb] = useState<ClimbLevel>(ClimbLevel.none);
+	const [autoCycles, setAutoCycles] = useState<ICycle[]>([]);
 
 	// Teleop scores
 	const [teleopClimb, setTeleopClimb] = useState<ClimbLevel>(ClimbLevel.none);
+	const [teleopCycles, setTeleopCycles] = useState<ICycle[]>([]);
 
 	return (
 		<main className="page data-collection-page">
@@ -53,6 +56,11 @@ export default function DataCollectionPage(props: IProps) {
 			<h2 className="gamemode-title">Auto</h2>
 			<h3 className="objective-title">Defenses</h3>
 			<h3 className="objective-title">Current Auto Cycle</h3>
+			<CycleEstimator
+				gamemode="Auto"
+				cycles={ autoCycles }
+				setCycles={ setAutoCycles }
+			/>
 			<h3 id="auto-climb-label" className="objective-title">Climb</h3>
 			<ToggleButtonGroup
 				id="auto-climb"
@@ -80,7 +88,13 @@ export default function DataCollectionPage(props: IProps) {
 					Yes
 				</ToggleButton>
 			</ToggleButtonGroup>
+
 			<h2 className="gamemode-title">Teleop</h2>
+			<CycleEstimator
+				gamemode="Teleop"
+				cycles={ teleopCycles }
+				setCycles={ setTeleopCycles }
+			/>
 			<h3 id="teleop-climb-label" className="objective-title">Climb</h3>
 			<ToggleButtonGroup
 				id="teleop-climb"

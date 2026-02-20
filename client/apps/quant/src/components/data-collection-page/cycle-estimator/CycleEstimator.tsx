@@ -133,14 +133,13 @@ export default function CycleEstimator(props: IProps) {
 					<MenuItem value={ CycleSize.large }>26+</MenuItem>
 				</Select>
 			</FormControl>
-			<Button
-				color="primary"
+			<button
+				className="add-cycle-button gif-button-primary"
 				onClick={ addCycle }
 				disabled={ !isValid }
-				className="add-cycle-button"
 			>
-				Add
-			</Button>
+				Add Cycle
+			</button>
 			<div className="cycle-count">{ props.gamemode } cycles: { props.cycles.length }</div>
 		</div>
 	);

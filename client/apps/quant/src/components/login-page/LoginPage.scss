@@ -1,9 +1,10 @@
 .login-page {
+	$offwhite: #FAF9F6;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	color: #fe5000;
-	background-color: #02243e;
+	color: #FE5000;
+	background-color: #02243E;
 	padding: 16px;
 
 	.login-form {
@@ -14,6 +15,16 @@
 
 	.login-form__title {
 		margin-bottom: 16px;
+	}
+
+	#team-number-input, #scouter-name-input, #event-code-input, #secret-code-input, #tbaCodeInput {
+		color: $offwhite;
+	}
+
+	.adornment {
+		& > p {
+			color: $offwhite;
+		}
 	}
 
 	.submit-button {

@@ -1,6 +1,7 @@
+$font-family: Roboto, Helvetica, Arial, sans-serif;
 
 :root {
-	font-family: Roboto, Helvetica, Arial, sans-serif;
+	font-family: $font-family;
 	-webkit-font-smoothing: antialiased;
 
 	--header-height: 0px;
@@ -27,4 +28,22 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100vw;
 	overflow-x: clip;
 	overflow-y: auto;
+}
+
+.gif-button-primary {
+	padding: 12px 16px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #FFFFFF;
+	background-color: #FE5000;
+	border: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: $font-family;
+	letter-spacing: 0.02857em;
+	text-transform: uppercase;
+
+	&:disabled {
+		opacity: 0.6;
+	}
 }

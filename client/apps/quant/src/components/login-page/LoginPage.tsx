@@ -65,7 +65,7 @@ export default function LoginPage(props: IProps) {
 					onChange={ handleChange }
 					slotProps={{
 						input: {
-							startAdornment: <InputAdornment position="start">#</InputAdornment>
+							startAdornment: <InputAdornment className="adornment" position="start">#</InputAdornment>
 						},
 						htmlInput: {
 							minLength: 1,
@@ -134,16 +134,14 @@ export default function LoginPage(props: IProps) {
 						}
 					}}
 				/>
-				<Button
-					className="submit-button"
-					variant="contained"
-					color="primary"
+				<button
+					className="submit-button gif-button-primary"
 					type="submit"
 					onClick={ handleSubmit }
 					disabled={ !isValid }
 				>
 					Submit
-				</Button>
+				</button>
 			</form>
 		</main>
 	);

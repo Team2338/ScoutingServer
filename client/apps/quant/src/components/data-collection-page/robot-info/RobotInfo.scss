@@ -1,0 +1,28 @@
+.team-number-loader {
+	display: flex;
+	position: relative;
+	margin: 16px 0 8px;
+
+	.textbox-placeholder {
+		$side-padding: 14px;
+		display: flex;
+		align-items: center;
+		box-sizing: border-box;
+		width: calc(10em + (2 * $side-padding)); // Match the MUI text box
+		height: 56px;
+		border-radius: 4px;
+		border: 1px solid #faf9f6;
+		padding: 16px $side-padding;
+		color: #faf9f6;
+		font-size: 16px;
+		line-height: 24px;
+		opacity: 0.4;
+	}
+
+	.spin-loader {
+		$spinner-radius: 20px;
+		position: absolute;
+		top: calc(50% - $spinner-radius);
+		left: calc(50% - $spinner-radius);
+	}
+}

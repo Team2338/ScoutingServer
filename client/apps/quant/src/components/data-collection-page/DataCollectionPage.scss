@@ -1,0 +1,71 @@
+.data-collection-page {
+	$grey: #BABFB7;
+	$orange: #FE5000;
+	$offorange: #FF6F00;
+	$blue: #00243E;
+	$offblue: #02355B;
+	$offwhite: #FAF9F6;
+	$owHighlight: #FFFFFF;
+	$tHighlight: #F2F2F2;
+	$offBlack: #1D1C1B;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: $orange;
+	background-color: $blue;
+	padding: 16px;
+
+	#robot-number, #match-number {
+		color: $offwhite;
+		width: 10em;
+		max-width: 100%;
+	}
+
+	.toggle-button-group {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+		margin-bottom: 16px;
+
+		.toggle-button {
+			border-radius: 4px;
+			height: 36px;
+			min-width: 72px;
+			color: $grey;
+			border-color: $grey;
+			background-color: transparent;
+
+			&.Mui-selected {
+				color: #fff;
+				background-color: $orange;
+				border: 0;
+			}
+		}
+
+		.alliance-toggle {
+			border-radius: 4px;
+			height: 36px;
+			min-width: 136px;
+			margin-top: 16px;
+			color: $grey;
+			border-color: $grey;
+			background-color: transparent;
+
+			&.Mui-selected {
+				color: #fff;
+				border: 0;
+
+				&.red {
+					background-color: #aa3333;
+				}
+
+				&.blue {
+					background-color: #2255cc;
+				}
+			}
+		}
+	}
+
+}

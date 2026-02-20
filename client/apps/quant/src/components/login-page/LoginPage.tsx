@@ -1,16 +1,10 @@
 import './LoginPage.scss';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, InputAdornment, TextField } from '@mui/material';
+import { ICredentials } from '../../models/models';
 
-interface IState {
-	teamNumber: string;
-	scouterName: string;
-	eventCode: string;
-	secretCode: string;
-	tbaCode: string;
-}
 
-const initialState: IState = {
+const initialState: ICredentials = {
 	teamNumber: '',
 	scouterName: '',
 	eventCode: '',
@@ -19,24 +13,39 @@ const initialState: IState = {
 };
 
 interface IProps {
-	handleSubmit: (credentials: IState) => void;
+	handleSubmit: (credentials: ICredentials) => void;
 }
 
 export default function LoginPage(props: IProps) {
-	const [state, setState] = useState<IState>(initialState);
+	const [credentials, setCredentials] = useState<ICredentials>(initialState);
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setState(prev => ({
+		setCredentials(prev => ({
 			...prev,
 			[event.target.name]: event.target.value
 		}));
 	};
 
 	const isValid = Boolean(
-		state.teamNumber
-		&& state.scouterName
-		&& state.eventCode
-		&& state.secretCode
+		credentials.teamNumber
+		&& credentials.scouterName
+		&& credentials.eventCode
+		&& credentials.secretCode
 	);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		localStorage.setItem('login', JSON.stringify(credentials));
+		props.handleSubmit(credentials);
+	};
+
+	// Attempt to recall credentials from localStorage
+	useEffect(() => {
+		const credentialsString: string | null = localStorage.getItem('login');
+		if (credentialsString) {
+			const credentials = JSON.parse(credentialsString);
+			setCredentials(credentials);
+		}
+	}, []);
 
 	return (
 		<main className="page login-page">
@@ -52,7 +61,7 @@ export default function LoginPage(props: IProps) {
 					inputMode="numeric"
 					margin="dense"
 					variant="outlined"
-					value={ state.teamNumber }
+					value={ credentials.teamNumber }
 					onChange={ handleChange }
 					slotProps={{
 						input: {
@@ -72,7 +81,7 @@ export default function LoginPage(props: IProps) {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={ state.scouterName }
+					value={ credentials.scouterName }
 					onChange={ handleChange }
 					slotProps={{
 						htmlInput: {
@@ -87,7 +96,7 @@ export default function LoginPage(props: IProps) {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={ state.eventCode }
+					value={ credentials.eventCode }
 					onChange={ handleChange }
 					slotProps={{
 						htmlInput: {
@@ -102,7 +111,7 @@ export default function LoginPage(props: IProps) {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={ state.secretCode }
+					value={ credentials.secretCode }
 					onChange={ handleChange }
 					slotProps={{
 						htmlInput: {
@@ -117,7 +126,7 @@ export default function LoginPage(props: IProps) {
 					type="text"
 					margin="dense"
 					variant="outlined"
-					value={ state.eventCode }
+					value={ credentials.tbaCode }
 					onChange={ handleChange }
 					slotProps={{
 						htmlInput: {
@@ -130,7 +139,7 @@ export default function LoginPage(props: IProps) {
 					variant="contained"
 					color="primary"
 					type="submit"
-					onClick={ () => props.handleSubmit(state) }
+					onClick={ handleSubmit }
 					disabled={ !isValid }
 				>
 					Submit

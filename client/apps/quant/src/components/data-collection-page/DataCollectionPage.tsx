@@ -55,7 +55,6 @@ export default function DataCollectionPage(props: IProps) {
 			/>
 			<h2 className="gamemode-title">Auto</h2>
 			<h3 className="objective-title">Defenses</h3>
-			<h3 className="objective-title">Current Auto Cycle</h3>
 			<CycleEstimator
 				gamemode="Auto"
 				cycles={ autoCycles }

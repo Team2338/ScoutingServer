@@ -17,7 +17,7 @@
 	align-items: center;
 	color: $orange;
 	background-color: $blue;
-	padding: 16px;
+	padding: 16px 16px 32px 16px;
 
 	.gamemode-title {
 		font-size: 40px;
@@ -91,6 +91,12 @@
 				}
 			}
 		}
+	}
+
+	.action-area {
+		display: flex;
+		margin-top: 24px;
+		column-gap: 8px;
 	}
 
 }

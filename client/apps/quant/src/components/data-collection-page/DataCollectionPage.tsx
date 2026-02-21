@@ -171,7 +171,7 @@ export default function DataCollectionPage(props: IProps) {
 			</ToggleButtonGroup>
 			<div className="action-area">
 				<button
-					className="gif-button-primary-tertiary"
+					className="gif-button-tertiary"
 					onClick={ () => window.location.href = '/' }
 				>
 					Back

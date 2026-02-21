@@ -1,6 +1,6 @@
 import './LoginPage.scss';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button, InputAdornment, TextField } from '@mui/material';
+import { InputAdornment, TextField } from '@mui/material';
 import { ICredentials } from '../../models/models';
 
 
@@ -18,7 +18,8 @@ interface IProps {
 
 export default function LoginPage(props: IProps) {
 	const [credentials, setCredentials] = useState<ICredentials>(initialState);
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		setCredentials(prev => ({
 			...prev,
 			[event.target.name]: event.target.value
@@ -38,13 +39,41 @@ export default function LoginPage(props: IProps) {
 		props.handleSubmit(credentials);
 	};
 
-	// Attempt to recall credentials from localStorage
+	// Attempt to read credentials from query parameters
+	// then attempt to recall from localStorage
 	useEffect(() => {
-		const credentialsString: string | null = localStorage.getItem('login');
-		if (credentialsString) {
-			const credentials = JSON.parse(credentialsString);
-			setCredentials(credentials);
+		const query = new URLSearchParams(window.location.search);
+		const initialTeamNumber = query.get('team');
+		const initialEventCode = query.get('event');
+		const initialSecretCode = query.get('secret');
+		const initialTbaCode = query.get('tba');
+
+		if (initialTeamNumber ?? initialEventCode ?? initialSecretCode ?? initialTbaCode) {
+			// Set initial values from query string and clear
+			if (initialTeamNumber) {
+				localStorage.setItem('teamNumber', initialTeamNumber);
+			}
+			if (initialEventCode) {
+				localStorage.setItem('eventCode', initialEventCode);
+			}
+			if (initialSecretCode) {
+				localStorage.setItem('secretCode', initialSecretCode);
+			}
+			if (initialTbaCode) {
+				localStorage.setItem('tbaCode', initialTbaCode);
+			}
+			const urlPieces: string[] = [window.location.protocol, '//', window.location.host, window.location.pathname];
+			const url: string = urlPieces.join('');
+			window.location.replace(url);
 		}
+
+		setCredentials({
+			teamNumber: localStorage.getItem('teamNumber') ?? '',
+			scouterName: localStorage.getItem('scouterName') ?? '',
+			eventCode: localStorage.getItem('eventCode') ?? '',
+			secretCode: localStorage.getItem('secretCode') ?? '',
+			tbaCode: localStorage.getItem('tbaCode') ?? ''
+		});
 	}, []);
 
 	return (

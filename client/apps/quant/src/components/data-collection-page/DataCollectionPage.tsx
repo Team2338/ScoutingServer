@@ -1,5 +1,5 @@
 import './DataCollectionPage.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import RobotInfo from './robot-info/RobotInfo';
 import { AllianceColor, ClimbLevel, ICredentials, ICycle, IMatch, IMatchLineup } from '../../models/models';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';

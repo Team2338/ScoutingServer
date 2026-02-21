@@ -9,7 +9,9 @@
     "pitscout:tc": "nx typecheck pitscout",
     "pitscout:build": "nx typecheck pitscout && nx build pitscout",
     "pitscout:start": "nx serve pitscout",
-    "quant:start": "nx serve quant"
+    "quant:start": "nx serve quant",
+    "quant:build": "nx typecheck quant && nx build quant",
+    "quant:lint": "nx lint quant"
   },
   "private": true,
   "dependencies": {

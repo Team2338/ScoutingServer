@@ -81,7 +81,7 @@ export default function LoginPage(props: IProps) {
 	return (
 		<main className="page login-page">
 			<h1 className="app-title">GearScout</h1>
-			<div className="version">v2026.2</div>
+			<div className="version">v{ import.meta.env.VITE_APP_VERSION }</div>
 			<form className="login-form">
 				<h2 className="login-form__title">Sign in</h2>
 				<TextField

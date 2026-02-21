@@ -1,7 +1,7 @@
 import './CycleEstimator.scss';
 import React, { useState } from 'react';
 import { ClimbLevel, CycleSize, ICycle } from '../../../models/models';
-import { Button, FormControl, InputLabel, MenuItem, Select, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 interface IProps {
 	className?: string;

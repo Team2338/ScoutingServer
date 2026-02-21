@@ -1,7 +1,7 @@
 import './DataCollectionPage.scss';
 import React, { useState } from 'react';
 import RobotInfo from './robot-info/RobotInfo';
-import { AllianceColor, ClimbLevel, ICredentials, ICycle, IMatch } from '../../models/models';
+import { AllianceColor, ClimbLevel, ICredentials, ICycle, IMatch, IMatchLineup } from '../../models/models';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import CycleEstimator from './cycle-estimator/CycleEstimator';
 import { dataModelService } from '../../services/DataModelService';
@@ -9,6 +9,8 @@ import { dataModelService } from '../../services/DataModelService';
 interface IProps {
 	className?: string;
 	credentials: ICredentials;
+	schedule: IMatchLineup[];
+	scheduleIsLoading: boolean;
 	handleSubmit: (match: IMatch) => void;
 }
 
@@ -77,8 +79,8 @@ export default function DataCollectionPage(props: IProps) {
 				}}
 			/>
 			<RobotInfo
-				scheduleIsLoading={ false }
-				schedule={ null }
+				scheduleIsLoading={ props.scheduleIsLoading }
+				schedule={ props.schedule }
 				matchNumber={ matchNumber }
 				teamNumber={ robotNumber }
 				allianceColor={ allianceColor }

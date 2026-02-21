@@ -39,7 +39,7 @@ export default function RobotInfo(props: IProps) {
 		);
 	}
 
-	if (!props.schedule) {
+	if (!props.schedule || props.schedule.length === 0) {
 		return <ManualRobotInfo { ...props } />;
 	}
 
@@ -103,9 +103,9 @@ export default function RobotInfo(props: IProps) {
 				sx={ { width: 'calc(10em + 28px)' } }
 			>
 				<MenuItem value="">None</MenuItem>
-				<ListSubheader sx={ { color: '#aa3333', fontWeight: 600 } }>Red</ListSubheader>
+				<ListSubheader sx={ { color: '#AA3333', fontWeight: 600 } }>Red</ListSubheader>
 				{ redElements }
-				<ListSubheader sx={ { color: '#2255cc', fontWeight: 600 } }>Blue</ListSubheader>
+				<ListSubheader sx={ { color: '#2255CC', fontWeight: 600 } }>Blue</ListSubheader>
 				{ blueElements }
 			</Select>
 		</FormControl>

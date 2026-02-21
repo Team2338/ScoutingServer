@@ -46,6 +46,8 @@ export function App() {
 			<div className="app">
 				<DataCollectionPage
 					credentials={ credentials }
+					schedule={ schedule }
+					scheduleIsLoading={ scheduleIsLoading }
 					handleSubmit={ submitMatchData }
 				/>
 			</div>

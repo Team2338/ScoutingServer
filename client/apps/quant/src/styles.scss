@@ -31,6 +31,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gif-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	padding: 12px 16px;
 	font-weight: 600;
 	font-size: 14px;
@@ -42,6 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: $font-family;
 	letter-spacing: 0.02857em;
 	text-transform: uppercase;
+	text-decoration: none;
 	box-sizing: border-box;
 
 	&:disabled {
@@ -52,6 +56,11 @@ h1, h2, h3, h4, h5, h6 {
 .gif-button-primary {
 	@extend .gif-button;
 	background-color: #FE5000;
+}
+
+.gif-button-secondary {
+	@extend .gif-button;
+	background-color: grey;
 }
 
 .gif-button-tertiary {

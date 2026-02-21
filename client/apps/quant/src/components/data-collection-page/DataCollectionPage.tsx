@@ -1,5 +1,5 @@
 import './DataCollectionPage.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RobotInfo from './robot-info/RobotInfo';
 import { AllianceColor, ClimbLevel, ICredentials, ICycle, IMatch, IMatchLineup } from '../../models/models';
 import { TextField, ToggleButton, ToggleButtonGroup } from '@mui/material';
@@ -59,7 +59,18 @@ export default function DataCollectionPage(props: IProps) {
 
 	return (
 		<main className="page data-collection-page">
-			<div className="header">header</div>
+			<div className="header">
+				<div className="logo">
+					<img src="logos/192-pwa.png" alt="2338 logo" height="100rem" />
+				</div>
+				<div></div>
+				<a
+					className="gif-button-secondary analytics-link"
+					href="https://data.gearitforward.com/"
+				>
+					Analytics &gt;
+				</a>
+			</div>
 			<TextField
 				id="match-number"
 				label="Match Number"

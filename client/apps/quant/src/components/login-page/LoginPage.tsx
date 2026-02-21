@@ -35,7 +35,9 @@ export default function LoginPage(props: IProps) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		localStorage.setItem('login', JSON.stringify(credentials));
+		for (const key in credentials) {
+			localStorage.setItem(key, credentials[key]);
+		}
 		props.handleSubmit(credentials);
 	};
 

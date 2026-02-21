@@ -19,6 +19,19 @@
 	background-color: $blue;
 	padding: 16px 16px 32px 16px;
 
+	.header {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		.analytics-link {
+			height: fit-content;
+			width: fit-content;
+			align-self: center;
+			justify-self: flex-end;
+		}
+	}
+
 	.gamemode-title {
 		font-size: 40px;
 		line-height: 48px;

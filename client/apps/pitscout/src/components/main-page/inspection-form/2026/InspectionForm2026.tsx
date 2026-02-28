@@ -13,6 +13,7 @@ import {
 	FormQuestions,
 	IForm,
 	INTAKE_LOCATIONS,
+	SHOOTER_TYPES_2026,
 	SHOOTING_LOCATIONS_2026,
 	TRAVERSABLE_DEFENSES,
 	YES_AND_NO,
@@ -67,6 +68,7 @@ export default function InspectionForm2025(props: IProps) {
 	const [fuelCapacity,				setFuelCapacity]				= useState<string>('');
 	const [canFeedHuman,				setCanFeedHuman]				= useState<string>('');
 	const [intakeLocations,			setIntakeLocations]			= useState<string[]>([]);
+	const [shooterType,					setShooterType]					= useState<string>('');
 	const [fireRate,						setFireRate]						= useState<string>('');
 	const [shootingLocations,		setShootingLocations]		= useState<string[]>([]);
 	const [climbHeight,					setClimbHeight]					= useState<string>('');
@@ -75,6 +77,7 @@ export default function InspectionForm2025(props: IProps) {
 	const [robotNotes,					setRobotNotes]					= useState<string>('');
 	/* End form questions @formatter:on */
 
+	// Load saved values into the UI
 	useEffect(() => {
 		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
 		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
@@ -85,6 +88,7 @@ export default function InspectionForm2025(props: IProps) {
 		setTerrainPreference(savedForm.questions[FormQuestions.terrainPreference] ?? '');
 		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
 		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
+		setShooterType(savedForm.questions[FormQuestions.shooterType] ?? '');
 		setFireRate(savedForm.questions[FormQuestions.fireRate] ?? '');
 		setShootingLocations(savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []);
 		setClimbHeight(savedForm.questions[FormQuestions.climbHeight] ?? '');
@@ -105,6 +109,7 @@ export default function InspectionForm2025(props: IProps) {
 			[FormQuestions.terrainPreference]: terrainPreference,
 			[FormQuestions.fuelCapacity]: fuelCapacity,
 			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
+			[FormQuestions.shooterType]: shooterType,
 			[FormQuestions.fireRate]: fireRate,
 			[FormQuestions.shootingLocations]: shootingLocations.join(', '),
 			[FormQuestions.canFeedHuman]: canFeedHuman,
@@ -183,6 +188,13 @@ export default function InspectionForm2025(props: IProps) {
 				values={ intakeLocations }
 				includeNoneOption={ true }
 				onChange={ setIntakeLocations }
+			/>
+			<Dropdown
+				id="shooter-type-dropdown"
+				title="Shooter type"
+				options={ SHOOTER_TYPES_2026 }
+				value={ shooterType }
+				onChange={ setShooterType }
 			/>
 			<TextField
 				id="fire-rate-input"

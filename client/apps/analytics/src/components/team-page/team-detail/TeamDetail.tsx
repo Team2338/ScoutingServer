@@ -16,7 +16,7 @@ import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import {
 	Button,
-	Icon
+	Icon, Paper, Table, TableBody, TableCell, TableHead, TableRow
 } from '@mui/material';
 import {
 	ExternalLink,
@@ -92,19 +92,23 @@ function Gamemode(props: { name: string, matchNumbers: number[], objectives: Map
 	});
 
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>{ translate(props.name) }</th>
-					<th>{ translate('MEAN') }</th>
-					<th>{ translate('MEDIAN') }</th>
-					{ props.matchNumbers.map((matchNumber: number) => <th key={ matchNumber }>{ matchNumber }</th>) }
-				</tr>
-			</thead>
-			<tbody>
+		<Table component={ Paper } size="small" sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+			<TableHead sx={{ backgroundColor: '#EEEEEE' }}>
+				<TableRow>
+					<TableCell>{ translate(props.name) }</TableCell>
+					<TableCell align="right">{ translate('MEAN') }</TableCell>
+					<TableCell align="right">{ translate('MEDIAN') }</TableCell>
+					{
+						props.matchNumbers.map((matchNumber: number) => (
+							<TableCell key={ matchNumber } align="right">{ matchNumber }</TableCell>
+						))
+					}
+				</TableRow>
+			</TableHead>
+			<TableBody>
 				{ objectiveElements }
-			</tbody>
-		</table>
+			</TableBody>
+		</Table>
 	);
 
 	// return (
@@ -137,12 +141,16 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	}
 
 	return (
-		<tr>
-			<td>{ translate(props.name) }</td>
-			<td>{ props.stats.mean.toFixed(2) }</td>
-			<td>{ roundToDecimal(props.stats.median) }</td>
-			{ spacedScores.map((score: number | undefined, index: number) => <td key={ index }>{ score }</td>) }
-		</tr>
+		<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+			<TableCell sx={{ width: 'fit-content' }}>{ translate(props.name) }</TableCell>
+			<TableCell align="right">{ props.stats.mean.toFixed(2) }</TableCell>
+			<TableCell align="right">{ roundToDecimal(props.stats.median) }</TableCell>
+			{
+				spacedScores.map((score: number | undefined, index: number) => (
+					<TableCell key={ index } align="right">{ score }</TableCell>
+				))
+			}
+		</TableRow>
 	);
 
 	// return (

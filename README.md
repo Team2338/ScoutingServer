@@ -51,7 +51,7 @@ Pit scouting app (of course). Users perform 'inspections' by answering questions
 <img src="https://pit.gearitforward.com/Screenshot_GSP.png" alt="" role="presentation" height="512"/>
 
 ### Collection
-[GitHub](https://github.com/Team2338/GearScout2024) | [Website](https://gearitforward.com)\
+[GitHub](https://github.com/Team2338/GearScoutCollection2026) | [Website](https://gearitforward.com)\
 Quantitative scouting app. Users record 'objectives' scored in a match.
 
 

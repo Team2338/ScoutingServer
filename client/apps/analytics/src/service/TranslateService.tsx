@@ -177,7 +177,16 @@ const languages: ILanguageTranslation = {
 		'CAN_MODIFY_DATA': 'Can modify data',
 		'CAN_SEE_EVENT_LIST': 'Can see event list',
 		'NO_PRIVILEGES': 'No privileges',
-		'ACTIONS': 'Actions'
+		'ACTIONS': 'Actions',
+		'ACCURACY': 'Accuracy',
+		'CLIMB_2026': 'Climb',
+		'SMALL_CYCLE_2026': 'Small Cycle (1-10)',
+		'MEDIUM_CYCLE_2026': 'Medium Cycle (11-25)',
+		'LARGE_CYCLE_2026': 'Large Cycle (26+)',
+		'BLUE_TRENCH_2026': 'Blue Trench',
+		'BLUE_BUMP_2026': 'Blue Bump',
+		'RED_TRENCH_2026': 'Red Trench',
+		'RED_BUMP_2026': 'Red Bump',
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

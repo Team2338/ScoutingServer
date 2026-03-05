@@ -128,7 +128,7 @@ function ManualRobotInfo(props: IProps) {
 				slotProps={{
 					htmlInput: {
 						minLength: 1,
-						maxLength: 3,
+						maxLength: 5,
 						pattern: '[0-9]*'
 					}
 				}}

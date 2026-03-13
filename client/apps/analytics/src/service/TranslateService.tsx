@@ -187,6 +187,7 @@ const languages: ILanguageTranslation = {
 		'BLUE_BUMP_2026': 'Blue Bump',
 		'RED_TRENCH_2026': 'Red Trench',
 		'RED_BUMP_2026': 'Red Bump',
+		'TOTAL_BALLS_2026': 'Total Fuel'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

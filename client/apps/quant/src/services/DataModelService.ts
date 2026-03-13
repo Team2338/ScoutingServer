@@ -16,8 +16,8 @@ class DataModelService {
 		const autoCyclesBySize = this.groupCyclesBySize(data.autoCycles);
 		const teleopCyclesBySize = this.groupCyclesBySize(data.teleopCycles);
 
-		const autoAccuracy = this.getAverageAccuracy(data.autoCycles);
-		const teleopAccuracy = this.getAverageAccuracy(data.teleopCycles);
+		const totalAutoFuel = this.getTotalFuel(data.autoCycles);
+		const totalTeleopFuel = this.getTotalFuel(data.teleopCycles);
 
 		return {
 			gameYear: 2026,
@@ -28,16 +28,16 @@ class DataModelService {
 			allianceColor: data.allianceColor,
 			objectives: [
 				{ gamemode: Gamemode.auto, objective: 'CLIMB_2026', count: data.autoClimb },
-				{ gamemode: Gamemode.auto, objective: 'ACCURACY', count: autoAccuracy },
 				{ gamemode: Gamemode.auto, objective: 'SMALL_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.small).length },
 				{ gamemode: Gamemode.auto, objective: 'MEDIUM_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.medium).length },
 				{ gamemode: Gamemode.auto, objective: 'LARGE_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.large).length },
+				{ gamemode: Gamemode.auto, objective: 'TOTAL_BALLS_2026', count: totalAutoFuel },
 
 				{ gamemode: Gamemode.teleop, objective: 'CLIMB_2026', count: data.teleopClimb },
-				{ gamemode: Gamemode.teleop, objective: 'ACCURACY', count: teleopAccuracy },
 				{ gamemode: Gamemode.teleop, objective: 'SMALL_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.small).length },
 				{ gamemode: Gamemode.teleop, objective: 'MEDIUM_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.medium).length },
 				{ gamemode: Gamemode.teleop, objective: 'LARGE_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.large).length },
+				{ gamemode: Gamemode.teleop, objective: 'TOTAL_BALLS_2026', count: totalTeleopFuel }
 			]
 		};
 	}
@@ -55,16 +55,12 @@ class DataModelService {
 		return cyclesBySize;
 	}
 
-	private getAverageAccuracy(cycles: ICycle[]): number {
-		let totalAttempted = 0;
-		let totalMade = 0;
-		for (const cycle of cycles) {
-			const quantity = this.cycleSizeToQuantity[cycle.size];
-			totalAttempted += quantity;
-			totalMade += quantity * cycle.accuracy / 100;
-		}
+	private getTotalFuel(cycles: ICycle[]): number {
+		const total = cycles
+			.map(cycle => this.cycleSizeToQuantity[cycle.size] * (cycle.accuracy / 100))
+			.reduce((sum, next) => sum + next, 0);
 
-		return Math.round(100 * totalMade / totalAttempted);
+		return Math.round(total);
 	}
 
 }

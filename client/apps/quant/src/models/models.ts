@@ -38,7 +38,8 @@ export interface ICycle {
 export enum CycleSize {
 	small = 'small',
 	medium = 'medium',
-	large = 'large'
+	large = 'large',
+	extraLarge = 'extraLarge',
 }
 
 export interface IMatch {

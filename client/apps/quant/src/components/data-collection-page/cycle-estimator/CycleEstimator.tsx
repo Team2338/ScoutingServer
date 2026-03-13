@@ -130,7 +130,8 @@ export default function CycleEstimator(props: IProps) {
 					<MenuItem value="">None</MenuItem>
 					<MenuItem value={ CycleSize.small }>1-10</MenuItem>
 					<MenuItem value={ CycleSize.medium }>11-25</MenuItem>
-					<MenuItem value={ CycleSize.large }>26+</MenuItem>
+					<MenuItem value={ CycleSize.large }>26-40</MenuItem>
+					<MenuItem value={ CycleSize.extraLarge }>41+</MenuItem>
 				</Select>
 			</FormControl>
 			<button

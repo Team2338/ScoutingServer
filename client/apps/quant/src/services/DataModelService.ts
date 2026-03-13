@@ -9,7 +9,8 @@ class DataModelService {
 	readonly cycleSizeToQuantity: ISizeToQuantityMap = {
 		[CycleSize.small]: 8,
 		[CycleSize.medium]: 20,
-		[CycleSize.large]: 35
+		[CycleSize.large]: 32,
+		[CycleSize.extraLarge]: 45
 	};
 
 	convertToRequestBody(credentials: ICredentials, data: IMatchUi2026): IMatch {
@@ -31,12 +32,14 @@ class DataModelService {
 				{ gamemode: Gamemode.auto, objective: 'SMALL_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.small).length },
 				{ gamemode: Gamemode.auto, objective: 'MEDIUM_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.medium).length },
 				{ gamemode: Gamemode.auto, objective: 'LARGE_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.large).length },
+				{ gamemode: Gamemode.auto, objective: 'EXTRA_LARGE_CYCLE_2026', count: autoCyclesBySize.get(CycleSize.extraLarge).length },
 				{ gamemode: Gamemode.auto, objective: 'TOTAL_BALLS_2026', count: totalAutoFuel },
 
 				{ gamemode: Gamemode.teleop, objective: 'CLIMB_2026', count: data.teleopClimb },
 				{ gamemode: Gamemode.teleop, objective: 'SMALL_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.small).length },
 				{ gamemode: Gamemode.teleop, objective: 'MEDIUM_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.medium).length },
 				{ gamemode: Gamemode.teleop, objective: 'LARGE_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.large).length },
+				{ gamemode: Gamemode.teleop, objective: 'EXTRA_LARGE_CYCLE_2026', count: teleopCyclesBySize.get(CycleSize.extraLarge).length },
 				{ gamemode: Gamemode.teleop, objective: 'TOTAL_BALLS_2026', count: totalTeleopFuel }
 			]
 		};

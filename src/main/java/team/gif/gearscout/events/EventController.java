@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +57,31 @@ public class EventController {
 		}
 
 		List<AggregateEventInfo> events = eventService.getEventList(user.getTeamNumber());
+		return ResponseEntity.ok(events);
+	}
+
+
+	@GetMapping(value = "/{teamNumber}")
+	public ResponseEntity<List<AggregateEventInfo>> getEvents(
+		@PathVariable Integer teamNumber,
+		@RequestHeader(value = "Authorization") String tokenHeader
+	) {
+		logger.debug("Received getEvents request");
+
+		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
+		Long userId = token.getUserId();
+		UserEntity user = userService.findUserById(userId);
+
+		if (!user.getRole().equals(UserRoles.ADMIN) && !user.getRole().equals(UserRoles.SUPERADMIN)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		// Only a superadmin can get events for other teams
+		if (!teamNumber.equals(user.getTeamNumber()) && !user.getRole().equals(UserRoles.SUPERADMIN)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		List<AggregateEventInfo> events = eventService.getEventList(teamNumber);
 		return ResponseEntity.ok(events);
 	}
 

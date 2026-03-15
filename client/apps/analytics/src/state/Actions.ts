@@ -67,7 +67,8 @@ export enum Actions {
 	SET_HIDDEN_INSPECTION_COLUMNS_START = '[INSPECTION] Set hidden columns',
 	GET_ALL_COMMENTS_START = '[COMMENTS] Start getting all comments',
 	GET_ALL_COMMENTS_SUCCESS = '[COMMENTS] Successfully got all comments',
-	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments'
+	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments',
+	SELECT_OWN_TEAM = '[SUPER] Select own team'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -337,4 +338,9 @@ export const getCommentsSuccess = (comments: CommentsForEvent, topics: string[])
 
 export const getCommentsFail = (): Action => ({
 	type: Actions.GET_ALL_COMMENTS_FAIL
+});
+
+export const setOwnTeam = (teamNumber: number): Action => ({
+	type: Actions.SELECT_OWN_TEAM,
+	payload: teamNumber
 });

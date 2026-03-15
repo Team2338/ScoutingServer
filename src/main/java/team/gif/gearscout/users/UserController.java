@@ -78,6 +78,32 @@ public class UserController {
 	}
 
 
+	@GetMapping(value = "/{teamNumber}")
+	ResponseEntity<List<UserEntity>> getUsersForTeam(
+		@PathVariable Integer teamNumber,
+		@RequestHeader(value = "Authorization") String tokenHeader
+	) {
+		logger.debug("Received getUsersForTeam request");
+
+		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
+		Long userId = token.getUserId();
+		UserEntity user = userService.findUserById(userId);
+
+		List<String> allowedRoles = List.of(UserRoles.VERIFIED_USER, UserRoles.ADMIN, UserRoles.SUPERADMIN);
+		if (!allowedRoles.contains(user.getRole())) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		// Only superadmins can get info on other teams' users
+		if (!teamNumber.equals(user.getTeamNumber()) && !user.getRole().equals(UserRoles.SUPERADMIN)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		List<UserEntity> users = userService.findUsersByTeamNumber(teamNumber);
+		return ResponseEntity.ok(users);
+	}
+
+
 	@PutMapping(value = "/{userId}/role/{role}")
 	ResponseEntity<UserEntity> updateUserRole(
 		@PathVariable Long userId,

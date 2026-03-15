@@ -484,8 +484,9 @@ export const getUsers = () => async (dispatch: AppDispatch, getState: GetState) 
 	dispatch(getUsersStart());
 
 	try {
+		const teamNumber = getState().loginV2.user.teamNumber;
 		const tokenString = getState().loginV2.tokenString;
-		const response = await gearscoutService.getUsersOnTeam(tokenString);
+		const response = await gearscoutService.getUsersOnTeam(teamNumber, tokenString);
 
 		const users: IUserInfo[] = response.data;
 		dispatch(getUsersSuccess(users));

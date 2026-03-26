@@ -82,18 +82,19 @@ export default function InspectionForm2025(props: IProps) {
 		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
 		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
 		setWeight(savedForm.questions[FormQuestions.weight] ?? '');
-		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
+		setCanAutoClimb(savedForm.questions[FormQuestions.canAutoClimb] ?? '');
+		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setTraversableDefenses(savedForm.questions[FormQuestions.traversableDefenses]?.split(', ') ?? []);
 		setTerrainPreference(savedForm.questions[FormQuestions.terrainPreference] ?? '');
-		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
+		setFuelCapacity(savedForm.questions[FormQuestions.fuelCapacity] ?? '');
 		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
 		setShooterType(savedForm.questions[FormQuestions.shooterType] ?? '');
 		setFireRate(savedForm.questions[FormQuestions.fireRate] ?? '');
 		setShootingLocations(savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []);
-		setClimbHeight(savedForm.questions[FormQuestions.climbHeight] ?? '');
+		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
+		setClimbHeight(savedForm.questions[FormQuestions.climbCapabilities] ?? '');
 		setClimbLocation(savedForm.questions[FormQuestions.climbLocation]?.split(', ') ?? []);
-		setCanAutoClimb(savedForm.questions[FormQuestions.canAutoClimb] ?? '');
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
 

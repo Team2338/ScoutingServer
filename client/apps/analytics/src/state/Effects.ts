@@ -61,7 +61,8 @@ import {
 	ITokenModel,
 	IUserInfo,
 	Language,
-	LanguageInfo, UserRole
+	LanguageInfo,
+	UserRole
 } from '@gearscout/shared-models';
 
 type GetState = () => AppState;
@@ -269,8 +270,9 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 	dispatch(getEventsStart());
 
 	try {
+		const teamNumber: number = getState().loginV2.user.teamNumber;
 		const tokenString: string = getState().loginV2.tokenString;
-		const response = await gearscoutService.getEvents(tokenString);
+		const response = await gearscoutService.getEvents(teamNumber, tokenString);
 		const events: IEventInfo[] = response.data;
 		dispatch(getEventsSuccess(events));
 	} catch (error) {
@@ -482,8 +484,9 @@ export const getUsers = () => async (dispatch: AppDispatch, getState: GetState) 
 	dispatch(getUsersStart());
 
 	try {
+		const teamNumber = getState().loginV2.user.teamNumber;
 		const tokenString = getState().loginV2.tokenString;
-		const response = await gearscoutService.getUsersOnTeam(tokenString);
+		const response = await gearscoutService.getUsersOnTeam(teamNumber, tokenString);
 
 		const users: IUserInfo[] = response.data;
 		dispatch(getUsersSuccess(users));

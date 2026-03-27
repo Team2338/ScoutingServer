@@ -37,8 +37,8 @@ class GearscoutService {
 		return this.http.post(url, data);
 	};
 
-	getEvents = (tokenString: string): GearscoutResponse<IEventInfo[]> => {
-		const url: string = '/v1/events';
+	getEvents = (teamNumber: number, tokenString: string): GearscoutResponse<IEventInfo[]> => {
+		const url: string = `/v1/events/${teamNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				Authorization: `Bearer ${tokenString}`
@@ -165,8 +165,8 @@ class GearscoutService {
 		return this.http.get(url, config);
 	};
 
-	getUsersOnTeam = (tokenString: string): GearscoutResponse<IUserInfo[]> => {
-		const url: string = '/v2/user';
+	getUsersOnTeam = (teamNumber: number, tokenString: string): GearscoutResponse<IUserInfo[]> => {
+		const url: string = `/v2/user/${teamNumber}`;
 		const config: AxiosRequestConfig = {
 			headers: {
 				Authorization: `Bearer ${tokenString}`

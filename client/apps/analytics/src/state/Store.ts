@@ -224,6 +224,22 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 					selectedEvent: action.payload
 				}
 			};
+		case Actions.SELECT_OWN_TEAM:
+			if (action.payload === state.loginV2.user.teamNumber) {
+				return state;
+			}
+
+			return {
+				...INITIAL_STATE,
+				language: state.language,
+				loginV2: {
+					...state.loginV2,
+					user: {
+						...state.loginV2.user,
+						teamNumber: action.payload
+					}
+				}
+			};
 		case Actions.GET_MATCHES_START:
 			return {
 				...state,

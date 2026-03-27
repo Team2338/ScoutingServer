@@ -4,7 +4,7 @@ import {
 	IEventInfo,
 	IUserInfo,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 describe('ProfileCard', () => {
 

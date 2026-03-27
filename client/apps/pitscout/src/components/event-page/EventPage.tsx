@@ -2,8 +2,8 @@ import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../st
 import React, { Fragment, useEffect } from 'react';
 import './EventPage.scss';
 import { useNavigate } from 'react-router';
-import { IEventInfo, IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
-import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
+import { IEventInfo, IUserInfo, LoadStatus, UserRole } from '@gearscout/shared-models';
+import { EventSelectorForm, EventSelectorList } from '@gearscout/shared-components';
 import { useTranslator } from '../../services/TranslateService';
 
 

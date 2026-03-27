@@ -16,7 +16,7 @@ import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import {
 	Button,
-	Icon
+	Icon, Paper, Table, TableBody, TableCell, TableHead, TableRow
 } from '@mui/material';
 import {
 	ExternalLink,
@@ -47,6 +47,7 @@ export default function TeamDetail(props: IProps) {
 					<Gamemode
 						key={ gamemode }
 						name={ gamemode }
+						matchNumbers={ team.matchNumbers }
 						objectives={ objectives }
 					/>
 				);
@@ -81,7 +82,7 @@ export default function TeamDetail(props: IProps) {
 	);
 }
 
-function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveStats> }) {
+function Gamemode(props: { name: string, matchNumbers: number[], objectives: Map<string, TeamObjectiveStats> }) {
 
 	const translate = useTranslator();
 
@@ -91,18 +92,41 @@ function Gamemode(props: { name: string, objectives: Map<string, TeamObjectiveSt
 	});
 
 	return (
-		<div className="gamemode">
-			<h3 className="gamemode-title">{ translate(props.name) }</h3>
-			<div className="gamemode-stats-wrapper">
+		<Table component={ Paper } size="small" sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+			<TableHead sx={{ backgroundColor: '#EEEEEE' }}>
+				<TableRow>
+					<TableCell>{ translate(props.name) }</TableCell>
+					<TableCell align="right">{ translate('MEAN') }</TableCell>
+					<TableCell align="right">{ translate('MEDIAN') }</TableCell>
+					{
+						props.matchNumbers.map((matchNumber: number) => (
+							<TableCell key={ matchNumber } align="right">{ matchNumber }</TableCell>
+						))
+					}
+				</TableRow>
+			</TableHead>
+			<TableBody>
 				{ objectiveElements }
-			</div>
-		</div>
+			</TableBody>
+		</Table>
 	);
+
+	// return (
+	// 	<div className="gamemode">
+	// 		<h3 className="gamemode-title">{ translate(props.name) }</h3>
+	// 		<div className="gamemode-stats-wrapper">
+	// 			{ objectiveElements }
+	// 		</div>
+	// 	</div>
+	// );
 }
 
 function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	const translate = useTranslator();
 	const scores = props.stats.scores.map(roundToDecimal);
+	const spacedScores = props.stats.spacedScores.map((score: number | undefined) =>
+		score === undefined ? undefined : roundToDecimal(score)
+	);
 
 	let sumListElement = null;
 	if (props.stats.sumList) {
@@ -117,14 +141,27 @@ function ObjectiveStats(props: { name: string, stats: TeamObjectiveStats }) {
 	}
 
 	return (
-		<div className="stats">
-			<div className="objective-name">{ translate(props.name) }:</div>
-			<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
-			<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
-			<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
-			<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
-			{ sumListElement }
-		</div>
+		<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+			<TableCell sx={{ width: 'fit-content' }}>{ translate(props.name) }</TableCell>
+			<TableCell align="right">{ props.stats.mean.toFixed(2) }</TableCell>
+			<TableCell align="right">{ roundToDecimal(props.stats.median) }</TableCell>
+			{
+				spacedScores.map((score: number | undefined, index: number) => (
+					<TableCell key={ index } align="right">{ score }</TableCell>
+				))
+			}
+		</TableRow>
 	);
+
+	// return (
+	// 	<div className="stats">
+	// 		<div className="objective-name">{ translate(props.name) }:</div>
+	// 		<div className="objective-stat">{ translate('SCORES') }: [ { scores.join(', ') } ]</div>
+	// 		<div className="objective-stat">{ translate('MEAN') }: { props.stats.mean.toFixed(2) }</div>
+	// 		<div className="objective-stat">{ translate('MEDIAN') }: { roundToDecimal(props.stats.median) }</div>
+	// 		<div className="objective-stat">{ translate('MODE') }: { roundToDecimal(props.stats.mode) }</div>
+	// 		{ sumListElement }
+	// 	</div>
+	// );
 
 }

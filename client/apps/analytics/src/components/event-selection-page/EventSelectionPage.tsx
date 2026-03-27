@@ -6,12 +6,12 @@ import './EventSelectionPage.scss';
 import { useNavigate } from 'react-router';
 import { useTranslator } from '../../service/TranslateService';
 import { AppDispatch, getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
-import { EventSelectorForm, EventSelectorList } from '@gearscout/components';
+import { EventSelectorForm, EventSelectorList } from '@gearscout/shared-components';
 import {
 	IEventInfo,
 	LoadStatus,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 export default function EventSelectionPage() {
 

@@ -9,6 +9,7 @@ interface ObjectiveSums {
 	gamemode: string;
 	objective: string;
 	scores: number[];
+	spacedScores: number[];
 	lists: number[][];
 }
 
@@ -52,10 +53,13 @@ class TeamModelService {
 	createTeam = (matches: MatchResponse[]): Team => {
 		const teamNumber = matches[0].robotNumber;
 		const reducedMatches = this.mergeDuplicateMatches(matches); // Merge duplicates
+		const matchNumbers = reducedMatches.map((match: MatchResponse) => match.matchNumber);
 		const stats = this.getStats(teamNumber, reducedMatches);
+		this.applyModifiers(stats);
 
 		return {
 			id: teamNumber,
+			matchNumbers: matchNumbers,
 			stats: stats
 		};
 	};
@@ -153,22 +157,30 @@ class TeamModelService {
 
 	private getStats = (teamNumber: number, matches: MatchResponse[]): ObjectiveStats => {
 		const scores: Map<string, ObjectiveSums> = new Map();
+		const matchNumbers: number[] = matches.map((match: MatchResponse) => match.matchNumber);
+		const matchNumberToIndexMap: Map<number, number> = new Map();
+
+		// Map each match number to its index in the list
+		matchNumbers.forEach((matchNumber: number, index: number) => matchNumberToIndexMap.set(matchNumber, index));
 
 		// Collect a list of counts for each objective
 		for (const match of matches) {
 			for (const objective of match.objectives) {
 				const key = objective.gamemode + objective.objective;
+				const matchIndex = matchNumberToIndexMap.get(match.matchNumber);
 
 				if (!scores.has(key)) {
 					scores.set(key, {
 						gamemode: objective.gamemode,
 						objective: objective.objective,
 						scores: [],
+						spacedScores: Array.from(Array(matchNumbers.length)).fill(undefined),
 						lists: []
 					});
 				}
 
 				scores.get(key).scores.push(objective.count);
+				scores.get(key).spacedScores[matchIndex] = objective.count;
 
 				if (objective.list && objective.list.length > 0) {
 					scores.get(key).lists.push(objective.list);
@@ -186,7 +198,9 @@ class TeamModelService {
 			stats.get(objective.gamemode)
 				.set(objective.objective, {
 					teamNumber: teamNumber,
+					matchNumbers: matchNumbers,
 					scores: objective.scores,
+					spacedScores: objective.spacedScores,
 					lists: objective.lists.length > 0 ? objective.lists : null,
 					sumList: objective.lists.length > 0 ? getSumList(objective.lists) : null,
 					meanList: objective.lists.length > 0 ? getMeanList(objective.lists) : null,
@@ -198,6 +212,44 @@ class TeamModelService {
 		});
 
 		return stats;
+	};
+
+	private applyModifiers = (stats: ObjectiveStats): void => {
+		const autoAccuracy = stats.get('AUTO')?.get('ACCURACY')?.mean;
+		const autoShotAttempts = stats.get('AUTO')?.get('HIGH_GOAL_2026');
+		if (autoAccuracy !== undefined && autoShotAttempts !== undefined) {
+			stats.get('AUTO').set('HIGH_GOAL_SUCCESS_2026', {
+				teamNumber: autoShotAttempts.teamNumber,
+				matchNumbers: autoShotAttempts.matchNumbers,
+				mean: autoShotAttempts.mean * autoAccuracy / 100,
+				median: autoShotAttempts.median * autoAccuracy / 100,
+				mode: autoShotAttempts.mode * autoAccuracy / 100,
+				spacedScores: autoShotAttempts.spacedScores.map(score => score === undefined ? undefined : score * autoAccuracy / 100),
+				scores: autoShotAttempts.scores.map(count => count * autoAccuracy / 100), // Not exact, but the best we can do right now
+				variance: 0,
+				lists: null,
+				sumList: null,
+				meanList: null,
+			});
+		}
+
+		const teleopAccuracy = stats.get('TELEOP')?.get('ACCURACY')?.mean;
+		const teleopShotAttempts = stats.get('TELEOP')?.get('HIGH_GOAL_2026');
+		if (teleopAccuracy !== undefined && teleopShotAttempts !== undefined) {
+			stats.get('TELEOP').set('HIGH_GOAL_SUCCESS_2026', {
+				teamNumber: teleopShotAttempts.teamNumber,
+				matchNumbers: teleopShotAttempts.matchNumbers,
+				mean: teleopShotAttempts.mean * teleopAccuracy / 100,
+				median: teleopShotAttempts.median * teleopAccuracy / 100,
+				mode: teleopShotAttempts.mode * teleopAccuracy / 100,
+				spacedScores: autoShotAttempts.spacedScores.map(score => score === undefined ? undefined : score * teleopAccuracy / 100),
+				scores: teleopShotAttempts.scores.map(count => count * teleopAccuracy), // Not exact, but the best we can do right now
+				variance: 0,
+				lists: null,
+				sumList: null,
+				meanList: null,
+			});
+		}
 	};
 
 }

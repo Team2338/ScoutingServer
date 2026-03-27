@@ -3,7 +3,7 @@ import {
 	uploadForm,
 	useAppDispatch,
 	useAppSelector
-} from '../../../../state';
+} from '../../../state';
 import {
 	CLIMBING_CAPABILITIES_2025,
 	DRIVE_MOTOR_TYPES,
@@ -13,31 +13,31 @@ import {
 	IForm,
 	SCORE_LOCATIONS_2025,
 	YES_AND_NO
-} from '../../../../models';
+} from '../../../models';
 import React, {
 	useEffect,
 	useState
 } from 'react';
-import Dropdown from '../fields/Dropdown';
+import Dropdown from './fields/Dropdown';
 import {
 	DrivetrainIcon,
 	MotorIcon
-} from '../../../../icons';
+} from '../../../icons';
 import {
 	Button,
 	CircularProgress,
 } from '@mui/material';
-import { LoadStatus } from '@gearscout/models';
-import CheckboxGroup from '../fields/CheckboxGroup';
+import { LoadStatus } from '@gearscout/shared-models';
+import CheckboxGroup from './fields/CheckboxGroup';
 import '../InspectionForm.scss';
-import RobotWeightInput from '../fields/RobotWeightInput';
-import RobotNotesInput from '../fields/RobotNotesInput';
+import RobotWeightInput from './fields/RobotWeightInput';
+import RobotNotesInput from './fields/RobotNotesInput';
 import {
 	DirectionsRun,
 	Phishing
 } from '@mui/icons-material';
-import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
-import AutoPathsInput from '../fields/AutoPathsInput';
+import VisionCapabilitiesInput from './fields/VisionCapabilitiesInput';
+import AutoPathsInput from './fields/AutoPathsInput';
 
 interface IProps {
 	robotNumber: number;

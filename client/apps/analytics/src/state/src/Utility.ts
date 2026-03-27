@@ -1,4 +1,4 @@
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 export function getNextStatusOnLoad(previousStatus: LoadStatus): LoadStatus {
 	if (

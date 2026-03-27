@@ -1,10 +1,10 @@
-import '../InspectionForm.scss';
+import './InspectionForm.scss';
 import {
 	AppDispatch,
 	uploadForm,
 	useAppDispatch,
 	useAppSelector,
-} from '../../../../state';
+} from '../../../state';
 import {
 	CLIMB_HEIGHT_2026,
 	CLIMB_LOCATIONS_2026,
@@ -17,17 +17,17 @@ import {
 	SHOOTING_LOCATIONS_2026,
 	TRAVERSABLE_DEFENSES,
 	YES_AND_NO,
-} from '../../../../models';
+} from '../../../models';
 import React, { useEffect, useState } from 'react';
-import Dropdown from '../fields/Dropdown';
-import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../../icons';
+import Dropdown from './fields/Dropdown';
+import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../icons';
 import { Button, CircularProgress, InputAdornment, TextField } from '@mui/material';
-import { LoadStatus } from '@gearscout/models';
-import CheckboxGroup from '../fields/CheckboxGroup';
-import RobotWeightInput from '../fields/RobotWeightInput';
-import RobotNotesInput from '../fields/RobotNotesInput';
-import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
-import AutoPathsInput from '../fields/AutoPathsInput';
+import { LoadStatus } from '@gearscout/shared-models';
+import CheckboxGroup from './fields/CheckboxGroup';
+import RobotWeightInput from './fields/RobotWeightInput';
+import RobotNotesInput from './fields/RobotNotesInput';
+import VisionCapabilitiesInput from './fields/VisionCapabilitiesInput';
+import AutoPathsInput from './fields/AutoPathsInput';
 
 interface IProps {
 	robotNumber: number;
@@ -53,7 +53,7 @@ interface IProps {
  * Climb locations (left, center, right, back center, other)
  */
 
-export default function InspectionForm2025(props: IProps) {
+export default function InspectionForm2026(props: IProps) {
 	const dispatch: AppDispatch = useAppDispatch();
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 

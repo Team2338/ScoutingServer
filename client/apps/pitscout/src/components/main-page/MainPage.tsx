@@ -23,8 +23,8 @@ import MainPageMobile from './MainPageMobile';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddImageDialog from './add-image-dialog/AddImageDialog';
 import RobotListSkeleton from './robot-list-skeleton/RobotListSkeleton';
-import { LoadStatus, UserRole } from '@gearscout/models';
-import InspectionForm2026 from './inspection-form/2026/InspectionForm2026';
+import { LoadStatus, UserRole } from '@gearscout/shared-models';
+import InspectionForm2026 from './inspection-form/InspectionForm2026';
 
 function SlideTransition(props: SlideProps) {
 	return <Slide {...props} direction="down"/>;

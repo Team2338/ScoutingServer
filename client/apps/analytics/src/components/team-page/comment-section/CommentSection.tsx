@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../state';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
 import Topic from './topic/Topic';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 interface IProps {
 	teamNumber: number;

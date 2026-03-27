@@ -25,7 +25,7 @@ import CommentSection from './comment-section/CommentSection';
 import DataFailure from '../shared/data-failure/DataFailure';
 import TeamListSkeleton from './team-list-skeleton/TeamListSkeleton';
 import TeamDetailModal from '../shared/team-detail-modal/TeamDetailModal';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 
 export default function TeamPage() {
@@ -132,6 +132,7 @@ const getTeamsWithDataOrImagesOrCommentsOrInspections = (
 	uniqueTeamNumbersWithImagesOrCommentsOrInspections.forEach((teamNumber: number) => {
 		completeListOfTeams.push({
 			id: teamNumber,
+			matchNumbers: [],
 			stats: null
 		});
 	});

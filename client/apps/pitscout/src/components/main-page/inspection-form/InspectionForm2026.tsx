@@ -1,4 +1,4 @@
-import '../InspectionForm.scss';
+import './InspectionForm.scss';
 import {
 	AppDispatch,
 	uploadForm,

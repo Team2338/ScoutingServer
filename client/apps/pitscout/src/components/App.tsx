@@ -6,7 +6,7 @@ import MainPage from './main-page/MainPage';
 import LoginPage from './login-page/LoginPage';
 import EventPage from './event-page/EventPage';
 import { Navigate, Route, Routes } from 'react-router';
-import { IEventInfo } from '@gearscout/models';
+import { IEventInfo } from '@gearscout/shared-models';
 
 function App() {
 	const dispatch = useAppDispatch();

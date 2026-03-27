@@ -6,7 +6,7 @@ import './ProfileCard.scss';
 import {
 	IEventInfo,
 	IUserInfo
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import { CalendarMonthRounded } from '@mui/icons-material';
 
 interface IProps {

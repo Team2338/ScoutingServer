@@ -39,15 +39,18 @@ export type ObjectiveStats = Map<string, Map<string, TeamObjectiveStats>>; // ga
 
 export interface Team {
 	id: number;
+	matchNumbers: number[];
 	stats: ObjectiveStats;
 }
 
 export interface TeamObjectiveStats {
 	teamNumber: number;
-	scores: number[];
-	lists: number[][];
-	sumList: number[]; // The sum of all lists
-	meanList: number[]; // The average of all lists
+	matchNumbers: number[];
+	scores: number[]; // Excludes matches with no data
+	spacedScores: (number | undefined)[]; // Insert 'undefined' for matches with no data
+	lists: number[][] | null;
+	sumList: number[] | null; // The sum of all lists
+	meanList: number[] | null; // The average of all lists
 	mean: number;
 	variance: number;
 	median: number;

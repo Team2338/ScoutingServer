@@ -1,7 +1,7 @@
 import './EventManagementPage.scss';
 import { useTranslator } from '../../service/TranslateService';
 import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
-import { IEventInfo, LoadStatus } from '@gearscout/models';
+import { IEventInfo, LoadStatus } from '@gearscout/shared-models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
 	IconButton,

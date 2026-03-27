@@ -16,7 +16,7 @@ import {
 	SHOOTING_LOCATIONS_2024,
 	Statelet,
 	YES_AND_NO
-} from '../../../../models';
+} from '../../../models';
 import {
 	Button,
 	CircularProgress,
@@ -27,18 +27,18 @@ import {
 	uploadForm,
 	useAppDispatch,
 	useAppSelector
-} from '../../../../state';
+} from '../../../state';
 import {
 	DrivetrainIcon,
 	MotorIcon
-} from '../../../../icons';
-import { LoadStatus } from '@gearscout/models';
-import Dropdown from '../fields/Dropdown';
-import RobotWeightInput from '../fields/RobotWeightInput';
-import RobotNotesInput from '../fields/RobotNotesInput';
-import CheckboxGroup from '../fields/CheckboxGroup';
-import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
-import AutoPathsInput from '../fields/AutoPathsInput';
+} from '../../../icons';
+import { LoadStatus } from '@gearscout/shared-models';
+import Dropdown from './fields/Dropdown';
+import RobotWeightInput from './fields/RobotWeightInput';
+import RobotNotesInput from './fields/RobotNotesInput';
+import CheckboxGroup from './fields/CheckboxGroup';
+import VisionCapabilitiesInput from './fields/VisionCapabilitiesInput';
+import AutoPathsInput from './fields/AutoPathsInput';
 
 
 interface IProps {

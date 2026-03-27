@@ -42,10 +42,10 @@ import {
 	LanguageInfo,
 	LoadStatus,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import {
 	ProfileCard
-} from '@gearscout/components';
+} from '@gearscout/shared-components';
 
 
 interface IRoute {

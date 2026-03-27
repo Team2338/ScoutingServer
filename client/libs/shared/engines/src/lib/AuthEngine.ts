@@ -4,7 +4,7 @@ import {
 	ITokenPayloadResponse,
 	ITokenResponse,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 class AuthEngine {
 

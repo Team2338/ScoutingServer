@@ -5,7 +5,7 @@ import React, {
 import {
 	IEventInfo,
 	LoadStatus
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import styles from './EventSelectorList.module.scss';
 import {
 	Button,

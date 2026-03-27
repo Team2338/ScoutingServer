@@ -18,8 +18,8 @@ import { NavLink } from 'react-router';
 import {
 	IEventInfo,
 	IUserInfo
-} from '@gearscout/models';
-import { ProfileCard } from '@gearscout/components';
+} from '@gearscout/shared-models';
+import { ProfileCard } from '@gearscout/shared-components';
 
 export default function Header() {
 	const dispatch = useAppDispatch();

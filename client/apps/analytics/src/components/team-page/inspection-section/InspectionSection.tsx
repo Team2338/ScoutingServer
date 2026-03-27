@@ -4,7 +4,7 @@ import { ImageState, Inspection, InspectionQuestion, InspectionState } from '../
 import { useAppSelector } from '../../../state';
 import { CircularProgress, Drawer, Skeleton } from '@mui/material';
 import { useTranslator } from '../../../service/TranslateService';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 interface IProps {
 	robotNumber: number;

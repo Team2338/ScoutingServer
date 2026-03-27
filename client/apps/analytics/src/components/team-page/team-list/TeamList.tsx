@@ -9,7 +9,7 @@ import { useTranslator } from '../../../service/TranslateService';
 import SearchInput from '../../shared/search-input/SearchInput';
 import { useSelectedTeam } from '../../../state/src/Selectors';
 import { selectTeam, useAppDispatch, useAppSelector } from '../../../state';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 interface IProps {
 	teams: Team[];

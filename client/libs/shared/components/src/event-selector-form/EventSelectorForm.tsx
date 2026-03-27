@@ -1,5 +1,5 @@
 import styles from './EventSelectorForm.module.scss';
-import { IEventInfo } from '@gearscout/models';
+import { IEventInfo } from '@gearscout/shared-models';
 import { Button, TextField } from '@mui/material';
 import { FormEvent, useState } from 'react';
 

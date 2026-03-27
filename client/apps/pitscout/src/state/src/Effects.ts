@@ -34,14 +34,14 @@ import {
 	IUserInfo,
 	LoginErrors,
 	UserRole
-} from '@gearscout/models';
-import { authEngine } from '@gearscout/engines';
+} from '@gearscout/shared-models';
+import { authEngine } from '@gearscout/shared-engines';
 import {
 	loginFailed,
 	loginStart,
 	loginSuccess,
 	logoutSuccess
-} from '@gearscout/state';
+} from '@gearscout/shared-state';
 
 type GetState = () => IPitState;
 const OFFLINE_INSPECTION_LOCATION = 'offlineInspections';

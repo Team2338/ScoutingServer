@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import InspectionTableConfigDrawer from './inspection-table-config-drawer/InspectionTableConfigDrawer';
 import DataFailure from '../shared/data-failure/DataFailure';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 export default function InspectionPage() {
 	const translate = useTranslator();

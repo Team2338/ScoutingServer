@@ -55,6 +55,7 @@ class TeamModelService {
 		const reducedMatches = this.mergeDuplicateMatches(matches); // Merge duplicates
 		const matchNumbers = reducedMatches.map((match: MatchResponse) => match.matchNumber);
 		const stats = this.getStats(teamNumber, reducedMatches);
+		this.applyModifiers(stats);
 
 		return {
 			id: teamNumber,
@@ -211,6 +212,44 @@ class TeamModelService {
 		});
 
 		return stats;
+	};
+
+	private applyModifiers = (stats: ObjectiveStats): void => {
+		const autoAccuracy = stats.get('AUTO')?.get('ACCURACY')?.mean;
+		const autoShotAttempts = stats.get('AUTO')?.get('HIGH_GOAL_2026');
+		if (autoAccuracy !== undefined && autoShotAttempts !== undefined) {
+			stats.get('AUTO').set('HIGH_GOAL_SUCCESS_2026', {
+				teamNumber: autoShotAttempts.teamNumber,
+				matchNumbers: autoShotAttempts.matchNumbers,
+				mean: autoShotAttempts.mean * autoAccuracy / 100,
+				median: autoShotAttempts.median * autoAccuracy / 100,
+				mode: autoShotAttempts.mode * autoAccuracy / 100,
+				spacedScores: autoShotAttempts.spacedScores.map(score => score === undefined ? undefined : score * autoAccuracy / 100),
+				scores: autoShotAttempts.scores.map(count => count * autoAccuracy / 100), // Not exact, but the best we can do right now
+				variance: 0,
+				lists: null,
+				sumList: null,
+				meanList: null,
+			});
+		}
+
+		const teleopAccuracy = stats.get('TELEOP')?.get('ACCURACY')?.mean;
+		const teleopShotAttempts = stats.get('TELEOP')?.get('HIGH_GOAL_2026');
+		if (teleopAccuracy !== undefined && teleopShotAttempts !== undefined) {
+			stats.get('TELEOP').set('HIGH_GOAL_SUCCESS_2026', {
+				teamNumber: teleopShotAttempts.teamNumber,
+				matchNumbers: teleopShotAttempts.matchNumbers,
+				mean: teleopShotAttempts.mean * teleopAccuracy / 100,
+				median: teleopShotAttempts.median * teleopAccuracy / 100,
+				mode: teleopShotAttempts.mode * teleopAccuracy / 100,
+				spacedScores: autoShotAttempts.spacedScores.map(score => score === undefined ? undefined : score * teleopAccuracy / 100),
+				scores: teleopShotAttempts.scores.map(count => count * teleopAccuracy), // Not exact, but the best we can do right now
+				variance: 0,
+				lists: null,
+				sumList: null,
+				meanList: null,
+			});
+		}
 	};
 
 }

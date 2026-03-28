@@ -196,6 +196,14 @@ const languages: ILanguageTranslation = {
 		'HIGH_GOAL_2026': 'Fuel shot',
 		'HIGH_GOAL_SUCCESS_2026': 'Fuel scored',
 		'SWITCH_TEAMS': 'Switch teams',
+		'CAN_AUTO_CLIMB': 'Can climb in auto',
+		'CAN_FEED_HUMAN': 'Can feed HP',
+		'CLIMB_LOCATION': 'Climb location',
+		'FIRE_RATE': 'Fire rate',
+		'FUEL_CAPACITY': 'Fuel capacity',
+		'SHOOTER_TYPE': 'Shooter type',
+		'TERRAIN_PREFERENCE': 'Terrain preference',
+		'TRAVERSABLE_DEFENSES': 'Traversable terrain'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

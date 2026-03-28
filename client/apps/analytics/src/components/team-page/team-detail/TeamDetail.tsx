@@ -1,9 +1,9 @@
 import React, {
-	Fragment, useMemo,
+	Fragment,
 	useState
 } from 'react';
 import {
-	GAMEMODE_ORDERING, OBJECTIVE_ORDERING,
+	GAMEMODE_ORDERING,
 	Statelet,
 	Team,
 	TeamObjectiveStats
@@ -16,7 +16,7 @@ import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import {
 	Button,
-	Icon, Paper, Table, TableBody, TableCell, TableHead, TableRow
+	Icon, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 } from '@mui/material';
 import {
 	ExternalLink,
@@ -92,23 +92,25 @@ function Gamemode(props: { name: string, matchNumbers: number[], objectives: Map
 	});
 
 	return (
-		<Table component={ Paper } size="small" sx={{ borderRadius: '8px', overflow: 'hidden' }}>
-			<TableHead sx={{ backgroundColor: '#EEEEEE' }}>
-				<TableRow>
-					<TableCell>{ translate(props.name) }</TableCell>
-					<TableCell align="right">{ translate('MEAN') }</TableCell>
-					<TableCell align="right">{ translate('MEDIAN') }</TableCell>
-					{
-						props.matchNumbers.map((matchNumber: number) => (
-							<TableCell key={ matchNumber } align="right">{ matchNumber }</TableCell>
-						))
-					}
-				</TableRow>
-			</TableHead>
-			<TableBody>
-				{ objectiveElements }
-			</TableBody>
-		</Table>
+		<TableContainer component={ Paper } sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+			<Table size="small">
+				<TableHead sx={{ backgroundColor: '#EEEEEE' }}>
+					<TableRow>
+						<TableCell>{ translate(props.name) }</TableCell>
+						<TableCell align="right">{ translate('MEAN') }</TableCell>
+						<TableCell align="right">{ translate('MEDIAN') }</TableCell>
+						{
+							props.matchNumbers.map((matchNumber: number) => (
+								<TableCell key={ matchNumber } align="right">{ matchNumber }</TableCell>
+							))
+						}
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{ objectiveElements }
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 
 	// return (

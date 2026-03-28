@@ -1,9 +1,9 @@
 import React, {
-	Fragment,
+	Fragment, useMemo,
 	useState
 } from 'react';
 import {
-	GAMEMODE_ORDERING,
+	GAMEMODE_ORDERING, OBJECTIVE_ORDERING,
 	Statelet,
 	Team,
 	TeamObjectiveStats

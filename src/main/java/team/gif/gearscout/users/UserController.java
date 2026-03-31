@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import team.gif.gearscout.shared.AuthService;
 import team.gif.gearscout.shared.UserRoles;
 import team.gif.gearscout.token.CredentialServiceV2;
 import team.gif.gearscout.token.model.LoginResponse;
@@ -29,16 +30,19 @@ import java.util.List;
 public class UserController {
 
 	private static final Logger logger = LogManager.getLogger(UserController.class);
+	private final AuthService authService;
 	private final CredentialServiceV2 credentialService;
 	private final TokenService tokenService;
 	private final UserService userService;
 
 	@Autowired
 	public UserController(
+		AuthService authService,
 		CredentialServiceV2 credentialService,
 		TokenService tokenService,
 		UserService userService
 	) {
+		this.authService = authService;
 		this.credentialService = credentialService;
 		this.tokenService = tokenService;
 		this.userService = userService;
@@ -58,15 +62,25 @@ public class UserController {
 	}
 
 
+	@GetMapping(value = "/self")
+	ResponseEntity<UserEntity> getSelfUser(
+		@RequestHeader(value = "Authorization") String tokenHeader
+	) {
+		logger.debug("Received getSelfUser request");
+
+		UserEntity user = authService.getUserFromTokenHeader(tokenHeader);
+
+		return ResponseEntity.ok(user);
+	}
+
+
 	@GetMapping(value = "")
 	ResponseEntity<List<UserEntity>> getUsersForTeam(
 		@RequestHeader(value = "Authorization") String tokenHeader
 	) {
 		logger.debug("Received getUsersForTeam request");
 
-		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
-		Long userId = token.getUserId();
-		UserEntity user = userService.findUserById(userId);
+		UserEntity user = authService.getUserFromTokenHeader(tokenHeader);
 
 		List<String> allowedRoles = List.of(UserRoles.VERIFIED_USER, UserRoles.ADMIN, UserRoles.SUPERADMIN);
 		if (!allowedRoles.contains(user.getRole())) {
@@ -85,9 +99,7 @@ public class UserController {
 	) {
 		logger.debug("Received getUsersForTeam request");
 
-		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
-		Long userId = token.getUserId();
-		UserEntity user = userService.findUserById(userId);
+		UserEntity user = authService.getUserFromTokenHeader(tokenHeader);
 
 		List<String> allowedRoles = List.of(UserRoles.VERIFIED_USER, UserRoles.ADMIN, UserRoles.SUPERADMIN);
 		if (!allowedRoles.contains(user.getRole())) {
@@ -112,9 +124,7 @@ public class UserController {
 	) {
 		logger.debug("Received updateUserRole request");
 
-		TokenModel token = tokenService.validateTokenHeader(tokenHeader);
-		Long requesterId = token.getUserId();
-		UserEntity requester = userService.findUserById(requesterId);
+		UserEntity requester = authService.getUserFromTokenHeader(tokenHeader);
 		UserEntity target = userService.findUserById(userId);
 
 		if (target.getRole().equals(UserRoles.SUPERADMIN)) {

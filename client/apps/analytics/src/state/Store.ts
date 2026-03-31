@@ -127,7 +127,7 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 				loginV2: {
 					...state.loginV2,
 					loginStatus: LoginStatus.loggedIn,
-					role: action.payload.token.role,
+					role: action.payload.user.role,
 					user: action.payload.user,
 					tokenString: action.payload.tokenString,
 					token: action.payload.token,

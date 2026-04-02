@@ -1,6 +1,6 @@
 import './EventManagementPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { getEvents, selectEvent, useAppDispatch, useAppSelector } from '../../state';
+import { getEvents, hideEvent, selectEvent, useAppDispatch, useAppSelector } from '../../state';
 import { IEventInfo, LoadStatus } from '@gearscout/shared-models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
@@ -32,6 +32,8 @@ export default function EventManagementPage() {
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
+
+	const filteredEvents: IEventInfo[] = events.filter(event => !event.isHidden);
 
 	const isRowSelected = useCallback(
 		(event: IEventInfo) => event.eventId === selectedEvent.eventId,
@@ -88,7 +90,7 @@ export default function EventManagementPage() {
 					</TableHead>
 					<TableBody>
 						{
-							events.map(event => (
+							filteredEvents.map(event => (
 								<StyledRow key={ event.eventId } className={ isRowSelected(event) ? 'selected': '' }>
 									<TableCell>{ event.eventCode }</TableCell>
 									<TableCell>{ event.secretCode }</TableCell>
@@ -96,7 +98,7 @@ export default function EventManagementPage() {
 									<TableCell align="right">{ event.inspectionCount }</TableCell>
 									<TableCell align="right">{ event.matchCount }</TableCell>
 									<TableCell align="right">
-										<ActionButton event={ event } />
+										<ActionButton event={ event } isSelected={ isRowSelected(event) }/>
 									</TableCell>
 								</StyledRow>
 							))
@@ -108,7 +110,7 @@ export default function EventManagementPage() {
 	);
 }
 
-const ActionButton = ({ event }: { event: IEventInfo}) => {
+const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: boolean }) => {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -124,6 +126,11 @@ const ActionButton = ({ event }: { event: IEventInfo}) => {
 
 	const handleEventSelection = () => {
 		dispatch(selectEvent(event));
+		handleClose();
+	};
+
+	const handleEventHide = () => {
+		dispatch(hideEvent(event));
 		handleClose();
 	};
 
@@ -149,6 +156,9 @@ const ActionButton = ({ event }: { event: IEventInfo}) => {
 			>
 				<MenuItem onClick={ handleEventSelection }>
 					{ translate('SWITCH_TO_EVENT') }
+				</MenuItem>
+				<MenuItem onClick={ handleEventHide } disabled={ isSelected }>
+					{ translate('HIDE_EVENT')}
 				</MenuItem>
 			</Menu>
 		</Fragment>

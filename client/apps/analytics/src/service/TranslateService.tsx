@@ -203,7 +203,10 @@ const languages: ILanguageTranslation = {
 		'FUEL_CAPACITY': 'Fuel capacity',
 		'SHOOTER_TYPE': 'Shooter type',
 		'TERRAIN_PREFERENCE': 'Terrain preference',
-		'TRAVERSABLE_DEFENSES': 'Traversable terrain'
+		'TRAVERSABLE_DEFENSES': 'Traversable terrain',
+		'EVENTS_TABLE': 'Events table',
+		'HIDE_EVENT': 'Hide event',
+		'UNHIDE_EVENT': 'Unhide event'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

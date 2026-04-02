@@ -40,6 +40,7 @@ export const EventSelectorForm = (props: IProps) => {
 			gameYear: Number(gameYear),
 			eventCode: eventCode,
 			secretCode: secretCode,
+			isHidden: false,
 			matchCount: null,
 			inspectionCount: null
 		});

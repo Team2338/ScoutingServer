@@ -1,10 +1,11 @@
-import { Language, LoadStatus, UserRole } from '@gearscout/shared-models';
+import { IEventInfo, Language, LoadStatus, UserRole } from '@gearscout/shared-models';
 import { configureStore, UnknownAction } from '@reduxjs/toolkit';
 import { userManagementSlice } from './src/UserManagementSlice';
 import { AppState, ImageInfo, ImageState, LoginStatus, Match, MatchResponse, } from '../models';
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 import { getNextStatusOnFail, getNextStatusOnLoad } from './src/Utility';
+import * as repl from 'node:repl';
 
 
 const INITIAL_STATE: AppState = {
@@ -103,6 +104,7 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 						gameYear: action.payload.gameYear,
 						eventCode: action.payload.eventCode,
 						secretCode: action.payload.secretCode,
+						isHidden: false,
 						matchCount: null,
 						inspectionCount: null
 					}
@@ -222,6 +224,26 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 				events: {
 					...state.events,
 					selectedEvent: action.payload
+				}
+			};
+		case Actions.HIDE_EVENT_SUCCESS:
+			if (action.payload.eventId === state.events.selectedEvent.eventId) {
+				throw Error('Cannot hide a selected event');
+			}
+
+			return {
+				...state,
+				events: {
+					...state.events,
+					list: replaceEvent(state.events.list, action.payload.eventId, event => ({ ...event, isHidden: true }))
+				}
+			};
+		case Actions.UNHIDE_EVENT_SUCCESS:
+			return {
+				...state,
+				events: {
+					...state.events,
+					list: replaceEvent(state.events.list, action.payload.eventId, event => ({ ...event, isHidden: false }))
 				}
 			};
 		case Actions.SELECT_OWN_TEAM:
@@ -581,6 +603,14 @@ export const store = configureStore({
 // Infer the `RootState` and `AppDispatch` types from the store itself
 // export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+function replaceEvent(events: IEventInfo[], eventId: number, replacer: (event: IEventInfo) => IEventInfo): IEventInfo[] {
+	const targetIndex = events.findIndex(event => event.eventId === eventId);
+	const result = events.slice();
+	result[targetIndex] = replacer(result[targetIndex]);
+
+	return result;
+}
 
 function replaceMatch(matches: Match[], oldId: number, match: Match): Match[] {
 	const targetIndex = matches.findIndex((match: Match) => match.id === oldId);

@@ -48,6 +48,34 @@ class GearscoutService {
 		return this.http.get(url, config);
 	};
 
+	hideEvent = (data: {
+		eventId: number;
+		tokenString: string;
+	}): GearscoutResponse<IEventInfo> => {
+		const url: string = `/v1/events/${data.eventId}/hide`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${data.tokenString}`
+			}
+		};
+
+		return this.http.put(url, null, config);
+	};
+
+	unhideEvent = (data: {
+		eventId: number;
+		tokenString: string;
+	}): GearscoutResponse<IEventInfo> => {
+		const url: string = `/v1/events/${data.eventId}/unhide`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				Authorization: `Bearer ${data.tokenString}`
+			}
+		};
+
+		return this.http.put(url, null, config);
+	};
+
 	getMatches = (teamNumber: number, gameYear: number, eventCode: string, secretCode: string): GearscoutResponse<MatchResponse[]> => {
 		const url: string = `/v1/team/${teamNumber}/gameYear/${gameYear}/event/${eventCode}`;
 		const config: AxiosRequestConfig = {

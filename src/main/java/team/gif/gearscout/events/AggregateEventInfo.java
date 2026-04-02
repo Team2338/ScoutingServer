@@ -7,6 +7,7 @@ public class AggregateEventInfo {
 	public final Integer gameYear;
 	public final String eventCode;
 	public final String secretCode;
+	public final boolean isHidden;
 	private Long matchCount;
 	private Long inspectionCount;
 
@@ -15,13 +16,15 @@ public class AggregateEventInfo {
 		Integer teamNumber,
 		Integer gameYear,
 		String eventCode,
-		String secretCode
+		String secretCode,
+		boolean isHidden
 	) {
 		this.eventId = eventId;
 		this.teamNumber = teamNumber;
 		this.gameYear = gameYear;
 		this.eventCode = eventCode;
 		this.secretCode = secretCode;
+		this.isHidden = isHidden;
 		this.matchCount = 0L;
 		this.inspectionCount = 0L;
 	}

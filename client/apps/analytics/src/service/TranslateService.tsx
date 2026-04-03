@@ -211,10 +211,12 @@ const languages: ILanguageTranslation = {
 		'SHOW_ONLY_VALID_EVENTS': 'Show only valid events',
 		'SHOW_ONLY_HIDDEN_EVENTS': 'Show only hidden events',
 		'ARE_YOU_SURE': 'Are you sure?',
-		'DATA_MIGRATION_CONFIRMATION': 'This will migrate all of the data from the target event into this one.\n' +
-			'The target event will be removed once all data has been transferred.\n' +
-			'Please enter the information for your currently selected event\n' +
-			'to confirm that you wish to perform this migration.'
+		'DATA_MIGRATION_DESCRIPTION': 'This will migrate all of the data from the target event into this one.\n' +
+			'The target event will be removed once all data has been transferred.',
+		'DATA_MIGRATION_PROMPT': 'Please enter the information for your currently selected event\n' +
+			'to confirm that you wish to perform this migration.',
+		'YES': 'Yes',
+		'NO': 'No'
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

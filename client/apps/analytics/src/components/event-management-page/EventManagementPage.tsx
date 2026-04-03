@@ -13,10 +13,13 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow, ToggleButton, ToggleButtonGroup, Tooltip
+	TableRow,
+	ToggleButton,
+	ToggleButtonGroup,
+	Tooltip
 } from '@mui/material';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { MoreVert, Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { MoreVert, RefreshRounded, Visibility, VisibilityOff } from '@mui/icons-material';
 
 const StyledRow = styled(TableRow)(({ theme }) => ({
 	['&.selected']: {
@@ -35,9 +38,19 @@ export default function EventManagementPage() {
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
+	const lastUpdated: string = useAppSelector(state => state.events.lastUpdated);
 
 	const [shouldShowHidden, setShouldShowHidden] = useState(false);
 	const filteredEvents: IEventInfo[] = events.filter(event => event.isHidden === shouldShowHidden);
+
+	const formattedUpdateTime: string = useMemo(() => {
+		if (!lastUpdated) return '';
+
+		return Intl.DateTimeFormat('fr', {
+			dateStyle: undefined,
+			timeStyle: 'short'
+		}).format(new Date(lastUpdated));
+	}, [lastUpdated]);
 
 	const isRowSelected = useCallback(
 		(event: IEventInfo) => event.eventId === selectedEvent.eventId,
@@ -68,7 +81,11 @@ export default function EventManagementPage() {
 	return (
 		<main className="page event-management-page">
 			<div className="header-wrapper">
-				<h2 className="page-title">{ translate('EVENTS') }</h2>
+				<EventTitleAndRefresh
+					lastUpdateTime={ formattedUpdateTime }
+					loadStatus={ eventLoadStatus }
+					handleEventListReload={ () => dispatch(getEvents()) }
+				/>
 				<ToggleButtonGroup
 					value={ shouldShowHidden }
 					exclusive={ true }
@@ -133,6 +150,35 @@ export default function EventManagementPage() {
 		</main>
 	);
 }
+
+const EventTitleAndRefresh = (props: {
+	className?: string;
+	loadStatus?: LoadStatus;
+	lastUpdateTime: string;
+	handleEventListReload: () => void;
+}) => {
+	const translate = useTranslator();
+
+	return (
+		<div className={ props.className + ' event-title-and-refresh' }>
+			<div className="title-and-updated">
+				<h2 className="page-title">{ translate('EVENTS') }</h2>
+				<span className="last-updated">
+					{ translate('LAST_UPDATED_AT').replace('{TIME}', props.lastUpdateTime) }
+				</span>
+			</div>
+			<IconButton
+				className="reload-button"
+				size="small"
+				aria-label={ translate('REFRESH_DATA') }
+				disabled={ props.loadStatus === LoadStatus.loadingWithPriorSuccess }
+				onClick={ props.handleEventListReload }
+			>
+				<RefreshRounded />
+			</IconButton>
+		</div>
+	);
+};
 
 const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: boolean }) => {
 	const translate = useTranslator();

@@ -5,7 +5,6 @@ import { AppState, ImageInfo, ImageState, LoginStatus, Match, MatchResponse, } f
 import planningService from '../service/PlanningService';
 import { Action, Actions } from './Actions';
 import { getNextStatusOnFail, getNextStatusOnLoad } from './src/Utility';
-import * as repl from 'node:repl';
 
 
 const INITIAL_STATE: AppState = {
@@ -23,6 +22,7 @@ const INITIAL_STATE: AppState = {
 		url: null
 	},
 	events: {
+		lastUpdated: '',
 		loadStatus: LoadStatus.none,
 		error: null,
 		list: [],
@@ -200,6 +200,7 @@ const mainReducer = function (state: AppState = INITIAL_STATE, action: Action): 
 				...state,
 				events: {
 					...state.events,
+					lastUpdated: (new Date()).toISOString(),
 					loadStatus: LoadStatus.success,
 					list: action.payload
 				}

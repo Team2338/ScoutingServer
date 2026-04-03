@@ -6,6 +6,7 @@ export interface IEventInfo {
 	gameYear: number;
 	eventCode: string;
 	secretCode: string;
+	isHidden: boolean;
 	matchCount: number | null;
 	inspectionCount: number | null;
 }

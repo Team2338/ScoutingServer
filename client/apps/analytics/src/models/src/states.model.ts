@@ -41,7 +41,7 @@ export interface AppState {
 		loadStatus: LoadStatus;
 		url: string;
 	};
-	events: IEventState,
+	events: IEventState & { lastUpdated: string },
 	matches: {
 		lastUpdated: string;
 		loadStatus: LoadStatus;

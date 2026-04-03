@@ -5,6 +5,31 @@
 	row-gap: 8px;
 	padding: 16px;
 
+	.header-wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+	}
+
+	.event-title-and-refresh {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.last-updated {
+		display: flex;
+		font-size: 12px;
+		line-height: 16px;
+		color: #444;
+	}
+
+	.reload-button {
+		width: fit-content;
+		height: fit-content;
+		margin-left: 24px;
+	}
+
 	td, th {
 		padding: 12px;
 	}
@@ -12,4 +37,5 @@
 	.action-button {
 		padding: 2px;
 	}
+
 }

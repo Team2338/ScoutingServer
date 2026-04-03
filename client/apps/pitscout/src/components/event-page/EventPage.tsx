@@ -11,9 +11,12 @@ export default function EventPage() {
 	const translate = useTranslator();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+
 	const user: IUserInfo = useAppSelector(state => state.login.user);
 	const eventLoadStatus: LoadStatus = useAppSelector(state => state.events.loadStatus);
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
+
+	const filteredEvents: IEventInfo[] = events.filter(event => !event.isHidden);
 	const isAdmin: boolean = user.role === UserRole.admin || user.role === UserRole.superAdmin;
 
 	const _getEvents = () => dispatch(getEvents());
@@ -48,7 +51,7 @@ export default function EventPage() {
 					<section className="event-list-section">
 						<h2 className="event-section-header">Choose an existing event</h2>
 						<EventSelectorList
-							events={ events }
+							events={ filteredEvents }
 							eventLoadStatus={ eventLoadStatus }
 							handleEventSelected={ _selectEvent }
 							handleRetry={ _getEvents }

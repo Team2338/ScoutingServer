@@ -42,6 +42,7 @@ import {
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
+	hideEventSuccess,
 	hideInspectionColumnStart,
 	loginAsMemberFail,
 	loginAsMemberStart,
@@ -52,7 +53,8 @@ import {
 	selectEventSuccess,
 	selectLangSuccess,
 	setHiddenInspectionColumnsStart,
-	showInspectionColumnStart
+	showInspectionColumnStart,
+	unhideEventSuccess
 } from './Actions';
 import { getUsersFail, getUsersStart, getUsersSuccess, updateUserRoleSuccess } from './src/UserManagementSlice';
 import { AppDispatch } from './Store';
@@ -346,6 +348,36 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 	}
 };
 
+export const hideEvent = (event: IEventInfo) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Hiding event');
+	dispatch(hideEventSuccess(event));
+	const tokenString: string = getState().loginV2.tokenString;
+
+	try {
+		await gearscoutService.hideEvent({
+			eventId: event.eventId,
+			tokenString: tokenString
+		});
+	} catch (error) {
+		console.error('Error hiding event', error);
+	}
+};
+
+export const unhideEvent = (event: IEventInfo) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Unhiding event');
+	dispatch(unhideEventSuccess(event));
+	const tokenString: string = getState().loginV2.tokenString;
+
+	try {
+		await gearscoutService.unhideEvent({
+			eventId: event.eventId,
+			tokenString: tokenString
+		});
+	} catch (error) {
+		console.error('Error unhiding event', error);
+	}
+};
+
 export const hideMatch = (match: Match) => async (dispatch: AppDispatch, getState: GetState) => {
 	console.log('Hiding match');
 	try {
@@ -431,7 +463,7 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 		const info: ImageInfo[] = imageModelService.createImageInfo(infoResponses);
 		dispatch(getEventImageInfoSuccess(info));
 	} catch (error) {
-		console.log('Error getting image info for event');
+		console.log('Error getting image info for event', error);
 		dispatch(getEventImageInfoFail());
 	}
 };

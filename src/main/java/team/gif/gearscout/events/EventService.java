@@ -67,6 +67,17 @@ public class EventService {
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
+	public EventEntity setEventHiddenStatus(Long eventId, boolean isHidden) {
+		EventEntity event = eventRepository
+			.findById(eventId)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+		event.setIsHidden(isHidden);
+		event = eventRepository.save(event);
+
+		return event;
+	}
+
 	public List<AggregateEventInfo> getEventList(Integer teamNumber) {
 		List<EventEntity> events = eventRepository.getEventEntitiesByTeamNumber(teamNumber);
 		List<Long> eventIds = events.stream()
@@ -86,7 +97,8 @@ public class EventService {
 					event.getTeamNumber(),
 					event.getGameYear(),
 					event.getEventCode(),
-					event.getSecretCode()
+					event.getSecretCode(),
+					event.getIsHidden()
 				);
 				info.setMatchCount(matchCountMap.getOrDefault(event.getId(), 0L));
 				info.setInspectionCount(inspectionCountMap.getOrDefault(event.getId(), 0L));

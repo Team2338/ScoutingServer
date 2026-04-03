@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { MoreVert, RefreshRounded, Visibility, VisibilityOff } from '@mui/icons-material';
+import MigrateDataModal from './migrate-data-modal/MigrateDataModal';
 
 const StyledRow = styled(TableRow)(({ theme }) => ({
 	['&.selected']: {
@@ -40,8 +41,21 @@ export default function EventManagementPage() {
 	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 	const lastUpdated: string = useAppSelector(state => state.events.lastUpdated);
 
-	const [shouldShowHidden, setShouldShowHidden] = useState(false);
+	const [shouldShowHidden, setShouldShowHidden] = useState<boolean>(false);
 	const filteredEvents: IEventInfo[] = events.filter(event => event.isHidden === shouldShowHidden);
+
+	const [targetEvent, setTargetEvent] = useState<IEventInfo>(null);
+	const [isMigrationModalOpen, setMigrationModalOpen] = useState<boolean>(false);
+
+	const openMigrationModal = (event: IEventInfo): void => {
+		setTargetEvent(event);
+		setMigrationModalOpen(true);
+	};
+
+	const closeMigrationModal = (): void => {
+		setMigrationModalOpen(false);
+		setTargetEvent(null);
+	};
 
 	const formattedUpdateTime: string = useMemo(() => {
 		if (!lastUpdated) return '';
@@ -139,7 +153,11 @@ export default function EventManagementPage() {
 									<TableCell align="right">{ event.inspectionCount }</TableCell>
 									<TableCell align="right">{ event.matchCount }</TableCell>
 									<TableCell align="right">
-										<ActionButton event={ event } isSelected={ isRowSelected(event) }/>
+										<ActionButton
+											event={ event }
+											isSelected={ isRowSelected(event) }
+											openMigrationModal={ openMigrationModal }
+										/>
 									</TableCell>
 								</StyledRow>
 							))
@@ -147,6 +165,11 @@ export default function EventManagementPage() {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<MigrateDataModal
+				isOpen={ isMigrationModalOpen }
+				handleClose={ closeMigrationModal }
+				eventToMigrate={ targetEvent }
+			/>
 		</main>
 	);
 }
@@ -180,7 +203,11 @@ const EventTitleAndRefresh = (props: {
 	);
 };
 
-const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: boolean }) => {
+const ActionButton = ({ event, isSelected, openMigrationModal }: {
+	event: IEventInfo,
+	isSelected: boolean,
+	openMigrationModal: (event: IEventInfo) => void
+}) => {
 	const translate = useTranslator();
 	const dispatch = useAppDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -210,6 +237,11 @@ const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: bo
 		handleClose();
 	};
 
+	const handleMigrationModalOpen = () => {
+		openMigrationModal(event);
+		handleClose();
+	};
+
 	return (
 		<Fragment>
 			<IconButton
@@ -232,6 +264,9 @@ const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: bo
 			>
 				<MenuItem onClick={ handleEventSelection }>
 					{ translate('SWITCH_TO_EVENT') }
+				</MenuItem>
+				<MenuItem onClick={ handleMigrationModalOpen } disabled={ isSelected }>
+					{ translate('MIGRATE_MATCHES') }
 				</MenuItem>
 				<MenuItem onClick={ handleEventHide } disabled={ isSelected }>
 					{ translate(event.isHidden ? 'UNHIDE_EVENT' : 'HIDE_EVENT')}

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useTranslator } from '../../../service/TranslateService';
 import { useAppDispatch, useAppSelector } from '../../../state';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { IEventInfo } from '@gearscout/shared-models';
 
 interface IProps {
 	isOpen: boolean;
 	handleClose: () => void;
+	eventToMigrate: IEventInfo;
 }
 
 export default function MigrateDataModal(props: IProps) {

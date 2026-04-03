@@ -1,6 +1,6 @@
 import './EventManagementPage.scss';
 import { useTranslator } from '../../service/TranslateService';
-import { getEvents, hideEvent, selectEvent, useAppDispatch, useAppSelector } from '../../state';
+import { getEvents, hideEvent, selectEvent, unhideEvent, useAppDispatch, useAppSelector } from '../../state';
 import { IEventInfo, LoadStatus } from '@gearscout/shared-models';
 import DataFailure from '../shared/data-failure/DataFailure';
 import {
@@ -154,6 +154,12 @@ const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: bo
 	};
 
 	const handleEventHide = () => {
+		if (event.isHidden) {
+			dispatch(unhideEvent(event));
+			handleClose();
+			return;
+		}
+
 		dispatch(hideEvent(event));
 		handleClose();
 	};
@@ -161,7 +167,7 @@ const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: bo
 	return (
 		<Fragment>
 			<IconButton
-				id={ `action-button-${event.eventId}` }
+				id={ `action-button-${ event.eventId }` }
 				className="action-button"
 				size="small"
 				aria-controls={ isOpen ? 'basic-menu' : undefined }
@@ -173,7 +179,7 @@ const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: bo
 				<MoreVert/>
 			</IconButton>
 			<Menu
-				id={ `action-menu-${event.eventId}` }
+				id={ `action-menu-${ event.eventId }` }
 				anchorEl={ anchorEl }
 				open={ isOpen }
 				onClose={ handleClose }
@@ -182,7 +188,7 @@ const ActionButton = ({ event, isSelected }: { event: IEventInfo, isSelected: bo
 					{ translate('SWITCH_TO_EVENT') }
 				</MenuItem>
 				<MenuItem onClick={ handleEventHide } disabled={ isSelected }>
-					{ translate('HIDE_EVENT')}
+					{ translate(event.isHidden ? 'UNHIDE_EVENT' : 'HIDE_EVENT')}
 				</MenuItem>
 			</Menu>
 		</Fragment>

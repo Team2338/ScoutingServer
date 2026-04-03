@@ -1,16 +1,10 @@
 import './LoginPage.scss';
 import React from 'react';
 import { Button, InputAdornment, TextField } from '@mui/material';
-import {
-	connect,
-	ConnectedProps
-} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { AppState, LoginPageVariant } from '../../models';
 import { translate } from '../../service/TranslateService';
-import {
-	AppDispatch,
-	login
-} from '../../state';
+import { AppDispatch, login } from '../../state';
 import CreateUser from './create-user/CreateUser';
 import MemberLoginForm from './member-login-form/MemberLoginForm';
 

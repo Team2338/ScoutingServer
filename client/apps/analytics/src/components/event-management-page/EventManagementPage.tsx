@@ -13,15 +13,18 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow
+	TableRow, ToggleButton, ToggleButtonGroup, Tooltip
 } from '@mui/material';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { MoreVert } from '@mui/icons-material';
+import { MoreVert, Visibility, VisibilityOff } from '@mui/icons-material';
 
 const StyledRow = styled(TableRow)(({ theme }) => ({
 	['&.selected']: {
 		backgroundColor: theme.palette.grey['100'],
-		fontWeight: 'bold',
+
+		['> td']: {
+			fontWeight: 'bold',
+		}
 	}
 }));
 
@@ -33,7 +36,8 @@ export default function EventManagementPage() {
 	const events: IEventInfo[] = useAppSelector(state => state.events.list);
 	const selectedEvent: IEventInfo = useAppSelector(state => state.events.selectedEvent);
 
-	const filteredEvents: IEventInfo[] = events.filter(event => !event.isHidden);
+	const [shouldShowHidden, setShouldShowHidden] = useState(false);
+	const filteredEvents: IEventInfo[] = events.filter(event => event.isHidden === shouldShowHidden);
 
 	const isRowSelected = useCallback(
 		(event: IEventInfo) => event.eventId === selectedEvent.eventId,
@@ -63,7 +67,27 @@ export default function EventManagementPage() {
 
 	return (
 		<main className="page event-management-page">
-			<h2 className="page-title">{ translate('EVENTS') }</h2>
+			<div className="header-wrapper">
+				<h2 className="page-title">{ translate('EVENTS') }</h2>
+				<ToggleButtonGroup
+					value={ shouldShowHidden }
+					exclusive={ true }
+					size="small"
+					aria-label={ translate('EVENT_VISIBILITY') }
+					onChange={ (_event, value) => setShouldShowHidden(value) }
+				>
+					<Tooltip title={ translate('SHOW_ONLY_VALID_EVENTS') } >
+						<ToggleButton value={ false } aria-label={ translate('SHOW_ONLY_VALID_EVENTS') }>
+							<Visibility />
+						</ToggleButton>
+					</Tooltip>
+					<Tooltip title={ translate('SHOW_ONLY_HIDDEN_EVENTS') }>
+						<ToggleButton value={ true } aria-label={ translate('SHOW_ONLY_HIDDEN_EVENTS') }>
+							<VisibilityOff />
+						</ToggleButton>
+					</Tooltip>
+				</ToggleButtonGroup>
+			</div>
 			<TableContainer>
 				<Table aria-label={ translate('EVENTS_TABLE') }>
 					<TableHead>

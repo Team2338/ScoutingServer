@@ -206,7 +206,10 @@ const languages: ILanguageTranslation = {
 		'TRAVERSABLE_DEFENSES': 'Traversable terrain',
 		'EVENTS_TABLE': 'Events table',
 		'HIDE_EVENT': 'Hide event',
-		'UNHIDE_EVENT': 'Unhide event'
+		'UNHIDE_EVENT': 'Unhide event',
+		'EVENT_VISIBILITY': 'Event visibility',
+		'SHOW_ONLY_VALID_EVENTS': 'Show only valid events',
+		'SHOW_ONLY_HIDDEN_EVENTS': 'Show only hidden events',
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

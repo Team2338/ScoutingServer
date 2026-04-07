@@ -29,3 +29,20 @@ export const GAMEMODE_ORDERING: Record<string, string> = {
 	'TELEOP': '1',
 	'SUPERSCOUT': '99'
 };
+
+export const OBJECTIVE_ORDERING: Record<string, number> = {
+	'RED_TRENCH_2026': 0,
+	'RED_BUMP_2026': 1,
+	'BLUE_TRENCH_2026': 2,
+	'BLUE_BUMP_2026': 3,
+	'CLIMB_2026': 3.5,
+	'5_CYCLE_2026': 4,
+	'10_CYCLE_2026': 5,
+	'20_CYCLE_2026': 6,
+	'30_CYCLE_2026': 7,
+	'40_CYCLE_2026': 8,
+	'50_CYCLE_2026': 9,
+	'HIGH_GOAL_2026': 10,
+	'ACCURACY': 11,
+	'HIGH_GOAL_SUCCESS_2026': 12
+};

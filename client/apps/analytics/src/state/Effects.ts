@@ -9,7 +9,7 @@ import {
 	GlobalObjectiveStats,
 	ImageInfoResponse
 } from '../models';
-import { authEngine } from '@gearscout/engines';
+import { authEngine } from '@gearscout/shared-engines';
 import commentService from '../service/CommentService';
 import imageModelService from '../service/ImageModelService';
 import inspectionModelService from '../service/InspectionModelService';
@@ -42,6 +42,7 @@ import {
 	getMatchesFail,
 	getMatchesStart,
 	getMatchesSuccess,
+	hideEventSuccess,
 	hideInspectionColumnStart,
 	loginAsMemberFail,
 	loginAsMemberStart,
@@ -52,7 +53,8 @@ import {
 	selectEventSuccess,
 	selectLangSuccess,
 	setHiddenInspectionColumnsStart,
-	showInspectionColumnStart
+	showInspectionColumnStart,
+	unhideEventSuccess
 } from './Actions';
 import { getUsersFail, getUsersStart, getUsersSuccess, updateUserRoleSuccess } from './src/UserManagementSlice';
 import { AppDispatch } from './Store';
@@ -61,8 +63,9 @@ import {
 	ITokenModel,
 	IUserInfo,
 	Language,
-	LanguageInfo, UserRole
-} from '@gearscout/models';
+	LanguageInfo,
+	UserRole
+} from '@gearscout/shared-models';
 
 type GetState = () => AppState;
 
@@ -269,8 +272,9 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 	dispatch(getEventsStart());
 
 	try {
+		const teamNumber: number = getState().loginV2.user.teamNumber;
 		const tokenString: string = getState().loginV2.tokenString;
-		const response = await gearscoutService.getEvents(tokenString);
+		const response = await gearscoutService.getEvents(teamNumber, tokenString);
 		const events: IEventInfo[] = response.data;
 		dispatch(getEventsSuccess(events));
 	} catch (error) {
@@ -341,6 +345,36 @@ export const getCsvData = () => async (dispatch: AppDispatch, getState: GetState
 		dispatch(getCsvSuccess(nextUrl));
 	} catch (error) {
 		console.error('Error getting CSV', error);
+	}
+};
+
+export const hideEvent = (event: IEventInfo) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Hiding event');
+	dispatch(hideEventSuccess(event));
+	const tokenString: string = getState().loginV2.tokenString;
+
+	try {
+		await gearscoutService.hideEvent({
+			eventId: event.eventId,
+			tokenString: tokenString
+		});
+	} catch (error) {
+		console.error('Error hiding event', error);
+	}
+};
+
+export const unhideEvent = (event: IEventInfo) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Unhiding event');
+	dispatch(unhideEventSuccess(event));
+	const tokenString: string = getState().loginV2.tokenString;
+
+	try {
+		await gearscoutService.unhideEvent({
+			eventId: event.eventId,
+			tokenString: tokenString
+		});
+	} catch (error) {
+		console.error('Error unhiding event', error);
 	}
 };
 
@@ -429,7 +463,7 @@ export const getAllImageInfoForEvent = () => async (dispatch: AppDispatch, getSt
 		const info: ImageInfo[] = imageModelService.createImageInfo(infoResponses);
 		dispatch(getEventImageInfoSuccess(info));
 	} catch (error) {
-		console.log('Error getting image info for event');
+		console.log('Error getting image info for event', error);
 		dispatch(getEventImageInfoFail());
 	}
 };
@@ -482,8 +516,9 @@ export const getUsers = () => async (dispatch: AppDispatch, getState: GetState) 
 	dispatch(getUsersStart());
 
 	try {
+		const teamNumber = getState().loginV2.user.teamNumber;
 		const tokenString = getState().loginV2.tokenString;
-		const response = await gearscoutService.getUsersOnTeam(tokenString);
+		const response = await gearscoutService.getUsersOnTeam(teamNumber, tokenString);
 
 		const users: IUserInfo[] = response.data;
 		dispatch(getUsersSuccess(users));

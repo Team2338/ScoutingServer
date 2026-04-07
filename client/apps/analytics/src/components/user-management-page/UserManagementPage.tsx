@@ -1,5 +1,5 @@
 import './UserManagementPage.scss';
-import { IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
+import { IUserInfo, LoadStatus, UserRole } from '@gearscout/shared-models';
 import {
 	Button,
 	MenuItem,

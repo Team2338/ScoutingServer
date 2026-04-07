@@ -1,6 +1,10 @@
 import {
 	AppBar,
 	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
 	Drawer,
 	Icon,
 	IconButton,
@@ -10,6 +14,7 @@ import {
 	ListItemText,
 	Menu,
 	MenuItem,
+	TextField,
 	Toolbar,
 	Tooltip,
 	useMediaQuery
@@ -22,9 +27,10 @@ import React, {
 import { NavLink } from 'react-router';
 import { Statelet } from '../../models';
 import { useTranslator } from '../../service/TranslateService';
-import { logout, selectLanguage, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
+import { logout, selectLanguage, setOwnTeam, useAppDispatch, useAppSelector, useIsLoggedInSelector } from '../../state';
 import './Header.scss';
 import {
+	Diversity3,
 	ExitToApp,
 	Shuffle
 } from '@mui/icons-material';
@@ -36,10 +42,10 @@ import {
 	LanguageInfo,
 	LoadStatus,
 	UserRole
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 import {
 	ProfileCard
-} from '@gearscout/components';
+} from '@gearscout/shared-components';
 
 
 interface IRoute {
@@ -62,6 +68,7 @@ export default function Header() {
 
 	const [isDrawerOpen, setDrawerOpen]: Statelet<boolean> = useState<boolean>(false);
 	const [accountAnchor, setAccountAnchor] = useState(null);
+	const [isTeamSwitcherOpen, setIsTeamSwitcherOpen] = useState<boolean>(false);
 
 	const toggleDrawer = (isOpen: boolean) => () => setDrawerOpen(isOpen);
 
@@ -129,23 +136,33 @@ export default function Header() {
 				user={ user }
 				selectedEvent={ selectedEvent }
 			/>
-			{
-				selectedEvent && (user.role !== UserRole.guest) && (
-					<NavLink id="switch-event-link" to="/events" onClick={ handleAccountMenuClose }>
-						<MenuItem>
-							<ListItemIcon>
-								<Shuffle />
-							</ListItemIcon>
-							<ListItemText>
-								{ translate('SWITCH_EVENTS') }
-							</ListItemText>
-						</MenuItem>
-					</NavLink>
-				)
-			}
+			{ selectedEvent && (user.role !== UserRole.guest) && (
+				<NavLink id="switch-event-link" to="/events" onClick={ handleAccountMenuClose }>
+					<MenuItem>
+						<ListItemIcon>
+							<Shuffle />
+						</ListItemIcon>
+						<ListItemText>
+							{ translate('SWITCH_EVENTS') }
+						</ListItemText>
+					</MenuItem>
+				</NavLink>
+			)}
+			{ user.role === UserRole.superAdmin && (
+				<MenuItem onClick={ () => {
+					setIsTeamSwitcherOpen(true);
+					handleAccountMenuClose();
+				}}>
+					<ListItemIcon>
+						<Diversity3 />
+					</ListItemIcon>
+					<ListItemText>
+						{ translate('SWITCH_TEAMS') }
+					</ListItemText>
+				</MenuItem>
+			)}
 			<MenuItem onClick={ handleLogout }>
 				<ListItemIcon>
-					{/*<Icon>exit_to_app</Icon>*/}
 					<ExitToApp />
 				</ListItemIcon>
 				<ListItemText>
@@ -275,6 +292,12 @@ export default function Header() {
 				</Toolbar>
 			</AppBar>
 			{ drawer }
+			{ user.role === UserRole.superAdmin && (
+				<TeamSwitcher
+					isOpen={ isTeamSwitcherOpen }
+					handleClose={ () => setIsTeamSwitcherOpen(false) }
+				/>
+			)}
 		</Fragment>
 	);
 }
@@ -376,5 +399,58 @@ function LanguageSelector() {
 				{ languageOptions }
 			</Menu>
 		</Fragment>
+	);
+}
+
+function TeamSwitcher({ isOpen, handleClose }: { isOpen: boolean, handleClose: () => void }) {
+	const selectedTeamNumber = useAppSelector(state => state.loginV2.user.teamNumber );
+	const dispatch = useAppDispatch();
+	const translate = useTranslator();
+
+	const [teamNumber, setTeamNumber] = useState<string>('');
+
+	const submit = () => {
+		dispatch(setOwnTeam(Number(teamNumber)));
+		handleClose();
+		setTeamNumber('');
+	};
+
+	const cancel = () => {
+		handleClose();
+		setTeamNumber('');
+	};
+
+	return (
+		<Dialog open={ isOpen } onClose={ cancel }>
+			<DialogTitle>Select Team</DialogTitle>
+			<DialogContent>
+				<div style={{ paddingBottom: '12px' }}>Currently selected: #{ selectedTeamNumber }</div>
+				<TextField
+					id="team-number-input"
+					label={ translate('TEAM_NUMBER' )}
+					name="teamNumber"
+					type="text"
+					inputMode="numeric"
+					variant="outlined"
+					value={ teamNumber }
+					autoFocus={ true }
+					onChange={ event => setTeamNumber(event.target.value) }
+					slotProps={{
+						htmlInput: {
+							pattern: '[0-9]*',
+							maxLength: 5
+						}
+					}}
+				/>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={ cancel }>{ translate('CANCEL') }</Button>
+				<Button
+					variant="contained"
+					disableElevation={ true }
+					onClick={ submit }>{ translate('SUBMIT') }
+				</Button>
+			</DialogActions>
+		</Dialog>
 	);
 }

@@ -12,7 +12,7 @@ import {
 	ITokenModel,
 	IUserInfo,
 	Language
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 export interface Action {
 	type: Actions;
@@ -34,6 +34,8 @@ export enum Actions {
 	GET_EVENTS_START = '[EVENT] Start getting events',
 	GET_EVENTS_SUCCESS = '[EVENT] Successfully got events',
 	GET_EVENTS_FAIL = '[EVENT] Failed to get events',
+	HIDE_EVENT_SUCCESS = '[EVENT] Hid event',
+	UNHIDE_EVENT_SUCCESS = '[EVENT] Unhid event',
 	SELECT_EVENT_SUCCESS = '[EVENT] Successfully selected event',
 	GET_MATCHES_START = '[MATCH] Started getting matches',
 	GET_MATCHES_SUCCESS = '[MATCH] Successfully got matches',
@@ -67,7 +69,8 @@ export enum Actions {
 	SET_HIDDEN_INSPECTION_COLUMNS_START = '[INSPECTION] Set hidden columns',
 	GET_ALL_COMMENTS_START = '[COMMENTS] Start getting all comments',
 	GET_ALL_COMMENTS_SUCCESS = '[COMMENTS] Successfully got all comments',
-	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments'
+	GET_ALL_COMMENTS_FAIL = '[COMMENTS] Failed to get comments',
+	SELECT_OWN_TEAM = '[SUPER] Select own team'
 }
 
 export const selectLangSuccess = (language: Language): Action => ({
@@ -151,6 +154,16 @@ export const getEventsFail = (message: string): Action => ({
 
 export const selectEventSuccess = (event: IEventInfo): Action => ({
 	type: Actions.SELECT_EVENT_SUCCESS,
+	payload: event
+});
+
+export const hideEventSuccess = (event: IEventInfo): Action => ({
+	type: Actions.HIDE_EVENT_SUCCESS,
+	payload: event
+});
+
+export const unhideEventSuccess = (event: IEventInfo): Action => ({
+	type: Actions.UNHIDE_EVENT_SUCCESS,
 	payload: event
 });
 
@@ -337,4 +350,9 @@ export const getCommentsSuccess = (comments: CommentsForEvent, topics: string[])
 
 export const getCommentsFail = (): Action => ({
 	type: Actions.GET_ALL_COMMENTS_FAIL
+});
+
+export const setOwnTeam = (teamNumber: number): Action => ({
+	type: Actions.SELECT_OWN_TEAM,
+	payload: teamNumber
 });

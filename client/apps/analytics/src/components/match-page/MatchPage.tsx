@@ -1,4 +1,4 @@
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 import { RefreshRounded } from '@mui/icons-material';
 import { Dialog, DialogContent, Divider, Icon, IconButton, Slide, useMediaQuery } from '@mui/material';
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';

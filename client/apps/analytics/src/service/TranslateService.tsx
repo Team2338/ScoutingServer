@@ -4,9 +4,9 @@ import { useAppSelector } from '../state';
 import {
 	ILanguageTranslation,
 	Language
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
-const translateKey = (language: string, key: string): string => {
+const translateKey = (language: Language, key: string): string => {
 	const mapping = languages[language];
 
 	if (Object.hasOwn(mapping, key)) {
@@ -187,7 +187,29 @@ const languages: ILanguageTranslation = {
 		'BLUE_BUMP_2026': 'Blue Bump',
 		'RED_TRENCH_2026': 'Red Trench',
 		'RED_BUMP_2026': 'Red Bump',
-		'TOTAL_BALLS_2026': 'Total Fuel'
+		'50_CYCLE_2026': '50 fuel cycle',
+		'40_CYCLE_2026': '40 fuel cycle',
+		'30_CYCLE_2026': '30 fuel cycle',
+		'20_CYCLE_2026': '20 fuel cycle',
+		'10_CYCLE_2026': '10 fuel cycle',
+		'5_CYCLE_2026': '5 fuel cycle',
+		'HIGH_GOAL_2026': 'Fuel shot',
+		'HIGH_GOAL_SUCCESS_2026': 'Fuel scored',
+		'SWITCH_TEAMS': 'Switch teams',
+		'CAN_AUTO_CLIMB': 'Can climb in auto',
+		'CAN_FEED_HUMAN': 'Can feed HP',
+		'CLIMB_LOCATION': 'Climb location',
+		'FIRE_RATE': 'Fire rate',
+		'FUEL_CAPACITY': 'Fuel capacity',
+		'SHOOTER_TYPE': 'Shooter type',
+		'TERRAIN_PREFERENCE': 'Terrain preference',
+		'TRAVERSABLE_DEFENSES': 'Traversable terrain',
+		'EVENTS_TABLE': 'Events table',
+		'HIDE_EVENT': 'Hide event',
+		'UNHIDE_EVENT': 'Unhide event',
+		'EVENT_VISIBILITY': 'Event visibility',
+		'SHOW_ONLY_VALID_EVENTS': 'Show only valid events',
+		'SHOW_ONLY_HIDDEN_EVENTS': 'Show only hidden events',
 	},
 	[Language.SPANISH]: {
 		'SIGN_IN': 'Iniciar sesión',

@@ -1,4 +1,4 @@
-import { IUserInfo, LoadStatus, UserRole } from '@gearscout/models';
+import { IUserInfo, LoadStatus, UserRole } from '@gearscout/shared-models';
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { IUserManagementState } from '../../models';
 import { getNextStatusOnFail, getNextStatusOnLoad } from './Utility';

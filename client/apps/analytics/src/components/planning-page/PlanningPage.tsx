@@ -29,7 +29,7 @@ import { GridScore } from '../shared/GridScore';
 import { TeamSelector } from '../shared/team-selector/TeamSelector';
 import './PlanningPage.scss';
 import DataFailure from '../shared/data-failure/DataFailure';
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 import {
 	ExternalLink,
 	ExternalLinkType

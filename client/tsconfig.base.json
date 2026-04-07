@@ -20,10 +20,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gearscout/components": ["libs/shared/components/src/index.ts"],
-      "@gearscout/engines": ["libs/shared/engines/src/index.ts"],
-      "@gearscout/models": ["libs/shared/models/src/index.ts"],
-      "@gearscout/state": ["libs/shared/state/src/index.ts"]
+      "@gearscout/shared-components": ["libs/shared/components/src/index.ts"],
+      "@gearscout/shared-engines": ["libs/shared/engines/src/index.ts"],
+      "@gearscout/shared-models": ["libs/shared/models/src/index.ts"],
+      "@gearscout/shared-state": ["libs/shared/state/src/index.ts"]
     },
     "strict": false,
     "forceConsistentCasingInFileNames": true,

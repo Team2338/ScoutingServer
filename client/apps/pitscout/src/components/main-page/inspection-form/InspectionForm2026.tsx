@@ -1,10 +1,10 @@
-import '../InspectionForm.scss';
+import './InspectionForm.scss';
 import {
 	AppDispatch,
 	uploadForm,
 	useAppDispatch,
 	useAppSelector,
-} from '../../../../state';
+} from '../../../state';
 import {
 	CLIMB_HEIGHT_2026,
 	CLIMB_LOCATIONS_2026,
@@ -13,20 +13,21 @@ import {
 	FormQuestions,
 	IForm,
 	INTAKE_LOCATIONS,
+	SHOOTER_TYPES_2026,
 	SHOOTING_LOCATIONS_2026,
 	TRAVERSABLE_DEFENSES,
 	YES_AND_NO,
-} from '../../../../models';
+} from '../../../models';
 import React, { useEffect, useState } from 'react';
-import Dropdown from '../fields/Dropdown';
-import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../../icons';
+import Dropdown from './fields/Dropdown';
+import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../icons';
 import { Button, CircularProgress, InputAdornment, TextField } from '@mui/material';
-import { LoadStatus } from '@gearscout/models';
-import CheckboxGroup from '../fields/CheckboxGroup';
-import RobotWeightInput from '../fields/RobotWeightInput';
-import RobotNotesInput from '../fields/RobotNotesInput';
-import VisionCapabilitiesInput from '../fields/VisionCapabilitiesInput';
-import AutoPathsInput from '../fields/AutoPathsInput';
+import { LoadStatus } from '@gearscout/shared-models';
+import CheckboxGroup from './fields/CheckboxGroup';
+import RobotWeightInput from './fields/RobotWeightInput';
+import RobotNotesInput from './fields/RobotNotesInput';
+import VisionCapabilitiesInput from './fields/VisionCapabilitiesInput';
+import AutoPathsInput from './fields/AutoPathsInput';
 
 interface IProps {
 	robotNumber: number;
@@ -52,7 +53,7 @@ interface IProps {
  * Climb locations (left, center, right, back center, other)
  */
 
-export default function InspectionForm2025(props: IProps) {
+export default function InspectionForm2026(props: IProps) {
 	const dispatch: AppDispatch = useAppDispatch();
 	const savedForm: IForm = useAppSelector(state => state.forms.data[props.robotNumber]);
 
@@ -67,6 +68,7 @@ export default function InspectionForm2025(props: IProps) {
 	const [fuelCapacity,				setFuelCapacity]				= useState<string>('');
 	const [canFeedHuman,				setCanFeedHuman]				= useState<string>('');
 	const [intakeLocations,			setIntakeLocations]			= useState<string[]>([]);
+	const [shooterType,					setShooterType]					= useState<string>('');
 	const [fireRate,						setFireRate]						= useState<string>('');
 	const [shootingLocations,		setShootingLocations]		= useState<string[]>([]);
 	const [climbHeight,					setClimbHeight]					= useState<string>('');
@@ -75,21 +77,24 @@ export default function InspectionForm2025(props: IProps) {
 	const [robotNotes,					setRobotNotes]					= useState<string>('');
 	/* End form questions @formatter:on */
 
+	// Load saved values into the UI
 	useEffect(() => {
 		setDrivetrain(savedForm.questions[FormQuestions.drivetrain] ?? '');
 		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
 		setWeight(savedForm.questions[FormQuestions.weight] ?? '');
-		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
+		setCanAutoClimb(savedForm.questions[FormQuestions.canAutoClimb] ?? '');
+		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setTraversableDefenses(savedForm.questions[FormQuestions.traversableDefenses]?.split(', ') ?? []);
 		setTerrainPreference(savedForm.questions[FormQuestions.terrainPreference] ?? '');
-		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
+		setFuelCapacity(savedForm.questions[FormQuestions.fuelCapacity] ?? '');
 		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
+		setShooterType(savedForm.questions[FormQuestions.shooterType] ?? '');
 		setFireRate(savedForm.questions[FormQuestions.fireRate] ?? '');
 		setShootingLocations(savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []);
-		setClimbHeight(savedForm.questions[FormQuestions.climbHeight] ?? '');
+		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
+		setClimbHeight(savedForm.questions[FormQuestions.climbCapabilities] ?? '');
 		setClimbLocation(savedForm.questions[FormQuestions.climbLocation]?.split(', ') ?? []);
-		setCanAutoClimb(savedForm.questions[FormQuestions.canAutoClimb] ?? '');
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
 
@@ -105,6 +110,7 @@ export default function InspectionForm2025(props: IProps) {
 			[FormQuestions.terrainPreference]: terrainPreference,
 			[FormQuestions.fuelCapacity]: fuelCapacity,
 			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
+			[FormQuestions.shooterType]: shooterType,
 			[FormQuestions.fireRate]: fireRate,
 			[FormQuestions.shootingLocations]: shootingLocations.join(', '),
 			[FormQuestions.canFeedHuman]: canFeedHuman,
@@ -183,6 +189,13 @@ export default function InspectionForm2025(props: IProps) {
 				values={ intakeLocations }
 				includeNoneOption={ true }
 				onChange={ setIntakeLocations }
+			/>
+			<Dropdown
+				id="shooter-type-dropdown"
+				title="Shooter type"
+				options={ SHOOTER_TYPES_2026 }
+				value={ shooterType }
+				onChange={ setShooterType }
 			/>
 			<TextField
 				id="fire-rate-input"

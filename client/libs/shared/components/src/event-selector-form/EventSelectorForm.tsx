@@ -1,5 +1,5 @@
 import styles from './EventSelectorForm.module.scss';
-import { IEventInfo } from '@gearscout/models';
+import { IEventInfo } from '@gearscout/shared-models';
 import { Button, TextField } from '@mui/material';
 import { FormEvent, useState } from 'react';
 
@@ -40,6 +40,7 @@ export const EventSelectorForm = (props: IProps) => {
 			gameYear: Number(gameYear),
 			eventCode: eventCode,
 			secretCode: secretCode,
+			isHidden: false,
 			matchCount: null,
 			inspectionCount: null
 		});

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 import App from './components/App';
 import { store } from './state';
-import { myRegister, unregister } from './serviceWorkerRegistration';
+import { myRegister } from './serviceWorkerRegistration';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { orange } from '@mui/material/colors';
 
@@ -17,6 +17,7 @@ const theme = createTheme({
 	}
 });
 
+console.log(import.meta.env.VITE_APP_SERVER_URL);
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
@@ -30,4 +31,3 @@ root.render(
 );
 
 myRegister();
-// unregister();

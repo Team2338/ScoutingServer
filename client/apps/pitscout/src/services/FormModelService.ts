@@ -10,7 +10,7 @@ import {
 	IInspectionQuestionResponse,
 	IUserInfo,
 	LoadStatus
-} from '@gearscout/models';
+} from '@gearscout/shared-models';
 
 class FormModelService {
 

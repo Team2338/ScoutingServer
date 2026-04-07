@@ -1,4 +1,4 @@
-import { LoadStatus } from '@gearscout/models';
+import { LoadStatus } from '@gearscout/shared-models';
 
 export enum FormQuestions {
 	drivetrain = 'DRIVETRAIN',
@@ -24,7 +24,8 @@ export enum FormQuestions {
 	canAutoClimb = 'CAN_AUTO_CLIMB',
 	fuelCapacity = 'FUEL_CAPACITY',
 	fireRate = 'FIRE_RATE',
-	terrainPreference = 'TERRAIN_PREFERENCE'
+	terrainPreference = 'TERRAIN_PREFERENCE',
+	shooterType = 'SHOOTER_TYPE'
 }
 
 export interface IForm {
@@ -116,6 +117,13 @@ export const SCORE_LOCATIONS_2025: string[] = [
 export const TRAVERSABLE_DEFENSES: string[] = [
 	'Bump',
 	'Trench'
+];
+
+export const SHOOTER_TYPES_2026: string[] = [
+	'Turret',
+	'Fixed - collector side',
+	'Fixed - opposite collector',
+	'Fixed - 90° offset'
 ];
 
 export const SHOOTING_LOCATIONS_2026: string[] = [

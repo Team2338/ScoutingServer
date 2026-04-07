@@ -215,17 +215,19 @@ class TeamModelService {
 	};
 
 	private applyModifiers = (stats: ObjectiveStats): void => {
-		const autoAccuracy = stats.get('AUTO')?.get('ACCURACY')?.mean;
-		const autoShotAttempts = stats.get('AUTO')?.get('HIGH_GOAL_2026');
+		const autoAccuracy: TeamObjectiveStats = stats.get('AUTO')?.get('ACCURACY');
+		const autoShotAttempts: TeamObjectiveStats = stats.get('AUTO')?.get('HIGH_GOAL_2026');
 		if (autoAccuracy !== undefined && autoShotAttempts !== undefined) {
+			const autoSpacedScores = this.applyMultiplierToSpacedMatches(autoShotAttempts.spacedScores, autoAccuracy.spacedScores, autoAccuracy.mean);
+
 			stats.get('AUTO').set('HIGH_GOAL_SUCCESS_2026', {
 				teamNumber: autoShotAttempts.teamNumber,
 				matchNumbers: autoShotAttempts.matchNumbers,
-				mean: autoShotAttempts.mean * autoAccuracy / 100,
-				median: autoShotAttempts.median * autoAccuracy / 100,
-				mode: autoShotAttempts.mode * autoAccuracy / 100,
-				spacedScores: autoShotAttempts.spacedScores.map(score => score === undefined ? undefined : score * autoAccuracy / 100),
-				scores: autoShotAttempts.scores.map(count => count * autoAccuracy / 100), // Not exact, but the best we can do right now
+				mean: autoShotAttempts.mean * autoAccuracy.mean / 100,
+				median: autoShotAttempts.median * autoAccuracy.mean / 100,
+				mode: autoShotAttempts.mode * autoAccuracy.mean / 100,
+				spacedScores: autoSpacedScores,
+				scores: autoSpacedScores.filter(score => score !== undefined),
 				variance: 0,
 				lists: null,
 				sumList: null,
@@ -233,23 +235,46 @@ class TeamModelService {
 			});
 		}
 
-		const teleopAccuracy = stats.get('TELEOP')?.get('ACCURACY')?.mean;
-		const teleopShotAttempts = stats.get('TELEOP')?.get('HIGH_GOAL_2026');
+		const teleopAccuracy: TeamObjectiveStats = stats.get('TELEOP')?.get('ACCURACY');
+		const teleopShotAttempts: TeamObjectiveStats = stats.get('TELEOP')?.get('HIGH_GOAL_2026');
 		if (teleopAccuracy !== undefined && teleopShotAttempts !== undefined) {
+			const teleopSpacedScores = this.applyMultiplierToSpacedMatches(teleopShotAttempts.spacedScores, teleopAccuracy.spacedScores, teleopAccuracy.mean);
+
 			stats.get('TELEOP').set('HIGH_GOAL_SUCCESS_2026', {
 				teamNumber: teleopShotAttempts.teamNumber,
 				matchNumbers: teleopShotAttempts.matchNumbers,
-				mean: teleopShotAttempts.mean * teleopAccuracy / 100,
-				median: teleopShotAttempts.median * teleopAccuracy / 100,
-				mode: teleopShotAttempts.mode * teleopAccuracy / 100,
-				spacedScores: autoShotAttempts.spacedScores.map(score => score === undefined ? undefined : score * teleopAccuracy / 100),
-				scores: teleopShotAttempts.scores.map(count => count * teleopAccuracy), // Not exact, but the best we can do right now
+				mean: teleopShotAttempts.mean * teleopAccuracy.mean / 100,
+				median: teleopShotAttempts.median * teleopAccuracy.mean / 100,
+				mode: teleopShotAttempts.mode * teleopAccuracy.mean / 100,
+				spacedScores: teleopSpacedScores,
+				scores: teleopSpacedScores.filter(score => score !== undefined),
 				variance: 0,
 				lists: null,
 				sumList: null,
 				meanList: null,
 			});
 		}
+	};
+
+	private applyMultiplierToSpacedMatches = (base: (number | undefined)[], multiplier: (number | undefined)[], avgMultiplier: number): (number | undefined)[] => {
+		console.assert(base.length === multiplier.length);
+
+		const result: (number | undefined)[] = [];
+		for (let i = 0; i < base.length; i++) {
+			if (base[i] === undefined) {
+				result.push(undefined);
+				continue;
+			}
+
+			if (multiplier[i] === undefined) {
+				result.push(base[i] * avgMultiplier / 100);
+				continue;
+			}
+
+			result.push(base[i] * multiplier[i] / 100);
+		}
+
+		return result;
 	};
 
 }

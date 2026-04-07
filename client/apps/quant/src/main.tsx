@@ -2,6 +2,7 @@ import * as ReactDOM from 'react-dom/client';
 import App from './app/app';
 import { createTheme, Theme, ThemeProvider } from '@mui/material';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
+import { unregister } from './ServiceWorkerRegistration';
 
 
 const ORANGE = '#FE5000';
@@ -87,3 +88,6 @@ root.render(
 		<App />
 	</ThemeProvider>
 );
+
+unregister();
+window.location.replace('https://gearitforward.com');

@@ -16,15 +16,15 @@ export function App() {
 
 	// Listen for updates on app init
 	useEffect(() => {
-		registerServiceWorker({
-			onUpdate: (sw: ServiceWorker) => {
-				setHasUpdate(true);
-				setServiceWorker(sw);
-			},
-			onSuccess: () => {
-				window.location.reload();
-			}
-		});
+		// registerServiceWorker({
+		// 	onUpdate: (sw: ServiceWorker) => {
+		// 		setHasUpdate(true);
+		// 		setServiceWorker(sw);
+		// 	},
+		// 	onSuccess: () => {
+		// 		window.location.reload();
+		// 	}
+		// });
 	}, []);
 
 	const submitMatchData = (match: IMatch): void => {

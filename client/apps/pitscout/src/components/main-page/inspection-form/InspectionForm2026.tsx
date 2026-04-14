@@ -6,22 +6,17 @@ import {
 	useAppSelector,
 } from '../../../state';
 import {
-	CLIMB_HEIGHT_2026,
-	CLIMB_LOCATIONS_2026,
 	DRIVE_MOTOR_TYPES,
 	DRIVETRAIN_TYPES,
 	FormQuestions,
 	IForm,
-	INTAKE_LOCATIONS,
 	SHOOTER_TYPES_2026,
-	SHOOTING_LOCATIONS_2026,
 	TRAVERSABLE_DEFENSES,
-	YES_AND_NO,
 } from '../../../models';
 import React, { useEffect, useState } from 'react';
 import Dropdown from './fields/Dropdown';
-import { DrivetrainIcon, FireRateIcon, LadderIcon, MotorIcon } from '../../../icons';
-import { Button, CircularProgress, InputAdornment, TextField } from '@mui/material';
+import { DrivetrainIcon, MotorIcon } from '../../../icons';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { LoadStatus } from '@gearscout/shared-models';
 import CheckboxGroup from './fields/CheckboxGroup';
 import RobotWeightInput from './fields/RobotWeightInput';
@@ -45,12 +40,6 @@ interface IProps {
  * Traversable defenses (trench or bump)
  * Preferred terrain
  * Fuel capacity
- * Intake locations (ground or HP)
- * Fire rate
- * Shooting locations
- * Can feed HP
- * Climb height (L1, L2, L3)
- * Climb locations (left, center, right, back center, other)
  */
 
 export default function InspectionForm2026(props: IProps) {
@@ -66,14 +55,7 @@ export default function InspectionForm2026(props: IProps) {
 	const [traversableDefenses,	setTraversableDefenses]	= useState<string[]>([]);
 	const [terrainPreference,		setTerrainPreference]		= useState<string>('');
 	const [fuelCapacity,				setFuelCapacity]				= useState<string>('');
-	const [canFeedHuman,				setCanFeedHuman]				= useState<string>('');
-	const [intakeLocations,			setIntakeLocations]			= useState<string[]>([]);
 	const [shooterType,					setShooterType]					= useState<string>('');
-	const [fireRate,						setFireRate]						= useState<string>('');
-	const [shootingLocations,		setShootingLocations]		= useState<string[]>([]);
-	const [climbHeight,					setClimbHeight]					= useState<string>('');
-	const [climbLocation,				setClimbLocation]				= useState<string[]>([]);
-	const [canAutoClimb,				setCanAutoClimb]				= useState<string>('');
 	const [robotNotes,					setRobotNotes]					= useState<string>('');
 	/* End form questions @formatter:on */
 
@@ -83,18 +65,11 @@ export default function InspectionForm2026(props: IProps) {
 		setDriveMotorType(savedForm.questions[FormQuestions.driveMotorType] ?? '');
 		setWeight(savedForm.questions[FormQuestions.weight] ?? '');
 		setAutoPaths(savedForm.questions[FormQuestions.autoPaths] ?? '');
-		setCanAutoClimb(savedForm.questions[FormQuestions.canAutoClimb] ?? '');
 		setVisionAbilities(savedForm.questions[FormQuestions.visionCapabilities] ?? '');
 		setTraversableDefenses(savedForm.questions[FormQuestions.traversableDefenses]?.split(', ') ?? []);
 		setTerrainPreference(savedForm.questions[FormQuestions.terrainPreference] ?? '');
 		setFuelCapacity(savedForm.questions[FormQuestions.fuelCapacity] ?? '');
-		setIntakeLocations(savedForm.questions[FormQuestions.intakeLocations]?.split(', ') ?? []);
 		setShooterType(savedForm.questions[FormQuestions.shooterType] ?? '');
-		setFireRate(savedForm.questions[FormQuestions.fireRate] ?? '');
-		setShootingLocations(savedForm.questions[FormQuestions.shootingLocations]?.split(', ') ?? []);
-		setCanFeedHuman(savedForm.questions[FormQuestions.canFeedHuman] ?? '');
-		setClimbHeight(savedForm.questions[FormQuestions.climbCapabilities] ?? '');
-		setClimbLocation(savedForm.questions[FormQuestions.climbLocation]?.split(', ') ?? []);
 		setRobotNotes(savedForm.questions[FormQuestions.robotNotes] ?? '');
 	}, [savedForm]);
 
@@ -104,18 +79,11 @@ export default function InspectionForm2026(props: IProps) {
 			[FormQuestions.driveMotorType]: driveMotorType,
 			[FormQuestions.weight]: weight,
 			[FormQuestions.autoPaths]: autoPaths,
-			[FormQuestions.canAutoClimb]: canAutoClimb,
 			[FormQuestions.visionCapabilities]: visionAbilities,
 			[FormQuestions.traversableDefenses]: traversableDefenses.join(', '),
 			[FormQuestions.terrainPreference]: terrainPreference,
 			[FormQuestions.fuelCapacity]: fuelCapacity,
-			[FormQuestions.intakeLocations]: intakeLocations.join(', '),
 			[FormQuestions.shooterType]: shooterType,
-			[FormQuestions.fireRate]: fireRate,
-			[FormQuestions.shootingLocations]: shootingLocations.join(', '),
-			[FormQuestions.canFeedHuman]: canFeedHuman,
-			[FormQuestions.climbCapabilities]: climbHeight,
-			[FormQuestions.climbLocation]: climbLocation.join(', '),
 			[FormQuestions.robotNotes]: robotNotes
 		}));
 	};
@@ -144,13 +112,6 @@ export default function InspectionForm2026(props: IProps) {
 			/>
 			<RobotWeightInput value={ weight } onChange={ setWeight } />
 			<AutoPathsInput value={ autoPaths } onChange={ setAutoPaths } />
-			<Dropdown
-				id="can-auto-climb"
-				title="Can climb in auto"
-				options={ YES_AND_NO }
-				value={ canAutoClimb }
-				onChange={ setCanAutoClimb }
-			/>
 			<VisionCapabilitiesInput value={ visionAbilities } onChange={ setVisionAbilities } />
 			<CheckboxGroup
 				title="Traversable defenses"
@@ -183,69 +144,12 @@ export default function InspectionForm2026(props: IProps) {
 				}}
 				autoComplete="off"
 			/>
-			<CheckboxGroup
-				title="Intake locations"
-				options={ INTAKE_LOCATIONS }
-				values={ intakeLocations }
-				includeNoneOption={ true }
-				onChange={ setIntakeLocations }
-			/>
 			<Dropdown
 				id="shooter-type-dropdown"
 				title="Shooter type"
 				options={ SHOOTER_TYPES_2026 }
 				value={ shooterType }
 				onChange={ setShooterType }
-			/>
-			<TextField
-				id="fire-rate-input"
-				label="Fire rate"
-				name="fireRate"
-				type="number"
-				margin="normal"
-				variant="outlined"
-				value={ fireRate }
-				onChange={ (event) => setFireRate(event.target.value) }
-				slotProps={{
-					input: {
-						startAdornment: <InputAdornment position="start"><FireRateIcon /></InputAdornment>,
-						endAdornment: <InputAdornment position="end">fps</InputAdornment>
-					},
-					htmlInput: {
-						min: 0,
-						max: 99,
-					},
-				}}
-				autoComplete="off"
-			/>
-			<CheckboxGroup
-				title="Shooting locations"
-				options={ SHOOTING_LOCATIONS_2026 }
-				values={ shootingLocations }
-				includeNoneOption={ true }
-				onChange={ setShootingLocations }
-			/>
-			<Dropdown
-				id="can-feed-human"
-				title="Can feed human"
-				options={ YES_AND_NO }
-				value={ canFeedHuman }
-				onChange={ setCanFeedHuman }
-			/>
-			<Dropdown
-				id="climb-height-selector"
-				title="Climb height"
-				options={ CLIMB_HEIGHT_2026 }
-				value={ climbHeight }
-				onChange={ setClimbHeight }
-				icon={ <LadderIcon className="selector-adornment" /> }
-			/>
-			<CheckboxGroup
-				title="Climb locations"
-				options={ CLIMB_LOCATIONS_2026 }
-				values={ climbLocation }
-				includeNoneOption={ true }
-				onChange={ setClimbLocation }
 			/>
 			<RobotNotesInput value={ robotNotes } onChange={ setRobotNotes } />
 			<Button

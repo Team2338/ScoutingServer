@@ -17,13 +17,8 @@ export enum FormQuestions {
 	coralIntakeLocations = 'INTAKE_LOCATIONS_CORAL',
 	algaeIntakeLocations = 'INTAKE_LOCATIONS_ALGAE',
 	removeAlgae = 'REMOVE_ALGAE',
-	canFeedHuman = 'CAN_FEED_HUMAN',
 	traversableDefenses = 'TRAVERSABLE_DEFENSES',
-	climbHeight = 'CLIMB_HEIGHT',
-	climbLocation = 'CLIMB_LOCATION',
-	canAutoClimb = 'CAN_AUTO_CLIMB',
 	fuelCapacity = 'FUEL_CAPACITY',
-	fireRate = 'FIRE_RATE',
 	terrainPreference = 'TERRAIN_PREFERENCE',
 	shooterType = 'SHOOTER_TYPE'
 }
@@ -124,24 +119,4 @@ export const SHOOTER_TYPES_2026: string[] = [
 	'Fixed - collector side',
 	'Fixed - opposite collector',
 	'Fixed - 90° offset'
-];
-
-export const SHOOTING_LOCATIONS_2026: string[] = [
-	'Hub',
-	'Tower',
-	'Open'
-];
-
-export const CLIMB_HEIGHT_2026: string[] = [
-	'None',
-	'L1',
-	'L2',
-	'L3'
-];
-
-export const CLIMB_LOCATIONS_2026: string[] = [
-	'Left',
-	'Center',
-	'Back center',
-	'Right'
 ];

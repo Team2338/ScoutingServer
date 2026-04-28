@@ -1,5 +1,6 @@
 package team.gif.gearscout.matches;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import team.gif.gearscout.matches.model.MatchEntity;
@@ -37,5 +38,13 @@ public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 	GROUP BY match.eventId
 	""")
 	List<EventInfo> getMatchCountPerEvent(List<Long> eventIds);
+
+	@Modifying
+	@Query(value = """
+	UPDATE MatchEntity match
+	SET match.eventId = :nextEventId
+	WHERE match.eventId = :originalEventId
+	""")
+	void migrateEvent(Long originalEventId, Long nextEventId);
 
 }

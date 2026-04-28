@@ -66,6 +66,7 @@ import {
 	LanguageInfo,
 	UserRole
 } from '@gearscout/shared-models';
+import App from '../components/App';
 
 type GetState = () => AppState;
 
@@ -541,5 +542,19 @@ export const updateUserRole = (userId: number, role: UserRole) => async (dispatc
 		});
 	} catch (error) {
 		console.log('Error updating user role', error);
+	}
+};
+
+export const migrateEventData = (fromEventId: number, toEventId: number) => async (dispatch: AppDispatch, getState: GetState) => {
+	console.log('Migrating event data');
+
+	// TODO: dispatch startMigration
+	try {
+		const tokenString = getState().loginV2.tokenString;
+		// TODO: make API call
+		// TODO: dispatch migration success
+	} catch (error) {
+		console.log('Error migrating event date', error);
+		// TODO: dispatch migration failure
 	}
 };

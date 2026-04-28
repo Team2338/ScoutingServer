@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import team.gif.gearscout.inspections.InspectionRepository;
 import team.gif.gearscout.matches.MatchRepository;
+import team.gif.gearscout.matches.model.MatchEntity;
 import team.gif.gearscout.shared.EventInfo;
 
 import java.util.HashMap;
@@ -115,6 +116,42 @@ public class EventService {
 		}
 
 		return map;
+	}
+
+	public AggregateEventInfo migrateEvent(Long fromEventId, Long toEventId) {
+		EventEntity fromEvent = eventRepository.findById(fromEventId)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find event " + fromEventId));
+		EventEntity toEvent = eventRepository.findById(toEventId)
+			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find event " + toEventId));
+
+
+		matchRepository.migrateEvent(fromEventId, toEventId);
+
+		// TODO: call inspection repository to migrate
+		// TODO: call notes repository to migrate
+		// TODO: call images repository to migrate
+
+		// TODO: delete 'fromEvent'
+
+		List<EventInfo> matchCounts = matchRepository.getMatchCountPerEvent(List.of(toEventId));
+		List<EventInfo> inspectionCounts = inspectionRepository.getInspectionCountPerEvent(List.of(toEventId));
+
+		if (matchCounts.isEmpty() || inspectionCounts.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve updated event data");
+		}
+
+		AggregateEventInfo result = new AggregateEventInfo(
+			toEvent.getId(),
+			toEvent.getTeamNumber(),
+			toEvent.getGameYear(),
+			toEvent.getEventCode(),
+			toEvent.getSecretCode(),
+			toEvent.getIsHidden()
+		);
+		result.setMatchCount(matchCounts.getFirst().matchCount());
+		result.setInspectionCount(inspectionCounts.getFirst().matchCount());
+
+		return result;
 	}
 
 }

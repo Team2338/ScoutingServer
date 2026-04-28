@@ -141,4 +141,43 @@ public class EventController {
 		return ResponseEntity.ok(result);
 	}
 
+
+	@PutMapping(value = "/{fromEventId}/migrateTo/{toEventId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AggregateEventInfo> migrateEvent(
+		@PathVariable Long fromEventId,
+		@PathVariable Long toEventId,
+		@RequestHeader(value = "Authorization") String tokenHeader
+	) {
+		logger.debug("Received migrateEvent request");
+
+		UserEntity user = authService.getUserFromTokenHeader(tokenHeader);
+
+		if (fromEventId.equals(toEventId)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fromEventId and toEventId must not match");
+		}
+
+		switch (user.getRole()) {
+			case UserRoles.SUPERADMIN:
+				break;
+			case UserRoles.ADMIN:
+				EventEntity fromEvent = eventService.getEvent(fromEventId);
+				if (!Objects.equals(fromEvent.getTeamNumber(), user.getTeamNumber())) {
+					throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+				}
+
+				EventEntity toEvent = eventService.getEvent(toEventId);
+				if (!Objects.equals(toEvent.getTeamNumber(), user.getTeamNumber())) {
+					throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+				}
+
+				break;
+			default:
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
+		AggregateEventInfo result = eventService.migrateEvent(fromEventId, toEventId);
+
+		return ResponseEntity.ok(result);
+	}
+
 }

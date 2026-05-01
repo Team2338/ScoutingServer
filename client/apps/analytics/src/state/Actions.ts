@@ -352,7 +352,7 @@ export const getCommentsFail = (): Action => ({
 	type: Actions.GET_ALL_COMMENTS_FAIL
 });
 
-export const setOwnTeam = (teamNumber: number): Action => ({
+export const setOwnTeamSuccess = (teamNumber: number): Action => ({
 	type: Actions.SELECT_OWN_TEAM,
 	payload: teamNumber
 });

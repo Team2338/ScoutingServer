@@ -53,6 +53,7 @@ import {
 	selectEventSuccess,
 	selectLangSuccess,
 	setHiddenInspectionColumnsStart,
+	setOwnTeamSuccess,
 	showInspectionColumnStart,
 	unhideEventSuccess
 } from './Actions';
@@ -89,16 +90,19 @@ export const initApp = () => async (dispatch: AppDispatch) => {
 };
 
 const attemptMemberLoginFromStorage = (dispatch: AppDispatch): boolean => {
-	const member: string = localStorage.getItem('member');
+	const memberString: string = localStorage.getItem('member');
 	const tokenString: string = localStorage.getItem('tokenString');
-	const selectedEvent: string = localStorage.getItem('selectedEvent');
+	const selectedEventString: string = localStorage.getItem('selectedEvent');
 
-	if (member && tokenString) {
+	if (memberString && tokenString) {
 		// TODO: check if token is still valid
 		// TODO: dispatch loginAsMemberStart if token validation requires an HTTP request
+		const member: IUserInfo = JSON.parse(memberString);
 		const token: ITokenModel = authEngine.createTokenModel(tokenString);
-		dispatch(loginAsMemberSuccess(JSON.parse(member), tokenString, token));
-		dispatch(selectEvent(JSON.parse(selectedEvent)));
+		const selectedEvent: IEventInfo = JSON.parse(selectedEventString);
+
+		dispatch(loginAsMemberSuccess(member, tokenString, token));
+		dispatch(selectEvent(selectedEvent));
 
 		return true;
 	}
@@ -286,6 +290,16 @@ export const getEvents = () => async (dispatch: AppDispatch, getState: GetState)
 export const selectEvent = (event: IEventInfo) => async (dispatch: AppDispatch) => {
 	localStorage.setItem('selectedEvent', JSON.stringify(event));
 	dispatch(selectEventSuccess(event));
+};
+
+export const setOwnTeam = (teamNumber: number) => async (dispatch: AppDispatch, getState: GetState) => {
+	const member: IUserInfo = {
+		...getState().loginV2.user,
+		teamNumber: teamNumber
+	};
+	localStorage.setItem('member', JSON.stringify(member));
+	localStorage.removeItem('selectedEvent');
+	dispatch(setOwnTeamSuccess(teamNumber));
 };
 
 export const getAllData = () => async (dispatch: AppDispatch, getState: GetState) => {

@@ -1,3 +1,4 @@
+import './TeamDetail.scss';
 import React, {
 	Fragment,
 	useState
@@ -11,12 +12,18 @@ import {
 import { roundToDecimal } from '../../../service/DisplayUtility';
 import { useTranslator } from '../../../service/TranslateService';
 import { GridScore } from '../../shared/GridScore';
-import './TeamDetail.scss';
 import InspectionSection from '../inspection-section/InspectionSection';
 import { useAppSelector } from '../../../state';
 import {
 	Button,
-	Icon, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
+	Icon,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow
 } from '@mui/material';
 import {
 	ExternalLink,
@@ -92,7 +99,7 @@ function Gamemode(props: { name: string, matchNumbers: number[], objectives: Map
 	});
 
 	return (
-		<TableContainer component={ Paper } sx={{ borderRadius: '8px', overflow: 'hidden' }}>
+		<TableContainer component={ Paper } sx={{ borderRadius: '8px' }}>
 			<Table size="small">
 				<TableHead sx={{ backgroundColor: '#EEEEEE' }}>
 					<TableRow>

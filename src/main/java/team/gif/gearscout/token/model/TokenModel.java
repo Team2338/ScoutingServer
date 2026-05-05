@@ -1,7 +1,7 @@
 package team.gif.gearscout.token.model;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class TokenModel {
 			Payload parsedPayload = mapper.readValue(payload, Payload.class);
 
 			return new TokenModel(parsedHeader, parsedPayload);
-		} catch (JsonProcessingException e) {
+		} catch (JacksonException e) {
 			logger.error("Failed to deserialize token", e);
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", e);
 		}
@@ -75,7 +75,7 @@ public class TokenModel {
 
 		try {
 			return mapper.writeValueAsString(header);
-		} catch (JsonProcessingException e) {
+		} catch (JacksonException e) {
 			logger.error("Failed to serialize header", e);
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e);
 		}
@@ -86,7 +86,7 @@ public class TokenModel {
 
 		try {
 			return mapper.writeValueAsString(payload);
-		} catch (JsonProcessingException e) {
+		} catch (JacksonException e) {
 			logger.error("Failed to serialize payload", e);
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e);
 		}

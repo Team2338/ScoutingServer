@@ -12,7 +12,7 @@ public interface CommentRepository extends CrudRepository<CommentEntity, Long> {
 	SELECT comment
 	FROM CommentEntity comment
 	WHERE comment.eventId = :eventId
-	ORDER BY comment.robotNumber, comment.topic ASC
+	ORDER BY comment.robotNumber, comment.topic, comment.matchNumber, comment.timeCreated ASC
 	""")
 	List<CommentEntity> findCommentsByEventId(Long eventId);
 
